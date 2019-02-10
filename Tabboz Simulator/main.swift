@@ -10,3 +10,6 @@ import Foundation
 
 print("Hello, World!")
 
+WinMain(0, 0, 0, 0)
+
+

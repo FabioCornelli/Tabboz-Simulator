@@ -12,7 +12,6 @@
 		3FED2040220FC7E000AC38D7 /* disco.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED203F220FC7E000AC38D7 /* disco.c */; };
 		3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2042220FCA3500AC38D7 /* lavoro.c */; };
 		3FED2055220FCA3500AC38D7 /* vestiti.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2043220FCA3500AC38D7 /* vestiti.c */; };
-		3FED2058220FCA3500AC38D7 /* net.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2046220FCA3500AC38D7 /* net.c */; };
 		3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2047220FCA3500AC38D7 /* tabimg.c */; };
 		3FED205A220FCA3500AC38D7 /* prompt.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2048220FCA3500AC38D7 /* prompt.c */; };
 		3FED205B220FCA3500AC38D7 /* eventi.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2049220FCA3500AC38D7 /* eventi.c */; };
@@ -195,7 +194,6 @@
 				3F54DC1C2210991100794232 /* stubs.c in Sources */,
 				3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */,
 				3FED2060220FCA3500AC38D7 /* scooter.c in Sources */,
-				3FED2058220FCA3500AC38D7 /* net.c in Sources */,
 				3FED205C220FCA3500AC38D7 /* readkey.c in Sources */,
 				3FED2062220FCA3500AC38D7 /* tempo.c in Sources */,
 				3FED205D220FCA3500AC38D7 /* telefono.c in Sources */,

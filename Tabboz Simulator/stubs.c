@@ -77,5 +77,10 @@ void new_reset_check() { }
 void sndPlaySound() { }
 void tabboz_random() { }
 
+void BWCCRegister() {}
+void ExitWindows() {}
+void randomize() {}
+
 char * _argv[] = {""};
+int _argc = 0;
 int ps = 0;

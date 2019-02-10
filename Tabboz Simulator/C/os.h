@@ -2,6 +2,7 @@
 #define NEAR
 #define PASCAL
 
+#define TABBOZ_WIN
 #define TABBOZ_WIN32
 
 typedef _Bool BOOL;
@@ -124,6 +125,7 @@ static const int SND_ASYNC = 0;
 static const int SND_NODEFAULT = 0;
 
 extern char * _argv[];
+extern int _argc;
 extern int hWndMain;
 extern int hInst;
 extern int tipahDlg;
@@ -131,3 +133,5 @@ extern int ps;
 
 #define random tabboz_random
 #define openlog tabboz_openlog
+
+#include <stdio.h>
