@@ -8,78 +8,78 @@
 
 #include <stdio.h>
 
-void AppendMenu() { }
-void BeginPaint() { }
-void BitBlt() { }
-void CreateBitmap() { }
-void CreateCompatibleDC() { }
-void DefWindowProc() { }
-void DeleteDC() { }
-void DeleteMenu() { }
-void DeleteObject() { }
-void DestroyIcon() { }
-void DialogBox() { }
-void DrawMenuBar() { }
-void EnableWindow() { }
-void EndDialog() { }
-void EndPaint() { }
-void FreeProcInstance() { }
-void GetDC() { }
-void GetDlgItem() { }
-void GetDlgItemText() { }
-void GetMenu() { }
-void GetObject() { }
-void GetOpenFileName() { }
-void GetPrivateProfileString() { }
-void GetProp() { }
-void GetSaveFileName() { }
-void GetSubMenu() { }
-void GetSystemMenu() { }
-void GetSystemMetrics() { }
-void GetWindowRect() { }
-void HIWORD() { }
-void IsIconic() { }
-void KillTimer() { }
-void LOWORD() { }
-void LoadBitmap() { }
-void LoadCursor() { }
-void LoadIcon() { }
-void LoadString() { }
-void MAKEINTRESOURCE() { }
-void MakeProcInstance() { }
-void MessageBox() { }
-void MoveWindow() { }
-void PlaySound() { }
-void RGB() { }
-void RegCloseKey() { }
-void RegCreateKeyEx() { }
-void RegOpenKeyEx() { }
-void RegQueryValue() { }
-void RegSetValue() { }
-void RegisterClass() { }
-void ReleaseDC() { }
-void RemoveProp() { }
-void SelectObject() { }
-void SendMessage() { }
-void SetBkColor() { }
-void SetDlgItemText() { }
-void SetFocus() { }
-void SetProp() { }
-void SetTextColor() { }
-void SetTimer() { }
-void SetWindowPos() { }
-void ShowWindow() { }
-void WritePrivateProfileString() { }
-void new_check_i() { }
-void new_check_l() { }
-void new_counter() { }
-void new_reset_check() { }
-void sndPlaySound() { }
-void tabboz_random() { }
+void AppendMenu() { abort(); }
+void BeginPaint() { abort(); }
+void BitBlt() { abort(); }
+void CreateBitmap() { abort(); }
+void CreateCompatibleDC() { abort(); }
+void DefWindowProc() { abort(); }
+void DeleteDC() { abort(); }
+void DeleteMenu() { abort(); }
+void DeleteObject() { abort(); }
+void DestroyIcon() { abort(); }
+void DialogBox() { abort(); }
+void DrawMenuBar() { abort(); }
+void EnableWindow() { abort(); }
+void EndDialog() { abort(); }
+void EndPaint() { abort(); }
+void FreeProcInstance() { abort(); }
+void GetDC() { abort(); }
+void GetDlgItem() { abort(); }
+void GetDlgItemText() { abort(); }
+void GetMenu() { abort(); }
+void GetObject() { abort(); }
+void GetOpenFileName() { abort(); }
+void GetPrivateProfileString() { abort(); }
+void GetProp() { abort(); }
+void GetSaveFileName() { abort(); }
+void GetSubMenu() { abort(); }
+void GetSystemMenu() { abort(); }
+void GetSystemMetrics() { abort(); }
+void GetWindowRect() { abort(); }
+void HIWORD() { abort(); }
+void IsIconic() { abort(); }
+void KillTimer() { abort(); }
+void LOWORD() { abort(); }
+void LoadBitmap() { abort(); }
+void LoadCursor() { abort(); }
+void LoadIcon() { abort(); }
+void LoadString() { abort(); }
+void MAKEINTRESOURCE() { abort(); }
+void MakeProcInstance() { abort(); }
+void MessageBox() { abort(); }
+void MoveWindow() { abort(); }
+void PlaySound() { abort(); }
+void RGB() { abort(); }
+void RegCloseKey() { abort(); }
+void RegCreateKeyEx() { abort(); }
+void RegOpenKeyEx() { abort(); }
+void RegQueryValue() { abort(); }
+void RegSetValue() { abort(); }
+void RegisterClass() { abort(); }
+void ReleaseDC() { abort(); }
+void RemoveProp() { abort(); }
+void SelectObject() { abort(); }
+void SendMessage() { abort(); }
+void SetBkColor() { abort(); }
+void SetDlgItemText() { abort(); }
+void SetFocus() { abort(); }
+void SetProp() { abort(); }
+void SetTextColor() { abort(); }
+void SetTimer() { abort(); }
+void SetWindowPos() { abort(); }
+void ShowWindow() { abort(); }
+void WritePrivateProfileString() { abort(); }
+void new_check_i() { abort(); }
+void new_check_l() { abort(); }
+void new_counter() { abort(); }
+void new_reset_check() { abort(); }
+void sndPlaySound() { abort(); }
+void tabboz_random() { abort(); }
 
-void BWCCRegister() {}
-void ExitWindows() {}
-void randomize() {}
+void BWCCRegister() { abort(); }
+void ExitWindows() { abort(); }
+void randomize() { abort(); }
 
 char * _argv[] = {""};
 int _argc = 0;
