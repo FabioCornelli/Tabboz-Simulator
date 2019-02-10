@@ -22,15 +22,45 @@ typedef int HKEY;
 typedef int HBITMAP;
 typedef int COLORREF;
 typedef int FARPROC;
-typedef int BITMAP;
+
+typedef struct {
+    int bmWidth;
+    int bmHeight;
+} BITMAP;
+
 typedef int LPSTR;
 typedef int LPCREATESTRUCT;
 typedef int ATOM;
-typedef int WNDCLASS;
-typedef int RECT;
+
+typedef struct {
+    int lpfnWndProc;
+    int hInstance;
+    int hCursor;
+    int hbrBackground;
+    int lpszClassName;
+} WNDCLASS;
+
+typedef struct {
+    int right;
+    int left;
+    int bottom;
+    int top;
+} RECT;
+
 typedef int LPRECT;
 typedef int HICON;
-typedef int OPENFILENAME;
+
+typedef struct {
+    int lStructSize;
+    int hwndOwner;
+    int hInstance;
+    int lpstrFile;
+    int nMaxFile;
+    int lpstrDefExt;
+    int lpstrFilter;
+    int Flags;
+} OPENFILENAME;
+
 typedef int PAINTSTRUCT;
 
 static const int IDYES = 0;
@@ -102,4 +132,3 @@ int ps = 0;
 
 #define random tabboz_random
 #define openlog tabboz_openlog
-
