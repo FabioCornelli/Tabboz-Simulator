@@ -88,8 +88,6 @@ static char  a[255];
 
 #ifdef TABBOZ32
 
-#include <mmsystem.h> // Per sndPlaySound
-
 #define REG_MAXSIZE 	30	// Numero massimo di caratteri
 #define TABBOZ_KEY_NAME "Software\\Obscured Truckware\\Tabboz Simulator 32"
 
