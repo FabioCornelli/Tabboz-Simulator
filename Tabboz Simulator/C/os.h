@@ -1,5 +1,3 @@
-char * _argv[] = {""};
-
 #define FAR
 #define NEAR
 #define PASCAL
@@ -125,10 +123,11 @@ static const int HKEY_ALL_ACCESS = 0;
 static const int SND_ASYNC = 0;
 static const int SND_NODEFAULT = 0;
 
-int hWndMain = 0;
-int hInst = 0;
-int tipahDlg = 0;
-int ps = 0;
+extern char * _argv[];
+extern int hWndMain;
+extern int hInst;
+extern int tipahDlg;
+extern int ps;
 
 #define random tabboz_random
 #define openlog tabboz_openlog
