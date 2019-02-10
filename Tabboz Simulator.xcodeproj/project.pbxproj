@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F4DA426220FC25A008DC569 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4DA425220FC25A008DC569 /* main.swift */; };
-		3F54DC1C2210991100794232 /* stubs.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.c */; };
+		3F54DC1C2210991100794232 /* stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.m */; };
 		3FED2040220FC7E000AC38D7 /* disco.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED203F220FC7E000AC38D7 /* disco.c */; };
 		3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2042220FCA3500AC38D7 /* lavoro.c */; };
 		3FED2055220FCA3500AC38D7 /* vestiti.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2043220FCA3500AC38D7 /* vestiti.c */; };
@@ -39,25 +39,25 @@
 /* Begin PBXFileReference section */
 		3F4DA422220FC25A008DC569 /* Tabboz Simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Tabboz Simulator"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4DA425220FC25A008DC569 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		3F54DC1B2210991100794232 /* stubs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stubs.c; sourceTree = "<group>"; };
+		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
 		3FED203E220FC7E000AC38D7 /* Tabboz Simulator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabboz Simulator-Bridging-Header.h"; sourceTree = "<group>"; };
-		3FED203F220FC7E000AC38D7 /* disco.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = disco.c; path = "Tabboz Simulator/C/disco.c"; sourceTree = SOURCE_ROOT; };
+		3FED203F220FC7E000AC38D7 /* disco.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = disco.c; path = "Tabboz Simulator/C/disco.c"; sourceTree = SOURCE_ROOT; };
 		3FED2041220FCA3500AC38D7 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = "Tabboz Simulator/C/resource.h"; sourceTree = SOURCE_ROOT; };
-		3FED2042220FCA3500AC38D7 /* lavoro.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lavoro.c; path = "Tabboz Simulator/C/lavoro.c"; sourceTree = SOURCE_ROOT; };
-		3FED2043220FCA3500AC38D7 /* vestiti.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vestiti.c; path = "Tabboz Simulator/C/vestiti.c"; sourceTree = SOURCE_ROOT; };
-		3FED2046220FCA3500AC38D7 /* net.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = net.c; path = "Tabboz Simulator/C/net.c"; sourceTree = SOURCE_ROOT; };
-		3FED2047220FCA3500AC38D7 /* tabimg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tabimg.c; path = "Tabboz Simulator/C/tabimg.c"; sourceTree = SOURCE_ROOT; };
-		3FED2048220FCA3500AC38D7 /* prompt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = prompt.c; path = "Tabboz Simulator/C/prompt.c"; sourceTree = SOURCE_ROOT; };
-		3FED2049220FCA3500AC38D7 /* eventi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eventi.c; path = "Tabboz Simulator/C/eventi.c"; sourceTree = SOURCE_ROOT; };
+		3FED2042220FCA3500AC38D7 /* lavoro.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = lavoro.c; path = "Tabboz Simulator/C/lavoro.c"; sourceTree = SOURCE_ROOT; };
+		3FED2043220FCA3500AC38D7 /* vestiti.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = vestiti.c; path = "Tabboz Simulator/C/vestiti.c"; sourceTree = SOURCE_ROOT; };
+		3FED2046220FCA3500AC38D7 /* net.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = net.c; path = "Tabboz Simulator/C/net.c"; sourceTree = SOURCE_ROOT; };
+		3FED2047220FCA3500AC38D7 /* tabimg.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = tabimg.c; path = "Tabboz Simulator/C/tabimg.c"; sourceTree = SOURCE_ROOT; };
+		3FED2048220FCA3500AC38D7 /* prompt.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = prompt.c; path = "Tabboz Simulator/C/prompt.c"; sourceTree = SOURCE_ROOT; };
+		3FED2049220FCA3500AC38D7 /* eventi.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = eventi.c; path = "Tabboz Simulator/C/eventi.c"; sourceTree = SOURCE_ROOT; };
 		3FED204A220FCA3500AC38D7 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os.h; path = "Tabboz Simulator/C/os.h"; sourceTree = SOURCE_ROOT; };
-		3FED204B220FCA3500AC38D7 /* readkey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readkey.c; path = "Tabboz Simulator/C/readkey.c"; sourceTree = SOURCE_ROOT; };
-		3FED204C220FCA3500AC38D7 /* telefono.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = telefono.c; path = "Tabboz Simulator/C/telefono.c"; sourceTree = SOURCE_ROOT; };
-		3FED204D220FCA3500AC38D7 /* tipa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tipa.c; path = "Tabboz Simulator/C/tipa.c"; sourceTree = SOURCE_ROOT; };
-		3FED204E220FCA3500AC38D7 /* zarrosim.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zarrosim.c; path = "Tabboz Simulator/C/zarrosim.c"; sourceTree = SOURCE_ROOT; };
+		3FED204B220FCA3500AC38D7 /* readkey.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = readkey.c; path = "Tabboz Simulator/C/readkey.c"; sourceTree = SOURCE_ROOT; };
+		3FED204C220FCA3500AC38D7 /* telefono.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = telefono.c; path = "Tabboz Simulator/C/telefono.c"; sourceTree = SOURCE_ROOT; };
+		3FED204D220FCA3500AC38D7 /* tipa.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = tipa.c; path = "Tabboz Simulator/C/tipa.c"; sourceTree = SOURCE_ROOT; };
+		3FED204E220FCA3500AC38D7 /* zarrosim.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = zarrosim.c; path = "Tabboz Simulator/C/zarrosim.c"; sourceTree = SOURCE_ROOT; };
 		3FED204F220FCA3500AC38D7 /* zarrosim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zarrosim.h; path = "Tabboz Simulator/C/zarrosim.h"; sourceTree = SOURCE_ROOT; };
-		3FED2050220FCA3500AC38D7 /* scooter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = scooter.c; path = "Tabboz Simulator/C/scooter.c"; sourceTree = SOURCE_ROOT; };
-		3FED2051220FCA3500AC38D7 /* scuola.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = scuola.c; path = "Tabboz Simulator/C/scuola.c"; sourceTree = SOURCE_ROOT; };
-		3FED2052220FCA3500AC38D7 /* tempo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tempo.c; path = "Tabboz Simulator/C/tempo.c"; sourceTree = SOURCE_ROOT; };
+		3FED2050220FCA3500AC38D7 /* scooter.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = scooter.c; path = "Tabboz Simulator/C/scooter.c"; sourceTree = SOURCE_ROOT; };
+		3FED2051220FCA3500AC38D7 /* scuola.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = scuola.c; path = "Tabboz Simulator/C/scuola.c"; sourceTree = SOURCE_ROOT; };
+		3FED2052220FCA3500AC38D7 /* tempo.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = tempo.c; path = "Tabboz Simulator/C/tempo.c"; sourceTree = SOURCE_ROOT; };
 		3FED2053220FCA3500AC38D7 /* net.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = net.h; path = "Tabboz Simulator/C/net.h"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -93,7 +93,7 @@
 			children = (
 				3FED203D220FC7B800AC38D7 /* C */,
 				3F4DA425220FC25A008DC569 /* main.swift */,
-				3F54DC1B2210991100794232 /* stubs.c */,
+				3F54DC1B2210991100794232 /* stubs.m */,
 			);
 			path = "Tabboz Simulator";
 			sourceTree = "<group>";
@@ -191,7 +191,7 @@
 				3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */,
 				3FED205B220FCA3500AC38D7 /* eventi.c in Sources */,
 				3FED205F220FCA3500AC38D7 /* zarrosim.c in Sources */,
-				3F54DC1C2210991100794232 /* stubs.c in Sources */,
+				3F54DC1C2210991100794232 /* stubs.m in Sources */,
 				3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */,
 				3FED2060220FCA3500AC38D7 /* scooter.c in Sources */,
 				3FED205C220FCA3500AC38D7 /* readkey.c in Sources */,

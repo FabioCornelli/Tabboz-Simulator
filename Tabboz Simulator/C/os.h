@@ -5,10 +5,6 @@
 #define TABBOZ_WIN
 #define TABBOZ_WIN32
 
-typedef _Bool BOOL;
-static _Bool FALSE = 0;
-static _Bool TRUE = 1;
-
 typedef int bc;
 
 typedef int HWND;
@@ -133,5 +129,11 @@ extern int ps;
 
 #define random tabboz_random
 #define openlog tabboz_openlog
+
+#include <Foundation/Foundation.h>
+
+#ifndef BRIDGING
+#include "Tabboz_Simulator-Swift.h"
+#endif
 
 #include <stdio.h>
