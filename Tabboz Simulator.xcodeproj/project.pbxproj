@@ -11,8 +11,6 @@
 		3FED2040220FC7E000AC38D7 /* disco.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED203F220FC7E000AC38D7 /* disco.c */; };
 		3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2042220FCA3500AC38D7 /* lavoro.c */; };
 		3FED2055220FCA3500AC38D7 /* vestiti.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2043220FCA3500AC38D7 /* vestiti.c */; };
-		3FED2056220FCA3500AC38D7 /* proteggi.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2044220FCA3500AC38D7 /* proteggi.c */; };
-		3FED2057220FCA3500AC38D7 /* newproteggi.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2045220FCA3500AC38D7 /* newproteggi.c */; };
 		3FED2058220FCA3500AC38D7 /* net.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2046220FCA3500AC38D7 /* net.c */; };
 		3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2047220FCA3500AC38D7 /* tabimg.c */; };
 		3FED205A220FCA3500AC38D7 /* prompt.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2048220FCA3500AC38D7 /* prompt.c */; };
@@ -46,8 +44,6 @@
 		3FED2041220FCA3500AC38D7 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = "Tabboz Simulator/C/resource.h"; sourceTree = SOURCE_ROOT; };
 		3FED2042220FCA3500AC38D7 /* lavoro.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lavoro.c; path = "Tabboz Simulator/C/lavoro.c"; sourceTree = SOURCE_ROOT; };
 		3FED2043220FCA3500AC38D7 /* vestiti.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vestiti.c; path = "Tabboz Simulator/C/vestiti.c"; sourceTree = SOURCE_ROOT; };
-		3FED2044220FCA3500AC38D7 /* proteggi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = proteggi.c; path = "Tabboz Simulator/C/proteggi.c"; sourceTree = SOURCE_ROOT; };
-		3FED2045220FCA3500AC38D7 /* newproteggi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = newproteggi.c; path = "Tabboz Simulator/C/newproteggi.c"; sourceTree = SOURCE_ROOT; };
 		3FED2046220FCA3500AC38D7 /* net.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = net.c; path = "Tabboz Simulator/C/net.c"; sourceTree = SOURCE_ROOT; };
 		3FED2047220FCA3500AC38D7 /* tabimg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tabimg.c; path = "Tabboz Simulator/C/tabimg.c"; sourceTree = SOURCE_ROOT; };
 		3FED2048220FCA3500AC38D7 /* prompt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = prompt.c; path = "Tabboz Simulator/C/prompt.c"; sourceTree = SOURCE_ROOT; };
@@ -108,10 +104,8 @@
 				3FED2042220FCA3500AC38D7 /* lavoro.c */,
 				3FED2046220FCA3500AC38D7 /* net.c */,
 				3FED2053220FCA3500AC38D7 /* net.h */,
-				3FED2045220FCA3500AC38D7 /* newproteggi.c */,
 				3FED204A220FCA3500AC38D7 /* os.h */,
 				3FED2048220FCA3500AC38D7 /* prompt.c */,
-				3FED2044220FCA3500AC38D7 /* proteggi.c */,
 				3FED204B220FCA3500AC38D7 /* readkey.c */,
 				3FED2041220FCA3500AC38D7 /* resource.h */,
 				3FED2050220FCA3500AC38D7 /* scooter.c */,
@@ -191,7 +185,6 @@
 				3FED2040220FC7E000AC38D7 /* disco.c in Sources */,
 				3FED205A220FCA3500AC38D7 /* prompt.c in Sources */,
 				3F4DA426220FC25A008DC569 /* main.swift in Sources */,
-				3FED2056220FCA3500AC38D7 /* proteggi.c in Sources */,
 				3FED2055220FCA3500AC38D7 /* vestiti.c in Sources */,
 				3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */,
 				3FED205B220FCA3500AC38D7 /* eventi.c in Sources */,
@@ -201,7 +194,6 @@
 				3FED2058220FCA3500AC38D7 /* net.c in Sources */,
 				3FED205C220FCA3500AC38D7 /* readkey.c in Sources */,
 				3FED2062220FCA3500AC38D7 /* tempo.c in Sources */,
-				3FED2057220FCA3500AC38D7 /* newproteggi.c in Sources */,
 				3FED205D220FCA3500AC38D7 /* telefono.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
