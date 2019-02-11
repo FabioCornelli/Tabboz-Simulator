@@ -1,9 +1,23 @@
+#include <stdio.h>
+#include <Foundation/Foundation.h>
+
+#ifndef BRIDGING
+#include "Tabboz_Simulator-Swift.h"
+#endif
+
 #define FAR
 #define NEAR
 #define PASCAL
 
 #define TABBOZ_WIN
 #define TABBOZ_WIN32
+
+#define random tabboz_random
+#define openlog tabboz_openlog
+
+// -
+// Type definitions
+// -
 
 typedef int bc;
 
@@ -57,6 +71,10 @@ typedef struct {
 } OPENFILENAME;
 
 typedef int PAINTSTRUCT;
+
+// -
+// Constants Definitions
+// -
 
 static const int IDYES = 0;
 static const int SRCAND = 0;
@@ -127,13 +145,10 @@ extern int hInst;
 extern int tipahDlg;
 extern int ps;
 
-#define random tabboz_random
-#define openlog tabboz_openlog
+// -
+// Stub Implementation
+// -
 
-#include <Foundation/Foundation.h>
-
-#ifndef BRIDGING
-#include "Tabboz_Simulator-Swift.h"
-#endif
-
-#include <stdio.h>
+static inline void BWCCRegister(HANDLE _) {
+    ;
+}

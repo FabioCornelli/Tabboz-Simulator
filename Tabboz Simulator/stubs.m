@@ -77,7 +77,6 @@ void new_reset_check() { abort(); }
 void sndPlaySound() { abort(); }
 void tabboz_random() { abort(); }
 
-void BWCCRegister() { abort(); }
 void ExitWindows() { abort(); }
 void randomize() { abort(); }
 
