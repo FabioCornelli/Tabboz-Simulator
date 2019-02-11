@@ -156,3 +156,9 @@ static inline void BWCCRegister(HANDLE _) {
 static inline void randomize() {
     ;
 }
+
+static inline int RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey) {
+    // Log and fail
+    printf("%s -- %d, %s, %d, %d, %p\n", __PRETTY_FUNCTION__, a, keyName, c, d, hkey);
+    return 1;
+}

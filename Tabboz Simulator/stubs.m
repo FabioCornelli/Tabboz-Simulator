@@ -44,7 +44,6 @@ void LOWORD() { abort(); }
 void LoadBitmap() { abort(); }
 void LoadCursor() { abort(); }
 void LoadIcon() { abort(); }
-void LoadString() { abort(); }
 void MAKEINTRESOURCE() { abort(); }
 void MakeProcInstance() { abort(); }
 void MessageBox() { abort(); }
