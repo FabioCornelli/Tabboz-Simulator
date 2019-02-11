@@ -366,7 +366,7 @@ static void InitTabboz(void)
 // 12 Mar 1999 - A causa di un riordino generale, e' stata spostata qui...
 
 	 if (STARTcmdShow)
-		DialogBox(hInst,MAKEINTRESOURCE(LOGO),NULL,Logo);
+         [Tabboz showLogo];
 
 // 14 Gen 1999 - Formattazione iniziale Tabbozzo
 	 if (firsttime == 1) {

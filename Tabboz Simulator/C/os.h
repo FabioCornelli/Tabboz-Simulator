@@ -188,12 +188,12 @@ static inline void LoadString(HANDLE hinst, int b, LPSTR ptr, int size) {
 }
 
 static inline int LoadCursor(HANDLE hinst, int b) {
-    printf("%s -- %d, %d\n", __PRETTY_FUNCTION__, hinst, b);
+//    printf("%s -- %d, %d\n", __PRETTY_FUNCTION__, hinst, b);
     return 0;
 }
 
 static inline ATOM RegisterClass(WNDCLASS * wc) {
-    printf("%s -- %p\n", __PRETTY_FUNCTION__, wc);
+//    printf("%s -- %p\n", __PRETTY_FUNCTION__, wc);
     return 0;
 }
 
@@ -220,10 +220,11 @@ static inline int DialogBox(HWND hinst, int b, void * c, FARPROC proc) {
 }
 
 static inline FARPROC MakeProcInstance(FARPROC proc, HWND hinst) {
-    printf("%s -- %p, %d\n", __PRETTY_FUNCTION__, proc, hinst);
+//    printf("%s -- %p, %d\n", __PRETTY_FUNCTION__, proc, hinst);
     return 0;
 }
 
 static inline void FreeProcInstance(FARPROC proc) {
-    printf("%s -- %p\n", __PRETTY_FUNCTION__, proc);
+//    printf("%s -- %p\n", __PRETTY_FUNCTION__, proc);
 }
+
