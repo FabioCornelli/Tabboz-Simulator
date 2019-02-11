@@ -161,9 +161,24 @@ static inline int tabboz_random(int x) {
     return x;
 }
 
-static inline int RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey) {
-    // Log and fail
-    printf("%s -- %d, %s, %d, %d, %p\n", __PRETTY_FUNCTION__, a, keyName, c, d, hkey);
+static inline LONG RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey) {
+    // Just fail
+//    printf("%s -- %d, %s, %d, %d, %p\n", __PRETTY_FUNCTION__, a, keyName, c, d, hkey);
+    return 1;
+}
+
+static inline LONG RegCreateKeyEx(int hkey,
+                                  char * name,
+                                  int c,
+                                  void * d,
+                                  int opt,
+                                  int access,
+                                  void * g,
+                                  HKEY *xKey,
+                                  LONG *disposition)
+{
+    // Just fail
+//    printf("%s -- %d, %s, %d, %p, %d %d %p %p %p\n", __PRETTY_FUNCTION__, hkey, name, c, d, opt, access, g, xKey, disposition);
     return 1;
 }
 
