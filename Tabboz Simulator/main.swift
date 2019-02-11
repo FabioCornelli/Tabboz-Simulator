@@ -8,6 +8,41 @@
 
 import Foundation
 
+func prompt(
+    availableCommands: String,
+    test: String?,
+    commands: (String)->((()->Bool)?)
+) {
+    while (true) {
+        print("Available commands: \(availableCommands)")
+        print("> ", terminator: "")
+
+        if let line = test ?? readLine() {
+            if let command = commands(line) {
+                _ = command()
+                if shouldEndDialog {
+                    shouldEndDialog = false
+                    break
+                }
+                if test != nil {
+                    return
+                }
+            }
+            else {
+                if test != nil {
+                    print("Default not in commands")
+                    return
+                }
+                print("Di nuovo!")
+                continue
+            }
+        }
+        else {
+            break
+        }
+    }
+}
+
 var shouldEndDialog = false
 
 class Tabboz : NSObject {
@@ -43,26 +78,11 @@ class Tabboz : NSObject {
             "annulla" : { FormatTabboz(nil, WM_COMMAND, IDCANCEL, 0) },
         ]
         
-        while (true) {
-            print("Available commands: \(commands.keys.joined(separator: ", "))")
-            print("> ", terminator: "")
-            
-            if let line = readLine() {
-                if let command = commands[line] {
-                    _ = command()
-                    if shouldEndDialog {
-                        shouldEndDialog = false
-                        break
-                    }
-                }
-                else {
-                    print("Di nuovo!")
-                    continue
-                }
-            }
-            else {
-                break
-            }
+        prompt(
+            availableCommands: commands.keys.joined(separator: ", "),
+            test: "ok"
+        ) {
+            commands[$0]
         }
     }
 
