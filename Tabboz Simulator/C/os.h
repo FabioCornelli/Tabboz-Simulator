@@ -228,3 +228,28 @@ static inline void FreeProcInstance(FARPROC proc) {
 //    printf("%s -- %p\n", __PRETTY_FUNCTION__, proc);
 }
 
+static inline int GetDlgItem(HWND hDlg, int x) {
+    return x;
+}
+
+static inline int LOWORD(int x) {
+    return x;
+}
+
+static BOOL log_window = true;
+
+static inline void EnableWindow(int x, int a) {
+    if (log_window) printf("    enable window %d\n", x);
+}
+
+static inline void SendMessage(int dlg, int msg, int value, int x) {
+    if (log_window) printf("    sending dlg: %d, msg: %d, value: %d, x: %d\n", dlg, msg, value, x);
+}
+
+static inline void EndDialog(int dlg, int x) {
+    if (log_window) printf("    end dialog %d\n", dlg);
+
+#ifndef BRIDGING
+    [Tabboz endDialog];
+#endif
+}

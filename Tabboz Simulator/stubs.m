@@ -19,12 +19,9 @@ void DeleteMenu() { abort(); }
 void DeleteObject() { abort(); }
 void DestroyIcon() { abort(); }
 void DrawMenuBar() { abort(); }
-void EnableWindow() { abort(); }
-void EndDialog() { abort(); }
 void EndPaint() { abort(); }
 void FreeProcInstance() { abort(); }
 void GetDC() { abort(); }
-void GetDlgItem() { abort(); }
 void GetDlgItemText() { abort(); }
 void GetMenu() { abort(); }
 void GetObject() { abort(); }
@@ -39,7 +36,6 @@ void GetWindowRect() { abort(); }
 void HIWORD() { abort(); }
 void IsIconic() { abort(); }
 void KillTimer() { abort(); }
-void LOWORD() { abort(); }
 void LoadBitmap() { abort(); }
 void LoadIcon() { abort(); }
 void MessageBox() { abort(); }
@@ -54,7 +50,6 @@ void RegSetValue() { abort(); }
 void ReleaseDC() { abort(); }
 void RemoveProp() { abort(); }
 void SelectObject() { abort(); }
-void SendMessage() { abort(); }
 void SetBkColor() { abort(); }
 void SetDlgItemText() { abort(); }
 void SetFocus() { abort(); }
