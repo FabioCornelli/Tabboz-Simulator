@@ -19,7 +19,6 @@ void DeleteObject() { abort(); }
 void DestroyIcon() { abort(); }
 void EndPaint() { abort(); }
 void GetDC() { abort(); }
-void GetDlgItemText() { abort(); }
 void GetObject() { abort(); }
 void GetOpenFileName() { abort(); }
 void GetPrivateProfileString() { abort(); }
@@ -31,9 +30,7 @@ void HIWORD() { abort(); }
 void IsIconic() { abort(); }
 void KillTimer() { abort(); }
 void LoadBitmap() { abort(); }
-void MessageBox() { abort(); }
 void MoveWindow() { abort(); }
-void PlaySound() { abort(); }
 void RGB() { abort(); }
 void RegCloseKey() { abort(); }
 void RegQueryValue() { abort(); }
@@ -48,7 +45,6 @@ void SetTextColor() { abort(); }
 void SetWindowPos() { abort(); }
 void WritePrivateProfileString() { abort(); }
 void new_counter() { abort(); }
-
 void sndPlaySound() { abort(); }
 void ExitWindows() { abort(); }
 
@@ -94,7 +90,7 @@ void LoadString(HANDLE hinst, int b, LPSTR ptr, int size) {
     snprintf(ptr, size, "String %d", b);
 }
 
-int LoadCursor(HANDLE hinst, int b) {
+int LoadCursor(HANDLE hinst, INTRESOURCE b) {
     //    printf("%s -- %d, %d\n", __PRETTY_FUNCTION__, hinst, b);
     return 0;
 }
@@ -104,9 +100,11 @@ ATOM RegisterClass(WNDCLASS * wc) {
     return 0;
 }
 
-int MAKEINTRESOURCE(int a) {
-    // Passthrough seem logical
-    return a;
+INTRESOURCE MAKEINTRESOURCE_Real(int a, char * n) {
+    return (INTRESOURCE) {
+        .number = a,
+        .n = n,
+    };
 }
 
 void new_reset_check() {
@@ -121,14 +119,8 @@ u_long new_check_l(u_long x) {
     return x;
 }
 
-BOOL disableMessageBox = FALSE;
-
-int DialogBox(HWND hinst, int b, void * c, FARPROC proc) {
-    if (disableMessageBox)
-        return 0;
-    
-    printf("%s -- %p, %d, %p, %p\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
-    [Tabboz dialogFrom:hinst dialog:b callback:proc.proc];
+int DialogBox(HWND hinst, INTRESOURCE b, void * c, FARPROC proc) {
+    [Tabboz dialogFrom:hinst dialog:b callback:proc];
     return 0;
 }
 
@@ -152,6 +144,8 @@ int LOWORD(int x) {
 
 BOOL log_window = true;
 BOOL didLog = false;
+BOOL enableDialogTrace = false;
+BOOL shouldEndDialog = false;
 
 void EnableWindow(int x, int a) {
     if (log_window) printf("    enable window %d\n", x); didLog = true;
@@ -167,7 +161,7 @@ void EndDialog(HANDLE dlg, int x) {
     [Tabboz endDialog];
 }
 
-HICON LoadIcon(HANDLE h, int r) {
+HICON LoadIcon(HANDLE h, INTRESOURCE r) {
     return 0;
 }
 
@@ -192,7 +186,7 @@ int GetSubMenu(int menu, int i) {
 }
 
 void AppendMenu(int menu, int type, int cmd, char * label) {
-    if (log_window) printf("    append menu %d cmd %d label %s\n", menu, cmd, label);
+    if (log_window) printf("    append menu %d cmd %d label %s\n", menu, cmd, label); didLog = true;
 }
 
 int GetSystemMenu(HANDLE h, int menu) {
@@ -204,5 +198,24 @@ void DrawMenuBar(HANDLE h) {
 }
 
 void SetTimer(HANDLE h, int msg, int msec, void * c) {
-    if (log_window) printf("    set timer handle %p msg %d msec %d c %p\n", h, msg, msec, c);
+    if (log_window) printf("    set timer handle %p msg %d msec %d c %p\n", h, msg, msec, c); didLog = true;
+}
+
+void PlaySound(void * a, void * b, int c) {
+    if (log_window) printf("    play sound"); didLog = true;
+}
+
+int MessageBox(HANDLE h, char * msg, char * title, int flags) {
+    if (log_window) printf("    messagebox flags: x %x\n", flags);
+    if (log_window) printf("    messagebox title: %s\n", title);
+    if (log_window) printf("    messagebox text:\n%s\n", msg);
+    if (log_window) printf("    messagebox\n");
+    didLog = true;
+    return 0;
+}
+
+void GetDlgItemText(HANDLE h, int param, char * buf, size_t size) {
+    if (log_window) printf("    get item text - handle: %p param: %d\n", h, param); didLog = true;
+    static int unk = 0;
+    snprintf(buf, size, "unk %d", unk++);
 }

@@ -631,7 +631,7 @@ void RunVestiti(HWND hDlg,int numero)
 
 	lpproc = MakeProcInstance(CompraQualcosa, hInst); // La funzione e' uguale x tutti...
 	DialogBox(hInst,
-		 MAKEINTRESOURCE(numero),
+		 MAKEINTRESOURCE_Real(numero, NULL),
 		 hDlg, lpproc);
 	FreeProcInstance(lpproc);
 	} else {

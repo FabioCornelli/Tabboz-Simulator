@@ -34,7 +34,6 @@ typedef int HDC;
 typedef int HKEY;
 typedef int HBITMAP;
 typedef int COLORREF;
-//typedef void * FARPROC;
 
 typedef struct {
     int bmWidth;
@@ -83,10 +82,6 @@ struct TabbozHANDLE {};
 typedef struct TabbozHANDLE * HANDLE;
 typedef struct TabbozHANDLE * HWND;
 
-struct TabbozDialogProc {
-    BOOL (*proc)(HANDLE, LONG, LONG, LONG);
-};
-
 typedef struct TabbozDialogProc * DialogProc;
 
 typedef BOOL (*DialogProcFunc)(HANDLE, LONG, LONG, LONG);
@@ -96,6 +91,13 @@ struct TabbozFARPROC {
 };
 
 typedef struct TabbozFARPROC FARPROC;
+
+struct TabbozINTRESOURCE {
+    int number;
+    char * n;
+};
+
+typedef struct TabbozINTRESOURCE INTRESOURCE;
 
 // -
 // Constants Definitions
@@ -152,7 +154,7 @@ static const int OFN_NOTESTFILECREATE = 0;
 static const int SWP_NOMOVE = 0;
 static const int SWP_NOZORDER = 0;
 
-static const int IDC_ARROW = 0;
+static const INTRESOURCE IDC_ARROW = { .number = 0 };
 static const int COLOR_WINDOW = 0;
 
 static const int REG_OPTION_NON_VOLATILE = 0;
@@ -170,18 +172,23 @@ extern HANDLE hInst;
 extern HANDLE tipahDlg;
 extern int ps;
 
-HICON LoadIcon(HANDLE h, int r);
+HICON LoadIcon(HANDLE h, INTRESOURCE r);
 void BWCCRegister(HANDLE _);
 void randomize(void);
 int tabboz_random(int x);
 void LoadString(HANDLE hinst, int b, LPSTR ptr, int size);
-int LoadCursor(HANDLE hinst, int b);
+int LoadCursor(HANDLE hinst, INTRESOURCE b);
 ATOM RegisterClass(WNDCLASS * wc);
-int MAKEINTRESOURCE(int a);
+
+INTRESOURCE MAKEINTRESOURCE_Real(int a, char * n);
+
+#define STRINGY(s) #s
+#define MAKEINTRESOURCE(x) MAKEINTRESOURCE_Real(x, STRINGY(x) )
+
 void new_reset_check(void);
 int new_check_i(int x);
 u_long new_check_l(u_long x);
-int DialogBox(HWND hinst, int b, void * c, FARPROC proc);
+int DialogBox(HWND hinst, INTRESOURCE b, void * c, FARPROC proc);
 FARPROC MakeProcInstance(DialogProcFunc proc, HWND hinst);
 void FreeProcInstance(FARPROC proc);
 int GetDlgItem(HWND hDlg, int x);
@@ -189,7 +196,6 @@ int LOWORD(int x);
 void EnableWindow(int x, int a);
 void SendMessage(int dlg, int msg, int value, int x);
 void EndDialog(HANDLE dlg, int x) ;
-HICON LoadIcon(HANDLE h, int r);
 void ShowWindow(HANDLE h, int flags);
 void SetDlgItemText(HANDLE h, int d, char * str);
 int GetMenu(HANDLE h);
@@ -199,6 +205,9 @@ void AppendMenu(int menu, int type, int cmd, char * label);
 int GetSystemMenu(HANDLE h, int menu);
 void DrawMenuBar(HANDLE h);
 void SetTimer(HANDLE h, int msg, int msec, void *);
+void PlaySound(void *, void *, int);
+int MessageBox(HANDLE h, char * msg, char * title, int flags);
+void GetDlgItemText(HANDLE h, int param, char * buf, size_t size);
 
 LONG RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey);
 LONG RegCreateKeyEx(int hkey,
@@ -212,7 +221,9 @@ LONG RegCreateKeyEx(int hkey,
                     LONG *disposition);
 
 
-extern BOOL disableMessageBox;
+extern BOOL enableDialogTrace;
+extern BOOL shouldEndDialog;
+
 extern BOOL log_window;
 extern BOOL didLog;
 
