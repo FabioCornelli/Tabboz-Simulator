@@ -29,14 +29,14 @@ class Tabboz : NSObject {
         // DialogBox(hInst, MAKEINTRESOURCE(15), hInst, FormatTabboz);
         
         print("Format Tabboz")
-        FormatTabboz(0, WM_INITDIALOG, 0, 0)
+        FormatTabboz(nil, WM_INITDIALOG, 0, 0)
         
         let commands = [
-            "maschio" : { FormatTabboz(0, WM_COMMAND, 100,      0) },
-            "femmina" : { FormatTabboz(0, WM_COMMAND, 101,      0) },
-            "random"  : { FormatTabboz(0, WM_COMMAND, 102,      0) },
-            "ok"      : { FormatTabboz(0, WM_COMMAND, IDOK,     0) },
-            "annulla" : { FormatTabboz(0, WM_COMMAND, IDCANCEL, 0) },
+            "maschio" : { FormatTabboz(nil, WM_COMMAND, 100,      0) },
+            "femmina" : { FormatTabboz(nil, WM_COMMAND, 101,      0) },
+            "random"  : { FormatTabboz(nil, WM_COMMAND, 102,      0) },
+            "ok"      : { FormatTabboz(nil, WM_COMMAND, IDOK,     0) },
+            "annulla" : { FormatTabboz(nil, WM_COMMAND, IDCANCEL, 0) },
         ]
         
         print("Available commands: \(commands.keys.joined(separator: ", "))")
@@ -63,6 +63,6 @@ class Tabboz : NSObject {
 
 }
 
-WinMain(0, 0, nil, 0)
+WinMain(nil, nil, nil, 0)
 
 

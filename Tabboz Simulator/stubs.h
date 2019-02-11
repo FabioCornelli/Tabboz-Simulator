@@ -23,13 +23,15 @@
 // Type definitions
 // -
 
+struct TabbozHANDLE {};
+
 typedef int bc;
 
-typedef int HWND;
+typedef struct TabbozHANDLE * HANDLE;
+typedef struct TabbozHANDLE * HWND;
 typedef int WORD;
 typedef int DWORD;
 typedef int LONG;
-typedef int HANDLE;
 typedef int HDC;
 typedef int HKEY;
 typedef int HBITMAP;
@@ -144,9 +146,9 @@ static const int SND_NODEFAULT = 0;
 
 extern char * _argv[];
 extern int _argc;
-extern int hWndMain;
-extern int hInst;
-extern int tipahDlg;
+extern HANDLE hWndMain;
+extern HANDLE hInst;
+extern HANDLE tipahDlg;
 extern int ps;
 
 // -
