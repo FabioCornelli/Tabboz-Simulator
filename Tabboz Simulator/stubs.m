@@ -43,7 +43,6 @@ void KillTimer() { abort(); }
 void LOWORD() { abort(); }
 void LoadBitmap() { abort(); }
 void LoadIcon() { abort(); }
-void MAKEINTRESOURCE() { abort(); }
 void MakeProcInstance() { abort(); }
 void MessageBox() { abort(); }
 void MoveWindow() { abort(); }

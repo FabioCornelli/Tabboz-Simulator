@@ -177,3 +177,8 @@ static inline ATOM RegisterClass(WNDCLASS * wc) {
     printf("%s -- %p\n", __PRETTY_FUNCTION__, wc);
     return 0;
 }
+
+static inline int MAKEINTRESOURCE(int a) {
+    // Passthrough seem logical
+    return a;
+}
