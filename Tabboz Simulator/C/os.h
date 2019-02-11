@@ -37,7 +37,7 @@ typedef struct {
     int bmHeight;
 } BITMAP;
 
-typedef int LPSTR;
+typedef char * LPSTR;
 typedef int LPCREATESTRUCT;
 typedef int ATOM;
 
@@ -161,4 +161,9 @@ static inline int RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey)
     // Log and fail
     printf("%s -- %d, %s, %d, %d, %p\n", __PRETTY_FUNCTION__, a, keyName, c, d, hkey);
     return 1;
+}
+
+static inline void LoadString(HANDLE hinst, int b, LPSTR ptr, int size) {
+    // Don't know where this strings come from yet
+    snprintf(ptr, size, "String %d", b);
 }
