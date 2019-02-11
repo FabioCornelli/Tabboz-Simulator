@@ -2213,8 +2213,9 @@ int main (int argc, char **argv)
 //*******************************************************************
 // Dialog x la scelta del file da aprire...
 //*******************************************************************
+void OpenFileDlg(HWND hwnd) { }
 
-void OpenFileDlg(HWND hwnd)
+void Tabboz_OpenFileDlg(HWND hwnd)
 {
 #define OFN_LONGNAMES      0x00200000L
 
@@ -2242,7 +2243,9 @@ void OpenFileDlg(HWND hwnd)
 // Dialog x la scelta del file da salvare...
 //*******************************************************************
 
-void SaveFileDlg(HWND hwnd)
+void SaveFileDlg(HWND hwnd) {}
+
+void Tabboz_SaveFileDlg(HWND hwnd)
 {
 #define OFN_LONGNAMES      0x00200000L
   static char szFileName[256];

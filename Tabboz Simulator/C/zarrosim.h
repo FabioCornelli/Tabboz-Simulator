@@ -332,6 +332,7 @@ extern  BOOL FAR PASCAL	       MostraSalutieBaci(HWND hDlg, WORD message, WORD w
 extern  BOOL FAR PASCAL        Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam); 	/* 31 Marzo 1999 */
 
 BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam);
 
 extern  void  TabbozAddKey(char *key,char *v);
 extern  char  *TabbozReadKey(char *key,char *buf);

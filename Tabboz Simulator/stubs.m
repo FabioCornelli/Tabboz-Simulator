@@ -121,7 +121,12 @@ u_long new_check_l(u_long x) {
     return x;
 }
 
+BOOL disableMessageBox = FALSE;
+
 int DialogBox(HWND hinst, int b, void * c, DialogProc proc) {
+    if (disableMessageBox)
+        return 0;
+    
     printf("%s -- %p, %d, %p, %p\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
     [Tabboz dialogFrom:hinst dialog:b callback:proc];
     return 0;
@@ -144,18 +149,19 @@ int LOWORD(int x) {
     return x;
 }
 
-static BOOL log_window = true;
+BOOL log_window = true;
+BOOL didLog = false;
 
 void EnableWindow(int x, int a) {
-    if (log_window) printf("    enable window %d\n", x);
+    if (log_window) printf("    enable window %d\n", x); didLog = true;
 }
 
 void SendMessage(int dlg, int msg, int value, int x) {
-    if (log_window) printf("    sending dlg: %d, msg: %d, value: %d, x: %d\n", dlg, msg, value, x);
+    if (log_window) printf("    sending dlg: %d, msg: %d, value: %d, x: %d\n", dlg, msg, value, x); didLog = true;
 }
 
 void EndDialog(HANDLE dlg, int x) {
-    if (log_window) printf("    end dialog %p, %d\n", dlg, x);
+    if (log_window) printf("    end dialog %p, %d\n", dlg, x); didLog = true;
     
     [Tabboz endDialog];
 }
@@ -165,11 +171,11 @@ HICON LoadIcon(HANDLE h, int r) {
 }
 
 void ShowWindow(HANDLE h, int flags) {
-    if (log_window) printf("    show window %p %d\n", h, flags);
+    if (log_window) printf("    show window %p %d\n", h, flags); didLog = true;
 }
 
 void SetDlgItemText(HANDLE h, int d, char * str) {
-    if (log_window) printf("    set %p dlg text %3d %s\n", h, d, str);
+    if (log_window) printf("    set %p dlg text %3d %s\n", h, d, str); didLog = true;
 }
 
 int GetMenu(HANDLE h) {
@@ -177,7 +183,7 @@ int GetMenu(HANDLE h) {
 }
 
 void DeleteMenu(int menu, int item, int flags) {
-    if (log_window) printf("    delete menu %d item %d flags %d\n", menu, item, flags);
+    if (log_window) printf("    delete menu %d item %d flags %d\n", menu, item, flags); didLog = true;
 }
 
 int GetSubMenu(int menu, int i) {

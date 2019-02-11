@@ -200,4 +200,8 @@ LONG RegCreateKeyEx(int hkey,
                     LONG *disposition);
 
 
+extern BOOL disableMessageBox;
+extern BOOL log_window;
+extern BOOL didLog;
+
 #endif /* stubs_h */

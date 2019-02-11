@@ -88,6 +88,22 @@ class Tabboz : NSObject {
 
 }
 
-WinMain(nil, nil, nil, 0)
+// WinMain(nil, nil, nil, 0)
 
+func CommandsInWindowProc(_ p: (HWND?, WORD, WORD, LONG) -> Bool) -> [Int] {
+    var r = [Int]()
+    
+    disableMessageBox = true
+    log_window = false
+    
+    for cmd in 0 ..< 500  {
+        if p(nil, WM_COMMAND, Int32(cmd), 0) || didLog.boolValue {
+            r.append(cmd)
+        }
+        didLog = false
+    }
+    
+    return r
+}
 
+dump(CommandsInWindowProc(TabbozWndProc))
