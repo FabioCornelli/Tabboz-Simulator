@@ -78,7 +78,6 @@ void sndPlaySound() { abort(); }
 void tabboz_random() { abort(); }
 
 void ExitWindows() { abort(); }
-void randomize() { abort(); }
 
 char * _argv[] = {""};
 int _argc = 0;

@@ -152,3 +152,7 @@ extern int ps;
 static inline void BWCCRegister(HANDLE _) {
     ;
 }
+
+static inline void randomize() {
+    ;
+}
