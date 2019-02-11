@@ -37,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3F25441D22116E5300D494E8 /* stubs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stubs.h; sourceTree = "<group>"; };
 		3F4DA422220FC25A008DC569 /* Tabboz Simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Tabboz Simulator"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4DA425220FC25A008DC569 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 			children = (
 				3FED203D220FC7B800AC38D7 /* C */,
 				3F4DA425220FC25A008DC569 /* main.swift */,
+				3F25441D22116E5300D494E8 /* stubs.h */,
 				3F54DC1B2210991100794232 /* stubs.m */,
 			);
 			path = "Tabboz Simulator";

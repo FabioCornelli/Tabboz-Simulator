@@ -3,5 +3,6 @@
 //
 
 #define BRIDGING
-#import "os.h"
+#import <Foundation/Foundation.h>
+#import "stubs.h"
 #import "zarrosim.h"
