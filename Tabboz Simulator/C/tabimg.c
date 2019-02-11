@@ -287,9 +287,12 @@ long FAR PASCAL BMPViewWndProc(HWND hWnd, WORD msg,
 		 case WM_PAINT:   return WMPaint(hWnd);
 		 case WM_LBUTTONDOWN:
 				/* Display Personal Information box. */
-				DialogBox(hInst,MAKEINTRESOURCE(PERSONALINFO),hWnd,PersonalInfo);
+        {
+            __auto_type lpproc = MakeProcInstance(PersonalInfo, hInst);
+				DialogBox(hInst,MAKEINTRESOURCE(PERSONALINFO),hWnd,lpproc);
 				AggiornaPrincipale(hWndMain);
 				return(0);
+        }
 
 		 }
 	return DefWindowProc(hWnd,msg,wParam,lParam);

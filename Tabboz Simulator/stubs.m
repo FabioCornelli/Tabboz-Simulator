@@ -123,18 +123,19 @@ u_long new_check_l(u_long x) {
 
 BOOL disableMessageBox = FALSE;
 
-int DialogBox(HWND hinst, int b, void * c, DialogProc proc) {
+int DialogBox(HWND hinst, int b, void * c, FARPROC proc) {
     if (disableMessageBox)
         return 0;
     
     printf("%s -- %p, %d, %p, %p\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
-    [Tabboz dialogFrom:hinst dialog:b callback:proc];
+    [Tabboz dialogFrom:hinst dialog:b callback:proc.proc];
     return 0;
 }
 
-FARPROC MakeProcInstance(FARPROC proc, HWND hinst) {
-    //    printf("%s -- %p, %d\n", __PRETTY_FUNCTION__, proc, hinst);
-    return 0;
+FARPROC MakeProcInstance(DialogProcFunc proc, HWND hinst) {
+    return (FARPROC) {
+        .proc = proc,
+    };
 }
 
 void FreeProcInstance(FARPROC proc) {

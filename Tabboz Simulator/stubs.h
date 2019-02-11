@@ -34,7 +34,7 @@ typedef int HDC;
 typedef int HKEY;
 typedef int HBITMAP;
 typedef int COLORREF;
-typedef void * FARPROC;
+//typedef void * FARPROC;
 
 typedef struct {
     int bmWidth;
@@ -83,7 +83,19 @@ struct TabbozHANDLE {};
 typedef struct TabbozHANDLE * HANDLE;
 typedef struct TabbozHANDLE * HWND;
 
-typedef BOOL (*DialogProc)(HANDLE, LONG, LONG, LONG);
+struct TabbozDialogProc {
+    BOOL (*proc)(HANDLE, LONG, LONG, LONG);
+};
+
+typedef struct TabbozDialogProc * DialogProc;
+
+typedef BOOL (*DialogProcFunc)(HANDLE, LONG, LONG, LONG);
+
+struct TabbozFARPROC {
+    DialogProcFunc proc;
+};
+
+typedef struct TabbozFARPROC FARPROC;
 
 // -
 // Constants Definitions
@@ -169,8 +181,8 @@ int MAKEINTRESOURCE(int a);
 void new_reset_check(void);
 int new_check_i(int x);
 u_long new_check_l(u_long x);
-int DialogBox(HWND hinst, int b, void * c, DialogProc proc);
-FARPROC MakeProcInstance(FARPROC proc, HWND hinst);
+int DialogBox(HWND hinst, int b, void * c, FARPROC proc);
+FARPROC MakeProcInstance(DialogProcFunc proc, HWND hinst);
 void FreeProcInstance(FARPROC proc);
 int GetDlgItem(HWND hDlg, int x);
 int LOWORD(int x);

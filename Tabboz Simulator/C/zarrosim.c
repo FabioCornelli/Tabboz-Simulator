@@ -357,7 +357,8 @@ static void InitTabboz(void)
 	 if (_argc > 1)
 		 if (! strcmp(_argv[1],"config") ) {
 			 hWndMain = 0; // Segnala che non esiste proc. principale.
-			 DialogBox(hInst,MAKEINTRESOURCE(CONFIGURATION),NULL,Configuration);
+             __auto_type lpproc = MakeProcInstance(Configuration, hInst);
+			 DialogBox(hInst,MAKEINTRESOURCE(CONFIGURATION),NULL,lpproc);
 			 FineProgramma("config");
 			 exit(0);
 			 }
@@ -2142,7 +2143,8 @@ int PASCAL WinMain(HANDLE hInstance, HANDLE hPrevInstance,
 	 InitTabboz();
 
 	 /* Finestra principale */
-	 DialogBox(hInst,MAKEINTRESOURCE(1),NULL,TabbozWndProc);
+    __auto_type lpproc = MakeProcInstance(TabbozWndProc, hInst);
+	 DialogBox(hInst,MAKEINTRESOURCE(1),NULL,lpproc);
 
 	 /* Chiusura */
 

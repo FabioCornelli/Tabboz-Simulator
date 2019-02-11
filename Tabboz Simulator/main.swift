@@ -49,7 +49,7 @@ class Tabboz : NSObject {
     
     @objc static func dialog(from handle: HANDLE, dialog: Int32, callback: DialogProc) {
         print("dialog")
-        _ = callback(handle, WM_INITDIALOG, 0, 0)
+        _ = callback.pointee.proc(handle, WM_INITDIALOG, 0, 0)
     }
     
     @objc static func endDialog() {
