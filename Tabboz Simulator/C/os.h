@@ -167,3 +167,8 @@ static inline void LoadString(HANDLE hinst, int b, LPSTR ptr, int size) {
     // Don't know where this strings come from yet
     snprintf(ptr, size, "String %d", b);
 }
+
+static inline int LoadCursor(HANDLE hinst, int b) {
+    printf("%s -- %d, %d\n", __PRETTY_FUNCTION__, hinst, b);
+    return 0;
+}
