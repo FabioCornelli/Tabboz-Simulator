@@ -54,7 +54,6 @@ void RegCreateKeyEx() { abort(); }
 void RegOpenKeyEx() { abort(); }
 void RegQueryValue() { abort(); }
 void RegSetValue() { abort(); }
-void RegisterClass() { abort(); }
 void ReleaseDC() { abort(); }
 void RemoveProp() { abort(); }
 void SelectObject() { abort(); }

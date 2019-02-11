@@ -172,3 +172,8 @@ static inline int LoadCursor(HANDLE hinst, int b) {
     printf("%s -- %d, %d\n", __PRETTY_FUNCTION__, hinst, b);
     return 0;
 }
+
+static inline ATOM RegisterClass(WNDCLASS * wc) {
+    printf("%s -- %p\n", __PRETTY_FUNCTION__, wc);
+    return 0;
+}
