@@ -18,6 +18,11 @@ class Tabboz : NSObject {
         // is showing a splash screen with a timer
     }
     
+    @objc static func showFormatTabboz() {
+        // DialogBox(hInst, MAKEINTRESOURCE(15), hInst, FormatTabboz);
+        print("Format Tabboz")        
+    }
+
 }
 
 WinMain(0, 0, nil, 0)

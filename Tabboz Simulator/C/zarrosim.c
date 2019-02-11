@@ -369,15 +369,8 @@ static void InitTabboz(void)
          [Tabboz showLogo];
 
 // 14 Gen 1999 - Formattazione iniziale Tabbozzo
-	 if (firsttime == 1) {
-		 lpproc = MakeProcInstance(FormatTabboz, hInst);
-		 DialogBox(hInst,
-				MAKEINTRESOURCE(15),
-				hInst,
-				lpproc);
-		 FreeProcInstance(lpproc);
-       }
-
+	 if (firsttime == 1)
+         [Tabboz showFormatTabboz];
 
 #endif
 }
