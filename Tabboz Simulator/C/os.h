@@ -30,7 +30,7 @@ typedef int HDC;
 typedef int HKEY;
 typedef int HBITMAP;
 typedef int COLORREF;
-typedef int FARPROC;
+typedef void * FARPROC;
 
 typedef struct {
     int bmWidth;
@@ -214,16 +214,16 @@ static inline u_long new_check_l(u_long x) {
     return x;
 }
 
-static inline int DialogBox(HWND hinst, int b, int c, FARPROC proc) {
-    printf("%s -- %d, %d, %d, %d\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
+static inline int DialogBox(HWND hinst, int b, void * c, FARPROC proc) {
+    printf("%s -- %d, %d, %p, %p\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
     return 0;
 }
 
 static inline FARPROC MakeProcInstance(FARPROC proc, HWND hinst) {
-    printf("%s -- %d, %d\n", __PRETTY_FUNCTION__, proc, hinst);
+    printf("%s -- %p, %d\n", __PRETTY_FUNCTION__, proc, hinst);
     return 0;
 }
 
 static inline void FreeProcInstance(FARPROC proc) {
-    printf("%s -- %d\n", __PRETTY_FUNCTION__, proc);
+    printf("%s -- %p\n", __PRETTY_FUNCTION__, proc);
 }
