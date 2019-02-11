@@ -203,3 +203,12 @@ static inline int DialogBox(HWND hinst, int b, int c, FARPROC proc) {
     printf("%s -- %d, %d, %d, %d\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
     return 0;
 }
+
+static inline FARPROC MakeProcInstance(FARPROC proc, HWND hinst) {
+    printf("%s -- %d, %d\n", __PRETTY_FUNCTION__, proc, hinst);
+    return 0;
+}
+
+static inline void FreeProcInstance(FARPROC proc) {
+    printf("%s -- %d\n", __PRETTY_FUNCTION__, proc);
+}
