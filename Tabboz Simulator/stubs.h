@@ -176,7 +176,7 @@ int GetDlgItem(HWND hDlg, int x);
 int LOWORD(int x);
 void EnableWindow(int x, int a);
 void SendMessage(int dlg, int msg, int value, int x);
-void EndDialog(int dlg, int x) ;
+void EndDialog(HANDLE dlg, int x) ;
 HICON LoadIcon(HANDLE h, int r);
 void ShowWindow(HANDLE h, int flags);
 void SetDlgItemText(HANDLE h, int d, char * str);
