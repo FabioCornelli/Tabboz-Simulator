@@ -18,7 +18,6 @@ void DeleteDC() { abort(); }
 void DeleteMenu() { abort(); }
 void DeleteObject() { abort(); }
 void DestroyIcon() { abort(); }
-void DialogBox() { abort(); }
 void DrawMenuBar() { abort(); }
 void EnableWindow() { abort(); }
 void EndDialog() { abort(); }
@@ -69,8 +68,6 @@ void WritePrivateProfileString() { abort(); }
 void new_counter() { abort(); }
 
 void sndPlaySound() { abort(); }
-void tabboz_random() { abort(); }
-
 void ExitWindows() { abort(); }
 
 char * _argv[] = {""};

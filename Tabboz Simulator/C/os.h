@@ -157,6 +157,10 @@ static inline void randomize() {
     ;
 }
 
+static inline int tabboz_random(int x) {
+    return x;
+}
+
 static inline int RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey) {
     // Log and fail
     printf("%s -- %d, %s, %d, %d, %p\n", __PRETTY_FUNCTION__, a, keyName, c, d, hkey);
@@ -193,4 +197,9 @@ static inline int new_check_i(int x) {
 
 static inline u_long new_check_l(u_long x) {
     return x;
+}
+
+static inline int DialogBox(HWND hinst, int b, int c, FARPROC proc) {
+    printf("%s -- %d, %d, %d, %d\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
+    return 0;
 }
