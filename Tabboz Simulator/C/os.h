@@ -182,3 +182,15 @@ static inline int MAKEINTRESOURCE(int a) {
     // Passthrough seem logical
     return a;
 }
+
+static inline void new_reset_check() {
+    ;
+}
+
+static inline int new_check_i(int x) {
+    return x;
+}
+
+static inline u_long new_check_l(u_long x) {
+    return x;
+}

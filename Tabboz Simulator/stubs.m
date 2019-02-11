@@ -66,10 +66,8 @@ void SetTimer() { abort(); }
 void SetWindowPos() { abort(); }
 void ShowWindow() { abort(); }
 void WritePrivateProfileString() { abort(); }
-void new_check_i() { abort(); }
-void new_check_l() { abort(); }
 void new_counter() { abort(); }
-void new_reset_check() { abort(); }
+
 void sndPlaySound() { abort(); }
 void tabboz_random() { abort(); }
 
