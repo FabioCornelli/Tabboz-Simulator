@@ -12,6 +12,10 @@ var shouldEndDialog = false
 
 class Tabboz : NSObject {
     
+    @objc static func dialog(from handle: HANDLE, dialog: Int32, callback: DialogProc) {
+        print("dialog")
+        _ = callback(handle, WM_INITDIALOG, 0, 0)
+    }
     
     @objc static func endDialog() {
         shouldEndDialog = true
@@ -39,9 +43,10 @@ class Tabboz : NSObject {
             "annulla" : { FormatTabboz(nil, WM_COMMAND, IDCANCEL, 0) },
         ]
         
-        print("Available commands: \(commands.keys.joined(separator: ", "))")
-
         while (true) {
+            print("Available commands: \(commands.keys.joined(separator: ", "))")
+            print("> ", terminator: "")
+            
             if let line = readLine() {
                 if let command = commands[line] {
                     _ = command()

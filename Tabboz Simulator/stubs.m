@@ -9,35 +9,28 @@
 #include <stdlib.h>
 #include "os.h"
 
-void AppendMenu() { abort(); }
 void BeginPaint() { abort(); }
 void BitBlt() { abort(); }
 void CreateBitmap() { abort(); }
 void CreateCompatibleDC() { abort(); }
 void DefWindowProc() { abort(); }
 void DeleteDC() { abort(); }
-void DeleteMenu() { abort(); }
 void DeleteObject() { abort(); }
 void DestroyIcon() { abort(); }
-void DrawMenuBar() { abort(); }
 void EndPaint() { abort(); }
 void GetDC() { abort(); }
 void GetDlgItemText() { abort(); }
-void GetMenu() { abort(); }
 void GetObject() { abort(); }
 void GetOpenFileName() { abort(); }
 void GetPrivateProfileString() { abort(); }
 void GetProp() { abort(); }
 void GetSaveFileName() { abort(); }
-void GetSubMenu() { abort(); }
-void GetSystemMenu() { abort(); }
 void GetSystemMetrics() { abort(); }
 void GetWindowRect() { abort(); }
 void HIWORD() { abort(); }
 void IsIconic() { abort(); }
 void KillTimer() { abort(); }
 void LoadBitmap() { abort(); }
-void LoadIcon() { abort(); }
 void MessageBox() { abort(); }
 void MoveWindow() { abort(); }
 void PlaySound() { abort(); }
@@ -49,13 +42,10 @@ void ReleaseDC() { abort(); }
 void RemoveProp() { abort(); }
 void SelectObject() { abort(); }
 void SetBkColor() { abort(); }
-void SetDlgItemText() { abort(); }
 void SetFocus() { abort(); }
 void SetProp() { abort(); }
 void SetTextColor() { abort(); }
-void SetTimer() { abort(); }
 void SetWindowPos() { abort(); }
-void ShowWindow() { abort(); }
 void WritePrivateProfileString() { abort(); }
 void new_counter() { abort(); }
 
@@ -131,8 +121,9 @@ u_long new_check_l(u_long x) {
     return x;
 }
 
-int DialogBox(HWND hinst, int b, void * c, FARPROC proc) {
+int DialogBox(HWND hinst, int b, void * c, DialogProc proc) {
     printf("%s -- %p, %d, %p, %p\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
+    [Tabboz dialogFrom:hinst dialog:b callback:proc];
     return 0;
 }
 
@@ -167,4 +158,44 @@ void EndDialog(int dlg, int x) {
     if (log_window) printf("    end dialog %d\n", dlg);
     
     [Tabboz endDialog];
+}
+
+HICON LoadIcon(HANDLE h, int r) {
+    return 0;
+}
+
+void ShowWindow(HANDLE h, int flags) {
+    if (log_window) printf("    show window %p %d\n", h, flags);
+}
+
+void SetDlgItemText(HANDLE h, int d, char * str) {
+    if (log_window) printf("    set %p dlg text %3d %s\n", h, d, str);
+}
+
+int GetMenu(HANDLE h) {
+    return 0;
+}
+
+void DeleteMenu(int menu, int item, int flags) {
+    if (log_window) printf("    delete menu %d item %d flags %d\n", menu, item, flags);
+}
+
+int GetSubMenu(int menu, int i) {
+    return 0;
+}
+
+void AppendMenu(int menu, int type, int cmd, char * label) {
+    if (log_window) printf("    append menu %d cmd %d label %s\n", menu, cmd, label);
+}
+
+int GetSystemMenu(HANDLE h, int menu) {
+    return 0;
+}
+
+void DrawMenuBar(HANDLE h) {
+    ;
+}
+
+void SetTimer(HANDLE h, int msg, int msec, void * c) {
+    if (log_window) printf("    set timer handle %p msg %d msec %d c %p\n", h, msg, msec, c);
 }

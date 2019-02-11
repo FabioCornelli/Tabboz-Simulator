@@ -23,12 +23,10 @@
 // Type definitions
 // -
 
-struct TabbozHANDLE {};
+//
 
 typedef int bc;
 
-typedef struct TabbozHANDLE * HANDLE;
-typedef struct TabbozHANDLE * HWND;
 typedef int WORD;
 typedef int DWORD;
 typedef int LONG;
@@ -77,6 +75,15 @@ typedef struct {
 } OPENFILENAME;
 
 typedef int PAINTSTRUCT;
+
+//
+
+struct TabbozHANDLE {};
+
+typedef struct TabbozHANDLE * HANDLE;
+typedef struct TabbozHANDLE * HWND;
+
+typedef BOOL (*DialogProc)(HANDLE, LONG, LONG, LONG);
 
 // -
 // Constants Definitions
@@ -150,5 +157,47 @@ extern HANDLE hWndMain;
 extern HANDLE hInst;
 extern HANDLE tipahDlg;
 extern int ps;
+
+HICON LoadIcon(HANDLE h, int r);
+void BWCCRegister(HANDLE _);
+void randomize(void);
+int tabboz_random(int x);
+void LoadString(HANDLE hinst, int b, LPSTR ptr, int size);
+int LoadCursor(HANDLE hinst, int b);
+ATOM RegisterClass(WNDCLASS * wc);
+int MAKEINTRESOURCE(int a);
+void new_reset_check(void);
+int new_check_i(int x);
+u_long new_check_l(u_long x);
+int DialogBox(HWND hinst, int b, void * c, DialogProc proc);
+FARPROC MakeProcInstance(FARPROC proc, HWND hinst);
+void FreeProcInstance(FARPROC proc);
+int GetDlgItem(HWND hDlg, int x);
+int LOWORD(int x);
+void EnableWindow(int x, int a);
+void SendMessage(int dlg, int msg, int value, int x);
+void EndDialog(int dlg, int x) ;
+HICON LoadIcon(HANDLE h, int r);
+void ShowWindow(HANDLE h, int flags);
+void SetDlgItemText(HANDLE h, int d, char * str);
+int GetMenu(HANDLE h);
+void DeleteMenu(int menu, int item, int flags);
+int GetSubMenu(int menu, int i);
+void AppendMenu(int menu, int type, int cmd, char * label);
+int GetSystemMenu(HANDLE h, int menu);
+void DrawMenuBar(HANDLE h);
+void SetTimer(HANDLE h, int msg, int msec, void *);
+
+LONG RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey);
+LONG RegCreateKeyEx(int hkey,
+                    char * name,
+                    int c,
+                    void * d,
+                    int opt,
+                    int access,
+                    void * g,
+                    HKEY *xKey,
+                    LONG *disposition);
+
 
 #endif /* stubs_h */
