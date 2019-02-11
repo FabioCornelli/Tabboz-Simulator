@@ -6,7 +6,8 @@
 //  Copyright © 2019 Antonio Malara. All rights reserved.
 //
 
-#include <stdio.h>
+#include <stdlib.h>
+#include "os.h"
 
 void AppendMenu() { abort(); }
 void BeginPaint() { abort(); }
@@ -20,7 +21,6 @@ void DeleteObject() { abort(); }
 void DestroyIcon() { abort(); }
 void DrawMenuBar() { abort(); }
 void EndPaint() { abort(); }
-void FreeProcInstance() { abort(); }
 void GetDC() { abort(); }
 void GetDlgItemText() { abort(); }
 void GetMenu() { abort(); }
@@ -43,8 +43,6 @@ void MoveWindow() { abort(); }
 void PlaySound() { abort(); }
 void RGB() { abort(); }
 void RegCloseKey() { abort(); }
-void RegCreateKeyEx() { abort(); }
-void RegOpenKeyEx() { abort(); }
 void RegQueryValue() { abort(); }
 void RegSetValue() { abort(); }
 void ReleaseDC() { abort(); }
@@ -67,3 +65,106 @@ void ExitWindows() { abort(); }
 char * _argv[] = {""};
 int _argc = 0;
 int ps = 0;
+
+void BWCCRegister(HANDLE _) {
+    ;
+}
+
+void randomize() {
+    ;
+}
+
+int tabboz_random(int x) {
+    return x;
+}
+
+LONG RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey) {
+    // Just fail
+    //    printf("%s -- %d, %s, %d, %d, %p\n", __PRETTY_FUNCTION__, a, keyName, c, d, hkey);
+    return 1;
+}
+
+LONG RegCreateKeyEx(int hkey,
+                    char * name,
+                    int c,
+                    void * d,
+                    int opt,
+                    int access,
+                    void * g,
+                    HKEY *xKey,
+                    LONG *disposition)
+{
+    // Just fail
+    //    printf("%s -- %d, %s, %d, %p, %d %d %p %p %p\n", __PRETTY_FUNCTION__, hkey, name, c, d, opt, access, g, xKey, disposition);
+    return 1;
+}
+
+void LoadString(HANDLE hinst, int b, LPSTR ptr, int size) {
+    // Don't know where this strings come from yet
+    snprintf(ptr, size, "String %d", b);
+}
+
+int LoadCursor(HANDLE hinst, int b) {
+    //    printf("%s -- %d, %d\n", __PRETTY_FUNCTION__, hinst, b);
+    return 0;
+}
+
+ATOM RegisterClass(WNDCLASS * wc) {
+    //    printf("%s -- %p\n", __PRETTY_FUNCTION__, wc);
+    return 0;
+}
+
+int MAKEINTRESOURCE(int a) {
+    // Passthrough seem logical
+    return a;
+}
+
+void new_reset_check() {
+    ;
+}
+
+int new_check_i(int x) {
+    return x;
+}
+
+u_long new_check_l(u_long x) {
+    return x;
+}
+
+int DialogBox(HWND hinst, int b, void * c, FARPROC proc) {
+    printf("%s -- %p, %d, %p, %p\n", __PRETTY_FUNCTION__, hinst, b, c, proc);
+    return 0;
+}
+
+FARPROC MakeProcInstance(FARPROC proc, HWND hinst) {
+    //    printf("%s -- %p, %d\n", __PRETTY_FUNCTION__, proc, hinst);
+    return 0;
+}
+
+void FreeProcInstance(FARPROC proc) {
+    //    printf("%s -- %p\n", __PRETTY_FUNCTION__, proc);
+}
+
+int GetDlgItem(HWND hDlg, int x) {
+    return x;
+}
+
+int LOWORD(int x) {
+    return x;
+}
+
+static BOOL log_window = true;
+
+void EnableWindow(int x, int a) {
+    if (log_window) printf("    enable window %d\n", x);
+}
+
+void SendMessage(int dlg, int msg, int value, int x) {
+    if (log_window) printf("    sending dlg: %d, msg: %d, value: %d, x: %d\n", dlg, msg, value, x);
+}
+
+void EndDialog(int dlg, int x) {
+    if (log_window) printf("    end dialog %d\n", dlg);
+    
+    [Tabboz endDialog];
+}
