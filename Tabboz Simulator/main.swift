@@ -57,26 +57,47 @@ extension INTRESOURCE {
 
 var t = [CalledDialogs]()
 
-var KnownDialogs : [Int : [String : Int]] = [
-    1: [
-        "vestiti": 131,
-        "famiglia": 135,
-        "personalinfo": 139,
-        "scuola": 136,
-        "compagnia": 134,
-        "190": 133,
-        "palestra": 142,
-        "logo": 121,
-        "scooter": 130,
-        "tabaccaio": 141,
-        "cellular": 155,
-        "lavoro": 137,
-        "about": 120,
-        "configuration": 140,
-        "disco": 132,
-        "spegnimi": 108
-    ]
-]
+var KnownDialogs : [Int : [String : Int]] =
+    [101: ["vendiscooter": 103,
+           "wparam - 101 + 78": 102],
+     140: ["15": 203],
+     110: ["95": 101],
+     133: ["cercatipa + spostamento": 110],
+     131: ["tabaccaio": 110,
+           "cmd_101": 101,
+           "cmd_102": 102,
+           "cellular": 112,
+           "cmd_103": 103,
+           "cmd_104": 104,
+           "palestra": 111,
+           "cmd_105": 105],
+     130: ["acquistascooter": 101,
+           "riparascooter": 103],
+     137: ["210": 114],
+     114: ["wparam+190": 109],
+     112: ["compracellular": 110,
+           "cellulrabbonam": 112],
+     001: ["cmd_146": 146,
+           "personalinfo": 139,
+           "cmd_144": 144,
+           "cellular": 155,
+           "tabaccaio": 141,
+           "vestiti": 131,
+           "disco": 132,
+           "cmd_145": 145,
+           "palestra": 142,
+           "logo": 121,
+           "compagnia": 134,
+           "scooter": 130,
+           "190": 133,
+           "spegnimi": 108,
+           "cmd_143": 143,
+           "cmd_147": 147,
+           "configuration": 140,
+           "about": 120,
+           "lavoro": 137,
+           "famiglia": 135,
+           "scuola": 136]]
 
 class Tabboz : NSObject {
     
@@ -95,7 +116,7 @@ class Tabboz : NSObject {
                 let cmd = dialogs[$0]
                 return {
                     if let c = cmd {
-                        callback.proc(handle, WM_COMMAND, Int32(c), Int32(0))
+                        _ = callback.proc(handle, WM_COMMAND, Int32(c), Int32(0))
                     }
                     return true
                 }
@@ -144,8 +165,8 @@ class Tabboz : NSObject {
 }
 
 /// Tries to recover a list of outgoing dialogs
-func CommandsInWindowProc(_ p: (HWND?, WORD, WORD, LONG) -> Bool) -> [(String?, Int32)] {
-    var r = [(String?, Int32)]()
+func CommandsInWindowProc(_ p: (HWND?, WORD, WORD, LONG) -> Bool) -> [(String?, Int32, FARPROC)] {
+    var r = [(String?, Int32, FARPROC)]()
     
     enableDialogTrace = true
     log_window = false
@@ -154,7 +175,7 @@ func CommandsInWindowProc(_ p: (HWND?, WORD, WORD, LONG) -> Bool) -> [(String?, 
         _ = p(nil, WM_COMMAND, Int32(cmd), 0)
         
         for d in t {
-            r.append((d.resourceId.string?.lowercased(), Int32(cmd)))
+            r.append((d.resourceId.string?.lowercased(), Int32(cmd), d.farproc))
         }
         
         t.removeAll()
@@ -163,8 +184,34 @@ func CommandsInWindowProc(_ p: (HWND?, WORD, WORD, LONG) -> Bool) -> [(String?, 
     return r
 }
 
+func RecursiveCalledDialogsToKnownDialogs() {
+    
+    var things = [Int32 : [String : Int32]]()
+    
+    func inner(dialog: Int32, proc: (HWND?, WORD, WORD, LONG) -> Bool) {
+        
+        let cmd = CommandsInWindowProc(proc)
+        var x = [String:Int32]()
+        
+        for (name, command, proc) in cmd {
+            x[name ?? "cmd_\(command)"] = command
+            inner(dialog: command) { (a, b, c, d) -> Bool in
+                proc.proc(a, b, c, d).boolValue
+            }
+        }
+        
+        if !x.isEmpty {
+            things[dialog] = x
+        }
+    }
+    
+    inner(dialog: Int32(1), proc: TabbozWndProc)
+    
+    print(things)
+}
+
 /// Creates an array of known dialogs ready to copypaste
-func CalledDialogsToKnownDialogs(cmd: [(String?, Int32)]) -> [String:Int32] {
+func CalledDialogsToKnownDialogs(cmd: [(String?, Int32, FARPROC)]) -> [String:Int32] {
     var x = [String:Int32]()
     for i in cmd {
         if let name = i.0?.lowercased() {
@@ -174,7 +221,8 @@ func CalledDialogsToKnownDialogs(cmd: [(String?, Int32)]) -> [String:Int32] {
     
     return x
 }
-    
+
+   
 var test = false
 
 if !test {
@@ -182,5 +230,5 @@ if !test {
     WinMain(handle, nil, nil, 0)
 }
 else {
-    print(CalledDialogsToKnownDialogs(cmd: CommandsInWindowProc(TabbozWndProc)))
+    RecursiveCalledDialogsToKnownDialogs()
 }
