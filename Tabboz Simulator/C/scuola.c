@@ -31,7 +31,7 @@ static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 /* Per una questione di svogliatezza del programmatore, viene usata STSCOOTER anche x i vestiti, */
 /* le materie scolastiche e qualche altra cosa che adesso non mi viene in mente...               */
 
-STSCOOTER MaterieMem[] =
+STSCOOTER _MaterieMem[] =
 	{   {0,  0, 0, 0, 0, 0,   0,  0,"---"},
 		 {0,  0, 0, 0, 0, 0,   0,  0,"Agraria"},
 		 {0,  0, 0, 0, 0, 0,   0,  0,"Fisica"},
@@ -45,6 +45,8 @@ STSCOOTER MaterieMem[] =
 		 /*     |			*/
 		 /*     \voto in una materia */
 
+
+STSCOOTER *MaterieMem = _MaterieMem;
 
 void ScriviVoti(HWND parent);
 void Aggiorna(HWND parent);
@@ -232,17 +234,7 @@ char tmp[128];
 void
 CalcolaStudio()
 {
-int i,i2;
-div_t x;
-
-  i2=0;
-  for (i=1;i<10;i++)
-	 i2+=MaterieMem[i].xxx;
-
-  i2=i2*10;
-
-  x = div(i2,9);
-  Studio=x.quot;
+    [Tabboz.global calcolaStudio];
 }
 
 

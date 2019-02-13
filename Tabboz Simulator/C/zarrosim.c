@@ -63,7 +63,6 @@ int	 ScuolaRedraw;	/* 27 Febbraio 1999 - 0.8.3pr */
 
 int    Fama;
 int    Reputazione;
-int    Studio;         // Quanto vai bene a scuola (1 - 100)
 u_long Soldi;          // Long...per forza! lo zarro ha tanti soldi...
 u_long Paghetta;       // Paghetta Settimanale...
 char   Nome[30];		  // Nome del Tabbozzo
@@ -383,6 +382,7 @@ void InitTabboz(void)
 
 static void CaricaTutto(void)
 {
+#ifdef TABBOZ_PERSISTANCE
 	 char       tmp[128];
 	 int			i;
 
@@ -561,6 +561,7 @@ static void CaricaTutto(void)
 	if (new_counter - atoi(RRKey("SoftCheck")))
 		ResetMe(0);
 
+#endif
 }
 
 
@@ -600,6 +601,9 @@ void FineProgramma(char *caller)
 //*******************************************************************
 
 static void SalvaTutto(void) {
+    
+#ifdef TABBOZ_PERSISTANCE
+    
 	 char tmp[128];
 	 int i;
 
@@ -773,6 +777,8 @@ static void SalvaTutto(void) {
 //	 writelog(tmp);
 // #endif
 
+#endif
+    
 }
 
 

@@ -219,9 +219,7 @@ void	Giorno(HANDLE hInstance)
 			MessageBox( hInstance,
 				"Questa mattina devi tornare a scuola...",
 				  "Primo giorno di scuola", MB_OK | MB_ICONINFORMATION);
-			Studio=0;   /* Azzera le materie...	*/
-			for (i=1;i<10;i++)
-					MaterieMem[i].xxx=0;
+                [Tabboz.global azzeraMaterie];
 			}
 			break;
 

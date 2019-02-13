@@ -193,7 +193,7 @@ typedef struct tagABB {
 extern   NEWSTSCOOTER ScooterData;
 extern	NEWSTSCOOTER ScooterMem[];
 
-extern	STSCOOTER    MaterieMem[];
+extern	STSCOOTER    *MaterieMem;
 
 extern	STCEL			 CellularData;
 extern	STCEL 		 CellularMem[];
@@ -243,7 +243,8 @@ extern  char 	 showscooter;
 
 extern  int     Fama;
 extern  int     Reputazione;
-extern  int     Studio;         // Quanto vai bene a scuola (1 - 100)
+//extern  int     Studio;         // Quanto vai bene a scuola (1 - 100)
+#define Studio Tabboz.global.studio
 extern  u_long  Soldi;          // Long...per forza! lo zarro ha tanti soldi...
 extern  u_long  Paghetta;       // Paghetta Settimanale...
 extern  char    Nome[30];

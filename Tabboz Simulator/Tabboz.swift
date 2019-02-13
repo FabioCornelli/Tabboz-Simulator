@@ -13,6 +13,7 @@ class Tabboz : NSObject {
     @objc static private(set) var global = Tabboz()
     
     @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
+    @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
     @objc static func initGlobalTabboz() {
         global = Tabboz()
@@ -20,11 +21,12 @@ class Tabboz : NSObject {
     
     override init() {
         attesa = ATTESAMAX
+        studio = 0
         super.init()
     }
 
     @objc func chiediPaghettaExtra(_ hDlg: HANDLE) {
-        if (Studio >= 40) {
+        if (studio >= 40) {
             if attesa == 0 {
                 attesa = ATTESAMAX
                 Soldi += 10
@@ -42,6 +44,25 @@ class Tabboz : NSObject {
         }
 
         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi))
+    }
+    
+    @objc func calcolaStudio() {
+        var i2 = Int32(0)
+        
+        for i in 0 ..< 10 {
+            i2 += MaterieMem.advanced(by: i).pointee.xxx
+        }
+
+        studio = Int(div(i2 * 10, 9).quot);
+    }
+    
+    /// Azzera le materie...
+    @objc func azzeraMaterie() {
+        studio = 0
+        
+        for i in 0 ..< 10 {
+            MaterieMem.advanced(by: i).pointee.xxx = 0
+        }
     }
 }
 
