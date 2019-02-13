@@ -10,8 +10,41 @@ import Foundation
 
 class Tabboz : NSObject {
     
-    @objc static let global = Tabboz()
+    @objc static private(set) var global = Tabboz()
     
-    @objc var attesa : Int = 0 // Tempo prima che ti diano altri soldi...
+    @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
     
+    @objc static func initGlobalTabboz() {
+        global = Tabboz()
+    }
+    
+    override init() {
+        attesa = ATTESAMAX
+        super.init()
+    }
+
+    @objc func chiediPaghettaExtra(_ hDlg: HANDLE) {
+        if (Studio >= 40) {
+            if attesa == 0 {
+                attesa = ATTESAMAX
+                Soldi += 10
+
+                Tabboz_Log("famiglia: paghetta extra (\(String(cString: MostraSoldi(10))))")
+                Evento(hDlg)
+            }
+            else {
+                MessageBox_NonPuoiContinuamenteChiedereSoldi(hDlg)
+                Evento(hDlg)
+            }
+        }
+        else {
+            MessageBox_QuandoAndraiMeglioAScuolaPotrai(hDlg)
+        }
+
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi))
+    }
+}
+
+func Tabboz_Log(_ s: String) {
+    print(s)
 }

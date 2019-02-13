@@ -288,6 +288,8 @@ void InitTabboz(void)
 
 #endif
 
+    [Tabboz initGlobalTabboz];
+    
 	 nome_del_file_su_cui_salvare[0]=0;
 
 	 // Inizializzazione dei numeri casuali...
@@ -298,7 +300,6 @@ void InitTabboz(void)
 
 	 Fortuna=0;					     /* Uguale a me...               */
 	 ScooterData=ScooterMem[0];  /* nessuno scooter              */
-	 Attesa=ATTESAMAX;           /* attesa per avere soldi...    */
 	 ImgSelector=0;              /* W l' arte di arrangiarsi...  */
 	 timer_active=1;             			 /* 10 Giugno  1998 */
 	 fase_di_avvio=1;				 		    /* 11 Giugno  1998 */
@@ -1282,33 +1283,7 @@ BOOL FAR PASCAL Famiglia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			return(TRUE);
 
 		 case 102:                   // Chiedi paghetta extra
-			if (Studio >= 40) {
-				if (Attesa == 0) {
-                                        Attesa=ATTESAMAX;
-					Soldi+= 10 ;
-					#ifdef TABBOZ_DEBUG
-					sprintf(tmp,"famiglia: paghetta extra (%s)",MostraSoldi(10));
-					writelog(tmp);
-					#endif
-					Evento(hDlg);
-				} else {
-					MessageBox( hDlg,
-					"Ma insomma ! Non puoi continuamente chiedere soldi ! Aspetta ancora qualche giorno. Fai qualche cosa di economico nel frattempo...",
-					"Non te li diamo", MB_OK | MB_ICONHAND);
-					Evento(hDlg);
-				}
-			} else {
-				sprintf(tmp,"Quando andrai meglio a scuola potrai tornare a chiederci dei soldi, non ora. \
-Ma non lo sai che per la tua vita e' importante studiare, e dovresti impegnarti \
-di piu, perche' quando ti impegni i risultati si vedono, solo che sei svogliat%c \
-e non fai mai nulla, mi ricordo che quando ero giovane io era tutta un altra cosa... \
-allora si' che i giovani studiavano...",ao);
-
-				MessageBox( hDlg,tmp,
-					"Errore irrecuperabile", MB_OK | MB_ICONHAND);
-			}
-
-			SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+                [Tabboz.global chiediPaghettaExtra:hDlg];
 			return(TRUE);
 
 		 case 103:                   // Papa, mi dai 100000 lire ?

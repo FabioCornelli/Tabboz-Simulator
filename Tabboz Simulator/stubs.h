@@ -171,6 +171,7 @@ extern HANDLE hWndMain;
 extern HANDLE hInst;
 extern HANDLE tipahDlg;
 extern int ps;
+extern char ao;
 
 HICON LoadIcon(HANDLE h, INTRESOURCE r);
 void BWCCRegister(HANDLE _);
@@ -231,5 +232,7 @@ extern BOOL shouldEndDialog;
 
 extern BOOL log_window;
 extern BOOL didLog;
+
+#include "MessageBoxes.h"
 
 #endif /* stubs_h */
