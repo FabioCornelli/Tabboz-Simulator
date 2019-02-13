@@ -208,6 +208,10 @@ void SetTimer(HANDLE h, int msg, int msec, void *);
 void PlaySound(void *, void *, int);
 int MessageBox(HANDLE h, char * msg, char * title, int flags);
 void GetDlgItemText(HANDLE h, int param, char * buf, size_t size);
+void sndPlaySound(char * filename, int flags);
+int GetSystemMetrics(int x);
+void MoveWindow(HANDLE handle, int x, int y, int w, int h, int q);
+void SetFocus(int dlg);
 
 LONG RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey);
 LONG RegCreateKeyEx(int hkey,

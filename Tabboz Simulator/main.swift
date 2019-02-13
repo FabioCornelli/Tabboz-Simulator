@@ -113,7 +113,12 @@ class Tabboz : NSObject {
                 availableCommands: dialogs.keys.joined(separator: ", "),
                 test: nil
             ) {
-                let cmd = dialogs[$0]
+                let cmd = dialogs[$0] ?? (
+                    ($0 == "ok"     ) ? Int(IDOK    ) :
+                    ($0 == "annulla") ? Int(IDCANCEL) :
+                    nil
+                );
+                
                 return {
                     if let c = cmd {
                         _ = callback.proc(handle, WM_COMMAND, Int32(c), Int32(0))

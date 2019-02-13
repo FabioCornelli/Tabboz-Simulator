@@ -24,13 +24,11 @@ void GetOpenFileName() { abort(); }
 void GetPrivateProfileString() { abort(); }
 void GetProp() { abort(); }
 void GetSaveFileName() { abort(); }
-void GetSystemMetrics() { abort(); }
 void GetWindowRect() { abort(); }
 void HIWORD() { abort(); }
 void IsIconic() { abort(); }
 void KillTimer() { abort(); }
 void LoadBitmap() { abort(); }
-void MoveWindow() { abort(); }
 void RGB() { abort(); }
 void RegCloseKey() { abort(); }
 void RegQueryValue() { abort(); }
@@ -39,13 +37,11 @@ void ReleaseDC() { abort(); }
 void RemoveProp() { abort(); }
 void SelectObject() { abort(); }
 void SetBkColor() { abort(); }
-void SetFocus() { abort(); }
 void SetProp() { abort(); }
 void SetTextColor() { abort(); }
 void SetWindowPos() { abort(); }
 void WritePrivateProfileString() { abort(); }
 void new_counter() { abort(); }
-void sndPlaySound() { abort(); }
 void ExitWindows() { abort(); }
 
 char * _argv[] = {""};
@@ -218,4 +214,21 @@ void GetDlgItemText(HANDLE h, int param, char * buf, size_t size) {
     if (log_window) printf("    get item text - handle: %p param: %d\n", h, param); didLog = true;
     static int unk = 0;
     snprintf(buf, size, "unk %d", unk++);
+}
+
+void sndPlaySound(char * filename, int flags) {
+    if (log_window) printf("    play sound %s\n", filename); didLog = true;
+
+}
+
+int GetSystemMetrics(int x) {
+    return 500;
+}
+
+void MoveWindow(HANDLE handle, int x, int y, int w, int h, int q) {
+    if (log_window) printf("    move window\n"); didLog = true;
+}
+
+void SetFocus(int dlg) {
+    if (log_window) printf("    set focus dlg %d\n", dlg); didLog = true;
 }
