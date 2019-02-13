@@ -61,7 +61,6 @@ int	 TabbozRedraw;	/* 26 Febbraio 1999 - 0.8.3pr */
 int	 ScuolaRedraw;	/* 27 Febbraio 1999 - 0.8.3pr */
 // DOPO LE CARATTERISTIKE
 
-int    Attesa;         // Tempo prima che ti diano altri soldi...
 int    Fama;
 int    Reputazione;
 int    Studio;         // Quanto vai bene a scuola (1 - 100)

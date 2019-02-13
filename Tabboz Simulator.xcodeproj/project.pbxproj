@@ -10,6 +10,7 @@
 		3F4DA426220FC25A008DC569 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4DA425220FC25A008DC569 /* main.swift */; };
 		3F54DC1C2210991100794232 /* stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.m */; };
 		3FC9F54822139BA60019B93A /* KnownDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54722139BA60019B93A /* KnownDialogs.swift */; };
+		3FC9F54C2214ACB70019B93A /* Tabboz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54B2214ACB70019B93A /* Tabboz.swift */; };
 		3FED2040220FC7E000AC38D7 /* disco.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED203F220FC7E000AC38D7 /* disco.c */; };
 		3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2042220FCA3500AC38D7 /* lavoro.c */; };
 		3FED2055220FCA3500AC38D7 /* vestiti.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2043220FCA3500AC38D7 /* vestiti.c */; };
@@ -43,6 +44,7 @@
 		3F4DA425220FC25A008DC569 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
 		3FC9F54722139BA60019B93A /* KnownDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownDialogs.swift; sourceTree = "<group>"; };
+		3FC9F54B2214ACB70019B93A /* Tabboz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabboz.swift; sourceTree = "<group>"; };
 		3FED203E220FC7E000AC38D7 /* Tabboz Simulator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabboz Simulator-Bridging-Header.h"; sourceTree = "<group>"; };
 		3FED203F220FC7E000AC38D7 /* disco.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = disco.c; path = "Tabboz Simulator/C/disco.c"; sourceTree = SOURCE_ROOT; };
 		3FED2041220FCA3500AC38D7 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = "Tabboz Simulator/C/resource.h"; sourceTree = SOURCE_ROOT; };
@@ -96,6 +98,7 @@
 			children = (
 				3FED203D220FC7B800AC38D7 /* C */,
 				3F4DA425220FC25A008DC569 /* main.swift */,
+				3FC9F54B2214ACB70019B93A /* Tabboz.swift */,
 				3FC9F54722139BA60019B93A /* KnownDialogs.swift */,
 				3F25441D22116E5300D494E8 /* stubs.h */,
 				3F54DC1B2210991100794232 /* stubs.m */,
@@ -192,6 +195,7 @@
 				3FED2040220FC7E000AC38D7 /* disco.c in Sources */,
 				3FED205A220FCA3500AC38D7 /* prompt.c in Sources */,
 				3F4DA426220FC25A008DC569 /* main.swift in Sources */,
+				3FC9F54C2214ACB70019B93A /* Tabboz.swift in Sources */,
 				3FED2055220FCA3500AC38D7 /* vestiti.c in Sources */,
 				3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */,
 				3FED205B220FCA3500AC38D7 /* eventi.c in Sources */,

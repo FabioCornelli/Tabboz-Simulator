@@ -57,7 +57,7 @@ extension INTRESOURCE {
 
 var t = [CalledDialogs]()
 
-class Tabboz : NSObject {
+extension Tabboz {
     
     @objc static func dialog(from handle: HANDLE, dialog: INTRESOURCE, callback: FARPROC) {
         if !enableDialogTrace.boolValue {

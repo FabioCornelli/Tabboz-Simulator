@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+class Tabboz : NSObject {
+    
+    @objc static let global = Tabboz()
+    
+}
