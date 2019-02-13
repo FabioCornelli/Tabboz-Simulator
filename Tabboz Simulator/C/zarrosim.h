@@ -347,15 +347,18 @@ extern  void CalcolaStudio(void);
 extern  char *MostraSoldi(u_long i);
 
 extern  char   *RRKey(char *xKey);		// 29 Novembre 1998
-extern  int    new_check_i(int i);		// 14 Marzo 1999
-extern  u_long new_check_l(u_long i);  // 14 Marzo 1999
-extern  void 	new_reset_check(void); 	// 14 Marzo 1999
+extern  int     new_check_i(int i);		// 14 Marzo 1999
+extern  u_long  new_check_l(u_long i);  // 14 Marzo 1999
+extern  void    new_reset_check(void); 	// 14 Marzo 1999
 
-extern  void   openlog(void);
+
+extern  void    openlog(void);
 extern  void	closelog(void);
-extern  void   nomoney(HWND parent,int tipo);
-extern  void   AggiornaPrincipale();
-extern  void	Giorno(HANDLE hInstance);
-extern  void   CalcolaStudio(void);
-extern  void   CalcolaVelocita(HANDLE hDlg);
+extern  void    nomoney(HWND parent,int tipo);
+extern  void    AggiornaPrincipale(HANDLE);
+extern  void    Giorno(HANDLE hInstance);
+extern  void    CalcolaStudio(void);
+extern  void    CalcolaVelocita(HANDLE hDlg);
+extern  void    InitTabboz(void);
+
 

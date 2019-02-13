@@ -57,48 +57,6 @@ extension INTRESOURCE {
 
 var t = [CalledDialogs]()
 
-var KnownDialogs : [Int : [String : Int]] =
-    [101: ["vendiscooter": 103,
-           "wparam - 101 + 78": 102],
-     140: ["15": 203],
-     110: ["95": 101],
-     133: ["cercatipa + spostamento": 110],
-     131: ["tabaccaio": 110,
-           "cmd_101": 101,
-           "cmd_102": 102,
-           "cellular": 112,
-           "cmd_103": 103,
-           "cmd_104": 104,
-           "palestra": 111,
-           "cmd_105": 105],
-     130: ["acquistascooter": 101,
-           "riparascooter": 103],
-     137: ["210": 114],
-     114: ["wparam+190": 109],
-     112: ["compracellular": 110,
-           "cellulrabbonam": 112],
-     001: ["cmd_146": 146,
-           "personalinfo": 139,
-           "cmd_144": 144,
-           "cellular": 155,
-           "tabaccaio": 141,
-           "vestiti": 131,
-           "disco": 132,
-           "cmd_145": 145,
-           "palestra": 142,
-           "logo": 121,
-           "compagnia": 134,
-           "scooter": 130,
-           "190": 133,
-           "spegnimi": 108,
-           "cmd_143": 143,
-           "cmd_147": 147,
-           "configuration": 140,
-           "about": 120,
-           "lavoro": 137,
-           "famiglia": 135,
-           "scuola": 136]]
-
 class Tabboz : NSObject {
     
     @objc static func dialog(from handle: HANDLE, dialog: INTRESOURCE, callback: FARPROC) {
@@ -170,18 +128,22 @@ class Tabboz : NSObject {
 }
 
 /// Tries to recover a list of outgoing dialogs
-func CommandsInWindowProc(_ p: (HWND?, WORD, WORD, LONG) -> Bool) -> [(String?, Int32, FARPROC)] {
-    var r = [(String?, Int32, FARPROC)]()
+func CommandsInWindowProc(_ p: (HWND?, WORD, WORD, LONG) -> Bool) -> [(String?, Int32, INTRESOURCE?, FARPROC?)] {
+    var r = [(String?, Int32, INTRESOURCE?, FARPROC?)]()
     
     enableDialogTrace = true
     log_window = false
-    
     for cmd in 0 ..< 500  {
         _ = p(nil, WM_COMMAND, Int32(cmd), 0)
         
         for d in t {
-            r.append((d.resourceId.string?.lowercased(), Int32(cmd), d.farproc))
+            r.append((d.resourceId.string?.lowercased(), Int32(cmd), d.resourceId, d.farproc))
         }
+        
+        if didLog.boolValue && t.isEmpty {
+            r.append((nil, Int32(cmd), nil, nil))
+        }
+        didLog = false
         
         t.removeAll()
     }
@@ -198,10 +160,22 @@ func RecursiveCalledDialogsToKnownDialogs() {
         let cmd = CommandsInWindowProc(proc)
         var x = [String:Int32]()
         
-        for (name, command, proc) in cmd {
-            x[name ?? "cmd_\(command)"] = command
-            inner(dialog: command) { (a, b, c, d) -> Bool in
-                proc.proc(a, b, c, d).boolValue
+        for (name, command, dialog, proc) in cmd {
+            let the_name = name ?? (
+                (command == IDOK    ) ? "ok" :
+                (command == IDCANCEL) ? "annulla" :
+                (command == IDNO)     ? "no" :
+                (command == IDYES)    ? "si" :
+                "cmd_\(command)"
+            );
+            
+            x[the_name] = command
+            
+            
+            if let proc = proc?.proc, let dialog = dialog {
+                inner(dialog: dialog.number) { (a, b, c, d) -> Bool in
+                    proc(a, b, c, d).boolValue
+                }
             }
         }
         
@@ -235,5 +209,6 @@ if !test {
     WinMain(handle, nil, nil, 0)
 }
 else {
+    InitTabboz()
     RecursiveCalledDialogsToKnownDialogs()
 }

@@ -27,7 +27,6 @@ void GetSaveFileName() { abort(); }
 void GetWindowRect() { abort(); }
 void HIWORD() { abort(); }
 void IsIconic() { abort(); }
-void KillTimer() { abort(); }
 void LoadBitmap() { abort(); }
 void RGB() { abort(); }
 void RegCloseKey() { abort(); }
@@ -57,7 +56,7 @@ void randomize() {
 }
 
 int tabboz_random(int x) {
-    return x;
+    return 0;
 }
 
 LONG RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey) {
@@ -195,6 +194,10 @@ void DrawMenuBar(HANDLE h) {
 
 void SetTimer(HANDLE h, int msg, int msec, void * c) {
     if (log_window) printf("    set timer handle %p msg %d msec %d c %p\n", h, msg, msec, c); didLog = true;
+}
+
+void KillTimer(HANDLE h, int msg) {
+    if (log_window) printf("    kill timer handle %p msg %d \n", h, msg); didLog = true;
 }
 
 void PlaySound(void * a, void * b, int c) {

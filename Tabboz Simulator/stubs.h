@@ -103,7 +103,6 @@ typedef struct TabbozINTRESOURCE INTRESOURCE;
 // Constants Definitions
 // -
 
-static const int IDYES = 0;
 static const int SRCAND = 0;
 static const int SRCPAINT = 0;
 static const int SRCCOPY = 0;
@@ -137,6 +136,7 @@ static const int WM_SYSCOMMAND = 8;
 static const int IDCANCEL = 0;
 static const int IDOK = 1;
 static const int IDNO = 2;
+static const int IDYES = 3;
 
 static const int SM_CXSCREEN = 0;
 static const int SM_CYSCREEN = 0;
@@ -205,6 +205,7 @@ void AppendMenu(int menu, int type, int cmd, char * label);
 int GetSystemMenu(HANDLE h, int menu);
 void DrawMenuBar(HANDLE h);
 void SetTimer(HANDLE h, int msg, int msec, void *);
+void KillTimer(HANDLE h, int msg);
 void PlaySound(void *, void *, int);
 int MessageBox(HANDLE h, char * msg, char * title, int flags);
 void GetDlgItemText(HANDLE h, int param, char * buf, size_t size);

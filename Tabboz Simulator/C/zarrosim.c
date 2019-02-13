@@ -277,7 +277,7 @@ static char tmpsesso;
 // InitTabboz
 //*******************************************************************
 #pragma argsused
-static void InitTabboz(void)
+void InitTabboz(void)
 {
 	 char       tmp[128];
 #ifdef TABBOZ_WIN
@@ -2116,7 +2116,7 @@ time_t 	t;
 
 	if (debug_active) {
 		time(&t);
-		fprintf(debugfile,"%24.24s %s\n",ctime(&t),s);
+        printf("Tabboz Debug: %24.24s %s\n",ctime(&t),s); // NOTE(Biappi): changed to printf from fprintf
 		fflush(debugfile); // Escegue il flush del file, cosi' anche se il Tabboz craschia si ha il file di log...
 	}
 }

@@ -44,6 +44,8 @@ int 		  caso,i;
 char 		  tmp[128];
 FARPROC	  lpproc;
 
+    didLog = true;
+    
 	if (Fortuna < 0) Fortuna = 0;		/* Prima che qualcuno bari... */
 	if (Fortuna > 100) Fortuna = 100;
 
