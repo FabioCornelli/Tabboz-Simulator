@@ -239,7 +239,8 @@ extern  char 	 showscooter;
 
 // DOPO LE CARATTERISTIKE...
 
-extern  int     Attesa;         // Tempo prima che ti diano altri soldi...
+#define Attesa Tabboz.global.attesa
+
 extern  int     Fama;
 extern  int     Reputazione;
 extern  int     Studio;         // Quanto vai bene a scuola (1 - 100)

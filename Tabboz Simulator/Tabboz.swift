@@ -12,4 +12,6 @@ class Tabboz : NSObject {
     
     @objc static let global = Tabboz()
     
+    @objc var attesa : Int = 0 // Tempo prima che ti diano altri soldi...
+    
 }
