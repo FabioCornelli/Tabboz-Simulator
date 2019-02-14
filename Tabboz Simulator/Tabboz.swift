@@ -95,18 +95,8 @@ class Tabboz : NSObject {
         return palestra.scadenzaString
     }
     
-    var abbonamentoPalestraScadeOggi: Bool {
-        if let scadenza = palestra.scadenza {
-            return scadenza.giorno == calendario.giornoDellAnno.giorno
-                && scadenza.mese   == calendario.giornoDellAnno.mese
-        }
-        else {
-            return false
-        }
-    }
-    
     func controllaScadenzaAbbonamentoPalestra(hInstance: HANDLE) {
-        if abbonamentoPalestraScadeOggi {
+        if calendario.giornoDellAnno == palestra.scadenza {
             palestra.cancellaAbbonamento()
             MessageBox_AppenaScadutoAbbonamentoPalestra(hInstance);
         }

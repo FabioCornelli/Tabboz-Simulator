@@ -83,22 +83,17 @@ import Foundation
     
 }
 
-class GiornoDellAnno {
+struct GiornoDellAnno : Equatable {
     
     var giorno : Int
     var mese   : Mese
-    
-    init(giorno: Int, mese: Mese) {
-        self.giorno = giorno
-        self.mese   = mese
-    }
     
     var string : String {
         return "\(giorno) \(mese.nome)"
     }
     
     func fraUnMese() -> GiornoDellAnno {
-        let fraUnMese = GiornoDellAnno(
+        var fraUnMese = GiornoDellAnno(
             giorno: giorno,
             mese: Mese(rawValue: mese.rawValue + 1) ?? .gennaio
         )
@@ -112,7 +107,7 @@ class GiornoDellAnno {
     }
 
     func fraSeiMesi() -> GiornoDellAnno {
-        let fraSeiMesi = GiornoDellAnno(
+        var fraSeiMesi = GiornoDellAnno(
             giorno: giorno,
             mese: Mese(rawValue: ((mese.rawValue + 6 - 1) % 12) + 1) ?? .gennaio
         )
@@ -126,7 +121,7 @@ class GiornoDellAnno {
     }
 
     func fraUnAnno() -> GiornoDellAnno {
-        let fraUnAnno = GiornoDellAnno(giorno: giorno - 1, mese: mese)
+        var fraUnAnno = GiornoDellAnno(giorno: giorno - 1, mese: mese)
         
         if fraUnAnno.giorno < 1 {
             fraUnAnno.mese = Mese(rawValue: mese.rawValue - 1) ?? .dicembre
