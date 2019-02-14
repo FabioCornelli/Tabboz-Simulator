@@ -24,28 +24,6 @@ static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 static int  numdisco;
 
 
-// Per una questione di svogliatezza del programmatore, viene usata STSCOOTER
-// anche x i vestiti e per le discoteche.
-
-STSCOOTER DiscoMem[] =
-	{   { 0,  0, 0, 0, 0, 0,   0,  0,"---"},
-		 { 0, 30, 2,15, 1, 0,  36,  0,""   },
-		 { 0,  0, 1, 7, 4, 0,  26,  0,""   },
-		 { 0,  0, 1, 8, 1, 0,  30,  0,""   },
-		 { 0, 35, 3,15, 1, 0,  36,  0,""   },
-		 { 0,  0, 2, 6, 3, 0,  26,  0,""   },
-		 { 0,  0, 2, 5, 2, 0,  22,  0,""   },
-		 { 0,  0, 3, 8, 1, 0,  30,  0,""   },
-		 { 1,  0, 2, 9, 7, 0,  36,  0,""   } };
-/*	    |	|  |  |   \       \costo 					*/
-/*	    |   |  |  |    \giorno di chiusura (1=lunedi',etc... - 0=nessuno) [24 marzo 1998] */
-/*	    \	\  \  \incremento fama						*/
-/*           \   \  \incremento reputazione					*/
-/*            \   \figosita' minima x entrare (selezione all' ingresso) 	*/
-/*	       1=disco fuori porta - ci puoi arrivare solo se hai lo scooter... */
-
-
-
 //********************************************************************
 // Routine per il pagamento della Discoteca.
 //********************************************************************

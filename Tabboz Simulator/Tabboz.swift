@@ -47,21 +47,21 @@ class Tabboz : NSObject {
     }
     
     @objc func calcolaStudio() {
-        var i2 = Int32(0)
+        var i2 = 0
         
-        for i in 0 ..< 10 {
-            i2 += MaterieMem.advanced(by: i).pointee.xxx
+        for materia in STSCOOTER.materie {
+            i2 += materia.xxx
         }
 
-        studio = Int(div(i2 * 10, 9).quot);
+        studio = (i2 * 10) / 9
     }
     
     /// Azzera le materie...
     @objc func azzeraMaterie() {
         studio = 0
         
-        for i in 0 ..< 10 {
-            MaterieMem.advanced(by: i).pointee.xxx = 0
+        for materia in STSCOOTER.materie {
+            materia.xxx = 0
         }
     }
 }

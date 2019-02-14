@@ -46,20 +46,6 @@ char Risposte3[3];
 
 // Numero di ditte
 #define NUM_DITTE 8
-STSCOOTER LavoroMem[] =
-	{   {0,  0, 0, 0, 0, 0,   0,  0,"---"},
-		 {0,  0, 0, 0, 0, 0,   0,  0,"Magneti Budelli"},
-		 {0,  0, 0, 0, 0, 0,   0,  0,"Diamine"},
-		 {1,  0, 0, 0, 0, 0,   0,  0,"Testmec"},
-		 {0,  0, 0, 0, 0, 0,   0,  0,"Ti Impalo Bene Bene"},
-		 {1,  0, 0, 0, 0, 0,   0,  0,"October"},
-		 {1,  0, 0, 0, 0, 0,   0,  0,"Arlond's"},
-		 {1,  0, 0, 0, 0, 0,   0,  0,"286 - Computer d' annata"}, // 14/01/2000
-		 {1,  0, 0, 0, 0, 0,   0,  0,"Ricopio" }}; 			       // 14/01/2000
-//     |
-//     \lavoro fuori porta (solo con lo scooter puoi arrivarci...)
-
-
 
 int	scheda;	/* numero scheda del quiz ( 0 - 9 ) */
 int	accetto;

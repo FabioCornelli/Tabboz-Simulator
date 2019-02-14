@@ -141,20 +141,6 @@ ATTESAMAX   		= 5,
 
 typedef unsigned long   u_long;	// 28 Novembre 1998
 
-
-// INFORMAZIONI SUGLI SCOOTER  (ora usato solo per cose generiche...)
-typedef struct tagSTSCOOTER {
-	 int         speed;          // velocita' massima
-	 int         cc;             // cilindrata
-	 int         xxx;            // [future espansioni]
-	 int         fama;           // figosita' scooter
-	 int         mass;           // massa sooter
-	 int         maneuver;       // manovrabilita'
-	 int         prezzo;         // costo dello scooter (modifiche incluse)
-	 int         stato;          // quanto e' intero (in percuntuale); -1 nessuno scooter
-	 char        nome[30];       // nome dello scooter
-  } STSCOOTER;
-
 // NUOVE INFORMAZIONI SUGLI SCOOTER - 28 Aprile 1998
 
 typedef struct tagNEWSTSCOOTER {
@@ -193,7 +179,12 @@ typedef struct tagABB {
 extern   NEWSTSCOOTER ScooterData;
 extern	NEWSTSCOOTER ScooterMem[];
 
-extern	STSCOOTER    *MaterieMem;
+#define MaterieMem  STSCOOTER.materie
+#define VestitiMem  STSCOOTER.vestiti
+#define SizeMem     STSCOOTER.sigarette
+#define PalestraMem STSCOOTER.palestra
+#define LavoroMem   STSCOOTER.lavoro
+#define DiscoMem    STSCOOTER.disco
 
 extern	STCEL			 CellularData;
 extern	STCEL 		 CellularMem[];

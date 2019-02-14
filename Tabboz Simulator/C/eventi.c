@@ -346,7 +346,7 @@ FARPROC	  lpproc;
 			if (x_vacanza == 0) {
 				i=random(9)+1;	// Fino alla versione 0.5 c'era scritto 10 ed era un bug...
 				LoadString(hInst, (1000 + caso), (LPSTR)messaggio, 255);
-				strcat(messaggio,MaterieMem[i].nome);
+				strcat(messaggio,MaterieMem[i].nome.UTF8String);
 				MessageBox( hInstance,
 					(LPSTR)messaggio,
 					"Scuola...", MB_OK | MB_ICONSTOP);
