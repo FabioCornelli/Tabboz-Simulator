@@ -27,6 +27,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
+
 __attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 static char natale2;
 
@@ -38,33 +39,6 @@ typedef struct tagVACANZE {
 	 int		mese;     		 /* giorno		         */
 	 char		*descrizione;   /* descrizione giorno di vacanza */
   } STVACANZE;
-
-
-
-STMESI InfoMese[] =
-	{ {"Gennaio",   31},
-	  {"Febbraio",  28},
-	  {"Marzo",		 31},
-	  {"Aprile",	 30},
-	  {"Maggio",	 31},
-	  {"Giugno",	 30},
-	  {"Luglio",	 31},
-	  {"Agosto",	 31},
-	  {"Settembre", 30},
-	  {"Ottobre",	 31},
-	  {"Novembre",	 30},
-	  {"Dicembre",	 31}
-	  };
-
-STMESI InfoSettimana[] =
-	{ {"Lunedi'",    0},
-	  {"Martedi'",   0},
-	  {"Mercoledi'", 0},
-	  {"Giovedi'",   0},
-	  {"Venerdi'",   0},
-	  {"Sabato",     0},
-	  {"Domenica",   1}
-	  };
 
 STVACANZE InfoVacanze[] =
 	{ {"Capodanno",    		 		 1,   1, "Oggi e' capodanno !"},
@@ -284,7 +258,7 @@ void	Giorno(HANDLE hInstance)
 
 	#ifdef TABBOZ_DEBUG
 	/* Mostra data e soldi */
-	sprintf(tmp, "giorno: %s %d %s, %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome,MostraSoldi(Soldi));
+	sprintf(tmp, "giorno: %s %d %s, %s",InfoSettimana[x_giornoset-1].nome.UTF8String,x_giorno,InfoMese[x_mese-1].nome.UTF8String,MostraSoldi(Soldi));
 	writelog(tmp);
 	#endif
 

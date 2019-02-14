@@ -160,13 +160,8 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define AbbonamentData Tabboz.global.abbonamento
 #define AbbonamentMem  STABB.abbonamenti
 
-typedef struct tagMESI {
-	 char        nome[20];       // nome del mese
-	 int			 num_giorni;     // giorni del mese
-  } STMESI;
-
-extern	STMESI InfoMese[];
-extern	STMESI InfoSettimana[];
+#define InfoMese      STMESI.mesi
+#define InfoSettimana STMESI.settimane
 
 extern	int  x_giorno;
 extern	int  x_mese;

@@ -1126,7 +1126,7 @@ BOOL FAR PASCAL PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	 char          tmp[128];
 
 	 if (message == WM_INITDIALOG) {
-		sprintf(tmp, " %d %s", comp_giorno,InfoMese[comp_mese-1].nome);
+		sprintf(tmp, " %d %s", comp_giorno,InfoMese[comp_mese-1].nome.UTF8String);
 		SetDlgItemText(hDlg, 103, tmp);			// Data di nascita
 		sprintf(tmp, "%d", (comp_giorno * 13 + comp_mese * 3 + 6070));
 		SetDlgItemText(hDlg, 104, tmp);			// Numero documento di nascita (inutile ma da' spessore...)
@@ -1578,7 +1578,7 @@ char tmp[128];
 		SetDlgItemText(parent, 156, tmp);	// Stato scooter
 	 }
 
-	 sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
+	 sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome.UTF8String,x_giorno,InfoMese[x_mese-1].nome.UTF8String);  // Calendario
 	 SetDlgItemText(parent, 157, tmp);
 
 	 if ( sesso == 'M' )	{// Non usare la variabile "ao" xche' qui e' necessario
