@@ -32,3 +32,27 @@ void MessageBox_QuandoAndraiMeglioAScuolaPotrai(HANDLE hDlg) {
                "Errore irrecuperabile",
                MB_OK | MB_ICONHAND);
 }
+
+void MessageBox_HaiGiaUnAbbonamento(HANDLE hDlg) {
+    MessageBox(hDlg,
+               "Hai gia' un abbonamento, perche' te ne serve un altro ???",
+               "Palestra",
+               MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_AppenaScadutoAbbonamentoPalestra(HANDLE hInstance) {
+    MessageBox( hInstance,
+               "E' appena scaduto il tuo abbonamento della palestra...",
+               "Palestra", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_PrimaDiVenireInPalestraFaiUnAbbonamento(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Prima di poter venire in palestra devi fare un abbonamento !",
+               "Palestra", MB_OK | MB_ICONINFORMATION);
+    
+}
+
+void MessageBox_EccessivaEsposizioneAiRaggiUltravioletti(HANDLE hDlg) {
+    MessageBox(hDlg, "L' eccessiva esposizione del tuo corpo ai raggi ultravioletti,\nprovoca un avanzato grado di carbonizzazione e pure qualche piccola mutazione genetica...", "Lampada", MB_OK  | MB_ICONSTOP);
+}

@@ -111,21 +111,9 @@ void	Giorno(HANDLE hInstance)
 
 	}
 
-		 /* ---------------> P A L E S T R A <---------------    21 Apr 1998	*/
-
-		 if (scad_pal_mese == x_mese)
-	       if (scad_pal_giorno == x_giorno) {
-			MessageBox( hInstance,
-				"E' appena scaduto il tuo abbonamento della palestra...",
-				  "Palestra", MB_OK | MB_ICONINFORMATION);
-		       scad_pal_giorno = 0;
-		       scad_pal_mese = 0;
-		       #ifdef TABBOZ_DEBUG
-		       writelog("giorno: E' scaduto l' abbonamento alla palestra");
-		       #endif
-		       }
-
-
+    /* ---------------> P A L E S T R A <---------------    21 Apr 1998	*/
+    [Tabboz.global controllaScadenzaAbbonamentoPalestraWithHInstance:hInstance];
+    
 	/* Calcola i giorni di vacanza durante l' anno ( da finire...)	*/
 	x_vacanza=0;
 	current_tipa=0;

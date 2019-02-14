@@ -144,16 +144,6 @@ class NEWSTSCOOTER : NSObject {
         STSCOOTER(0,  0, 0, 6, 0, 0, 230,  0,""    ), //    Nuove Buffalo
     ]
     
-    
-    // Abbonamenti Palestra ----------------------------------------------------------------------------
-    
-    static let palestra = [
-        STSCOOTER(0,  0, 0, 0, 0, 0,  50,  0, ""), // Un mese    21 Apr 1998
-        STSCOOTER(0,  0, 0, 8, 0, 0, 270,  0, ""), // Sei mesi
-        STSCOOTER(0,  0, 0, 9, 0, 0, 500,  0, ""), // Un anno
-        STSCOOTER(0,  0, 0, 9, 0, 0,  14,  0, ""), // Una lampada
-    ]
-    
     // Sigarette ---------------------------------------------------------------------------------------
     
     static let sigarette = [

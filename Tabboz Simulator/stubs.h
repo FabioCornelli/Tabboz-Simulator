@@ -200,7 +200,7 @@ void EnableWindow(int x, int a);
 void SendMessage(int dlg, int msg, int value, int x);
 void EndDialog(HANDLE dlg, int x) ;
 void ShowWindow(HANDLE h, int flags);
-void SetDlgItemText(HANDLE h, int d, char * str);
+void SetDlgItemText(HANDLE h, int d, const char * str);
 int GetMenu(HANDLE h);
 void DeleteMenu(int menu, int item, int flags);
 int GetSubMenu(int menu, int i);

@@ -172,9 +172,6 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define comp_giorno      Tabboz.global.compleannoGiorno
 #define comp_mese        Tabboz.global.compleannoMese
 
-#define scad_pal_giorno  Tabboz.global.scadenzaPalestraGiorno
-#define scad_pal_mese    Tabboz.global.scadenzaPalestraMese
-
 #ifdef PROMPT_ACTIVE
 extern	int  prompt_mode;
 #endif
@@ -318,3 +315,5 @@ extern  void    CalcolaStudio(void);
 extern  void    CalcolaVelocita(HANDLE hDlg);
 extern  void    InitTabboz(void);
 extern  void    AggiornaTipa(HWND hDlg);
+extern  void    EventiPalestra(HANDLE hInstance);
+extern void     AggiornaPalestra(HWND parent);

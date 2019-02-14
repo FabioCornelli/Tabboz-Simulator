@@ -340,7 +340,7 @@ BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 // Palestra ! (che centra tra i vestiti ??? Come procedura e' simile...)
 //*******************************************************************
 
-static void AggiornaPalestra(HWND parent)
+void AggiornaPalestra(HWND parent)
 {
 char tmp[128];
 
@@ -348,13 +348,7 @@ char tmp[128];
 	sprintf(tmp, "%d/100", Fama);
 	SetDlgItemText(parent, 105, tmp);
 
-	if (scad_pal_giorno < 1) {
-		sprintf(tmp, "Nessun Abbonamento");
-		SetDlgItemText(parent, 106, tmp);
-	} else {
-		 sprintf(tmp, "Scadenza abbonamento: %s", Tabboz.global.scadenzaPalestra.string.UTF8String);
-		 SetDlgItemText(parent, 106, tmp);
-	}
+    SetDlgItemText(parent, 106, Tabboz.global.scadenzaAbbonamentoPalestraString.UTF8String);
 
 	// Scrive il grado di abbronzatura... 4 Marzo 1999
 	switch (current_testa) {
@@ -372,138 +366,34 @@ char tmp[128];
 # pragma argsused
 BOOL FAR PASCAL Palestra(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-// Costi... (migliaia di lire)
-#define UN_MESE		50
-#define SEI_MESI	270
-#define UN_ANNO		500
-
-	 char          tmp[128];
-	 int		  i;
-
-	 if (message == WM_INITDIALOG) {
-	AggiornaPalestra(hDlg);
-	for (i=0; i<4; i++)
-		SetDlgItemText(hDlg, 120 + i , MostraSoldi(PalestraMem[i].prezzo));
-
-	return(TRUE);
+    if (message == WM_INITDIALOG) {
+        AggiornaPalestra(hDlg);
+        SetDlgItemText(hDlg, 120, MostraSoldi([Tabboz PalestraCostoAbbonamento:AbbonamentiPalestraUnMese ]));
+        SetDlgItemText(hDlg, 121, MostraSoldi([Tabboz PalestraCostoAbbonamento:AbbonamentiPalestraSeiMesi]));
+        SetDlgItemText(hDlg, 122, MostraSoldi([Tabboz PalestraCostoAbbonamento:AbbonamentiPalestraUnAnno ]));
+        SetDlgItemText(hDlg, 123, MostraSoldi([Tabboz PalestraCostoLampada]));
+        
+        return TRUE;
 	}
-
-	 else if (message == WM_COMMAND)
-	 {
-	switch (wParam)
-	{
-
-		 case 110:	// Vai in palestra
-		if (scad_pal_giorno < 1) {
-			  MessageBox( hDlg,
-					"Prima di poter venire in palestra devi fare un abbonamento !",
-					"Palestra", MB_OK | MB_ICONINFORMATION);
-		} else {
-			  if (sound_active) TabbozPlaySound(201);
-			  if (Fama < 82) Fama++;
-			  EventiPalestra(hDlg);
-			  AggiornaPalestra(hDlg);
-			  /* Evento(hDlg); */
-
-		}
-		return(TRUE);
-
-		 case 111:	// Lampada
-			if (PalestraMem[3].prezzo > Soldi) {
-				nomoney(hDlg,PALESTRA);
-			} else {
-				if (current_testa < 3) {
-					current_testa++; // Grado di abbronzatura
-					if (Fama < 20) Fama++;	// Da 0 a 3 punti in piu' di fama
-					if (Fama < 45) Fama++;	// ( secondo quanta se ne ha gia')
-					if (Fama < 96) Fama++;
-				} else {
-					current_testa=4; // Carbonizzato...
-					if (Fama > 8) Fama-=8;
-					if (Reputazione > 5) Reputazione-=5;
-					MessageBox( hDlg, "L' eccessiva esposizione del tuo corpo ai raggi ultravioletti,\
- provoca un avanzato grado di carbonizzazione e pure qualche piccola mutazione genetica...", "Lampada", MB_OK  | MB_ICONSTOP);
-				}
-				TabbozRedraw = 1;	// E' necessario ridisegnare l' immagine del Tabbozzo...
-
-				if (sound_active) TabbozPlaySound(202);
-				Soldi-=PalestraMem[3].prezzo;
-				#ifdef TABBOZ_DEBUG
-				sprintf(tmp,"lampada: Paga %s",MostraSoldi(PalestraMem[3].prezzo));
-				writelog(tmp);
-				#endif
-			}
-			i=random(5 + Fortuna);
-			if (i==0) Evento(hDlg);
-			AggiornaPalestra(hDlg);
-			return(TRUE);
-
-		 case 115:	// Abbonamenti
-		 case 116:
-		 case 117:
-		if (scad_pal_giorno > 0 ) {
-				  MessageBox( hDlg,
-					"Hai gia' un abbonamento, perche' te ne serve un altro ???",
-					"Palestra", MB_OK | MB_ICONINFORMATION);
-				  return(TRUE);
-			}
-
-		if (PalestraMem[wParam-115].prezzo > Soldi) {
-			nomoney(hDlg,PALESTRA);
-			return(TRUE);
-		} else {
-			Soldi-= PalestraMem[wParam-115].prezzo;
-			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"palestra: Paga %s",MostraSoldi(PalestraMem[wParam-115].prezzo));
-			writelog(tmp);
-			#endif
-		}
-
-		switch (wParam)
-		{
-		case 115: scad_pal_mese = x_mese + 1;      // UN MESE
-			  scad_pal_giorno = x_giorno;
-			  if (scad_pal_mese > 12) scad_pal_mese-=12;
-			  // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
-			  if (scad_pal_giorno > InfoMese[scad_pal_mese-1].num_giorni) scad_pal_giorno = InfoMese[scad_pal_mese-1].num_giorni;
-			break;;
-
-		case 116: scad_pal_mese = x_mese + 6;      // SEI MESI
-			  scad_pal_giorno = x_giorno;
-			  if (scad_pal_mese > 12) scad_pal_mese-=12;
-			  // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
-			  if (scad_pal_giorno > InfoMese[scad_pal_mese-1].num_giorni) scad_pal_giorno = InfoMese[scad_pal_mese-1].num_giorni;
-			break;;
-
-		case 117: scad_pal_mese = x_mese;          // UN ANNO ( meno un giorno...)
-			  scad_pal_giorno = x_giorno - 1;
-			  if ( scad_pal_giorno < 1) {
-				scad_pal_mese--;
-				if ( scad_pal_mese < 1) scad_pal_mese+=12;
-				scad_pal_giorno=InfoMese[scad_pal_mese-1].num_giorni;
-			  }
-			break;;
-		}
-
-		Evento(hDlg);
-		AggiornaPalestra(hDlg);
-		return(TRUE);
-
-
-		 case IDCANCEL:
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
-
-		 case IDOK:
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
-
-		 default:
-		return(TRUE);
-	}
-	 }
-
-	 return(FALSE);
+    else if (message == WM_COMMAND)
+    {
+        switch (wParam)
+        {
+            case 110: [Tabboz.global vaiInPalestra:hDlg];                                     return TRUE;
+            case 111: [Tabboz.global faiLaLampada: hDlg];                                     return TRUE;
+            case 115: [Tabboz.global compraAbbonamento:AbbonamentiPalestraUnMese  hDlg:hDlg]; return TRUE;
+            case 116: [Tabboz.global compraAbbonamento:AbbonamentiPalestraSeiMesi hDlg:hDlg]; return TRUE;
+            case 117: [Tabboz.global compraAbbonamento:AbbonamentiPalestraUnAnno  hDlg:hDlg]; return TRUE;
+                
+            case IDOK:
+            case IDCANCEL:
+            default:
+                EndDialog(hDlg, TRUE);
+                return TRUE;
+        }
+    }
+    
+    return FALSE;
 }
 
 

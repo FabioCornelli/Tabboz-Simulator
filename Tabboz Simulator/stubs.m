@@ -167,7 +167,7 @@ void ShowWindow(HANDLE h, int flags) {
     if (log_window) printf("    show window %p %d\n", h, flags); didLog = true;
 }
 
-void SetDlgItemText(HANDLE h, int d, char * str) {
+void SetDlgItemText(HANDLE h, int d, const char * str) {
     if (log_window) printf("    set %p dlg text %3d %s\n", h, d, str); didLog = true;
 }
 

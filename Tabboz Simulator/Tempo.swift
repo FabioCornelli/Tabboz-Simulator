@@ -136,6 +136,45 @@ class GiornoDellAnno : NSObject {
         return "\(giorno) \(mese.nome)"
     }
     
+    @objc func fraUnMese() -> GiornoDellAnno {
+        let fraUnMese = GiornoDellAnno(
+            giorno: giorno,
+            mese: Mese(rawValue: mese.rawValue + 1) ?? .gennaio
+        )
+        
+        // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
+        if fraUnMese.giorno > fraUnMese.mese.giorni {
+            fraUnMese.giorno = fraUnMese.mese.giorni;
+        }
+        
+        return fraUnMese
+    }
+
+    @objc func fraSeiMesi() -> GiornoDellAnno {
+        let fraSeiMesi = GiornoDellAnno(
+            giorno: giorno,
+            mese: Mese(rawValue: ((mese.rawValue + 6 - 1) % 12) + 1) ?? .gennaio
+        )
+        
+        // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
+        if fraSeiMesi.giorno > fraSeiMesi.mese.giorni {
+            fraSeiMesi.giorno = fraSeiMesi.mese.giorni
+        }
+        
+        return fraSeiMesi
+    }
+
+    @objc func fraUnAnno() -> GiornoDellAnno {
+        let fraUnAnno = GiornoDellAnno(giorno: giorno - 1, mese: mese)
+        
+        if fraUnAnno.giorno < 1 {
+            fraUnAnno.mese = Mese(rawValue: mese.rawValue - 1) ?? .dicembre
+            fraUnAnno.giorno = fraUnAnno.mese.giorni
+        }
+        
+        return fraUnAnno
+    }
+
 }
 
 @objc class Calendario : NSObject {
