@@ -37,9 +37,13 @@ BOOL FAR PASCAL TruccaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
 /* Il 28 Aprile 1998 la procedura scooter e' cambiata radicalmente... */
-extern	void  AggiornaScooter(HWND hDlg);
-extern   void	CalcolaVeelocita(HWND hDlg);
-extern	char	*MostraSpeed(void);
+void AggiornaScooter(HWND hDlg);
+void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * scooter);
+
+void CalcolaVelocita(HWND hDlg);
+void CalcolaVelocita_Ex(HWND hDlg, NEWSTSCOOTER * scooter, int showscooter);
+
+char *MostraSpeed(void);
 
 static char	*n_carburatore[]= { "12/10", "16/16", "19/19", "20/20", "24/24" , "custom" };
 static char	*n_cc[]=          { "50cc", "70cc", "90cc", "120cc", "150cc", "3969cc" };
@@ -56,8 +60,6 @@ static int tabella[]=
 				  -1000,  -1000,  -1000,    130,    150,   -100,
 				  -1000,  -1000,  -1000,  -1000,  -1000,    250  };
 
-char showscooter;
-
 int	benzina;
 int	antifurto;
 
@@ -72,7 +74,9 @@ int	PezziMem[] =
 // Calcola la velocita' massima dello scooter, sencodo il tipo di marmitta,
 // carburatore, etc...
 
-void	CalcolaVelocita(HWND hDlg)
+#undef  ScooterData
+
+void CalcolaVelocita_Ex(HWND hDlg, NEWSTSCOOTER * ScooterData, int showscooter)
 {
 	/* 28 Novembre 1998 0.81pr Bug ! Se lo scooter era ingrippato, cambiando il filtro
 	dell' aria o la marmitta la velocita' diventava un numero negativo... */
@@ -99,6 +103,12 @@ void	CalcolaVelocita(HWND hDlg)
 		     return;
 	     }
 	}
+}
+
+#define ScooterData Tabboz.global.scooter
+
+void CalcolaVelocita(HWND hDlg) {
+    CalcolaVelocita_Ex(hDlg, Tabboz.global.scooter, 0);
 }
 
 /********************************************************************/
@@ -273,7 +283,6 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 				 benzina=50;	/* 5 litri, il massimo che puo' contenere... */
 
 				 if (ScooterData.cc == 5) benzina = 850;  /* 85 litri, x la macchinina un po' figa... */
-				 showscooter=0;
 				 CalcolaVelocita(hDlg);
 
 				 sprintf(buf, "Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
@@ -319,13 +328,10 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 # pragma argsused
 BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-#if 0
 	     int           num_moto;
-static  NEWSTSCOOTER  ScooterTemp;
 
 	if (message == WM_INITDIALOG) {
 		scelta=-1;
-		ScooterTemp=ScooterData;
      	SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 		return(TRUE);
 	} else if (message == WM_COMMAND) {
@@ -338,23 +344,18 @@ static  NEWSTSCOOTER  ScooterTemp;
 			case 126:
 				num_moto=wParam-120;
 				scelta=num_moto;
-				ScooterData=ScooterMem[num_moto];
-				showscooter=1;
-				CalcolaVelocita(hDlg);
-				showscooter=0;
+                
+				CalcolaVelocita_Ex(hDlg, ScooterMem[num_moto], 1);
 
-				AggiornaScooter(hDlg);
-				ScooterData=ScooterMem[0];
+				AggiornaScooter_Ex(hDlg, ScooterMem[num_moto]);
 				return(TRUE);
 
 			case IDCANCEL:
 				scelta=-1;
-				ScooterData=ScooterTemp;
 				EndDialog(hDlg, TRUE);
 				return(TRUE);
 
 			case IDOK:
-				ScooterData=ScooterTemp;
 				EndDialog(hDlg, TRUE);
 				return(TRUE);
 
@@ -362,7 +363,6 @@ static  NEWSTSCOOTER  ScooterTemp;
 				return(TRUE);
 			}
 	 }
-#endif
     
 	 return(FALSE);
 }
@@ -532,7 +532,9 @@ BOOL FAR PASCAL TruccaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 
 
-void AggiornaScooter(HWND hDlg)
+#undef ScooterData
+
+void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * ScooterData)
 {
 char 	tmp[128];
 div_t  	d;
@@ -564,6 +566,12 @@ div_t  	d;
 		SetDlgItemText(hDlg, 117, "" );
 	}
 
+}
+
+#define ScooterData Tabboz.global.scooter
+
+void AggiornaScooter(HWND hDlg) {
+    AggiornaScooter_Ex(hDlg, Tabboz.global.scooter);
 }
 
 // -----------------------------------------------------------------------
@@ -611,7 +619,6 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		#endif
 
 		ScooterData.marmitta = (wParam - 129); /* (1 - 3 ) */
-		showscooter=0;
 		CalcolaVelocita(hDlg);
 		EndDialog(hDlg, TRUE);
 		return(TRUE);
@@ -631,7 +638,6 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			#endif
 
 			ScooterData.carburatore = (wParam - 132 );  /* ( 1 - 4 ) */
-			showscooter=0;
 			CalcolaVelocita(hDlg);
 			EndDialog(hDlg, TRUE);
 			return(TRUE);
@@ -653,7 +659,6 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			/* Piccolo bug della versione 0.6.91, qui c'era scritto ScooterData.marmitta */
 			/* al posto di ScooterData.cc :-) */
 			ScooterData.cc = (wParam - 136); /* ( 1 - 4 ) */
-			showscooter=0;
 			CalcolaVelocita(hDlg);
 			EndDialog(hDlg, TRUE);
 			return(TRUE);
@@ -673,7 +678,6 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			#endif
 
 			ScooterData.filtro = (wParam - 140); /* (1 - 4) */
-			showscooter=0;
 			CalcolaVelocita(hDlg);
 			EndDialog(hDlg, TRUE);
 			return(TRUE);

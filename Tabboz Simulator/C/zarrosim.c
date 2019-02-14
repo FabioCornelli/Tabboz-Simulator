@@ -1395,7 +1395,6 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		 }
 		 benzina-=5;
 		 if (benzina < 1) benzina = 0;
-		 showscooter=0;
 		 CalcolaVelocita(hDlg);
 
 		 Evento(hDlg);
