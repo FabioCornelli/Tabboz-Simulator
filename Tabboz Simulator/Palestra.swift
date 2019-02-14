@@ -31,3 +31,22 @@ import Foundation
     }
     
 }
+
+struct Palestra {
+    
+    private(set) var scadenza : GiornoDellAnno?
+    
+    var scadenzaString : String {
+        return (scadenza.map { "Scadenza abbonamento \($0)" })
+            ?? "Nessun Abbonamento"
+    }
+    
+    mutating func abbonati(a abbonamento: AbbonamentiPalestra, aPartireDa giornoDellAbbonamento: GiornoDellAnno) {
+        scadenza = abbonamento.scadenza(da: giornoDellAbbonamento)
+    }
+    
+    mutating func cancellaAbbonamento() {
+        scadenza = nil
+    }
+    
+}

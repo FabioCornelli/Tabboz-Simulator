@@ -16,8 +16,9 @@ class Tabboz : NSObject {
     @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
     @objc var calendario = Calendario()
-    @objc var scadenzaAbbonamentoPalestra : GiornoDellAnno?
 
+    var palestra = Palestra()
+    
     @objc var scooter = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
     @objc var cellulare = STCEL(0, 0, 0, 0, "")
     @objc var abbonamento = STABB(0, 0, 0, 0, 0, "")
@@ -97,16 +98,11 @@ class Tabboz : NSObject {
     @objc static func PalestraCostoAbbonamento(_ a: AbbonamentiPalestra) -> Int { return a.prezzo}
     
     var scadenzaAbbonamentoPalestraString : String {
-        if let scadenza = scadenzaAbbonamentoPalestra {
-            return "Scadenza abbonamento \(scadenza.string)"
-        }
-        else {
-            return "Nessun Abbonamento"
-        }
+        return palestra.scadenzaString
     }
     
     var abbonamentoPalestraScadeOggi: Bool {
-        if let scadenza = scadenzaAbbonamentoPalestra {
+        if let scadenza = palestra.scadenza {
             return scadenza.giorno == calendario.giornoDellAnno.giorno
                 && scadenza.mese   == calendario.giornoDellAnno.mese
         }
@@ -117,32 +113,32 @@ class Tabboz : NSObject {
     
     func controllaScadenzaAbbonamentoPalestra(hInstance: HANDLE) {
         if abbonamentoPalestraScadeOggi {
-            scadenzaAbbonamentoPalestra = nil
+            palestra.cancellaAbbonamento()
             MessageBox_AppenaScadutoAbbonamentoPalestra(hInstance);
         }
     }
     
-    func compraAbbonamento(_ palestra: AbbonamentiPalestra, hDlg: HANDLE) {
-        if scadenzaAbbonamentoPalestra != nil {
+    func compraAbbonamento(_ abbonamento: AbbonamentiPalestra, hDlg: HANDLE) {
+        if palestra.scadenza != nil {
             MessageBox_HaiGiaUnAbbonamento(hDlg);
             return
         }
         
-        if (palestra.prezzo > Soldi) {
+        if (abbonamento.prezzo > Soldi) {
             nomoney(hDlg, Int32(PALESTRA))
             return
         }
         else {
-            Soldi -= UInt(palestra.prezzo)
+            Soldi -= UInt(abbonamento.prezzo)
         }
 
-        scadenzaAbbonamentoPalestra = palestra.scadenza(da: calendario.giornoDellAnno)
+        palestra.abbonati(a: abbonamento, aPartireDa: calendario.giornoDellAnno)
         
         Evento(hDlg);
     }
 
     func vaiInPalestra(_ hDlg: HANDLE) {
-        if scadenzaAbbonamentoPalestra == nil {
+        if palestra.scadenza == nil {
             MessageBox_PrimaDiVenireInPalestraFaiUnAbbonamento(hDlg);
         } else {
             if sound_active != 0 {
