@@ -160,9 +160,6 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define AbbonamentData Tabboz.global.abbonamento
 #define AbbonamentMem  STABB.abbonamenti
 
-#define InfoMese      STMESI.mesi
-#define InfoSettimana STMESI.settimane
-
 #define x_giorno         Tabboz.global.calendario.giorno
 #define x_mese           Tabboz.global.calendario.mese
 #define x_anno_bisesto   Tabboz.global.calendario.annoBisesto
