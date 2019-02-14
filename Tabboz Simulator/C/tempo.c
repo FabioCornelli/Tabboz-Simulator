@@ -63,32 +63,19 @@ void	Giorno(HANDLE hInstance)
 	FARPROC lpproc;
 	char	tmp[255];
 
-	x_giorno++;
-	if (x_giorno > InfoMese[x_mese-1].num_giorni) {
-		if ((x_mese == 2) && (x_anno_bisesto == 1) && (x_giorno == 29)) {
-			MessageBox( hInstance, "Anno bisesto, anno funesto...",
-				  "Anno Bisestile", MB_OK | MB_ICONSTOP);
-		} else {
-			x_giorno=1;
-			x_mese+=1;
-			}
-		}
+    [Tabboz.global.calendario nuovoGiorno];
+    
+    if ((x_mese == 2) && (x_anno_bisesto == 1) && (x_giorno == 29)) {
+        MessageBox(hInstance,
+                   "Anno bisesto, anno funesto...",
+                   "Anno Bisestile",
+                   MB_OK | MB_ICONSTOP);
+    }
 
-	if (x_mese > 12) {
-		x_mese = 1;
-		x_anno_bisesto=+1;
-		if (x_anno_bisesto > 3) x_anno_bisesto=0;
-		/* Capodanno();	*/
-		}
-
-	x_giornoset++;
-	if (x_giornoset > 7) {
-		x_giornoset=1;
-		if (current_testa > 0 ) {
-			current_testa--;	// Ogni 7 giorni diminuisce l' abbronzatura - 26 Feb 1999
-			TabbozRedraw = 1; // e si deve aggiornare il disegno... (BUG ! Mancava fino alla versione 0.83pr )
-			}
-		}
+    if (x_giornoset == 1 && current_testa > 0 ) {
+        current_testa--;  // Ogni 7 giorni diminuisce l' abbronzatura - 26 Feb 1999
+        TabbozRedraw = 1; // e si deve aggiornare il disegno... (BUG ! Mancava fino alla versione 0.83pr )
+    }
 
 
 	/* ---------------> S T I P E N D I O <--------------- */

@@ -172,11 +172,9 @@ char  tmp[128];
 
 		CalcolaStudio();
 
-		x_mese				=  9;
-		x_giorno				= 30;
-		x_giornoset			=  1;
-		x_anno_bisesto		=	0;
+        [Tabboz.global resetCalendario];
 
+    
 		comp_mese			= random(12)+1;
 		comp_giorno			= random(InfoMese[comp_mese-1].num_giorni)+1;
 

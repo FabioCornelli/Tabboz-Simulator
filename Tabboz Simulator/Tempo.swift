@@ -49,14 +49,39 @@ class STMESI : NSObject {
 
 @objc class Calendario : NSObject {
     
-    @objc var giorno                 = Int32(0)
-    @objc var mese                   = Int32(0)
-    @objc var annoBisesto            = Int32(0) // Anno Bisestile - 12 Giugno 1999
-    @objc var giornoSettimana        = Int32(0)
-    @objc var compleannoGiorno       = Int32(0) // giorno & mese del compleanno
-    @objc var compleannoMese         = Int32(0)
-    @objc var vacanza                = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
-    @objc var scadenzaPalestraGiorno = Int32(0) // Giorno e mese in cui scadra' l' abbonamento alla palestra.
-    @objc var scadenzaPalestraMese   = Int32(0)
+    @objc private(set) var giorno                 = Int32(30)
+    @objc private(set) var mese                   = Int32(9)
+    @objc private(set) var annoBisesto            = Int32(0) // Anno Bisestile - 12 Giugno 1999
+    @objc private(set) var giornoSettimana        = Int32(1)
+    
+    @objc              var vacanza                = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
+
+    @objc              var compleannoGiorno       = Int32(0) // giorno & mese del compleanno
+    @objc              var compleannoMese         = Int32(0)
+    
+    @objc              var scadenzaPalestraGiorno = Int32(0) // Giorno e mese in cui scadra' l' abbonamento alla palestra.
+    @objc              var scadenzaPalestraMese   = Int32(0)
+    
+}
+
+@objc extension Calendario {
+    
+    func nuovoGiorno() {
+        giorno += 1
+        
+        if (giorno > STMESI.mesi[Int(mese) - 1].num_giorni) {
+            if !(mese == 2 && annoBisesto == 1 && giorno == 29) {
+                giorno = 1;
+                mese += 1;
+            }
+        }
+        
+        if mese > 12 {
+            mese = 1
+            annoBisesto = (annoBisesto + 1) % 4
+        }
+        
+        giornoSettimana = (giornoSettimana + 1) % 7
+    }
     
 }

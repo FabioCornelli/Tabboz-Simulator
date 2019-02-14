@@ -29,8 +29,10 @@ class Tabboz : NSObject {
         studio = 0
         super.init()
     }
+}
 
-    @objc func chiediPaghettaExtra(_ hDlg: HANDLE) {
+@objc extension Tabboz {
+    func chiediPaghettaExtra(_ hDlg: HANDLE) {
         if (studio >= 40) {
             if attesa == 0 {
                 attesa = ATTESAMAX
@@ -51,7 +53,7 @@ class Tabboz : NSObject {
         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi))
     }
     
-    @objc func calcolaStudio() {
+    func calcolaStudio() {
         var i2 = 0
         
         for materia in STSCOOTER.materie {
@@ -62,13 +64,18 @@ class Tabboz : NSObject {
     }
     
     /// Azzera le materie...
-    @objc func azzeraMaterie() {
+    func azzeraMaterie() {
         studio = 0
         
         for materia in STSCOOTER.materie {
             materia.xxx = 0
         }
     }
+    
+    func resetCalendario() {
+        calendario = Calendario()
+    }
+    
 }
 
 func Tabboz_Log(_ s: String) {
