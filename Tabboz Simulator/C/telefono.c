@@ -140,31 +140,7 @@ static int  scelta = 0;
 			return(TRUE);
 
 		case IDOK:
-			if (Soldi < AbbonamentMem[scelta].prezzo) { // Controlla se ha abbastanza soldi...
-				nomoney(hDlg,CELLULRABBONAM);
-				EndDialog(hDlg, TRUE);
-				return(TRUE);
-			}
-
-			if (AbbonamentMem[scelta].abbonamento == 1) { // Abbonamento, no problem...
-				Soldi-=AbbonamentMem[scelta].prezzo;
-				AbbonamentData=AbbonamentMem[scelta];
-				if ((sound_active) && (CellularData.stato > -1))
-					TabbozPlaySound(602);
-
-				EndDialog(hDlg, TRUE);
-			} else {													 // Ricarica...
-				if (( AbbonamentData.creditorest > -1) &&
-				( !strcmp(AbbonamentData.nome.UTF8String,AbbonamentMem[scelta].nome.UTF8String))) {
-					Soldi-=AbbonamentMem[scelta].prezzo;
-					AbbonamentData.creditorest+=AbbonamentMem[scelta].creditorest;
-					if ((sound_active) && (CellularData.stato > -1)) TabbozPlaySound(602);
-					EndDialog(hDlg, TRUE);
-				} else
-					MessageBox( hDlg,
-						"Oh, che  te ne fai di una ricarica se non hai la sim ???",
-						"Telefonino", MB_OK | MB_ICONINFORMATION);
-			}
+            [Tabboz.global compraAbbonamento:scelta :hDlg];
 			return(TRUE);
 
 		default:

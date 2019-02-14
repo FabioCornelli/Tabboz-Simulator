@@ -162,12 +162,66 @@ class Tabboz : NSObject {
             
             TabbozRedraw = 1;    // E' necessario ridisegnare l' immagine del Tabbozzo...
             
-            if sound_active != 0 { TabbozPlaySound(202) }
+            if sound_active != 0 {
+                TabbozPlaySound(202)
+            }
+            
             Soldi -= UInt(Tabboz.PalestraCostoLampada())
         }
         
-        if tabboz_random(5 + Fortuna) == 0 { Evento(hDlg) }
+        if tabboz_random(5 + Fortuna) == 0 {
+            Evento(hDlg)
+        }
+        
         AggiornaPalestra(hDlg)
+    }
+    
+    // -
+    // Telefono
+    // -
+
+    func compraAbbonamento(_ scelta: Int, _ hDlg: HANDLE) {
+        if (Soldi < STABB.abbonamenti[scelta].prezzo) {
+            // Controlla se ha abbastanza soldi...
+            
+            nomoney(hDlg, Int32(CELLULRABBONAM));
+            EndDialog(hDlg, true);
+        }
+        
+        if (STABB.abbonamenti[scelta].abbonamento == 1) {
+            // Abbonamento, no problem...
+            
+            Soldi -= UInt(STABB.abbonamenti[scelta].prezzo)
+            
+            abbonamento.creditorest = STABB.abbonamenti[scelta].creditorest
+            abbonamento.fama        = STABB.abbonamenti[scelta].fama
+            abbonamento.nome        = String(STABB.abbonamenti[scelta].nome)
+            
+            if sound_active != 0 && cellulare.stato > -1 {
+                TabbozPlaySound(602)
+            }
+            
+            EndDialog(hDlg, true)
+        }
+        else {
+            // Ricarica...
+            
+            if ((abbonamento.creditorest > -1) &&
+                (abbonamento.nome == STABB.abbonamenti[scelta].nome))
+            {
+                Soldi -= UInt(STABB.abbonamenti[scelta].prezzo)
+                abbonamento.creditorest += STABB.abbonamenti[scelta].creditorest
+                
+                if sound_active != 0 && cellulare.stato > -1 {
+                    TabbozPlaySound(602);
+                }
+                
+                EndDialog(hDlg, true);
+            }
+            else {
+                MessageBox_CheTeNeFaiDiRicaricaSenzaSim(hDlg)
+            }
+        }
     }
     
 }

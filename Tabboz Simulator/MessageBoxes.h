@@ -12,3 +12,4 @@ void MessageBox_HaiGiaUnAbbonamento(HANDLE hDlg);
 void MessageBox_AppenaScadutoAbbonamentoPalestra(HANDLE hDlg);
 void MessageBox_PrimaDiVenireInPalestraFaiUnAbbonamento(HANDLE hDlg);
 void MessageBox_EccessivaEsposizioneAiRaggiUltravioletti(HANDLE hDlg);
+void MessageBox_CheTeNeFaiDiRicaricaSenzaSim(HANDLE hDlg);

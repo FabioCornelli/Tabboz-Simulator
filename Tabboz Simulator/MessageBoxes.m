@@ -56,3 +56,9 @@ void MessageBox_PrimaDiVenireInPalestraFaiUnAbbonamento(HANDLE hDlg) {
 void MessageBox_EccessivaEsposizioneAiRaggiUltravioletti(HANDLE hDlg) {
     MessageBox(hDlg, "L' eccessiva esposizione del tuo corpo ai raggi ultravioletti,\nprovoca un avanzato grado di carbonizzazione e pure qualche piccola mutazione genetica...", "Lampada", MB_OK  | MB_ICONSTOP);
 }
+
+void MessageBox_CheTeNeFaiDiRicaricaSenzaSim(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Oh, che  te ne fai di una ricarica se non hai la sim ???",
+               "Telefonino", MB_OK | MB_ICONINFORMATION);
+}
