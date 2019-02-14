@@ -41,16 +41,8 @@ typedef struct {
 } BITMAP;
 
 typedef char * LPSTR;
-typedef int LPCREATESTRUCT;
+typedef void * LPCREATESTRUCT;
 typedef int ATOM;
-
-typedef struct {
-    int lpfnWndProc;
-    int hInstance;
-    int hCursor;
-    int hbrBackground;
-    int lpszClassName;
-} WNDCLASS;
 
 typedef struct {
     int right;
@@ -59,20 +51,8 @@ typedef struct {
     int top;
 } RECT;
 
-typedef int LPRECT;
+typedef RECT* LPRECT;
 typedef int HICON;
-
-typedef struct {
-    int lStructSize;
-    int hwndOwner;
-    int hInstance;
-    int lpstrFile;
-    int nMaxFile;
-    int lpstrDefExt;
-    int lpstrFilter;
-    int Flags;
-} OPENFILENAME;
-
 typedef int PAINTSTRUCT;
 
 //
@@ -98,6 +78,27 @@ struct TabbozINTRESOURCE {
 };
 
 typedef struct TabbozINTRESOURCE INTRESOURCE;
+
+//
+
+typedef struct {
+    int    lStructSize;
+    HANDLE hwndOwner;
+    HANDLE hInstance;
+    char * lpstrFile;
+    int    nMaxFile;
+    char * lpstrDefExt;
+    char * lpstrFilter;
+    int    Flags;
+} OPENFILENAME;
+
+typedef struct {
+    long   (*lpfnWndProc)(HANDLE hWnd, WORD msg, WORD wParam, LONG lParam);
+    HANDLE hInstance;
+    int    hCursor;
+    int    hbrBackground;
+    char   *lpszClassName;
+} WNDCLASS;
 
 // -
 // Constants Definitions
@@ -194,6 +195,7 @@ FARPROC MakeProcInstance(DialogProcFunc proc, HWND hinst);
 void FreeProcInstance(FARPROC proc);
 int GetDlgItem(HWND hDlg, int x);
 int LOWORD(int x);
+int HIWORD(int x);
 void EnableWindow(int x, int a);
 void SendMessage(int dlg, int msg, int value, int x);
 void EndDialog(HANDLE dlg, int x) ;
@@ -215,6 +217,34 @@ int GetSystemMetrics(int x);
 void MoveWindow(HANDLE handle, int x, int y, int w, int h, int q);
 void SetFocus(int dlg);
 
+HDC CreateCompatibleDC(HDC);
+HBITMAP SelectObject(HDC, HBITMAP);
+COLORREF SetBkColor(HDC, int);
+int RGB(int, int, int);
+void BitBlt(HDC, int x, int y,int cx, int cy, HDC hdc, int sx, int sy, int flags);
+HDC GetDC(void *);
+void DeleteDC(HDC);
+void ReleaseDC(void *, HDC);
+void GetObject(HBITMAP, size_t, LPSTR);
+void DeleteObject(HBITMAP);
+HBITMAP CreateBitmap(int width, int height, int, int, void *);
+void SetTextColor(HDC, int);
+HDC BeginPaint(HANDLE, PAINTSTRUCT *);
+void EndPaint(HANDLE, PAINTSTRUCT *);
+HBITMAP GetProp(HANDLE, char * name);
+void SetProp(HANDLE, char *, HBITMAP);
+void RemoveProp(HANDLE, char *);
+
+HBITMAP LoadBitmap(HANDLE, INTRESOURCE);
+void GetWindowRect(HANDLE, RECT *);
+void SpegniISuoni(void);
+void DestroyIcon(HICON);
+BOOL IsIconic(HANDLE);
+void ExitWindows(int, int);
+BOOL GetOpenFileName(OPENFILENAME *);
+BOOL GetSaveFileName(OPENFILENAME *);
+void SetWindowPos(HANDLE, void *, int, int, int, int, int);
+long DefWindowProc(HANDLE, WORD msg, WORD wparam, LONG lparam);
 LONG RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey);
 LONG RegCreateKeyEx(int hkey,
                     char * name,

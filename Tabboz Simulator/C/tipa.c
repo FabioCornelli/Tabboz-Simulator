@@ -26,7 +26,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 static 	int   spostamento;
 static	char  descrizione[30];
@@ -38,7 +38,6 @@ BOOL FAR PASCAL CercaTipa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL DueDiPicche(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 void DescrizioneTipa(int f);
 void DescrizioneTipo(int f);
-void AggiornaTipa(HWND hDlg);
 
 // ------------------------------------------------------------------------------------------
 // Tipa...
@@ -205,7 +204,7 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 			Soldi-=15;
 			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"tipa: Esci con la tipa\/o (%s)",MostraSoldi(15));
+			sprintf(tmp,"tipa: Esci con la tipa/o (%s)",MostraSoldi(15));
 			writelog(tmp);
 			#endif
 
@@ -415,7 +414,7 @@ char buf[30];
 		if (f > 35) sprintf(buf,"Puo' piacere.."); else
 			sprintf(buf,"E' un tipo...");
 
-	sprintf(descrizione,buf);
+	sprintf(descrizione, "%s", buf);
 }
 
 // ------------------------------------------------------------------------------------------
@@ -436,7 +435,7 @@ char buf[30];
 		if (f > 35) sprintf(buf,"Puo' piacere.."); else
 			sprintf(buf,"Inutile...");
 
-	sprintf(descrizione,buf);
+    sprintf(descrizione, "%s", buf);
 }
 
 // ------------------------------------------------------------------------------------------
@@ -476,7 +475,7 @@ BOOL FAR PASCAL DueDiPicche(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			case 201:
 			i++;
 			if (i > 5) {
-				sprintf(tmp,"Fino ad ora hai preso %d due di picche !\nNon ti preoccupare, capita a tutti di prendere qualche due di picche nella vita ...",DDP);
+				sprintf(tmp,"Fino ad ora hai preso %ld due di picche !\nNon ti preoccupare, capita a tutti di prendere qualche due di picche nella vita ...",DDP);
 				MessageBox( hDlg,
 					tmp, "La vita e' bella...", MB_OK | MB_ICONINFORMATION);
 				i = 0;

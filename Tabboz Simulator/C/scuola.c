@@ -26,7 +26,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
 void ScriviVoti(HWND parent);
@@ -47,15 +47,15 @@ BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		scelta=1;
 		SendMessage(GetDlgItem(hDlg, 110), BM_SETCHECK, TRUE, 0L); /* Seleziona agraria */
 
-		sprintf(tmp, "Corrompi il prof di %s",MaterieMem[1].nome);
+		sprintf(tmp, "Corrompi il prof di %s",MaterieMem[1].nome.UTF8String);
 		SetDlgItemText(hDlg, 101, tmp);
 		if (sesso == 'M')
-			sprintf(tmp, "Minaccia il prof di %s",MaterieMem[1].nome);
+			sprintf(tmp, "Minaccia il prof di %s",MaterieMem[1].nome.UTF8String);
 		else
-			sprintf(tmp, "Seduci il prof di %s",MaterieMem[1].nome);
+			sprintf(tmp, "Seduci il prof di %s",MaterieMem[1].nome.UTF8String);
 
 		SetDlgItemText(hDlg, 102, tmp);
-		sprintf(tmp, "Studia %s",MaterieMem[1].nome);
+		sprintf(tmp, "Studia %s",MaterieMem[1].nome.UTF8String);
 		SetDlgItemText(hDlg, 103, tmp);
 
       CalcolaStudio();
@@ -168,13 +168,14 @@ BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		 case 117:
 		 case 118:
 			scelta=wParam-109;
-			sprintf(tmp, "Corrompi il prof di %s",MaterieMem[scelta].nome); SetDlgItemText(hDlg, 101, tmp);
+			sprintf(tmp, "Corrompi il prof di %s",MaterieMem[scelta].nome.UTF8String); SetDlgItemText(hDlg, 101, tmp);
 			if (sesso == 'M')
-				sprintf(tmp, "Minaccia il prof di %s",MaterieMem[scelta].nome);
+				sprintf(tmp, "Minaccia il prof di %s",MaterieMem[scelta].nome.UTF8String);
 			else
-				sprintf(tmp, "Seduci il prof di %s",MaterieMem[scelta].nome);
+				sprintf(tmp, "Seduci il prof di %s",MaterieMem[scelta].nome.UTF8String);
 			SetDlgItemText(hDlg, 102, tmp);
-			sprintf(tmp, "Studia %s",MaterieMem[scelta].nome);              SetDlgItemText(hDlg, 103, tmp);
+			sprintf(tmp, "Studia %s",MaterieMem[scelta].nome.UTF8String);
+            SetDlgItemText(hDlg, 103, tmp);
 			return(TRUE);
 
 		 case IDOK:
@@ -202,11 +203,11 @@ char tmp[128];
    SetDlgItemText(parent, 104, MostraSoldi(Soldi));
    sprintf(tmp, "%d/100", Reputazione);
    SetDlgItemText(parent, 105, tmp);
-   sprintf(tmp, "%d/100", Studio);
+   sprintf(tmp, "%ld/100", Studio);
    SetDlgItemText(parent, 106, tmp);
 
    for (i=1;i<10;i++) {
-	sprintf(tmp, "%d",MaterieMem[i].xxx);
+	sprintf(tmp, "%ld",MaterieMem[i].xxx);
 	SetDlgItemText(parent, i + 119, tmp);
    }
 }
@@ -232,10 +233,10 @@ char tmp[128];
   SetDlgItemText(parent, 104, MostraSoldi(Soldi));
   sprintf(tmp, "%d/100", Reputazione);
   SetDlgItemText(parent, 105, tmp);
-  sprintf(tmp, "%d/100", Studio);
+  sprintf(tmp, "%ld/100", Studio);
   SetDlgItemText(parent, 106, tmp);
 
-  sprintf(tmp, "%d",MaterieMem[scelta].xxx);
+  sprintf(tmp, "%ld",MaterieMem[scelta].xxx);
   SetDlgItemText(parent, scelta + 119, tmp);
 
 }

@@ -27,7 +27,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 BOOL FAR PASCAL RiparaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
@@ -541,16 +541,19 @@ div_t  	d;
 	SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 
 	if (ScooterData.stato != -1) {
-		sprintf(tmp, "%s",  ScooterData.nome);        SetDlgItemText(hDlg, 116, tmp);
+		sprintf(tmp, "%s",  ScooterData.nome.UTF8String);
+        SetDlgItemText(hDlg, 116, tmp);
 		d = div(benzina,10);
-		sprintf(tmp, "%d.%dl", d.quot, d.rem);        SetDlgItemText(hDlg, 107, tmp);
+		sprintf(tmp, "%d.%dl", d.quot, d.rem);
+        SetDlgItemText(hDlg, 107, tmp);
 
 		SetDlgItemText(hDlg, 110, MostraSpeed());
 		SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
 		SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
 		SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
 		SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
-		sprintf(tmp, "%d%", ScooterData.stato);       SetDlgItemText(hDlg, 115, tmp);
+		sprintf(tmp, "%ld%%", ScooterData.stato);
+        SetDlgItemText(hDlg, 115, tmp);
 
 		SetDlgItemText(hDlg, 117, MostraSoldi(ScooterData.prezzo));
 
@@ -585,7 +588,7 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	 int		  i;
 
     if (message == WM_INITDIALOG) {
-	sprintf(tmp, "%s",  ScooterData.nome);
+	sprintf(tmp, "%s",  ScooterData.nome.UTF8String);
 	SetDlgItemText(hDlg, 109, tmp);
 	SetDlgItemText(hDlg, 105, n_carburatore[ScooterData.carburatore] );
 	SetDlgItemText(hDlg, 106, n_marmitta[ScooterData.marmitta] );
@@ -703,7 +706,7 @@ static	char   tmp[128];
 
 	switch (ScooterData.attivita)
 		{
-			case 1:  sprintf(tmp, "%dKm/h",  ScooterData.speed);
+			case 1:  sprintf(tmp, "%ldKm/h",  ScooterData.speed);
 				 break;
 			case 2:
 			case 3:

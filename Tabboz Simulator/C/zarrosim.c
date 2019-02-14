@@ -32,7 +32,7 @@
 #endif
 #endif
 
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 extern void	  Atinom(HANDLE hInstance);
 extern int	  vvc(int i);		/* 15 Giugno 1998 - v0.7.1 - Verifica Valori Chiave */
@@ -279,12 +279,9 @@ void InitTabboz(void)
 {
 	 char       tmp[128];
 #ifdef TABBOZ_WIN
-	 FARPROC		lpproc;
-
 	 // Init della liberia grafica...
 	 BWCCRegister(hInst); // Fanculo ! Mi sono magiato il fegato prima di trovare
 	 // questa funzione ! non c'e' nessuno documento fottuto che mi abbia aiutato !
-
 #endif
 
     [Tabboz initGlobalTabboz];
@@ -1361,7 +1358,7 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 		 if (sound_active) TabbozPlaySound(701);
 		 i=1 + random(6);	// 28 Aprile 1998 - (E' cambiato tutto cio' che riguarda gli scooter...)
-		 sprintf(buf,"Accetti la sfida con un tabbozzo che ha un %s ?",ScooterMem[i].nome);
+		 sprintf(buf,"Accetti la sfida con un tabbozzo che ha un %s ?",ScooterMem[i].nome.UTF8String);
 		 i2=MessageBox( hDlg,
 		    buf,
 		    "Gareggia con lo scooter", MB_YESNO | MB_ICONQUESTION);
@@ -1555,7 +1552,7 @@ char tmp[128];
 	 sprintf(tmp, "%d/100", Reputazione);	// Reputazione
 	 SetDlgItemText(parent, 152, tmp);
 
-	 sprintf(tmp, "%d/100", Studio);		// Profitto scolastico
+	 sprintf(tmp, "%ld/100", Studio);		// Profitto scolastico
 	 SetDlgItemText(parent, 153, tmp);
 
 	 if ( Rapporti != 0 ) {
@@ -1571,9 +1568,9 @@ char tmp[128];
 
 
 	 if (ScooterData.stato != -1) {
-		sprintf(tmp, "%s", ScooterData.nome);
+		sprintf(tmp, "%s", ScooterData.nome.UTF8String);
 		SetDlgItemText(parent, 150, tmp);	// Nomescooter
-		sprintf(tmp, "%d/100", ScooterData.stato);
+		sprintf(tmp, "%ld/100", ScooterData.stato);
 		SetDlgItemText(parent, 156, tmp);	// Stato scooter
 	 } else {
 		sprintf(tmp, " ");
@@ -1650,8 +1647,6 @@ static HICON 	 hIcon;
 	case WM_SYSCOMMAND:
 		 switch (LOWORD(wParam))
 		 {
-		 FARPROC lpproc;
-
 		 case QX_ABOUT:
 			 /* Display about box. */
 			 lpproc = MakeProcInstance(About, hInst);

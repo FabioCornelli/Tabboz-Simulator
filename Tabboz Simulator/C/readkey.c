@@ -23,7 +23,7 @@
 #include <string.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
 char nome_del_file_su_cui_salvare[256];
@@ -100,6 +100,8 @@ void SpegniISuoni()
 // Aggiunge una stringa al registro di configurazione
 void   TabbozAddKey(char *KeyName,char *KeyValue)
 {
+#ifdef TABBOZ_PERSISTANCE
+
 	LONG  Status;
 	HKEY  xKey;
 	DWORD KeyLen;
@@ -117,6 +119,8 @@ void   TabbozAddKey(char *KeyName,char *KeyValue)
 		 }
 	} else // 21 lug 2000 - Scrittura su di un file specifico.
 		WritePrivateProfileString("Tabboz",KeyName,KeyValue,nome_del_file_su_cui_salvare);
+    
+#endif
 };
 
 
@@ -124,6 +128,8 @@ void   TabbozAddKey(char *KeyName,char *KeyValue)
 
 char  *TabbozReadKey(char *KeyName,char *KeyValue)
 {
+#ifdef TABBOZ_PERSISTANCE
+
 	LONG  Status;
 	HKEY  xKey;
 	LONG	KeyLen;
@@ -148,6 +154,10 @@ char  *TabbozReadKey(char *KeyName,char *KeyValue)
 		if (*KeyValue == NULL) return NULL;
 		return KeyValue;
   }
+    
+#else
+    return NULL;
+#endif
 }
 
 

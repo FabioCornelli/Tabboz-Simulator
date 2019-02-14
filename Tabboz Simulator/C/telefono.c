@@ -27,7 +27,7 @@
 #include <string.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
 STCEL CellularData;
@@ -135,7 +135,7 @@ static int  scelta = 0;
 	 if (message == WM_INITDIALOG) {
 		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 		if (AbbonamentData.creditorest > -1) {
-			sprintf(tmp,AbbonamentData.nome);
+			sprintf(tmp, "%s", AbbonamentData.nome);
 			SetDlgItemText(hDlg, 105, tmp);
 		}
 		for (i=0;i<9;i++)
@@ -210,14 +210,14 @@ char tmp[128];
 		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 
 		if (CellularData.stato > -1) {
-			sprintf(tmp,CellularData.nome);
+			sprintf(tmp, "%s", CellularData.nome);
 			SetDlgItemText(hDlg, 120, tmp);
 		} else {
 			SetDlgItemText(hDlg, 120, NULL);
 		}
 
 		if (AbbonamentData.creditorest > -1) {
-			sprintf(tmp,AbbonamentData.nome);
+			sprintf(tmp, "%s", AbbonamentData.nome);
 			SetDlgItemText(hDlg, 121, tmp);  												// Abbonamento
 			SetDlgItemText(hDlg, 122, MostraSoldi(AbbonamentData.creditorest));	// Credito
 		} else {

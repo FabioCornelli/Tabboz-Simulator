@@ -339,5 +339,4 @@ extern  void    Giorno(HANDLE hInstance);
 extern  void    CalcolaStudio(void);
 extern  void    CalcolaVelocita(HANDLE hDlg);
 extern  void    InitTabboz(void);
-
-
+extern  void    AggiornaTipa(HWND hDlg);

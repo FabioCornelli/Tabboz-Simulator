@@ -25,7 +25,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 			char 	messaggio[256];
 BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lParam);
@@ -420,7 +420,7 @@ FARPROC	  lpproc;
 		case 43: // Domande inutili... 11 Giugno 1999
 		case 44:
 
-			if ((Rapporti > 0) && (sesso == 'M'))
+            if ((Rapporti > 0) && (sesso == 'M')) {
 				if (caso == 43) {
 					i=MessageBox( hInstance,
 						"Mi ami ???",
@@ -445,6 +445,7 @@ FARPROC	  lpproc;
 							}
 
 				}
+            }
 
 			#ifdef TABBOZ_DEBUG
 			writelog("eventi: Domande inutili della tipa...");

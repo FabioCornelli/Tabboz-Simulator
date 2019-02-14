@@ -28,7 +28,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 /* 10 Gennaio 1999 */
 #ifdef PROMPT_ACTIVE

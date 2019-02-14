@@ -27,7 +27,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 int    numeroditta;
 int    impegno;
@@ -173,9 +173,9 @@ static    int	  Lcheck;
 			numeroditta=n_ditta;
 
 			if (sesso == 'M')
-				sprintf(tmp, "SEI STATO ASSUNTO ! Ora sei un felice dipendente della %s !", LavoroMem[n_ditta].nome);
+				sprintf(tmp, "SEI STATO ASSUNTO ! Ora sei un felice dipendente della %s !", LavoroMem[n_ditta].nome.UTF8String);
 			else
-				sprintf(tmp, "SEI STATO ASSUNTA ! Ora sei una felice dipendente della %s !", LavoroMem[n_ditta].nome);
+				sprintf(tmp, "SEI STATO ASSUNTA ! Ora sei una felice dipendente della %s !", LavoroMem[n_ditta].nome.UTF8String);
 
 			MessageBox( hDlg, tmp, "Hai trovato lavoro !", MB_OK | MB_ICONINFORMATION);
 		} else {
@@ -198,7 +198,7 @@ static    int	  Lcheck;
 	    case 111:		/* Licenziati ------------------------------------------------------------------------------------ */
 		if (GiornoDiLavoro(hDlg,"Licenziati")) return(TRUE);
 
-		sprintf(tmp,"Sei proprio sicur%c di voler dare le dimissioni dalla %s ?",ao,LavoroMem[numeroditta].nome);
+		sprintf(tmp,"Sei proprio sicur%c di voler dare le dimissioni dalla %s ?",ao,LavoroMem[numeroditta].nome.UTF8String);
 		accetto=MessageBox( hDlg,
 		  tmp,
 		  "Licenziati", MB_YESNO | MB_ICONQUESTION);
@@ -390,7 +390,7 @@ char 	  tmp[128];
     SetDlgItemText(hDlg, 106, tmp);	// Stipendio
     SetDlgItemText(hDlg, 107, tmp);	// Impegno
   } else {
-    sprintf(tmp, "%s", LavoroMem[numeroditta].nome);
+    sprintf(tmp, "%s", LavoroMem[numeroditta].nome.UTF8String);
     SetDlgItemText(hDlg, 105, tmp);	// Ditta
     SetDlgItemText(hDlg, 106, MostraSoldi(stipendio)); // Stipendio
     sprintf(tmp, "%d/100", impegno);

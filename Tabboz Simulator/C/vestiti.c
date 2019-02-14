@@ -26,7 +26,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
 extern void EventiPalestra(HANDLE hInstance);
@@ -241,7 +241,6 @@ BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
 	 char      tmp_descrizione[1024];
 	 char      tmp[255];
-	 div_t	  nico;
 	 int		  i;
 
 	 if (message == WM_INITDIALOG) {
@@ -285,11 +284,11 @@ BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			if (SizeMem[scelta].cc == 0) {
 				/* Se i valori sono impostati a 0, non li scrive */
 				sprintf(tmp_descrizione,"%s\n%s",
-					SizeMem[scelta].nome, tmp );
+					SizeMem[scelta].nome.UTF8String, tmp );
 			} else {
-				nico = div(SizeMem[scelta].cc, 10);
-				sprintf(tmp_descrizione,"%s\n%sCondensato: %d Nicotina: %d.%d",
-					SizeMem[scelta].nome, tmp, SizeMem[scelta].speed, nico.quot, nico.rem);
+                __auto_type nico = SizeMem[scelta].cc;
+                sprintf(tmp_descrizione,"%s\n%sCondensato: %ld Nicotina: %ld.%ld",
+					SizeMem[scelta].nome.UTF8String, tmp, SizeMem[scelta].speed, nico / 10, nico % 10);
 			}
 
 			SetDlgItemText(hDlg, 106, tmp_descrizione);

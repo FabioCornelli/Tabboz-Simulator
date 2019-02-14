@@ -27,7 +27,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 static char natale2;
 
 BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam);
@@ -95,7 +95,6 @@ int  scad_pal_mese;
 
 void	Giorno(HANDLE hInstance)
 {
-	int i;
 	FARPROC lpproc;
 	char	tmp[255];
 
@@ -309,7 +308,7 @@ BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	for (i=1;i<10;i++) {
 		if (MaterieMem[i].xxx < 6) k++;		/* k = materie insuff o grav. insuf. */
 		if (MaterieMem[i].xxx < 4) k++;		/* k = materie insuff o grav. insuf. */
-		sprintf(tmp, "%d",MaterieMem[i].xxx);
+		sprintf(tmp, "%ld",MaterieMem[i].xxx);
 		SetDlgItemText(hDlg, i + 119, tmp);
 	}
 

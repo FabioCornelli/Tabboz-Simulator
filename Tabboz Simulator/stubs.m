@@ -9,39 +9,38 @@
 #include <stdlib.h>
 #include "os.h"
 
-void BeginPaint() { abort(); }
-void BitBlt() { abort(); }
-void CreateBitmap() { abort(); }
-void CreateCompatibleDC() { abort(); }
-void DefWindowProc() { abort(); }
-void DeleteDC() { abort(); }
-void DeleteObject() { abort(); }
-void DestroyIcon() { abort(); }
-void EndPaint() { abort(); }
-void GetDC() { abort(); }
-void GetObject() { abort(); }
-void GetOpenFileName() { abort(); }
-void GetPrivateProfileString() { abort(); }
-void GetProp() { abort(); }
-void GetSaveFileName() { abort(); }
-void GetWindowRect() { abort(); }
-void HIWORD() { abort(); }
-void IsIconic() { abort(); }
-void LoadBitmap() { abort(); }
-void RGB() { abort(); }
-void RegCloseKey() { abort(); }
-void RegQueryValue() { abort(); }
-void RegSetValue() { abort(); }
-void ReleaseDC() { abort(); }
-void RemoveProp() { abort(); }
-void SelectObject() { abort(); }
-void SetBkColor() { abort(); }
-void SetProp() { abort(); }
-void SetTextColor() { abort(); }
-void SetWindowPos() { abort(); }
-void WritePrivateProfileString() { abort(); }
-void new_counter() { abort(); }
-void ExitWindows() { abort(); }
+HDC BeginPaint(HANDLE a, PAINTSTRUCT * b)                  { abort(); }
+void BitBlt()                                              { abort(); }
+HBITMAP CreateBitmap(int a, int b, int c, int d, void * e) { abort(); }
+HDC CreateCompatibleDC(HDC a)                              { abort(); }
+long DefWindowProc(HANDLE a, WORD b, WORD c, LONG d)       { abort(); }
+void DeleteDC()                                            { abort(); }
+void DeleteObject()                                        { abort(); }
+void DestroyIcon()                                         { abort(); }
+void EndPaint()                                            { abort(); }
+HDC GetDC(void * a)                                        { abort(); }
+void GetObject()                                           { abort(); }
+BOOL GetOpenFileName(OPENFILENAME * a)                     { abort(); }
+BOOL GetSaveFileName(OPENFILENAME * a)                     { abort(); }
+void GetPrivateProfileString()                             { abort(); }
+HBITMAP GetProp(HANDLE a, char * b)                        { abort(); }
+void GetWindowRect()                                       { abort(); }
+BOOL IsIconic(HANDLE a)                                    { abort(); }
+HBITMAP LoadBitmap(HANDLE a, INTRESOURCE b)                { abort(); }
+int RGB(int a, int b, int c)                               { abort(); }
+void RegCloseKey()                                         { abort(); }
+void RegQueryValue()                                       { abort(); }
+void RegSetValue()                                         { abort(); }
+void ReleaseDC()                                           { abort(); }
+void RemoveProp()                                          { abort(); }
+HBITMAP SelectObject(HDC a, HBITMAP b)                     { abort(); }
+COLORREF SetBkColor(HDC a, int b)                          { abort(); }
+void SetProp()                                             { abort(); }
+void SetTextColor()                                        { abort(); }
+void SetWindowPos()                                        { abort(); }
+void WritePrivateProfileString()                           { abort(); }
+void new_counter()                                         { abort(); }
+void ExitWindows()                                         { abort(); }
 
 char * _argv[] = {""};
 int _argc = 0;
@@ -134,6 +133,10 @@ int GetDlgItem(HWND hDlg, int x) {
 }
 
 int LOWORD(int x) {
+    return x;
+}
+
+int HIWORD(int x) {
     return x;
 }
 
