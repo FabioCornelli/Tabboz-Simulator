@@ -352,7 +352,7 @@ char tmp[128];
 		sprintf(tmp, "Nessun Abbonamento");
 		SetDlgItemText(parent, 106, tmp);
 	} else {
-		 sprintf(tmp, "Scadenza abbonamento: %d %s",scad_pal_giorno,InfoMese[scad_pal_mese-1].nome.UTF8String);
+		 sprintf(tmp, "Scadenza abbonamento: %s", Tabboz.global.scadenzaPalestra.string.UTF8String);
 		 SetDlgItemText(parent, 106, tmp);
 	}
 

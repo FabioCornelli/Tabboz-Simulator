@@ -201,7 +201,10 @@ func CalledDialogsToKnownDialogs(cmd: [(String?, Int32, FARPROC)]) -> [String:In
     return x
 }
 
-   
+func tabboz_random(_ x: Int) -> Int {
+    return Int(tabboz_random(Int32(x)))
+}
+
 var test = false
 
 if !test {

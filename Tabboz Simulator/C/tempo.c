@@ -237,7 +237,7 @@ void	Giorno(HANDLE hInstance)
 			}
 		}
 
-	#ifdef TABBOZ_DEBUG
+	#ifdef TABBOZ_DEBUG_
 	/* Mostra data e soldi */
 	sprintf(tmp, "giorno: %s %d %s, %s",InfoSettimana[x_giornoset-1].nome.UTF8String,x_giorno,InfoMese[x_mese-1].nome.UTF8String,MostraSoldi(Soldi));
 	writelog(tmp);

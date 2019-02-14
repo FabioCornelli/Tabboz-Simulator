@@ -59,13 +59,36 @@ import Foundation
     
 }
 
+@objc enum Giorni : Int {
+    
+    case lunedi    = 0
+    case martedi   = 1
+    case mercoledi = 2
+    case giovedi   = 3
+    case venerdi   = 4
+    case sabato    = 5
+    case domenica  = 6
+    
+    var string: String {
+        switch self {
+        case .lunedi:    return "Lunedi'"
+        case .martedi:   return "Martedi'"
+        case .mercoledi: return "Mercoledi'"
+        case .giovedi:   return "Giovedi'"
+        case .venerdi:   return "Venerdi'"
+        case .sabato:    return "Sabato"
+        case .domenica:  return "Domenica"
+        }
+    }
+    
+}
+
 class STMESI : NSObject {
     
-    @objc let nome:       String // nome del mese
+//    @objc let nome:       String // nome del mese
     @objc let num_giorni: Int32  // giorni del mese
     
     init(_ nome: String, _ num_giorni: Int) {
-        self.nome = nome
         self.num_giorni = Int32(num_giorni)
         super.init()
     }
@@ -98,32 +121,43 @@ class STMESI : NSObject {
 }
 
 
+class GiornoDellAnno : NSObject {
+    
+    @objc var giorno : Int
+    @objc var mese   : Mese
+    
+    init(giorno: Int, mese: Mese) {
+        self.giorno = giorno
+        self.mese   = mese
+        super.init()
+    }
+    
+    @objc var string : String {
+        return "\(giorno) \(mese.nome)"
+    }
+    
+}
+
 @objc class Calendario : NSObject {
     
-    @objc private(set) var giorno                 = Int32(30)
-    @objc private(set) var mese                   = Mese.settembre
-    @objc private(set) var annoBisesto            = Int32(0) // Anno Bisestile - 12 Giugno 1999
-    @objc private(set) var giornoSettimana        = Int32(1)
+    @objc              var giornoDellAnno  = GiornoDellAnno(giorno: 30, mese: .settembre)
     
-    @objc              var vacanza                = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
-
-    @objc              var compleannoGiorno       = Int32(0) // giorno & mese del compleanno
-    @objc              var compleannoMese         = Int32(0)
+    @objc private(set) var annoBisesto     = Int32(0) // Anno Bisestile - 12 Giugno 1999
+    @objc private(set) var giornoSettimana = Giorni.lunedi
     
-    @objc              var scadenzaPalestraGiorno = Int32(0) // Giorno e mese in cui scadra' l' abbonamento alla palestra.
-    @objc              var scadenzaPalestraMese   = Int32(0)
+    @objc              var vacanza         = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
     
 }
 
 @objc extension Calendario {
     
     func nuovoGiorno() {
-        giorno += 1
+        giornoDellAnno.giorno += 1
         
-        if (giorno > STMESI.mesi[mese.rawValue - 1].num_giorni) {
-            if !(mese == .febbraio && annoBisesto == 1 && giorno == 29) {
-                giorno = 1;
-                mese = Mese(rawValue: mese.rawValue + 1) ?? .gennaio;
+        if (giornoDellAnno.giorno > giornoDellAnno.mese.giorni) {
+            if !(giornoDellAnno.mese == .febbraio && annoBisesto == 1 && giornoDellAnno.giorno == 29) {
+                giornoDellAnno.giorno = 1
+                giornoDellAnno.mese = Mese(rawValue: giornoDellAnno.mese.rawValue + 1) ?? .gennaio
             }
         }
         
@@ -131,7 +165,11 @@ class STMESI : NSObject {
             annoBisesto = (annoBisesto + 1) % 4
         }
         
-        giornoSettimana = (giornoSettimana + 1) % 7
+        giornoSettimana = Giorni(rawValue: (giornoSettimana.rawValue + 1) % 7) ?? .lunedi
     }
     
+    var giornoSettimanaString : String { return giornoSettimana.string       }
+    var giorno                : Int32  { return Int32(giornoDellAnno.giorno) }
+    var mese                  : Mese   { return giornoDellAnno.mese          }
+
 }

@@ -174,10 +174,8 @@ char  tmp[128];
 
         [Tabboz.global resetCalendario];
 
+        [Tabboz.global randomCompleanno];
     
-		comp_mese			= random(12)+1;
-		comp_giorno			= random(InfoMese[comp_mese-1].num_giorni)+1;
-
 		if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
 			STARTcmdShow		=  1;
 			timer_active		=  1;
@@ -1121,9 +1119,9 @@ BOOL FAR PASCAL PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	 char          tmp[128];
 
 	 if (message == WM_INITDIALOG) {
-		sprintf(tmp, " %d %s", comp_giorno,InfoMese[comp_mese-1].nome.UTF8String);
+		sprintf(tmp, " %s", Tabboz.global.compleanno.string.UTF8String);
 		SetDlgItemText(hDlg, 103, tmp);			// Data di nascita
-		sprintf(tmp, "%d", (comp_giorno * 13 + comp_mese * 3 + 6070));
+		sprintf(tmp, "%ld", Tabboz.global.documento);
 		SetDlgItemText(hDlg, 104, tmp);			// Numero documento di nascita (inutile ma da' spessore...)
 
 		if (numeroditta < 1) {        // Professione
@@ -1573,7 +1571,7 @@ char tmp[128];
 		SetDlgItemText(parent, 156, tmp);	// Stato scooter
 	 }
 
-	 sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome.UTF8String,x_giorno,InfoMese[x_mese-1].nome.UTF8String);  // Calendario
+	 sprintf(tmp, "%s %s",Tabboz.global.calendario.giornoSettimanaString.UTF8String, Tabboz.global.calendario.giornoDellAnno.string.UTF8String);  // Calendario
 	 SetDlgItemText(parent, 157, tmp);
 
 	 if ( sesso == 'M' )	{// Non usare la variabile "ao" xche' qui e' necessario

@@ -20,6 +20,26 @@ class Tabboz : NSObject {
     @objc var cellulare = STCEL(0, 0, 0, 0, "")
     @objc var abbonamento = STABB(0, 0, 0, 0, 0, "")
     
+    @objc var compleanno       = GiornoDellAnno(giorno: 1, mese: .gennaio)
+    @objc var scadenzaPalestra = GiornoDellAnno(giorno: 1, mese: .gennaio)
+    
+    @objc var compleannoGiorno       : Int32 { return Int32(compleanno.giorno) }
+    @objc var compleannoMese         : Mese  { return compleanno.mese          }
+    
+    @objc var scadenzaPalestraGiorno : Int32 {
+        get { return Int32(scadenzaPalestra.giorno)   }
+        set { scadenzaPalestra.giorno = Int(newValue) }
+    }
+    
+    @objc var scadenzaPalestraMese   : Mese  {
+        get { return scadenzaPalestra.mese     }
+        set { scadenzaPalestra.mese = newValue }
+    }
+
+    @objc var documento : Int {
+        return (compleanno.giorno * 13) + (compleanno.mese.rawValue * 3) + 6070;
+    }
+    
     @objc static func initGlobalTabboz() {
         global = Tabboz()
     }
@@ -74,6 +94,11 @@ class Tabboz : NSObject {
     
     func resetCalendario() {
         calendario = Calendario()
+    }
+
+    func randomCompleanno() {
+        let mese = Mese(rawValue: tabboz_random(12) + 1) ?? .gennaio
+        compleanno = GiornoDellAnno(giorno: tabboz_random(mese.giorni) + 1, mese: mese)
     }
     
 }
