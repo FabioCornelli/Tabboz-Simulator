@@ -10,35 +10,43 @@ import Foundation
 
 // INFORMAZIONI SUI TELEFONINI  31 Marzo 1999
 
-class STCEL : NSObject {
+class Telefono : NSObject {
 
-    let fama:   Int    // figosita'
-    private var stato:  Int    // quanto e' intero (in percuntuale)
-    
-    @objc private(set) var prezzo: Int
-    @objc var nome:   String // nome del telefono
-    
-    @objc var attivo  : Bool { return stato > -1 }
-    @objc var morente : Bool { return stato == 1 }
-    
-    init(
-        _ fama:   Int,
-        _ prezzo: Int,
-        _ nome:   String
-    ) {
-        self.fama   = fama
-        self.stato  = 100
-        self.prezzo = prezzo
-        self.nome   = nome
+    struct Cellulare {
         
-        super.init()
+        let fama:   Int    // figosita'
+        let prezzo: Int
+        let nome:   String // nome del telefono
+
+        init(
+            _ fama:   Int,
+            _ prezzo: Int,
+            _ nome:   String
+        ) {
+            self.fama   = fama
+            self.prezzo = prezzo
+            self.nome   = nome
+        }
+        
+    }
+    
+    private var cellulare: (cellulare: Cellulare, stato: Int)?
+    
+    func prendiCellulare(_ cellulare: Cellulare) {
+        self.cellulare = (cellulare, 100)
     }
     
     @objc func invalidate() {
-        stato = -1
+        self.cellulare = nil
     }
     
     @objc func danneggia(_ danno: Int) {
+        guard let (cellulare, vecchioStato) = self.cellulare else {
+            return
+        }
+        
+        var stato = vecchioStato
+        
         if stato > -1 {
             // A furia di prendere botte, il cellulare si spacca...
             stato -= danno;
@@ -48,15 +56,21 @@ class STCEL : NSObject {
               stato = 0
             }
         }
+        
+        self.cellulare = (cellulare, stato)
     }
     
     static let cellulari = [
-        STCEL( 2, 290, "Motorolo d170"),
-        STCEL( 7, 590, "Motorolo 8700"),
-        STCEL(10, 990, "Macro TAC 8900"),
+        Cellulare( 2, 290, "Motorolo d170"),
+        Cellulare( 7, 590, "Motorolo 8700"),
+        Cellulare(10, 990, "Macro TAC 8900"),
     ]
     
-    @objc var displayName : String? { return attivo ? nome : nil }
+    @objc var attivo      : Bool   { return cellulare == nil }
+    @objc var displayName : String { return cellulare.map { $0.cellulare.nome }  ?? ""    }
+    @objc var morente     : Bool   { return cellulare.map { $0.stato  == 1 }     ?? false }
+    @objc var prezzo      : Int    { return cellulare.map { $0.cellulare.prezzo} ?? 0     }
+
 }
 
 /* INFORMAZIONI SULLE COMPAGNIE DEI TELEFONINI */
@@ -165,7 +179,6 @@ class AbbonamentoCorrente : NSObject {
     @objc var creditoDisplay : String {
         let credito = String(cString: MostraSoldi(UInt(creditorest)))
         return creditorest > -1 ? credito : ""
-        
     }
     
 }

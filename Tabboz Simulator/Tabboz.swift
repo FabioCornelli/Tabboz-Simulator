@@ -21,7 +21,7 @@ class Tabboz : NSObject {
           var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
     
     @objc var scooter     = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
-    @objc var cellulare   = STCEL(0, 0, "")
+    @objc var cellulare   = Telefono()
     
     @objc private(set) var abbonamento = AbbonamentoCorrente(0, "")
     
@@ -180,7 +180,7 @@ class Tabboz : NSObject {
     // -
 
     func compraCellulare(_ scelta: Int, hDlg: HANDLE) {
-        let nuovoCellulare = STCEL.cellulari[scelta]
+        let nuovoCellulare = Telefono.cellulari[scelta]
         
         if (Soldi < nuovoCellulare.prezzo) {
             // Controlla se ha abbastanza soldi...
@@ -189,7 +189,8 @@ class Tabboz : NSObject {
         }
         
         Soldi -= UInt(nuovoCellulare.prezzo)
-        cellulare = STCEL.cellulari[scelta] // semantically wrong until STCEL is a Struct
+        cellulare.prendiCellulare(nuovoCellulare)
+        
         Fama += Int32(nuovoCellulare.fama)
         
         if Fama > 100 {
@@ -236,7 +237,7 @@ class Tabboz : NSObject {
                                         + 6070                             }
     
     static func enumerateCellulari(_ iteration: (Int, Int) -> Void) {
-        STCEL
+        Telefono
             .cellulari
             .enumerated()
             .map { ($0.offset, $0.element.prezzo) }
