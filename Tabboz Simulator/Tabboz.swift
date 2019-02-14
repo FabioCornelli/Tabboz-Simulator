@@ -15,6 +15,7 @@ class Tabboz : NSObject {
     @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
     @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
+    @objc var calendario = Calendario()
     @objc var scooter = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
     @objc var cellulare = STCEL(0, 0, 0, 0, "")
     @objc var abbonamento = STABB(0, 0, 0, 0, 0, "")

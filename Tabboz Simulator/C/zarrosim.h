@@ -163,16 +163,15 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define InfoMese      STMESI.mesi
 #define InfoSettimana STMESI.settimane
 
-extern	int  x_giorno;
-extern	int  x_mese;
-extern	int  x_giornoset;
-extern   int  x_vacanza;
-extern	int  x_anno_bisesto;
-extern	int  scad_pal_giorno;	// Giorno e mese in cui scadra' l' abbonamento alla palestra.
-extern	int  scad_pal_mese;
-
-extern	int  comp_giorno;			// giorno & mese del compleanno
-extern	int  comp_mese;
+#define x_giorno         Tabboz.global.calendario.giorno
+#define x_mese           Tabboz.global.calendario.mese
+#define x_anno_bisesto   Tabboz.global.calendario.annoBisesto
+#define x_giornoset      Tabboz.global.calendario.giornoSettimana
+#define comp_giorno      Tabboz.global.calendario.compleannoGiorno
+#define comp_mese        Tabboz.global.calendario.compleannoMese
+#define x_vacanza        Tabboz.global.calendario.vacanza
+#define scad_pal_giorno  Tabboz.global.calendario.scadenzaPalestraGiorno
+#define scad_pal_mese    Tabboz.global.calendario.scadenzaPalestraMese
 
 #ifdef PROMPT_ACTIVE
 extern	int  prompt_mode;

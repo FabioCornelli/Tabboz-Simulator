@@ -53,15 +53,6 @@ STVACANZE InfoVacanze[] =
 	  {"Santo Stefano",    			26,  12, "Buon Santo Stefano..."},
 	  { NULL,		        	 		 0,   0, NULL} };
 
-
-int  x_giorno;
-int  x_mese;
-int  x_anno_bisesto;	// Anno Bisestile - 12 Giugno 1999
-int  x_giornoset;
-int  x_vacanza;		/* Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0	*/
-int  scad_pal_giorno;	/* Giorno e mese in cui scadra' l' abbonamento alla palestra.		*/
-int  scad_pal_mese;
-
 // ------------------------------------------------------------------------------------------
 // Giorno...
 // ------------------------------------------------------------------------------------------

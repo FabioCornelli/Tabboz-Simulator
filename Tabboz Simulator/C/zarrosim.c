@@ -84,9 +84,6 @@ int	 current_pantaloni;
 int	 current_scarpe;
 int	 current_tipa;
 
-int	 comp_giorno;	// giorno & mese del compleanno
-int	 comp_mese;	//
-
 int	 timer_active;
 int	 fase_di_avvio;
 int	 sound_active;		/* 1 Marzo 1999 */

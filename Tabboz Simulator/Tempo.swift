@@ -45,3 +45,18 @@ class STMESI : NSObject {
     ]
     
 }
+
+
+@objc class Calendario : NSObject {
+    
+    @objc var giorno                 = Int32(0)
+    @objc var mese                   = Int32(0)
+    @objc var annoBisesto            = Int32(0) // Anno Bisestile - 12 Giugno 1999
+    @objc var giornoSettimana        = Int32(0)
+    @objc var compleannoGiorno       = Int32(0) // giorno & mese del compleanno
+    @objc var compleannoMese         = Int32(0)
+    @objc var vacanza                = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
+    @objc var scadenzaPalestraGiorno = Int32(0) // Giorno e mese in cui scadra' l' abbonamento alla palestra.
+    @objc var scadenzaPalestraMese   = Int32(0)
+    
+}
