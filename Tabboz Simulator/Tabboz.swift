@@ -22,7 +22,8 @@ class Tabboz : NSObject {
     
     @objc var scooter     = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
     @objc var cellulare   = STCEL(0, 0, 0, 0, "")
-    @objc var abbonamento = STABB(0, 0, 0, 0, 0, "")
+    
+    @objc private(set) var abbonamento = AbbonamentoCorrente(0, 0, "")
     
     @objc static func initGlobalTabboz() {
         global = Tabboz()

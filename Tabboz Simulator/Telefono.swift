@@ -86,3 +86,21 @@ class STABB : NSObject {
 
 }
 
+class AbbonamentoCorrente : NSObject {
+
+    @objc var creditorest: Int    // Credito Restante...
+    @objc var fama:        Int    // figosita'
+    @objc var nome:        String // nome del telefono
+    
+    init(
+        _ creditorest: Int,
+        _ fama:        Int,
+        _ nome:        String
+    ) {
+        self.creditorest = creditorest
+        self.fama        = fama
+        self.nome        = nome
+        super.init()
+    }
+    
+}
