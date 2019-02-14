@@ -153,7 +153,7 @@ void SendMessage(int dlg, int msg, int value, int x) {
     if (log_window) printf("    sending dlg: %d, msg: %d, value: %d, x: %d\n", dlg, msg, value, x); didLog = true;
 }
 
-void EndDialog(HANDLE dlg, int x) {
+void EndDialog(HANDLE dlg, BOOL x) {
     if (log_window) printf("    end dialog %p, %d\n", dlg, x); didLog = true;
     
     [Tabboz endDialog];

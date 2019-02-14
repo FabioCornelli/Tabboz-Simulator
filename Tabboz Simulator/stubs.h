@@ -198,7 +198,7 @@ int LOWORD(int x);
 int HIWORD(int x);
 void EnableWindow(int x, int a);
 void SendMessage(int dlg, int msg, int value, int x);
-void EndDialog(HANDLE dlg, int x) ;
+void EndDialog(HANDLE dlg, BOOL x) ;
 void ShowWindow(HANDLE h, int flags);
 void SetDlgItemText(HANDLE h, int d, const char * str);
 int GetMenu(HANDLE h);

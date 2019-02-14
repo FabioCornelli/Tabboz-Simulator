@@ -37,6 +37,7 @@ class Tabboz : NSObject {
 }
 
 @objc extension Tabboz {
+    
     func chiediPaghettaExtra(_ hDlg: HANDLE) {
         if (studio >= 40) {
             if attesa == 0 {
@@ -83,7 +84,9 @@ class Tabboz : NSObject {
         let mese = Mese(rawValue: tabboz_random(12) + 1) ?? .gennaio
         compleanno = GiornoDellAnno(giorno: tabboz_random(mese.giorni) + 1, mese: mese)
     }
-    
+
+    // -
+    // Palestra
     // -
     
     @objc static func PalestraCostoLampada() -> Int { return 14 }
