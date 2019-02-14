@@ -8,6 +8,57 @@
 
 import Foundation
 
+@objc enum Mese : Int {
+    
+    case gennaio   = 1
+    case febbraio  = 2
+    case marzo     = 3
+    case aprile    = 4
+    case maggio    = 5
+    case giugno    = 6
+    case luglio    = 7
+    case agosto    = 8
+    case settembre = 9
+    case ottobre   = 10
+    case novembre  = 11
+    case dicembre  = 12
+    
+    var nome: String {
+        switch self {
+        case .gennaio:   return "Gennaio"
+        case .febbraio:  return "Febbraio"
+        case .marzo:     return "Marzo"
+        case .aprile:    return "Aprile"
+        case .maggio:    return "Maggio"
+        case .giugno:    return "Giugno"
+        case .luglio:    return "Luglio"
+        case .agosto:    return "Agosto"
+        case .settembre: return "Settembre"
+        case .ottobre:   return "Ottobre"
+        case .novembre:  return "Novembre"
+        case .dicembre:  return "Dicembre"
+        }
+    }
+    
+    var giorni: Int {
+        switch self {
+        case .gennaio:   return 31
+        case .febbraio:  return 28
+        case .marzo:     return 31
+        case .aprile:    return 30
+        case .maggio:    return 31
+        case .giugno:    return 30
+        case .luglio:    return 31
+        case .agosto:    return 31
+        case .settembre: return 30
+        case .ottobre:   return 31
+        case .novembre:  return 30
+        case .dicembre:  return 31
+        }
+    }
+    
+}
+
 class STMESI : NSObject {
     
     @objc let nome:       String // nome del mese
@@ -50,7 +101,7 @@ class STMESI : NSObject {
 @objc class Calendario : NSObject {
     
     @objc private(set) var giorno                 = Int32(30)
-    @objc private(set) var mese                   = Int32(9)
+    @objc private(set) var mese                   = Mese.settembre
     @objc private(set) var annoBisesto            = Int32(0) // Anno Bisestile - 12 Giugno 1999
     @objc private(set) var giornoSettimana        = Int32(1)
     
@@ -69,15 +120,14 @@ class STMESI : NSObject {
     func nuovoGiorno() {
         giorno += 1
         
-        if (giorno > STMESI.mesi[Int(mese) - 1].num_giorni) {
-            if !(mese == 2 && annoBisesto == 1 && giorno == 29) {
+        if (giorno > STMESI.mesi[mese.rawValue - 1].num_giorni) {
+            if !(mese == .febbraio && annoBisesto == 1 && giorno == 29) {
                 giorno = 1;
-                mese += 1;
+                mese = Mese(rawValue: mese.rawValue + 1) ?? .gennaio;
             }
         }
         
-        if mese > 12 {
-            mese = 1
+        if mese == .gennaio {
             annoBisesto = (annoBisesto + 1) % 4
         }
         

@@ -212,6 +212,9 @@ void	Giorno(HANDLE hInstance)
 				}
 
 			break;
+            
+        default:
+            break;
 
 	}
 
