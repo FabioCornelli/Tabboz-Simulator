@@ -172,9 +172,7 @@ char  tmp[128];
 
 		CalcolaStudio();
 
-        [Tabboz.global resetCalendario];
-
-        [Tabboz.global randomCompleanno];
+        [Tabboz.global resetMe];
     
 		if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
 			STARTcmdShow		=  1;
@@ -204,8 +202,6 @@ char  tmp[128];
 #endif
 
 		ScooterData.stato	= -1;
-
-		AbbonamentData.creditorest = -1;
 		CellularData.stato 			= -1;
 
 }

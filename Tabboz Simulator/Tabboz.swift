@@ -23,7 +23,7 @@ class Tabboz : NSObject {
     @objc var scooter     = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
     @objc var cellulare   = STCEL(0, 0, 0, 0, "")
     
-    @objc private(set) var abbonamento = AbbonamentoCorrente(0, 0, "")
+    @objc private(set) var abbonamento = AbbonamentoCorrente(0, "")
     
     @objc static func initGlobalTabboz() {
         global = Tabboz()
@@ -77,13 +77,10 @@ class Tabboz : NSObject {
         }
     }
     
-    func resetCalendario() {
+    func resetMe() {
         calendario = Calendario()
-    }
-
-    func randomCompleanno() {
-        let mese = Mese(rawValue: tabboz_random(12) + 1) ?? .gennaio
-        compleanno = GiornoDellAnno(giorno: tabboz_random(mese.giorni) + 1, mese: mese)
+        compleanno = .random()
+        abbonamento = AbbonamentoCorrente(-1, "")
     }
 
     // -
@@ -182,22 +179,16 @@ class Tabboz : NSObject {
     // -
 
     func compraAbbonamento(_ scelta: Int, _ hDlg: HANDLE) {
+        let nuovoAbbonamento = STABB.abbonamenti[scelta]
+        
         if (Soldi < STABB.abbonamenti[scelta].prezzo) {
             // Controlla se ha abbastanza soldi...
             
             nomoney(hDlg, Int32(CELLULRABBONAM));
             EndDialog(hDlg, true);
         }
-        
-        if (STABB.abbonamenti[scelta].abbonamento == 1) {
-            // Abbonamento, no problem...
-            
-            Soldi -= UInt(STABB.abbonamenti[scelta].prezzo)
-            
-            abbonamento.creditorest = STABB.abbonamenti[scelta].creditorest
-            abbonamento.fama        = STABB.abbonamenti[scelta].fama
-            abbonamento.nome        = String(STABB.abbonamenti[scelta].nome)
-            
+
+        if abbonamento.accredita(nuovoAbbonamento) {
             if sound_active != 0 && cellulare.stato > -1 {
                 TabbozPlaySound(602)
             }
@@ -205,23 +196,7 @@ class Tabboz : NSObject {
             EndDialog(hDlg, true)
         }
         else {
-            // Ricarica...
-            
-            if ((abbonamento.creditorest > -1) &&
-                (abbonamento.nome == STABB.abbonamenti[scelta].nome))
-            {
-                Soldi -= UInt(STABB.abbonamenti[scelta].prezzo)
-                abbonamento.creditorest += STABB.abbonamenti[scelta].creditorest
-                
-                if sound_active != 0 && cellulare.stato > -1 {
-                    TabbozPlaySound(602);
-                }
-                
-                EndDialog(hDlg, true);
-            }
-            else {
-                MessageBox_CheTeNeFaiDiRicaricaSenzaSim(hDlg)
-            }
+            MessageBox_CheTeNeFaiDiRicaricaSenzaSim(hDlg)
         }
     }
     
@@ -238,5 +213,13 @@ class Tabboz : NSObject {
     var documento:        Int    { return (compleanno.giorno * 13)
                                         + (compleanno.mese.rawValue * 3)
                                         + 6070                             }
+    
+    static func enumerateAbbonamenti(_ iteration: (Int, Int) -> Void) {
+        STABB
+            .abbonamenti
+            .enumerated()
+            .map { ($0.offset, $0.element.prezzo) }
+            .forEach(iteration)
+    }
     
 }

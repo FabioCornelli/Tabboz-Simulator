@@ -107,7 +107,7 @@ static int  scelta = 0;
 BOOL FAR PASCAL   AbbonaCellulare(HWND hDlg, WORD message, WORD wParam, LONG lParam) 	/* 31 Marzo 1999 */
 {
 		 char tmp[128];
-		 int  i;
+    
 static int  scelta = 0;
 
 	 if (message == WM_INITDIALOG) {
@@ -116,8 +116,11 @@ static int  scelta = 0;
 			sprintf(tmp, "%s", AbbonamentData.nome.UTF8String);
 			SetDlgItemText(hDlg, 105, tmp);
 		}
-		for (i=0;i<9;i++)
-			SetDlgItemText(hDlg, 110+i, MostraSoldi( AbbonamentMem[i].prezzo));
+         
+         [Tabboz enumerateAbbonamenti:^(NSInteger i, NSInteger prezzo) {
+             SetDlgItemText(hDlg, 110 + (int)i, MostraSoldi((int)prezzo));
+         }];
+         
 		return(TRUE);
 	 } else if (message == WM_COMMAND) {
 

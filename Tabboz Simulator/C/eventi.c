@@ -74,7 +74,7 @@ FARPROC	  lpproc;
 /* Cellulare ----------------------------------------16 Apr 1999----- */
 
 	if ((AbbonamentData.creditorest > 0) && (CellularData.stato > -1)) {
-		AbbonamentData.creditorest-=1;
+        [Tabboz.global.abbonamento addebita: -1];
 		if (Fama < 55) Fama++;
 		if (AbbonamentData.creditorest == 0) {
 			MessageBox( hInstance,

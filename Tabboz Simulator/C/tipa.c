@@ -142,7 +142,7 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 				// 5 Maggio 1999 - Telefono di casa o telefonino ???
 
 				if ((AbbonamentData.creditorest >= 2) && (CellularData.stato > -1))
-					AbbonamentData.creditorest-=2;
+                    [Tabboz.global.abbonamento addebita: -2];
 				else
 					Soldi-=5;
 

@@ -131,6 +131,11 @@ struct GiornoDellAnno : Equatable {
         return fraUnAnno
     }
 
+    static func random() -> GiornoDellAnno {
+        let mese = Mese(rawValue: tabboz_random(12) + 1) ?? .gennaio
+        return GiornoDellAnno(giorno: tabboz_random(mese.giorni) + 1, mese: mese)
+    }
+    
 }
 
 @objc class Calendario : NSObject {

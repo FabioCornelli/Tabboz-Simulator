@@ -43,64 +43,101 @@ class STCEL : NSObject {
 
 /* INFORMAZIONI SULLE COMPAGNIE DEI TELEFONINI */
 
-class STABB : NSObject {
+struct STABB {
 
-    @objc var abbonamento: Int    // 0 = Ricarica, 1 = Abbonamento
-    @objc var dualonly:    Int    // Dual Band Only ?
-    @objc var creditorest: Int    // Credito Restante...
-    @objc var fama:        Int    // figosita'
-    @objc var prezzo:      Int
-    @objc var nome:        String // nome del telefono
+    enum Tipo {
+        case ricarica
+        case abbonamento
+    }
+
+    enum Bands {
+        case singleBand
+        case dualBand
+    }
+    
+    var abbonamento:     Tipo   // 0 = Ricarica, 1 = Abbonamento
+    var dualBandOnly:    Bands  // Dual Band Only ?
+    var creditoRestante: Int    // Credito Restante...
+    var prezzo:          Int
+    var nome:            String // nome del telefono
     
     init(
-        _ abbonamento: Int,
-        _ dualonly:    Int,
+        _ abbonamento: Tipo,
+        _ dualonly:    Bands,
         _ creditorest: Int,
-        _ fama:        Int,
         _ prezzo:      Int,
         _ nome:        String
     ) {
-        self.abbonamento = abbonamento
-        self.dualonly    = dualonly
-        self.creditorest = creditorest
-        self.fama        = fama
-        self.prezzo      = prezzo
-        self.nome        = nome
-        super.init()
+        self.abbonamento     = abbonamento
+        self.dualBandOnly    = dualonly
+        self.creditoRestante = creditorest
+        self.prezzo          = prezzo
+        self.nome            = nome
     }
     
-    @objc static let abbonamenti = [
-        STABB(1,  0,     50, 1,    100,  "Onmitel" ), // Abbonamenti
-        STABB(1,  0,     50, 1,    100,  "DIM"     ),
-        STABB(1,  1,    100, 1,    100,  "Vind"    ),
+    static let abbonamenti = [
+        STABB(.abbonamento,  .singleBand,  50, 100,  "Onmitel" ), // Abbonamenti
+        STABB(.abbonamento,  .singleBand,  50, 100,  "DIM"     ),
+        STABB(.abbonamento,  .dualBand,   100, 100,  "Vind"    ),
         
-        STABB(0,  0,     50, 1,     60,  "Onmitel" ), // Ricariche
-        STABB(0,  0,    100, 1,    110,  "Onmitel" ),
+        STABB(.ricarica,     .singleBand,  50,  60,  "Onmitel" ), // Ricariche
+        STABB(.ricarica,     .singleBand, 100, 110,  "Onmitel" ),
         
-        STABB(0,  0,     50, 1,     60,  "DIM"     ), // Ricariche
-        STABB(0,  0,    100, 1,    110,  "DIM"     ),
+        STABB(.ricarica,     .singleBand,  50,  60,  "DIM"     ), // Ricariche
+        STABB(.ricarica,     .singleBand, 100, 110,  "DIM"     ),
         
-        STABB(0,  1,     50, 1,     50,  "Vind"    ), // Ricariche
-        STABB(0,  1,    100, 1,    100,  "Vind"    ),
+        STABB(.ricarica,     .dualBand,    50,  50,  "Vind"    ), // Ricariche
+        STABB(.ricarica,     .dualBand,   100, 100,  "Vind"    ),
     ]
 
 }
 
 class AbbonamentoCorrente : NSObject {
 
-    @objc var creditorest: Int    // Credito Restante...
-    @objc var fama:        Int    // figosita'
-    @objc var nome:        String // nome del telefono
+    @objc private(set) var creditorest: Int    // Credito Restante...
+    @objc private(set) var nome:        String // nome del telefono
     
     init(
         _ creditorest: Int,
-        _ fama:        Int,
         _ nome:        String
     ) {
         self.creditorest = creditorest
-        self.fama        = fama
         self.nome        = nome
         super.init()
+    }
+    
+    func accredita(_ nuovoAbbonamento: STABB) -> Bool {
+        switch nuovoAbbonamento.abbonamento {
+            
+        case .abbonamento:
+            // Abbonamento, no problem...
+            
+            Soldi -= UInt(nuovoAbbonamento.prezzo)
+            
+            creditorest = nuovoAbbonamento.creditoRestante
+            nome        = String(nuovoAbbonamento.nome)
+            
+            return true
+            
+        case .ricarica:
+            // Ricarica...
+            
+            if ((creditorest > -1) &&
+                (nome == nuovoAbbonamento.nome))
+            {
+                Soldi -= UInt(nuovoAbbonamento.prezzo)
+                creditorest += nuovoAbbonamento.creditoRestante
+                
+                return true
+            }
+            else {
+                return false
+            }
+        }
+    }
+    
+    @objc func addebita(_ soldi: Int) {
+        creditorest -= soldi
     }
     
 }
