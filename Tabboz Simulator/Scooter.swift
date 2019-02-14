@@ -8,43 +8,92 @@
 
 import Foundation
 
+// Structure Definitions
+// -
+
 // INFORMAZIONI SUGLI SCOOTER  (ora usato solo per cose generiche...)
 class STSCOOTER : NSObject {
     
-    @objc var speed : Int          // velocita' massima
-    @objc var cc : Int             // cilindrata
-    @objc var xxx : Int            // [future espansioni]
-    @objc var fama : Int           // figosita' scooter
-    @objc var mass : Int           // massa sooter
-    @objc var maneuver : Int       // manovrabilita'
-    @objc var prezzo : Int         // costo dello scooter (modifiche incluse)
-    @objc var stato : Int          // quanto e' intero (in percuntuale); -1 nessuno scooter
-    @objc var nome : String        // nome dello scooter
+    @objc var speed:    Int    // velocita' massima
+    @objc var cc:       Int    // cilindrata
+    @objc var xxx:      Int    // [future espansioni]
+    @objc var fama:     Int    // figosita' scooter
+    @objc var mass:     Int    // massa sooter
+    @objc var maneuver: Int    // manovrabilita'
+    @objc var prezzo:   Int    // costo dello scooter (modifiche incluse)
+    @objc var stato:    Int    // quanto e' intero (in percuntuale); -1 nessuno scooter
+    @objc var nome:     String // nome dello scooter
     
     init(
-        _ speed : Int,
-        _ cc : Int,
-        _ xxx : Int,
-        _ fama : Int,
-        _ mass : Int,
-        _ maneuver : Int,
-        _ prezzo : Int,
-        _ stato : Int,
-        _ nome : String
+        _ speed:    Int,
+        _ cc:       Int,
+        _ xxx:      Int,
+        _ fama:     Int,
+        _ mass:     Int,
+        _ maneuver: Int,
+        _ prezzo:   Int,
+        _ stato:    Int,
+        _ nome:     String
     ) {
-        self.speed = speed
-        self.cc = cc
-        self.xxx = xxx
-        self.fama = fama
-        self.mass = mass
+        self.speed    = speed
+        self.cc       = cc
+        self.xxx      = xxx
+        self.fama     = fama
+        self.mass     = mass
         self.maneuver = maneuver
-        self.prezzo = prezzo
-        self.stato = stato
-        self.nome = nome
+        self.prezzo   = prezzo
+        self.stato    = stato
+        self.nome     = nome
         super.init()
     }
     
 }
+
+// NUOVE INFORMAZIONI SUGLI SCOOTER - 28 Aprile 1998
+
+class NEWSTSCOOTER : NSObject {
+    
+    @objc var speed:       Int     // 01  Velocita'
+    @objc var marmitta:    Int     // 02  Marmitta            ( +0, +7, +12, +15)
+    @objc var carburatore: Int     // 03  Carburatore         ( 0 - 4 )
+    @objc var cc:          Int     // 04  Cilindrata          ( 0 - 4 )
+    @objc var filtro:      Int     // 05  Filtro dell' aria   ( +0, +5, +10, +15)
+    @objc var prezzo:      Int     // 06  Costo dello scooter (modifiche incluse)
+    @objc var attivita:    Int     // 07  Attivita' scooter
+    @objc var stato:       Int     // 08  Quanto e' intero (in percuntuale); -1 nessuno scooter
+    @objc var nome:        String  // 09  Nome dello scooter
+    @objc var fama:        Int     // 10  Figosita' scooter
+    
+    init(
+        _ speed:       Int,
+        _ marmitta:    Int,
+        _ carburatore: Int,
+        _ cc:          Int,
+        _ filtro:      Int,
+        _ prezzo:      Int,
+        _ attivita:    Int,
+        _ stato:       Int,
+        _ nome:        String,
+        _ fama:        Int
+    ) {
+        self.speed       = speed
+        self.marmitta    = marmitta
+        self.carburatore = carburatore
+        self.cc          = cc
+        self.filtro      = filtro
+        self.prezzo      = prezzo
+        self.attivita    = attivita
+        self.stato       = stato
+        self.nome        = nome
+        self.fama        = fama
+        
+        super.init()
+    }
+}
+
+// -
+// Static Data
+// -
 
 @objc extension STSCOOTER {
 
@@ -175,6 +224,23 @@ class STSCOOTER : NSObject {
         //        |   |  \________________ incremento reputazione
         //        |   \___________________ figosita' minima x entrare (selezione all' ingresso)
         //         \______________________ 1=disco fuori porta - ci puoi arrivare solo se hai lo scooter...
+    ]
+    
+}
+
+@objc extension NEWSTSCOOTER {
+    
+    static let scooter = [
+        NEWSTSCOOTER(  0,  0, 0, 0, 0,     0, 0,  -1, "Nessuno scooter",            0),
+        NEWSTSCOOTER( 65,  0, 0, 0, 0,  2498, 1, 100, "Magutty Firecow",            5),
+        NEWSTSCOOTER( 75,  0, 1, 1, 1,  4348, 1, 100, "Honda F98",                 10),
+        NEWSTSCOOTER(105,  1, 1, 2, 1,  6498, 1, 100, "Mizzubisci R200 Millenium", 15),
+        
+        NEWSTSCOOTER( 75,  0, 0, 1, 1,  4298, 1, 100, "Magutty Firecow+",           7),
+        NEWSTSCOOTER(100,  0, 1, 2, 1,  5998, 1, 100, "Magutty Firecow II",        10),
+        NEWSTSCOOTER(100,  0, 1, 2, 1,  6348, 1, 100, "Honda F98s",                13),
+        
+        NEWSTSCOOTER(250,  0, 5, 5, 0,  1450, 1, 100, "Lexux LS400 ",               6),
     ]
     
 }

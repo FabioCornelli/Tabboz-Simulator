@@ -58,21 +58,6 @@ static int tabella[]=
 
 char showscooter;
 
-
-NEWSTSCOOTER ScooterMem[] =
-	{ {  0,  0, 0, 0, 0,     0, 0,  -1 , "Nessuno scooter", 	         0},
-	  { 65,  0, 0, 0, 0,  2498, 1, 100, "Magutty Firecow",	         5},
-	  { 75,  0, 1, 1, 1,  4348, 1, 100, "Honda F98",		        	  10},
-	  {105,  1, 1, 2, 1,  6498, 1, 100, "Mizzubisci R200 Millenium", 15},
-
-	  { 75,  0, 0, 1, 1,  4298, 1, 100, "Magutty Firecow+",	         7},
-	  {100,  0, 1, 2, 1,  5998, 1, 100, "Magutty Firecow II",        10},
-	  {100,  0, 1, 2, 1,  6348, 1, 100, "Honda F98s",	        		  13},
-
-	  {250,  0, 5, 5, 0,  1450, 1, 100, "Lexux LS400 ",	        	  60}
-		};
-
-
 int	benzina;
 int	antifurto;
 
@@ -334,6 +319,7 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 # pragma argsused
 BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
+#if 0
 	     int           num_moto;
 static  NEWSTSCOOTER  ScooterTemp;
 
@@ -376,7 +362,8 @@ static  NEWSTSCOOTER  ScooterTemp;
 				return(TRUE);
 			}
 	 }
-
+#endif
+    
 	 return(FALSE);
 }
 

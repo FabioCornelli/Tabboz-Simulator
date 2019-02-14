@@ -141,21 +141,6 @@ ATTESAMAX   		= 5,
 
 typedef unsigned long   u_long;	// 28 Novembre 1998
 
-// NUOVE INFORMAZIONI SUGLI SCOOTER - 28 Aprile 1998
-
-typedef struct tagNEWSTSCOOTER {
-	 int         speed;          // 01  Velocita'
-	 int			 marmitta;		  // 02  Marmitta 		( +0, +7, +12, +15)
-	 int			 carburatore;	  // 03  Carburatore  	( 0 - 4 )
-	 int         cc;             // 04  Cilindrata		( 0 - 4 )
-	 int         filtro;         // 05  Filtro dell' aria	( +0, +5, +10, +15)
-	 int         prezzo;         // 06  Costo dello scooter  (modifiche incluse)
-	 int         attivita;       // 07  Attivita' scooter
-	 int         stato;          // 08  Quanto e' intero (in percuntuale); -1 nessuno scooter
-	 char        nome[30];       // 09  Nome dello scooter
-	 int         fama;           // 10  Figosita' scooter
-  } NEWSTSCOOTER;
-
 // INFORMAZIONI SUI TELEFONINI  31 Marzo 1999
 typedef struct tagCEL {
 	 int			 dual;			  // Dual Band ?
@@ -176,8 +161,9 @@ typedef struct tagABB {
   } STABB;
 
 
-extern   NEWSTSCOOTER ScooterData;
-extern	NEWSTSCOOTER ScooterMem[];
+#define ScooterData Tabboz.global.scooter
+
+#define ScooterMem  NEWSTSCOOTER.scooter
 
 #define MaterieMem  STSCOOTER.materie
 #define VestitiMem  STSCOOTER.vestiti

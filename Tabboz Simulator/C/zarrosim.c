@@ -45,7 +45,7 @@ extern void SaveFileDlg(HWND hwnd);
 static void SalvaTutto(void);
 static void CaricaTutto(void);
 
-NEWSTSCOOTER ScooterData;
+#define ScooterData Tabboz.global.scooter
 
 // PRIMA LE VARIABILI GENERIKE...
 
