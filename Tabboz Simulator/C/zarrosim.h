@@ -158,16 +158,12 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define CellularMem  STCEL.cellulari
 
 #define AbbonamentData Tabboz.global.abbonamento
-#define AbbonamentMem  STABB.abbonamenti
 
 #define x_giorno         Tabboz.global.calendario.giorno
 #define x_mese           Tabboz.global.calendario.mese
 #define x_anno_bisesto   Tabboz.global.calendario.annoBisesto
 #define x_giornoset      Tabboz.global.calendario.giornoSettimana
 #define x_vacanza        Tabboz.global.calendario.vacanza
-
-#define comp_giorno      Tabboz.global.compleannoGiorno
-#define comp_mese        Tabboz.global.compleannoMese
 
 #ifdef PROMPT_ACTIVE
 extern	int  prompt_mode;

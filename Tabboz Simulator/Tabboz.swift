@@ -21,7 +21,7 @@ class Tabboz : NSObject {
           var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
     
     @objc var scooter     = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
-    @objc var cellulare   = STCEL(0, 0, 0, 0, "")
+    @objc var cellulare   = STCEL(0, 0, "")
     
     @objc private(set) var abbonamento = AbbonamentoCorrente(0, "")
     
@@ -80,6 +80,7 @@ class Tabboz : NSObject {
     func resetMe() {
         calendario = Calendario()
         compleanno = .random()
+        cellulare.invalidate()
         abbonamento = AbbonamentoCorrente(-1, "")
     }
 
@@ -178,6 +179,26 @@ class Tabboz : NSObject {
     // Telefono
     // -
 
+    func compraCellulare(_ scelta: Int, hDlg: HANDLE) {
+        let nuovoCellulare = STCEL.cellulari[scelta]
+        
+        if (Soldi < nuovoCellulare.prezzo) {
+            // Controlla se ha abbastanza soldi...
+            nomoney(hDlg, Int32(CELLULRABBONAM))
+            EndDialog(hDlg, true);
+        }
+        
+        Soldi -= UInt(nuovoCellulare.prezzo)
+        cellulare = STCEL.cellulari[scelta] // semantically wrong until STCEL is a Struct
+        Fama += Int32(nuovoCellulare.fama)
+        
+        if Fama > 100 {
+            Fama = 100
+        }
+        
+        EndDialog(hDlg, true);
+    }
+    
     func compraAbbonamento(_ scelta: Int, _ hDlg: HANDLE) {
         let nuovoAbbonamento = STABB.abbonamenti[scelta]
         
@@ -189,7 +210,7 @@ class Tabboz : NSObject {
         }
 
         if abbonamento.accredita(nuovoAbbonamento) {
-            if sound_active != 0 && cellulare.stato > -1 {
+            if sound_active != 0 && cellulare.attivo {
                 TabbozPlaySound(602)
             }
             
@@ -214,6 +235,14 @@ class Tabboz : NSObject {
                                         + (compleanno.mese.rawValue * 3)
                                         + 6070                             }
     
+    static func enumerateCellulari(_ iteration: (Int, Int) -> Void) {
+        STCEL
+            .cellulari
+            .enumerated()
+            .map { ($0.offset, $0.element.prezzo) }
+            .forEach(iteration)
+    }
+
     static func enumerateAbbonamenti(_ iteration: (Int, Int) -> Void) {
         STABB
             .abbonamenti

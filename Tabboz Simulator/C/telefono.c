@@ -53,47 +53,39 @@ static int CellularVacanza(HWND hDlg)
 # pragma argsused
 BOOL FAR PASCAL   CompraCellulare(HWND hDlg, WORD message, WORD wParam, LONG lParam) 	/* 31 Marzo 1999 */
 {
-		 int  i;
 static int  scelta = 0;
+    
+    if (message == WM_INITDIALOG) {
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        
+        [Tabboz enumerateAbbonamenti:^(NSInteger i, NSInteger prezzo) {
+            SetDlgItemText(hDlg, 120 + (int)i, MostraSoldi((int)prezzo));
+        }];
+        
+        return(TRUE);
+    }
+    else if (message == WM_COMMAND) {
 
-	 if (message == WM_INITDIALOG) {
-		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-		for (i=0;i<3;i++)
-			SetDlgItemText(hDlg, 120+i, MostraSoldi(CellularMem[i].prezzo));
-		return(TRUE);
-	 } else if (message == WM_COMMAND) {
-
-		switch (LOWORD(wParam)) {
-		case 110:
-		case 111:
-		case 112:
-			scelta = LOWORD(wParam) - 110;
-			return(TRUE);
-
-		case IDCANCEL:
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		case IDOK:
-			if (Soldi < CellularMem[scelta].prezzo) { // Controlla se ha abbastanza soldi...
-				nomoney(hDlg,CELLULRABBONAM);
-				EndDialog(hDlg, TRUE);
-				return(TRUE);
-			}
-
-			Soldi-=CellularMem[scelta].prezzo;
-			CellularData=CellularMem[scelta];
-			Fama+=CellularMem[scelta].fama;
-         if (Fama > 100) Fama=100;
-
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		default:
-			return(TRUE);
-		}
-	 }
-
+         switch (LOWORD(wParam)) {
+             case 110:
+             case 111:
+             case 112:
+                 scelta = LOWORD(wParam) - 110;
+                 return(TRUE);
+                 
+             case IDCANCEL:
+                 EndDialog(hDlg, TRUE);
+                 return(TRUE);
+                 
+             case IDOK:
+                 [Tabboz.global compraCellulare:scelta hDlg:hDlg];
+                 return(TRUE);
+                 
+             default:
+                 return(TRUE);
+         }
+     }
+    
 	 return(FALSE);
 }
 
@@ -106,23 +98,20 @@ static int  scelta = 0;
 # pragma argsused
 BOOL FAR PASCAL   AbbonaCellulare(HWND hDlg, WORD message, WORD wParam, LONG lParam) 	/* 31 Marzo 1999 */
 {
-		 char tmp[128];
-    
-static int  scelta = 0;
 
-	 if (message == WM_INITDIALOG) {
+    static int  scelta = 0;
+
+    if (message == WM_INITDIALOG) {
 		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-		if (AbbonamentData.creditorest > -1) {
-			sprintf(tmp, "%s", AbbonamentData.nome.UTF8String);
-			SetDlgItemText(hDlg, 105, tmp);
-		}
+        SetDlgItemText(hDlg, 105, AbbonamentData.nomeDisplay.UTF8String);
          
          [Tabboz enumerateAbbonamenti:^(NSInteger i, NSInteger prezzo) {
              SetDlgItemText(hDlg, 110 + (int)i, MostraSoldi((int)prezzo));
          }];
          
 		return(TRUE);
-	 } else if (message == WM_COMMAND) {
+	 }
+    else if (message == WM_COMMAND) {
 
 		switch (LOWORD(wParam)) {
 
@@ -163,24 +152,10 @@ static int  scelta = 0;
 
 void AggiornaCell(HWND hDlg)
 {
-char tmp[128];
-		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-
-		if (CellularData.stato > -1) {
-			sprintf(tmp, "%s", CellularData.nome.UTF8String);
-			SetDlgItemText(hDlg, 120, tmp);
-		} else {
-			SetDlgItemText(hDlg, 120, NULL);
-		}
-
-		if (AbbonamentData.creditorest > -1) {
-			sprintf(tmp, "%s", AbbonamentData.nome.UTF8String);
-			SetDlgItemText(hDlg, 121, tmp);  												// Abbonamento
-			SetDlgItemText(hDlg, 122, MostraSoldi(AbbonamentData.creditorest));	// Credito
-		} else {
-			SetDlgItemText(hDlg, 121, NULL);
-			SetDlgItemText(hDlg, 122, NULL);
-		}
+    SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+    SetDlgItemText(hDlg, 120, CellularData.displayName.UTF8String);    
+    SetDlgItemText(hDlg, 121, AbbonamentData.nomeDisplay.UTF8String);    // Abbonamento
+    SetDlgItemText(hDlg, 122, AbbonamentData.creditoDisplay.UTF8String); // Credito
 }
 
 
@@ -210,14 +185,14 @@ BOOL FAR PASCAL        Cellular(HWND hDlg, WORD message, WORD wParam, LONG lPara
 
 		case 111:
 			if (CellularVacanza(hDlg) == 0) {
-				if (CellularData.stato > -1) {
+				if (CellularData.attivo) {
 					offerta=CellularData.prezzo/2 + 15;
 					sprintf(tmp,"Ti posso dare %s per il tuo telefonino... vuoi vendermelo ?",MostraSoldi(offerta));
 					scelta=MessageBox( hDlg,
 					  tmp,
 					  "Telefonino", MB_YESNO | MB_ICONQUESTION);
 					if (scelta == IDYES) {
-					  CellularData.stato=-1;
+                        [Tabboz.global.cellulare invalidate];
 					  Soldi+=offerta;
 					} else
 					  MessageBox( hDlg,

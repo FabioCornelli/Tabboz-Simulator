@@ -133,7 +133,10 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 				return(TRUE);
 			}
 
-			if ((Soldi <= 5) && ((AbbonamentData.creditorest < 2) && (CellularData.stato < 0) )) {
+			if ((Soldi <= 5) &&
+                ((AbbonamentData.creditorest < 2) &&
+                 (!CellularData.attivo)))
+            {
 				MessageBox( hDlg,
 				 """Sei fai ancora una telefonata, ti spezzo le gambe"", disse tuo padre con un accetta in mano...",
 				 "Non toccare quel telefono...", MB_OK | MB_ICONSTOP);
@@ -141,7 +144,7 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 				if (sound_active) TabbozPlaySound(602);
 				// 5 Maggio 1999 - Telefono di casa o telefonino ???
 
-				if ((AbbonamentData.creditorest >= 2) && (CellularData.stato > -1))
+				if ((AbbonamentData.creditorest >= 2) && CellularData.attivo)
                     [Tabboz.global.abbonamento addebita: -2];
 				else
 					Soldi-=5;

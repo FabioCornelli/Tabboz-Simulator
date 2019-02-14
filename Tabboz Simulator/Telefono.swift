@@ -12,33 +12,51 @@ import Foundation
 
 class STCEL : NSObject {
 
-    @objc var dual:   Int    // Dual Band ?
-    @objc var fama:   Int    // figosita'
-    @objc var stato:  Int    // quanto e' intero (in percuntuale)
-    @objc var prezzo: Int
+    let fama:   Int    // figosita'
+    private var stato:  Int    // quanto e' intero (in percuntuale)
+    
+    @objc private(set) var prezzo: Int
     @objc var nome:   String // nome del telefono
-
+    
+    @objc var attivo  : Bool { return stato > -1 }
+    @objc var morente : Bool { return stato == 1 }
+    
     init(
-        _ dual:   Int,
         _ fama:   Int,
-        _ stato:  Int,
         _ prezzo: Int,
         _ nome:   String
     ) {
-        self.dual   = dual
         self.fama   = fama
-        self.stato  = stato
+        self.stato  = 100
         self.prezzo = prezzo
         self.nome   = nome
         
         super.init()
     }
     
-    @objc static let cellulari = [
-        STCEL(0,  2, 100,    290,     "Motorolo d170"),
-        STCEL(0,  7, 100,    590,     "Motorolo 8700"),
-        STCEL(1, 10, 100,    990,     "Macro TAC 8900"),
+    @objc func invalidate() {
+        stato = -1
+    }
+    
+    @objc func danneggia(_ danno: Int) {
+        if stato > -1 {
+            // A furia di prendere botte, il cellulare si spacca...
+            stato -= danno;
+            
+            // 0 = 'morente', -1 = 'morto'
+            if stato < 0 {
+              stato = 0
+            }
+        }
+    }
+    
+    static let cellulari = [
+        STCEL( 2, 290, "Motorolo d170"),
+        STCEL( 7, 590, "Motorolo 8700"),
+        STCEL(10, 990, "Macro TAC 8900"),
     ]
+    
+    @objc var displayName : String? { return attivo ? nome : nil }
 }
 
 /* INFORMAZIONI SULLE COMPAGNIE DEI TELEFONINI */
@@ -95,7 +113,7 @@ struct STABB {
 class AbbonamentoCorrente : NSObject {
 
     @objc private(set) var creditorest: Int    // Credito Restante...
-    @objc private(set) var nome:        String // nome del telefono
+                       var nome:        String // nome del telefono
     
     init(
         _ creditorest: Int,
@@ -138,6 +156,16 @@ class AbbonamentoCorrente : NSObject {
     
     @objc func addebita(_ soldi: Int) {
         creditorest -= soldi
+    }
+    
+    @objc var nomeDisplay : String {
+        return creditorest > -1 ? nome : ""
+    }
+    
+    @objc var creditoDisplay : String {
+        let credito = String(cString: MostraSoldi(UInt(creditorest)))
+        return creditorest > -1 ? credito : ""
+        
     }
     
 }

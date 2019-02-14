@@ -202,7 +202,6 @@ char  tmp[128];
 #endif
 
 		ScooterData.stato	= -1;
-		CellularData.stato 			= -1;
 
 }
 

@@ -73,7 +73,7 @@ FARPROC	  lpproc;
 
 /* Cellulare ----------------------------------------16 Apr 1999----- */
 
-	if ((AbbonamentData.creditorest > 0) && (CellularData.stato > -1)) {
+	if ((AbbonamentData.creditorest > 0) && (CellularData.attivo)) {
         [Tabboz.global.abbonamento addebita: -1];
 		if (Fama < 55) Fama++;
 		if (AbbonamentData.creditorest == 0) {
@@ -86,8 +86,9 @@ FARPROC	  lpproc;
 				"Telefonino", MB_OK | MB_ICONINFORMATION);
 		}
 
-	if (CellularData.stato == 1) { // Cellulate 'morente'...
-			CellularData.stato=-1;
+	if (CellularData.morente) { // Cellulate 'morente'...
+        [Tabboz.global.cellulare invalidate];
+        
 			MessageBox( hInstance,
 					"Dopo una vita di duro lavoro, a furia di prendere botte, il tuo cellulare si spacca...",
 					"Telefonino", MB_OK | MB_ICONSTOP);
@@ -256,12 +257,7 @@ FARPROC	  lpproc;
 		case 18:
 		case 19:
 		case 20: if ((ScooterData.stato != -1) & (ScooterData.attivita == 1)) {
-
-				if (CellularData.stato > -1) { // A furia di prendere botte, il cellulare si spacca...
-					CellularData.stato-=random(8);
-					// 0 = 'morente', -1 = 'morto'
-					if (CellularData.stato < 0 ) CellularData.stato=0;
-				}
+                [Tabboz.global.cellulare danneggia: random(8)];
 
 				if (caso < 17) {
 					ScooterData.stato-=35;
@@ -465,11 +461,9 @@ FARPROC	  lpproc;
 
 		case 49:
 		case 50:
-				if (CellularData.stato > -1) {
-					CellularData.stato-=random(8);
-					// 0 = 'morente', -1 = 'morto'
-					if (CellularData.stato < 0 ) CellularData.stato=0;
-					MessageBox( hInstance,
+				if (CellularData.attivo) {
+                    [Tabboz.global.cellulare danneggia: random(8)];
+                    MessageBox( hInstance,
 						"Il telefonino di cade di tasca e vola per terra...",
 						"Telefonino", MB_OK | MB_ICONSTOP);
 					#ifdef TABBOZ_DEBUG
