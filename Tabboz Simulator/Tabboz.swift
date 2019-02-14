@@ -42,8 +42,6 @@ class Tabboz : NSObject {
             if attesa == 0 {
                 attesa = ATTESAMAX
                 Soldi += 10
-
-                Tabboz_Log("famiglia: paghetta extra (\(String(cString: MostraSoldi(10))))")
                 Evento(hDlg)
             }
             else {
@@ -183,8 +181,4 @@ class Tabboz : NSObject {
                                         + (compleanno.mese.rawValue * 3)
                                         + 6070                             }
     
-}
-
-func Tabboz_Log(_ s: String) {
-    print(s)
 }
