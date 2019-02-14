@@ -27,15 +27,8 @@
 #include <string.h>
 
 #include "zarrosim.h"
+
 __attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
-
-
-STCEL CellularData;
-STCEL CellularMem[] =
-	{	 {0,  2, 100,	290,	 "Motorolo d170" },
-		 {0,  7, 100,	590,	 "Motorolo 8700" },
-		 {1, 10, 100,	990,	 "Macro TAC 8900"}
-	};
 
 // ------------------------------------------------------------------------------------------
 //  Controlla se e' un giorno di vacanza...
@@ -105,24 +98,9 @@ static int  scelta = 0;
 }
 
 
-
-
 // ------------------------------------------------------------------------------------------
 //  Abbonamento
 // ------------------------------------------------------------------------------------------
-
-STABB AbbonamentData;
-STABB AbbonamentMem[] =
-	{   {1,  0,	 50, 1,	100,	 "Onmitel"},	// Abbonamenti
-		 {1,  0,	 50, 1,	100,	 "DIM"},
-		 {1,  1,	100, 1,	100,	 "Vind"},
-		 {0,  0,	 50, 1,	 60,	 "Onmitel"},	// Ricariche
-		 {0,  0,	100, 1,	110,	 "Onmitel"},
-		 {0,  0,	 50, 1,	 60,	 "DIM"},			// Ricariche
-		 {0,  0,	100, 1,	110,	 "DIM"},
-		 {0,  1,  50, 1,   50,   "Vind"},      // Ricariche
-		 {0,  1,	100, 1,	100,	 "Vind"},
-	};
 
 
 # pragma argsused
@@ -135,7 +113,7 @@ static int  scelta = 0;
 	 if (message == WM_INITDIALOG) {
 		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 		if (AbbonamentData.creditorest > -1) {
-			sprintf(tmp, "%s", AbbonamentData.nome);
+			sprintf(tmp, "%s", AbbonamentData.nome.UTF8String);
 			SetDlgItemText(hDlg, 105, tmp);
 		}
 		for (i=0;i<9;i++)
@@ -177,7 +155,7 @@ static int  scelta = 0;
 				EndDialog(hDlg, TRUE);
 			} else {													 // Ricarica...
 				if (( AbbonamentData.creditorest > -1) &&
-				( !strcmp(AbbonamentData.nome,AbbonamentMem[scelta].nome))) {
+				( !strcmp(AbbonamentData.nome.UTF8String,AbbonamentMem[scelta].nome.UTF8String))) {
 					Soldi-=AbbonamentMem[scelta].prezzo;
 					AbbonamentData.creditorest+=AbbonamentMem[scelta].creditorest;
 					if ((sound_active) && (CellularData.stato > -1)) TabbozPlaySound(602);
@@ -210,14 +188,14 @@ char tmp[128];
 		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 
 		if (CellularData.stato > -1) {
-			sprintf(tmp, "%s", CellularData.nome);
+			sprintf(tmp, "%s", CellularData.nome.UTF8String);
 			SetDlgItemText(hDlg, 120, tmp);
 		} else {
 			SetDlgItemText(hDlg, 120, NULL);
 		}
 
 		if (AbbonamentData.creditorest > -1) {
-			sprintf(tmp, "%s", AbbonamentData.nome);
+			sprintf(tmp, "%s", AbbonamentData.nome.UTF8String);
 			SetDlgItemText(hDlg, 121, tmp);  												// Abbonamento
 			SetDlgItemText(hDlg, 122, MostraSoldi(AbbonamentData.creditorest));	// Credito
 		} else {

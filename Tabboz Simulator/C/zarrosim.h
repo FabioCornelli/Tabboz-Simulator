@@ -141,24 +141,6 @@ ATTESAMAX   		= 5,
 
 typedef unsigned long   u_long;	// 28 Novembre 1998
 
-// INFORMAZIONI SUI TELEFONINI  31 Marzo 1999
-typedef struct tagCEL {
-	 int			 dual;			  // Dual Band ?
-	 int         fama;           // figosita'
-	 int         stato;          // quanto e' intero (in percuntuale)
-	 int         prezzo;
-	 char        nome[30];       // nome del telefono
-  } STCEL;
-
-/* INFORMAZIONI SULLE COMPAGNIE DEI TELEFONINI */
-typedef struct tagABB {
-	 int			 abbonamento;	  // 0 = Ricarica, 1 = Abbonamento
-	 int			 dualonly;		  // Dual Band Only ?
-	 int			 creditorest;	  // Credito Restante...
-	 int         fama;           // figosita'
-	 int         prezzo;
-	 char        nome[30];       // nome del telefono
-  } STABB;
 
 
 #define ScooterData Tabboz.global.scooter
@@ -172,11 +154,11 @@ typedef struct tagABB {
 #define LavoroMem   STSCOOTER.lavoro
 #define DiscoMem    STSCOOTER.disco
 
-extern	STCEL			 CellularData;
-extern	STCEL 		 CellularMem[];
+#define CellularData Tabboz.global.cellulare
+#define CellularMem  STCEL.cellulari
 
-extern	STABB 		 AbbonamentData;
-extern	STABB 		 AbbonamentMem[];
+#define AbbonamentData Tabboz.global.abbonamento
+#define AbbonamentMem  STABB.abbonamenti
 
 typedef struct tagMESI {
 	 char        nome[20];       // nome del mese

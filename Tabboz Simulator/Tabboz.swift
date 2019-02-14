@@ -16,6 +16,8 @@ class Tabboz : NSObject {
     @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
     @objc var scooter = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
+    @objc var cellulare = STCEL(0, 0, 0, 0, "")
+    @objc var abbonamento = STABB(0, 0, 0, 0, 0, "")
     
     @objc static func initGlobalTabboz() {
         global = Tabboz()

@@ -10,6 +10,7 @@
 		3F4DA426220FC25A008DC569 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4DA425220FC25A008DC569 /* main.swift */; };
 		3F54DC1C2210991100794232 /* stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.m */; };
 		3F9031A32214D8EB00C9A2C3 /* Scooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A22214D8EB00C9A2C3 /* Scooter.swift */; };
+		3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A4221504FD00C9A2C3 /* Telefono.swift */; };
 		3FC9F54822139BA60019B93A /* KnownDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54722139BA60019B93A /* KnownDialogs.swift */; };
 		3FC9F54C2214ACB70019B93A /* Tabboz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54B2214ACB70019B93A /* Tabboz.swift */; };
 		3FC9F54F2214CB930019B93A /* MessageBoxes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54E2214CB930019B93A /* MessageBoxes.m */; };
@@ -46,6 +47,7 @@
 		3F4DA425220FC25A008DC569 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
 		3F9031A22214D8EB00C9A2C3 /* Scooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scooter.swift; sourceTree = "<group>"; };
+		3F9031A4221504FD00C9A2C3 /* Telefono.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telefono.swift; sourceTree = "<group>"; };
 		3FC9F54722139BA60019B93A /* KnownDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownDialogs.swift; sourceTree = "<group>"; };
 		3FC9F54B2214ACB70019B93A /* Tabboz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabboz.swift; sourceTree = "<group>"; };
 		3FC9F54D2214C8020019B93A /* MessageBoxes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBoxes.h; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				3F4DA425220FC25A008DC569 /* main.swift */,
 				3FC9F54B2214ACB70019B93A /* Tabboz.swift */,
 				3F9031A22214D8EB00C9A2C3 /* Scooter.swift */,
+				3F9031A4221504FD00C9A2C3 /* Telefono.swift */,
 				3FC9F54722139BA60019B93A /* KnownDialogs.swift */,
 				3FC9F54D2214C8020019B93A /* MessageBoxes.h */,
 				3FC9F54E2214CB930019B93A /* MessageBoxes.m */,
@@ -211,6 +214,7 @@
 				3FED205F220FCA3500AC38D7 /* zarrosim.c in Sources */,
 				3F54DC1C2210991100794232 /* stubs.m in Sources */,
 				3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */,
+				3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */,
 				3FED2060220FCA3500AC38D7 /* scooter.c in Sources */,
 				3FED205C220FCA3500AC38D7 /* readkey.c in Sources */,
 				3FC9F54822139BA60019B93A /* KnownDialogs.swift in Sources */,
