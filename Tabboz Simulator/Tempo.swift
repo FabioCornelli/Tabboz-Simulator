@@ -121,22 +121,21 @@ class STMESI : NSObject {
 }
 
 
-class GiornoDellAnno : NSObject {
+class GiornoDellAnno {
     
-    @objc var giorno : Int
-    @objc var mese   : Mese
+    var giorno : Int
+    var mese   : Mese
     
     init(giorno: Int, mese: Mese) {
         self.giorno = giorno
         self.mese   = mese
-        super.init()
     }
     
-    @objc var string : String {
+    var string : String {
         return "\(giorno) \(mese.nome)"
     }
     
-    @objc func fraUnMese() -> GiornoDellAnno {
+    func fraUnMese() -> GiornoDellAnno {
         let fraUnMese = GiornoDellAnno(
             giorno: giorno,
             mese: Mese(rawValue: mese.rawValue + 1) ?? .gennaio
@@ -150,7 +149,7 @@ class GiornoDellAnno : NSObject {
         return fraUnMese
     }
 
-    @objc func fraSeiMesi() -> GiornoDellAnno {
+    func fraSeiMesi() -> GiornoDellAnno {
         let fraSeiMesi = GiornoDellAnno(
             giorno: giorno,
             mese: Mese(rawValue: ((mese.rawValue + 6 - 1) % 12) + 1) ?? .gennaio
@@ -164,7 +163,7 @@ class GiornoDellAnno : NSObject {
         return fraSeiMesi
     }
 
-    @objc func fraUnAnno() -> GiornoDellAnno {
+    func fraUnAnno() -> GiornoDellAnno {
         let fraUnAnno = GiornoDellAnno(giorno: giorno - 1, mese: mese)
         
         if fraUnAnno.giorno < 1 {
@@ -179,7 +178,7 @@ class GiornoDellAnno : NSObject {
 
 @objc class Calendario : NSObject {
     
-    @objc              var giornoDellAnno  = GiornoDellAnno(giorno: 30, mese: .settembre)
+                       var giornoDellAnno  = GiornoDellAnno(giorno: 30, mese: .settembre)
     
     @objc private(set) var annoBisesto     = Int32(0) // Anno Bisestile - 12 Giugno 1999
     @objc private(set) var giornoSettimana = Giorni.lunedi

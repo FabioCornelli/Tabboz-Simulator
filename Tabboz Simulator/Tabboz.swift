@@ -15,21 +15,14 @@ class Tabboz : NSObject {
     @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
     @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
-    @objc var calendario = Calendario()
+    @objc var calendario  = Calendario()
 
-    var palestra = Palestra()
+          var palestra    = Palestra()
+          var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
     
-    @objc var scooter = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
-    @objc var cellulare = STCEL(0, 0, 0, 0, "")
+    @objc var scooter     = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
+    @objc var cellulare   = STCEL(0, 0, 0, 0, "")
     @objc var abbonamento = STABB(0, 0, 0, 0, 0, "")
-    
-    @objc var compleanno       = GiornoDellAnno(giorno: 1, mese: .gennaio)
-    @objc var compleannoGiorno       : Int32 { return Int32(compleanno.giorno) }
-    @objc var compleannoMese         : Mese  { return compleanno.mese          }
-    
-    @objc var documento : Int {
-        return (compleanno.giorno * 13) + (compleanno.mese.rawValue * 3) + 6070;
-    }
     
     @objc static func initGlobalTabboz() {
         global = Tabboz()
@@ -40,6 +33,7 @@ class Tabboz : NSObject {
         studio = 0
         super.init()
     }
+    
 }
 
 @objc extension Tabboz {
@@ -184,6 +178,20 @@ class Tabboz : NSObject {
         if tabboz_random(5 + Fortuna) == 0 { Evento(hDlg) }
         AggiornaPalestra(hDlg)
     }
+    
+}
+
+@objc extension Tabboz {
+    
+    var calendarioString: String { return calendario.giornoSettimana.string
+                                        + " "
+                                        + calendario.giornoDellAnno.string }
+    var compleannoString: String { return compleanno.string                }
+    var compleannoGiorno: Int32  { return Int32(compleanno.giorno)         }
+    var compleannoMese:   Mese   { return compleanno.mese                  }
+    var documento:        Int    { return (compleanno.giorno * 13)
+                                        + (compleanno.mese.rawValue * 3)
+                                        + 6070                             }
     
 }
 

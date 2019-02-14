@@ -1119,10 +1119,9 @@ BOOL FAR PASCAL PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	 char          tmp[128];
 
 	 if (message == WM_INITDIALOG) {
-		sprintf(tmp, " %s", Tabboz.global.compleanno.string.UTF8String);
-		SetDlgItemText(hDlg, 103, tmp);			// Data di nascita
+		SetDlgItemText(hDlg, 103, Tabboz.global.compleannoString.UTF8String); // Data di nascita
 		sprintf(tmp, "%ld", Tabboz.global.documento);
-		SetDlgItemText(hDlg, 104, tmp);			// Numero documento di nascita (inutile ma da' spessore...)
+		SetDlgItemText(hDlg, 104, tmp); // Numero documento di nascita (inutile ma da' spessore...)
 
 		if (numeroditta < 1) {        // Professione
 			if (sesso == 'M')
@@ -1571,8 +1570,7 @@ char tmp[128];
 		SetDlgItemText(parent, 156, tmp);	// Stato scooter
 	 }
 
-	 sprintf(tmp, "%s %s",Tabboz.global.calendario.giornoSettimanaString.UTF8String, Tabboz.global.calendario.giornoDellAnno.string.UTF8String);  // Calendario
-	 SetDlgItemText(parent, 157, tmp);
+	 SetDlgItemText(parent, 157, Tabboz.global.calendarioString.UTF8String);
 
 	 if ( sesso == 'M' )	{// Non usare la variabile "ao" xche' qui e' necessario
 		 DeleteMenu(GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
