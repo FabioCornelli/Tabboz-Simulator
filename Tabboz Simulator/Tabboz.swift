@@ -20,7 +20,6 @@ import Foundation
         case aSecco       = 6
     }
 
-    @objc var speed = 0
     @objc var prezzo = 0
     @objc var attivita = Attivita.mancante
     @objc var stato = -1
@@ -31,15 +30,32 @@ import Foundation
     @objc var speedString : String {
         switch attivita {
         case .mancante:    return ""
-        case .funzionante: return "\(speed)Km/h"
+        case .funzionante: return "\(scooter.speedCalcolata)Km/h"
         default:           return "\(attivita.string)"
         }
     }
     
     @objc func gareggia(con tipo: NEWSTSCOOTER) -> Bool {
         let fortunaDelTipo = tipo.speed + 80 + Int(tabboz_random(40))
-        let fortunaMia     = speed + stato + Int(Fortuna)
+        let fortunaMia     = scooter.speedCalcolata + stato + Int(Fortuna)
         return fortunaDelTipo > fortunaMia
+    }
+    
+    var attivitaCalcolata : Attivita {
+        var attivita = Attivita.funzionante
+        
+        if scooter.speedCalcolata <= -500  {
+            attivita = .invasato
+        }
+        else if scooter.speedCalcolata <= -1 {
+            attivita = .ingrippato
+        }
+        
+        if benzina < 1 {
+            attivita = .aSecco
+        }
+        
+        return attivita
     }
     
     @objc func ripara() {

@@ -41,7 +41,6 @@ void AggiornaScooter(HWND hDlg);
 void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * scooter, NSInteger);
 
 void CalcolaVelocita(HWND hDlg);
-void CalcolaVelocita_Ex(NEWSTSCOOTER * scooter);
 
 const char *MostraSpeed(void);
 
@@ -51,14 +50,6 @@ static char	*n_marmitta[]=    { "standard", "silenziosa", "rumorosa", "rumorosis
 static char	*n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
 
 		 char	*n_attivita[]=    { "mancante", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
-
-static int tabella[]=
-				  {  65,	    70,   -100,   -100,   -100,   -100,
-					  70,	    80,  	95,   -100,   -100,   -100,
-				  -1000,   	 90,    100,    115,   -100,   -100,
-				  -1000,  -1000,    110,    125,    135,   -100,
-				  -1000,  -1000,  -1000,    130,    150,   -100,
-				  -1000,  -1000,  -1000,  -1000,  -1000,    250  };
 
 int	benzina;
 int	antifurto;
@@ -70,35 +61,7 @@ int	PezziMem[] =
 		50,	120,  270,   400	/* filtro      */
 	 };
 
-// ******************************************************************
-// Calcola la velocita' massima dello scooter, sencodo il tipo di marmitta,
-// carburatore, etc...
-
-#undef  ScooterData
-
-void CalcolaVelocita_Ex(NEWSTSCOOTER * ScooterData)
-{
-	/* 28 Novembre 1998 0.81pr Bug ! Se lo scooter era ingrippato, cambiando il filtro
-	dell' aria o la marmitta la velocita' diventava un numero negativo... */
-
-	ScooterData.speed = (ScooterData.marmitta * 5) + (ScooterData.filtro * 5)
-			 + tabella[ScooterData.cc + (ScooterData.carburatore * 6 )];
-}
-
-#define ScooterData Tabboz.global.scooter
-
 void CalcolaVelocita(HWND hDlg) {
-    CalcolaVelocita_Ex(Tabboz.global.scooter.scooter);
-    
-    ScooterData.attivita = 1;            /* Sano...    */
-    
-    if (ScooterData.speed <= -500 )
-        ScooterData.attivita = 3;        /* Invasato   */
-    else if (ScooterData.speed <= -1 )
-        ScooterData.attivita = 2;        /* Ingrippato */
-    
-    if (benzina < 1)
-        ScooterData.attivita = 6;        /* A secco    */
     
     if (ScooterData.attivita != 1) {
         char   buf[128];
@@ -343,7 +306,6 @@ BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lPara
 				num_moto=wParam-120;
 				scelta=num_moto;
                 
-				CalcolaVelocita_Ex(ScooterMem[num_moto]);
 				AggiornaScooter_Ex(hDlg, ScooterMem[num_moto], 100);
 				return(TRUE);
 

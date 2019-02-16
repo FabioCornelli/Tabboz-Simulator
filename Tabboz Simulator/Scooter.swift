@@ -86,7 +86,7 @@ class NEWSTSCOOTER : NSObject {
         case extreme   = 4
     }
 
-    @objc var speed:       Int         // 01  Velocita'
+    @objc private(set) var speed:       Int         // 01  Velocita'
     @objc var marmitta:    Marmitta    // 02  Marmitta            ( +0, +7, +12, +15)
     @objc var carburatore: Carburatore // 03  Carburatore         ( 0 - 4 )
     @objc var cc:          Cilindrata  // 04  Cilindrata          ( 0 - 4 )
@@ -118,6 +118,28 @@ class NEWSTSCOOTER : NSObject {
         
         super.init()
     }
+    
+    /// Calcola la velocita' massima dello scooter, sencodo il tipo di marmitta,
+    /// carburatore, etc...
+    @objc var speedCalcolata : Int {
+        let tabella = [
+               65,     70,   -100,   -100,   -100,   -100,
+               70,     80,     95,   -100,   -100,   -100,
+            -1000,     90,    100,    115,   -100,   -100,
+            -1000,  -1000,    110,    125,    135,   -100,
+            -1000,  -1000,  -1000,    130,    150,   -100,
+            -1000,  -1000,  -1000,  -1000,  -1000,    250,
+        ]
+        
+        /* 28 Novembre 1998 0.81pr Bug ! Se lo scooter era ingrippato, cambiando il filtro
+         dell' aria o la marmitta la velocita' diventava un numero negativo... */
+        
+        return  (marmitta.rawValue * 5) +
+                (filtro.rawValue * 5) +
+                tabella[cc.rawValue +
+                        (carburatore.rawValue * 6)];
+    }
+    
 }
 
 extension NEWSTSCOOTER.Marmitta {
