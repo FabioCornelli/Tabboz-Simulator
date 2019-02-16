@@ -1375,8 +1375,8 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			if (Reputazione > 10)
 			Reputazione-=2;
 		 }
-		 benzina-=5;
-		 if (benzina < 1) benzina = 0;
+        
+         [Tabboz.global.scooter consumaWithBenza:5];
 		 CalcolaVelocita(hDlg);
 
 		 Evento(hDlg);

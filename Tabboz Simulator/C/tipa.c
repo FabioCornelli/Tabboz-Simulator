@@ -217,8 +217,8 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			if ( FigTipa > Fama) Fama++;
 			if (Fama > 100) Fama=100;
 
-			benzina-=3;
-			if (benzina < 1) benzina = 0;
+//            [Tabboz.global.scooter cons]
+			
 			CalcolaVelocita(hDlg);
 
 			AggiornaTipa(hDlg);

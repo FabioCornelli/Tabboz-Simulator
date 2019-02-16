@@ -20,11 +20,11 @@ import Foundation
         case aSecco       = 6
     }
 
-    @objc var benzina_ = 0
-    @objc var prezzo = 0
-    @objc var attivita = Attivita.mancante
-    @objc var stato = -1
-    @objc var nome = ""
+    var benzina = 0
+    @objc private(set) var prezzo = 0
+    @objc private(set) var attivita = Attivita.mancante
+    @objc private(set) var stato = -1
+    @objc private(set) var nome = ""
     
     @objc var scooter = NEWSTSCOOTER.scooter[0]
     
@@ -36,13 +36,17 @@ import Foundation
         }
     }
     
+    @objc var benzinaString : String {
+        return String(format: "%1.1f", Double(benzina) / 10.0)
+    }
+    
     @objc func gareggia(con tipo: NEWSTSCOOTER) -> Bool {
         let fortunaDelTipo = tipo.speed + 80 + Int(tabboz_random(40))
         let fortunaMia     = scooter.speedCalcolata + stato + Int(Fortuna)
         return fortunaDelTipo > fortunaMia
     }
     
-    var attivitaCalcolata : Attivita {
+    var attivitaCalcolataEx : Attivita? {
         var attivita = Attivita.funzionante
         
         if scooter.speedCalcolata <= -500  {
@@ -52,13 +56,17 @@ import Foundation
             attivita = .ingrippato
         }
         
-        if benzina_ < 1 {
+        if benzina < 1 {
             attivita = .aSecco
         }
         
         return attivita
     }
-    
+
+    @objc var attivitaCalcolata : Attivita {
+        return attivitaCalcolataEx ?? .funzionante
+    }
+
     @objc func ripara() {
         stato = 100
     }
@@ -70,6 +78,33 @@ import Foundation
     @objc func distruggi() {
         stato = -1
         attivita = .mancante
+    }
+    
+    @objc func consuma(benza: Int) {
+        benzina -= benza
+        
+        if benzina < 1 {
+            benzina = 0
+        }
+    }
+    
+    @objc func faiIlPieno() {
+        benzina = scooter.cc != ._3969cc
+            ? 50    /* 5 litri,  il massimo che puo' contenere... */
+            : 850   /* 85 litri, x la macchinina un po' figa...   */
+    }
+    
+    @objc func usaOParcheggia() -> Bool {
+        switch attivitaCalcolataEx ?? attivita {
+        case .funzionante:
+            attivita = .parcheggiato
+            return true
+        case .parcheggiato:
+            attivita = .funzionante
+            return true
+        default:
+            return false
+        }
     }
     
 }
@@ -303,7 +338,7 @@ class Tabboz : NSObject {
 
     func setScooter(_ newValue: NEWSTSCOOTER, benzin b: Int) {
         scooter.scooter = newValue
-        scooter.benzina_ = b
+        scooter.benzina = b
     }
     
     

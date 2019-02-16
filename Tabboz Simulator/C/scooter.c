@@ -62,7 +62,7 @@ int	PezziMem[] =
 
 void CalcolaVelocita(HWND hDlg) {
     
-    if (ScooterData.attivita != 1) {
+    if (ScooterData.attivitaCalcolata != 1) {
         char   buf[128];
         
         sprintf(buf,"Il tuo scooter e' %s.",n_attivita[ScooterData.attivita]);
@@ -191,21 +191,15 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			return(TRUE);
 			}
 
-		switch (ScooterData.attivita)
-		{
-			case 1:	 ScooterData.attivita = 4;
-				 sprintf(tmp, "Usa scooter");
-				 SetDlgItemText(hDlg, 105, tmp);
-				 break;
-			case 4:  ScooterData.attivita = 1;
-				 sprintf(tmp, "Parcheggia scooter");
-				 SetDlgItemText(hDlg, 105, tmp);
-				 break;
-			default: sprintf(buf, "Mi spieghi come fai a parcheggiare lo scooter visto che e' %s ???",n_attivita[ScooterData.attivita]);
+            if ([Tabboz.global.scooter usaOParcheggia]) {
+                SetDlgItemText(hDlg, 105, ScooterData.attivita == 4 ? "Usa scooter" : "Parcheggia scooter");
+            }
+            else{
+                sprintf(buf, "Mi spieghi come fai a parcheggiare lo scooter visto che e' %s ???",n_attivita[ScooterData.attivita]);
 				 MessageBox( hDlg,
 				   buf,
 				   "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
-		};
+            }
 
 		AggiornaScooter(hDlg);
 		return(TRUE);
@@ -240,9 +234,8 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 				 #endif
 
-				 benzina=50;	/* 5 litri, il massimo che puo' contenere... */
+                [Tabboz.global.scooter faiIlPieno];
 
-				 if (ScooterData.scooter.cc == 5) benzina = 850;  /* 85 litri, x la macchinina un po' figa... */
 				 CalcolaVelocita(hDlg);
 
 				 sprintf(buf, "Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
@@ -498,14 +491,11 @@ BOOL FAR PASCAL TruccaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * ScooterData, NSInteger stato)
 {
 char 	tmp[128];
-div_t  	d;
-	SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+    
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 
-		sprintf(tmp, "%s",  ScooterData.nome.UTF8String);
-        SetDlgItemText(hDlg, 116, tmp);
-		d = div((int)benzina,10);
-		sprintf(tmp, "%d.%dl", d.quot, d.rem);
-        SetDlgItemText(hDlg, 107, tmp);
+        SetDlgItemText(hDlg, 116, ScooterData.nome.UTF8String);
+        SetDlgItemText(hDlg, 107, Tabboz.global.scooter.benzinaString.UTF8String);
 
 		SetDlgItemText(hDlg, 110, MostraSpeed());
 		SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
