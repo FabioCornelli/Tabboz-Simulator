@@ -86,7 +86,7 @@ class NEWSTSCOOTER : NSObject {
         case extreme   = 4
     }
 
-    @objc private(set) var speed:       Int         // 01  Velocita'
+    @objc var speed:       Int         // 01  Velocita'
     @objc var marmitta:    Marmitta    // 02  Marmitta            ( +0, +7, +12, +15)
     @objc var carburatore: Carburatore // 03  Carburatore         ( 0 - 4 )
     @objc var cc:          Cilindrata  // 04  Cilindrata          ( 0 - 4 )
@@ -97,21 +97,19 @@ class NEWSTSCOOTER : NSObject {
     
     init(
         _ speed:       Int,
-        _ marmitta:    Int,
-        _ carburatore: Int,
-        _ cc:          Int,
-        _ filtro:      Int,
+        _ marmitta:    Marmitta,
+        _ carburatore: Carburatore,
+        _ cc:          Cilindrata,
+        _ filtro:      Filtro,
         _ prezzo:      Int,
-        _ attivita:    Int,
-        _ stato:       Int,
         _ nome:        String,
         _ fama:        Int
     ) {
         self.speed       = speed
-        self.marmitta    = Marmitta(rawValue: marmitta)!
-        self.carburatore = Carburatore(rawValue: carburatore)!
-        self.cc          = Cilindrata(rawValue: cc)!
-        self.filtro      = Filtro(rawValue: filtro)!
+        self.marmitta    = marmitta
+        self.carburatore = carburatore
+        self.cc          = cc
+        self.filtro      = filtro
         self.prezzo      = prezzo
         self.nome        = nome
         self.fama        = fama
@@ -329,16 +327,16 @@ extension NEWSTSCOOTER.Filtro {
 @objc extension NEWSTSCOOTER {
     
     static let scooter = [
-        NEWSTSCOOTER(  0,  0, 0, 0, 0,     0, 0,  -1, "Nessuno scooter",            0),
-        NEWSTSCOOTER( 65,  0, 0, 0, 0,  2498, 1, 100, "Magutty Firecow",            5),
-        NEWSTSCOOTER( 75,  0, 1, 1, 1,  4348, 1, 100, "Honda F98",                 10),
-        NEWSTSCOOTER(105,  1, 1, 2, 1,  6498, 1, 100, "Mizzubisci R200 Millenium", 15),
+        NEWSTSCOOTER(  0, .standard,   ._12_10, ._50cc,   .standard,    0, "Nessuno scooter",            0),
+        NEWSTSCOOTER( 65, .standard,   ._12_10, ._50cc,   .standard, 2498, "Magutty Firecow",            5),
+        NEWSTSCOOTER( 75, .standard,   ._16_16, ._70cc,   .P1,       4348, "Honda F98",                 10),
+        NEWSTSCOOTER(105, .silenziosa, ._16_16, ._90cc,   .P1,       6498, "Mizzubisci R200 Millenium", 15),
         
-        NEWSTSCOOTER( 75,  0, 0, 1, 1,  4298, 1, 100, "Magutty Firecow+",           7),
-        NEWSTSCOOTER(100,  0, 1, 2, 1,  5998, 1, 100, "Magutty Firecow II",        10),
-        NEWSTSCOOTER(100,  0, 1, 2, 1,  6348, 1, 100, "Honda F98s",                13),
+        NEWSTSCOOTER( 75, .standard,   ._12_10, ._70cc,   .P1,       4298, "Magutty Firecow+",           7),
+        NEWSTSCOOTER(100, .standard,   ._16_16, ._90cc,   .P1,       5998, "Magutty Firecow II",        10),
+        NEWSTSCOOTER(100, .standard,   ._16_16, ._90cc,   .P1,       6348, "Honda F98s",                13),
         
-        NEWSTSCOOTER(250,  0, 5, 5, 0,  1450, 1, 100, "Lexux LS400 ",               6),
+        NEWSTSCOOTER(250, .standard,   .custom, ._3969cc, .standard, 1450, "Lexux LS400 ",               6),
     ]
     
 }
