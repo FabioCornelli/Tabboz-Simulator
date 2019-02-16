@@ -88,13 +88,6 @@ class Tabboz : NSObject {
     // Palestra
     // -
     
-    @objc static func PalestraCostoLampada() -> Int { return 14 }
-    @objc static func PalestraCostoAbbonamento(_ a: AbbonamentiPalestra) -> Int { return a.prezzo}
-    
-    var scadenzaAbbonamentoPalestraString : String {
-        return palestra.scadenzaString
-    }
-    
     func controllaScadenzaAbbonamentoPalestra(hInstance: HANDLE) {
         if calendario.giornoDellAnno == palestra.scadenza {
             palestra.cancellaAbbonamento()
@@ -139,7 +132,7 @@ class Tabboz : NSObject {
     }
     
     func faiLaLampada(_ hDlg: HANDLE) {
-        if Tabboz.PalestraCostoLampada() > Soldi {
+        if Tabboz.palestraCostoLampada > Soldi {
             nomoney(hDlg, Int32(PALESTRA))
         }
         else {
@@ -165,7 +158,7 @@ class Tabboz : NSObject {
                 TabbozPlaySound(202)
             }
             
-            Soldi -= UInt(Tabboz.PalestraCostoLampada())
+            Soldi -= UInt(Tabboz.palestraCostoLampada)
         }
         
         if tabboz_random(5 + Fortuna) == 0 {
@@ -234,15 +227,22 @@ class Tabboz : NSObject {
 
 @objc extension Tabboz {
     
-    var calendarioString: String { return calendario.giornoSettimana.string
-                                        + " "
-                                        + calendario.giornoDellAnno.string }
-    var compleannoString: String { return compleanno.string                }
-    var compleannoGiorno: Int32  { return Int32(compleanno.giorno)         }
-    var compleannoMese:   Mese   { return compleanno.mese                  }
-    var documento:        Int    { return (compleanno.giorno * 13)
-                                        + (compleanno.mese.rawValue * 3)
-                                        + 6070                             }
+    var scadenzaPalestraString : String { return palestra.scadenzaString }
+    var calendarioString:        String { return calendario.giornoSettimana.string
+                                               + " "
+                                               + calendario.giornoDellAnno.string }
+    var compleannoString:        String { return compleanno.string                }
+    var compleannoGiorno:        Int32  { return Int32(compleanno.giorno)         }
+    var compleannoMese:          Mese   { return compleanno.mese                  }
+    var documento:               Int    { return (compleanno.giorno * 13)
+                                               + (compleanno.mese.rawValue * 3)
+                                               + 6070                             }
+    
+    static let palestraCostoLampada = 14
+    
+    static func palestraCostoAbbonamento(_ a: AbbonamentiPalestra) -> Int {
+        return a.prezzo
+    }
     
     static func enumerateCellulari(_ iteration: (Int, Int) -> Void) {
         Telefono

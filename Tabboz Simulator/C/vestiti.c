@@ -348,7 +348,7 @@ char tmp[128];
 	sprintf(tmp, "%d/100", Fama);
 	SetDlgItemText(parent, 105, tmp);
 
-    SetDlgItemText(parent, 106, Tabboz.global.scadenzaAbbonamentoPalestraString.UTF8String);
+    SetDlgItemText(parent, 106, Tabboz.global.scadenzaPalestraString.UTF8String);
 
 	// Scrive il grado di abbronzatura... 4 Marzo 1999
 	switch (current_testa) {
@@ -368,10 +368,10 @@ BOOL FAR PASCAL Palestra(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
     if (message == WM_INITDIALOG) {
         AggiornaPalestra(hDlg);
-        SetDlgItemText(hDlg, 120, MostraSoldi([Tabboz PalestraCostoAbbonamento:AbbonamentiPalestraUnMese ]));
-        SetDlgItemText(hDlg, 121, MostraSoldi([Tabboz PalestraCostoAbbonamento:AbbonamentiPalestraSeiMesi]));
-        SetDlgItemText(hDlg, 122, MostraSoldi([Tabboz PalestraCostoAbbonamento:AbbonamentiPalestraUnAnno ]));
-        SetDlgItemText(hDlg, 123, MostraSoldi([Tabboz PalestraCostoLampada]));
+        SetDlgItemText(hDlg, 120, MostraSoldi([Tabboz palestraCostoAbbonamento:AbbonamentiPalestraUnMese ]));
+        SetDlgItemText(hDlg, 121, MostraSoldi([Tabboz palestraCostoAbbonamento:AbbonamentiPalestraSeiMesi]));
+        SetDlgItemText(hDlg, 122, MostraSoldi([Tabboz palestraCostoAbbonamento:AbbonamentiPalestraUnAnno ]));
+        SetDlgItemText(hDlg, 123, MostraSoldi([Tabboz palestraCostoLampada]));
         
         return TRUE;
 	}
