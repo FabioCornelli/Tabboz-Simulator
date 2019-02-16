@@ -61,7 +61,7 @@ import Foundation
     @objc var prezzo = 0
     @objc var attivita = Attivita.mancante
     @objc var stato = 0
-    @objc var nome = ""
+          var nome = ""
     
     @objc var speedString : String {
         switch attivita {
@@ -384,6 +384,7 @@ class Tabboz : NSObject {
     var documento:               Int    { return (compleanno.giorno * 13)
                                                + (compleanno.mese.rawValue * 3)
                                                + 6070                             }
+    var nomeScooter:             String { return scooter.nome                     }
     var marmittaString:          String { return scooter.marmitta.string          }
     var carburatoreString:       String { return scooter.cc.string                }
     var ccString:                String { return scooter.carburatore.string       }

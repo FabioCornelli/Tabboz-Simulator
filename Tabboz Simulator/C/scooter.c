@@ -589,8 +589,7 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	 int		  i;
 
     if (message == WM_INITDIALOG) {
-	sprintf(tmp, "%s",  ScooterData.nome.UTF8String);
-	SetDlgItemText(hDlg, 109, tmp);
+	SetDlgItemText(hDlg, 109, Tabboz.global.nomeScooter.UTF8String);
 	SetDlgItemText(hDlg, 105, Tabboz.global.carburatoreString.UTF8String);
 	SetDlgItemText(hDlg, 106, Tabboz.global.marmittaString.UTF8String);
 	SetDlgItemText(hDlg, 107, Tabboz.global.ccString.UTF8String);

@@ -1554,8 +1554,7 @@ char tmp[128];
 
 
 	 if (ScooterData.stato != -1) {
-		sprintf(tmp, "%s", ScooterData.nome.UTF8String);
-		SetDlgItemText(parent, 150, tmp);	// Nomescooter
+		SetDlgItemText(parent, 150, Tabboz.global.nomeScooter.UTF8String);	// Nomescooter
 		sprintf(tmp, "%ld/100", ScooterData.stato);
 		SetDlgItemText(parent, 156, tmp);	// Stato scooter
 	 } else {
