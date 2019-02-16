@@ -38,10 +38,10 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 /* Il 28 Aprile 1998 la procedura scooter e' cambiata radicalmente... */
 void AggiornaScooter(HWND hDlg);
-void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * scooter);
+void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * scooter, NSInteger);
 
 void CalcolaVelocita(HWND hDlg);
-void CalcolaVelocita_Ex(HWND hDlg, NEWSTSCOOTER * scooter, int showscooter);
+void CalcolaVelocita_Ex(NEWSTSCOOTER * scooter);
 
 const char *MostraSpeed(void);
 
@@ -76,39 +76,37 @@ int	PezziMem[] =
 
 #undef  ScooterData
 
-void CalcolaVelocita_Ex(HWND hDlg, NEWSTSCOOTER * ScooterData, int showscooter)
+void CalcolaVelocita_Ex(NEWSTSCOOTER * ScooterData)
 {
 	/* 28 Novembre 1998 0.81pr Bug ! Se lo scooter era ingrippato, cambiando il filtro
 	dell' aria o la marmitta la velocita' diventava un numero negativo... */
 
-	char   buf[128];
-
 	ScooterData.speed = (ScooterData.marmitta * 5) + (ScooterData.filtro * 5)
 			 + tabella[ScooterData.cc + (ScooterData.carburatore * 6 )];
-
-	ScooterData.attivita = 1;					/* Sano...    */
-
-	/* 26 Novembre 1998 0.81pr  Arggg!!! Un bug !!! */
-	/* Se lo scooter sta' per essere comprato, non fa' questi noiosi check... */
-
-	if (!showscooter) {
-		if (ScooterData.speed <= -500 ) ScooterData.attivita = 3;	/* Invasato   */
-		else if (ScooterData.speed <= -1 ) ScooterData.attivita = 2; 	/* Ingrippato */
-
-		if (benzina < 1) ScooterData.attivita = 6;			/* A secco    */
-
-		if (ScooterData.attivita != 1) {
-		     sprintf(buf,"Il tuo scooter e' %s.",n_attivita[ScooterData.attivita]);
-		     MessageBox( hDlg, buf, "Attenzione", MB_OK | MB_ICONINFORMATION);
-		     return;
-	     }
-	}
 }
 
 #define ScooterData Tabboz.global.scooter
 
 void CalcolaVelocita(HWND hDlg) {
-    CalcolaVelocita_Ex(hDlg, Tabboz.global.scooter, 0);
+    CalcolaVelocita_Ex(Tabboz.global.scooter.scooter);
+    
+    ScooterData.attivita = 1;            /* Sano...    */
+    
+    if (ScooterData.speed <= -500 )
+        ScooterData.attivita = 3;        /* Invasato   */
+    else if (ScooterData.speed <= -1 )
+        ScooterData.attivita = 2;        /* Ingrippato */
+    
+    if (benzina < 1)
+        ScooterData.attivita = 6;        /* A secco    */
+    
+    if (ScooterData.attivita != 1) {
+        char   buf[128];
+        
+        sprintf(buf,"Il tuo scooter e' %s.",n_attivita[ScooterData.attivita]);
+        MessageBox( hDlg, buf, "Attenzione", MB_OK | MB_ICONINFORMATION);
+        return;
+    }
 }
 
 /********************************************************************/
@@ -282,7 +280,7 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 				 benzina=50;	/* 5 litri, il massimo che puo' contenere... */
 
-				 if (ScooterData.cc == 5) benzina = 850;  /* 85 litri, x la macchinina un po' figa... */
+				 if (ScooterData.scooter.cc == 5) benzina = 850;  /* 85 litri, x la macchinina un po' figa... */
 				 CalcolaVelocita(hDlg);
 
 				 sprintf(buf, "Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
@@ -345,9 +343,8 @@ BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lPara
 				num_moto=wParam-120;
 				scelta=num_moto;
                 
-				CalcolaVelocita_Ex(hDlg, ScooterMem[num_moto], 1);
-
-				AggiornaScooter_Ex(hDlg, ScooterMem[num_moto]);
+				CalcolaVelocita_Ex(ScooterMem[num_moto]);
+				AggiornaScooter_Ex(hDlg, ScooterMem[num_moto], 100);
 				return(TRUE);
 
 			case IDCANCEL:
@@ -537,13 +534,12 @@ BOOL FAR PASCAL TruccaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 #undef ScooterData
 
-void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * ScooterData)
+void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * ScooterData, NSInteger stato)
 {
 char 	tmp[128];
 div_t  	d;
 	SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 
-	if (ScooterData.stato != -1) {
 		sprintf(tmp, "%s",  ScooterData.nome.UTF8String);
         SetDlgItemText(hDlg, 116, tmp);
 		d = div(benzina,10);
@@ -555,29 +551,32 @@ div_t  	d;
 		SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
 		SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
 		SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
-		sprintf(tmp, "%ld%%", ScooterData.stato);
+		sprintf(tmp, "%ld%%", stato);
         SetDlgItemText(hDlg, 115, tmp);
 
 		SetDlgItemText(hDlg, 117, MostraSoldi(ScooterData.prezzo));
-
-	} else {
-		SetDlgItemText(hDlg, 107, "" );
-		SetDlgItemText(hDlg, 110, "" );
-		SetDlgItemText(hDlg, 111, "" );
-		SetDlgItemText(hDlg, 112, "" );
-		SetDlgItemText(hDlg, 113, "" );
-		SetDlgItemText(hDlg, 114, "" );
-		SetDlgItemText(hDlg, 115, "" );
-		SetDlgItemText(hDlg, 116, "" );
-		SetDlgItemText(hDlg, 117, "" );
-	}
 
 }
 
 #define ScooterData Tabboz.global.scooter
 
 void AggiornaScooter(HWND hDlg) {
-    AggiornaScooter_Ex(hDlg, Tabboz.global.scooter);
+    if (ScooterData.stato != -1) {
+        AggiornaScooter_Ex(hDlg, Tabboz.global.scooter.scooter, ScooterData.stato);
+
+    } else {
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        SetDlgItemText(hDlg, 107, "" );
+        SetDlgItemText(hDlg, 110, "" );
+        SetDlgItemText(hDlg, 111, "" );
+        SetDlgItemText(hDlg, 112, "" );
+        SetDlgItemText(hDlg, 113, "" );
+        SetDlgItemText(hDlg, 114, "" );
+        SetDlgItemText(hDlg, 115, "" );
+        SetDlgItemText(hDlg, 116, "" );
+        SetDlgItemText(hDlg, 117, "" );
+    }
+
 }
 
 // -----------------------------------------------------------------------
@@ -623,7 +622,7 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		writelog(tmp);
 		#endif
 
-		ScooterData.marmitta = (wParam - 129); /* (1 - 3 ) */
+		ScooterData.scooter.marmitta = (wParam - 129); /* (1 - 3 ) */
 		CalcolaVelocita(hDlg);
 		EndDialog(hDlg, TRUE);
 		return(TRUE);
@@ -642,7 +641,7 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			writelog(tmp);
 			#endif
 
-			ScooterData.carburatore = (wParam - 132 );  /* ( 1 - 4 ) */
+			ScooterData.scooter.carburatore = (wParam - 132 );  /* ( 1 - 4 ) */
 			CalcolaVelocita(hDlg);
 			EndDialog(hDlg, TRUE);
 			return(TRUE);
@@ -663,7 +662,7 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 			/* Piccolo bug della versione 0.6.91, qui c'era scritto ScooterData.marmitta */
 			/* al posto di ScooterData.cc :-) */
-			ScooterData.cc = (wParam - 136); /* ( 1 - 4 ) */
+			ScooterData.scooter.cc = (wParam - 136); /* ( 1 - 4 ) */
 			CalcolaVelocita(hDlg);
 			EndDialog(hDlg, TRUE);
 			return(TRUE);
@@ -682,7 +681,7 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			writelog(tmp);
 			#endif
 
-			ScooterData.filtro = (wParam - 140); /* (1 - 4) */
+			ScooterData.scooter.filtro = (wParam - 140); /* (1 - 4) */
 			CalcolaVelocita(hDlg);
 			EndDialog(hDlg, TRUE);
 			return(TRUE);
@@ -704,7 +703,7 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 const char	*MostraSpeed(void)
 {
-    return Tabboz.global.scooter.speedString.UTF8String;
+    return Tabboz.global.speedString.UTF8String;
 }
 
 

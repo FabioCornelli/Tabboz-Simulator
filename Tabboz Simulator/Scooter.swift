@@ -53,16 +53,47 @@ class STSCOOTER : NSObject {
 
 class NEWSTSCOOTER : NSObject {
     
-    @objc var speed:       Int     // 01  Velocita'
-    @objc var marmitta:    Int     // 02  Marmitta            ( +0, +7, +12, +15)
-    @objc var carburatore: Int     // 03  Carburatore         ( 0 - 4 )
-    @objc var cc:          Int     // 04  Cilindrata          ( 0 - 4 )
-    @objc var filtro:      Int     // 05  Filtro dell' aria   ( +0, +5, +10, +15)
-    @objc var prezzo:      Int     // 06  Costo dello scooter (modifiche incluse)
-    @objc var attivita:    Int     // 07  Attivita' scooter
-    @objc var stato:       Int     // 08  Quanto e' intero (in percuntuale); -1 nessuno scooter
-    @objc var nome:        String  // 09  Nome dello scooter
-    @objc var fama:        Int     // 10  Figosita' scooter
+    @objc enum Marmitta : Int {
+        case standard     = 0
+        case silenziosa   = 1
+        case rumorosa     = 2
+        case rumorosisima = 3
+    }
+    
+    @objc enum Carburatore : Int {
+        case _12_10 = 0
+        case _16_16 = 1
+        case _19_19 = 2
+        case _20_20 = 3
+        case _24_24 = 4
+        case custom = 5
+    }
+    
+    @objc enum Cilindrata : Int {
+        case _50cc   = 0
+        case _70cc   = 1
+        case _90cc   = 2
+        case _120cc  = 3
+        case _150cc  = 4
+        case _3969cc = 5
+    }
+    
+    @objc enum Filtro : Int {
+        case standard  = 0
+        case P1        = 1
+        case P2        = 2
+        case P2Plus    = 3
+        case extreme   = 4
+    }
+
+    @objc var speed:       Int         // 01  Velocita'
+    @objc var marmitta:    Marmitta    // 02  Marmitta            ( +0, +7, +12, +15)
+    @objc var carburatore: Carburatore // 03  Carburatore         ( 0 - 4 )
+    @objc var cc:          Cilindrata  // 04  Cilindrata          ( 0 - 4 )
+    @objc var filtro:      Filtro      // 05  Filtro dell' aria   ( +0, +5, +10, +15)
+    @objc var prezzo:      Int         // 06  Costo dello scooter (modifiche incluse)
+    @objc var nome:        String      // 09  Nome dello scooter
+    @objc var fama:        Int         // 10  Figosita' scooter
     
     init(
         _ speed:       Int,
@@ -77,18 +108,73 @@ class NEWSTSCOOTER : NSObject {
         _ fama:        Int
     ) {
         self.speed       = speed
-        self.marmitta    = marmitta
-        self.carburatore = carburatore
-        self.cc          = cc
-        self.filtro      = filtro
+        self.marmitta    = Marmitta(rawValue: marmitta)!
+        self.carburatore = Carburatore(rawValue: carburatore)!
+        self.cc          = Cilindrata(rawValue: cc)!
+        self.filtro      = Filtro(rawValue: filtro)!
         self.prezzo      = prezzo
-        self.attivita    = attivita
-        self.stato       = stato
         self.nome        = nome
         self.fama        = fama
         
         super.init()
     }
+}
+
+extension NEWSTSCOOTER.Marmitta {
+    
+    var string : String {
+        switch self {
+        case .standard:     return "standard"
+        case .silenziosa:   return "silenziosa"
+        case .rumorosa:     return "rumorosa"
+        case .rumorosisima: return "rumorosisima"
+        }
+    }
+    
+}
+
+extension NEWSTSCOOTER.Carburatore {
+    
+    var string : String {
+        switch self {
+        case ._12_10: return "12/10"
+        case ._16_16: return "16/16"
+        case ._19_19: return "19/19"
+        case ._20_20: return "20/20"
+        case ._24_24: return "24/24"
+        case .custom: return "custom"
+        }
+    }
+    
+}
+
+extension NEWSTSCOOTER.Cilindrata {
+    
+    var string : String {
+        switch self {
+        case ._50cc:   return "50cc"
+        case ._70cc:   return "70cc"
+        case ._90cc:   return "90cc"
+        case ._120cc:  return "120cc"
+        case ._150cc:  return "150cc"
+        case ._3969cc: return "3969cc"
+        }
+    }
+    
+}
+
+extension NEWSTSCOOTER.Filtro {
+    
+    var string : String {
+        switch self {
+        case .standard:  return "standard"
+        case .P1:        return "P1"
+        case .P2:        return "P2"
+        case .P2Plus:    return "P2+"
+        case .extreme:   return "Extreme"
+        }
+    }
+    
 }
 
 // -
