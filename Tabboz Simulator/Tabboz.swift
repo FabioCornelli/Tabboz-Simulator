@@ -219,9 +219,7 @@ class Tabboz : NSObject {
     // Scooter
     // -
 
-    func setScooter(_ newValue: NEWSTSCOOTER, benzin b: Int) {
-        scooter.scooter = newValue
-        scooter.benzina = b
+    func _setScooter(_ newValue: NEWSTSCOOTER, benzin b: Int) {
     }
     
     // -
@@ -266,6 +264,67 @@ class Tabboz : NSObject {
         else {
             nomoney(hInstance, Int32(TABACCAIO))
         }
+    }
+    
+    func vaiInDisco(_ discoId: Int, hDlg: HANDLE) {
+        let disco = Club.disco[discoId]
+        
+        if disco.speed == 1 && scooter.stato == -1 {
+            MessageBox_SenzaLoScooterNonVaiInDiscoFuoriPorta(hDlg)
+            Evento(hDlg)
+            return
+        }
+        
+        if disco.mass == calendario.giornoSettimana.rawValue {
+            MessageBox_UnCartelloRecitaGiornoDiChiusura(hDlg)
+            return
+        }
+        
+        let prezzo = sesso == UInt8(ascii: "M") ? disco.prezzo : disco.prezzo - 10
+        
+        if danaro.soldi >= prezzo {
+            if disco.cc > Fama && sesso == UInt8(ascii: "M") {
+                /* check selezione all'ingresso */
+                
+                if sound_active != 0 {
+                    TabbozPlaySound(302)
+                }
+                
+                MessageBox_ConciatoCosiNonPuoEntrare(hDlg)
+                
+                if Reputazione > 2 {
+                    Reputazione -= 1
+                }
+                
+                if Fama > 2 {
+                    Fama -= 1
+                }
+            }
+            else {
+                if sound_active != 0 {
+                    // suoni: 0303 -> 0305
+                    TabbozPlaySound(303 + tabboz_random(3))
+                }
+                
+                _ = danaro.paga(prezzo)
+                
+                Fama += Int32(disco.fama)
+                Reputazione += Int32(disco.xxx)
+                
+                if Fama > 100 {
+                    Fama = 100
+                }
+                
+                if Reputazione > 100 {
+                    Reputazione = 100
+                }
+            }
+        }
+        else {
+            nomoney(hDlg, Int32(DISCO))
+        }
+        
+        Evento(hDlg)
     }
 }
 

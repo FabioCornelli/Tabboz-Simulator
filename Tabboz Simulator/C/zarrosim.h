@@ -152,7 +152,7 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define SizeMem     Tabacchi.sigarette
 #define PalestraMem STSCOOTER.palestra
 #define LavoroMem   STSCOOTER.lavoro
-#define DiscoMem    STSCOOTER.disco
+#define DiscoMem    Club.disco
 
 #define CellularData Tabboz.global.cellulare
 #define CellularMem  STCEL.cellulari

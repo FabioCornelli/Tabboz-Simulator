@@ -70,3 +70,21 @@ void MessageBox_MessaggioPaurosoDaSigarette(HANDLE hDlg) {
                (LPSTR)tmp,
                "ART. 46 L. 29/12/1990 n. 428", MB_OK | MB_ICONINFORMATION );
 }
+
+void MessageBox_SenzaLoScooterNonVaiInDiscoFuoriPorta(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Senza lo scooter non puoi andare nelle discoteche fuori porta...",
+               "Discoteca fuori porta", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_UnCartelloRecitaGiornoDiChiusura(HANDLE hDlg) {    
+    MessageBox( hDlg,
+               "Un cartello recita che oggi e' il giorno di chiusura settimanale...",
+               "Giorno di chiusura", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ConciatoCosiNonPuoEntrare(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Mi dispiace signore, conciato cosi', qui non puo' entrare...\nVenga vestito meglio la prossima volta, signore.",
+               "Selezione all' ingresso", MB_OK | MB_ICONINFORMATION);
+}

@@ -304,9 +304,6 @@ FARPROC	  lpproc;
                  
                  [Tabboz.global.scooter distruggi];
 				 
-                 [Tabboz.global setScooter:ScooterMem[0]
-                                   benzin:0];
-
 				 #ifdef TABBOZ_DEBUG
 				 writelog("eventi: Lo scooter si e' completamente distrutto...");
 				 #endif

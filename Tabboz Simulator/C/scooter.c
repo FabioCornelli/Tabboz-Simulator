@@ -352,10 +352,6 @@ static long          offerta;  /* importante lo static !!! */
 		return(TRUE);
 
 	    case IDOK:
-            [Tabboz.global setScooter:ScooterMem[0] /* nessuno scooter                     */
-                              benzin:0];           /* serbatoio vuoto    7 Maggio 1998    */
-            
-
             [Tabboz.global.scooter distruggi];
             [Tabboz.global.danaro deposita:offerta];
 
@@ -690,8 +686,6 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
 				writelog(tmp);
 				#endif
 
-                [Tabboz.global setScooter:ScooterMem[0] /* nessuno scooter                     */
-                                  benzin:0];           /* serbatoio vuoto    7 Maggio 1998    */
                 [Tabboz.global.scooter distruggi];
             }
             
@@ -707,8 +701,8 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
 				writelog(tmp);
 				#endif
 
-                [Tabboz.global setScooter:ScooterMem[scelta]
-                                  benzin:0];
+                [Tabboz.global.scooter compraScooter:scelta];
+                
 				MessageBox( hDlg,
 				  "Fai un giro del quartiere per farti vedere con lo scooter nuovo...",
 				  "Lo scooter nuovo", MB_OK | MB_ICONINFORMATION);

@@ -153,6 +153,7 @@ class NEWSTSCOOTER : NSObject {
     }
     
     var benzina = 0
+    
     @objc private(set) var prezzo = 0
     @objc private(set) var attivita = Attivita.mancante
     @objc private(set) var stato = -1
@@ -199,6 +200,10 @@ class NEWSTSCOOTER : NSObject {
         return attivitaCalcolataEx ?? .funzionante
     }
     
+    @objc func compraScooter(_ scooterId: Int) {
+        scooter = NEWSTSCOOTER.scooter[scooterId]
+    }
+    
     @objc func ripara() {
         stato = 100
     }
@@ -210,6 +215,9 @@ class NEWSTSCOOTER : NSObject {
     @objc func distruggi() {
         stato = -1
         attivita = .mancante
+        
+        scooter = NEWSTSCOOTER.scooter[0] /* nessuno scooter                     */
+        benzina = 0                       /* serbatoio vuoto    7 Maggio 1998    */
     }
     
     @objc func consuma(benza: Int) {
@@ -237,6 +245,11 @@ class NEWSTSCOOTER : NSObject {
         default:
             return false
         }
+    }
+    
+    @objc func regalaMacchinina() {
+        scooter = NEWSTSCOOTER.scooter[7]
+        benzina = 850
     }
     
 }
@@ -355,30 +368,6 @@ extension NEWSTSCOOTER.Filtro {
         STSCOOTER(1,  0, 0, 0, 0, 0,   0,  0, "Ricopio"                  ), // 14/01/2000
         //        |
         //        \__ lavoro fuori porta (solo con lo scooter puoi arrivarci...)
-    ]
-
-    // Disco -------------------------------------------------------------------------------------------
-
-    // Per una questione di svogliatezza del programmatore, viene usata STSCOOTER
-    // anche x i vestiti e per le discoteche.
-    
-    static let disco = [
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "---"),
-        STSCOOTER(0, 30, 2,15, 1, 0,  36,  0, ""   ),
-        STSCOOTER(0,  0, 1, 7, 4, 0,  26,  0, ""   ),
-        STSCOOTER(0,  0, 1, 8, 1, 0,  30,  0, ""   ),
-        STSCOOTER(0, 35, 3,15, 1, 0,  36,  0, ""   ),
-        STSCOOTER(0,  0, 2, 6, 3, 0,  26,  0, ""   ),
-        STSCOOTER(0,  0, 2, 5, 2, 0,  22,  0, ""   ),
-        STSCOOTER(0,  0, 3, 8, 1, 0,  30,  0, ""   ),
-        STSCOOTER(1,  0, 2, 9, 7, 0,  36,  0, ""   ),
-        //        |   |  |  |  |       |
-        //        |   |  |  |  |       \__ costo
-        //        |   |  |  |  \__________ giorno di chiusura (1=lunedi',etc... - 0=nessuno) [24 marzo 1998]
-        //        |   |  |  \_____________ incremento fama
-        //        |   |  \________________ incremento reputazione
-        //        |   \___________________ figosita' minima x entrare (selezione all' ingresso)
-        //         \______________________ 1=disco fuori porta - ci puoi arrivare solo se hai lo scooter...
     ]
     
 }
