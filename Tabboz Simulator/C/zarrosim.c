@@ -283,8 +283,8 @@ void InitTabboz(void)
 	 boolean_shutdown=0;		  /* 0=resta dentro, 1=uscita, 2=shutdown 19 Giugno 1999 / 14 Ottoble 1999 */
 
 	 Fortuna=0;					     /* Uguale a me...               */
-	 ScooterData=ScooterMem[0];  /* nessuno scooter              */
-	 ImgSelector=0;              /* W l' arte di arrangiarsi...  */
+
+    ImgSelector=0;              /* W l' arte di arrangiarsi...  */
 	 timer_active=1;             			 /* 10 Giugno  1998 */
 	 fase_di_avvio=1;				 		    /* 11 Giugno  1998 */
 	 Tempo_trascorso_dal_pestaggio=0;    /* 12 Giugno  1998 */
@@ -833,8 +833,7 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			}
 
 			if (! strcmp(Daniele,buf)) {	/* Murdock, ti regala una macchinina... */
-				ScooterData=ScooterMem[7];
-				benzina=850;
+                [Tabboz.global setScooter:ScooterMem[7] benzina:850];
 				Reputazione=100;
 			}
 

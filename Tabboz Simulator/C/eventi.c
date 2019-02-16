@@ -294,7 +294,10 @@ FARPROC	  lpproc;
 					"Scooter Distrutto", MB_OK | MB_ICONSTOP);
 				 ScooterData.stato=-1;
 				 ScooterData.attivita=0;
-				 ScooterData=ScooterMem[0];
+				 
+                 [Tabboz.global setScooter:ScooterMem[0]
+                                   benzina:0];
+
 				 #ifdef TABBOZ_DEBUG
 				 writelog("eventi: Lo scooter si e' completamente distrutto...");
 				 #endif

@@ -20,7 +20,7 @@ class Tabboz : NSObject {
           var palestra    = Palestra()
           var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
     
-    @objc var scooter     = NEWSTSCOOTER(0, 0, 0, 0, 0, 0, 0, 0, "", 0)
+    @objc private(set) var scooter     = NEWSTSCOOTER.scooter[0]
     @objc var cellulare   = Telefono()
     
     @objc private(set) var abbonamento = AbbonamentoCorrente(0, "")
@@ -222,6 +222,14 @@ class Tabboz : NSObject {
         }
     }
     
+    // -
+    // Scooter
+    // -
+
+    func setScooter(_ newValue: NEWSTSCOOTER, benzina b: Int) {
+        scooter = newValue
+        benzina = Int32(b)
+    }
 }
 
 @objc extension Tabboz {
