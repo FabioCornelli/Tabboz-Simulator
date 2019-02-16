@@ -148,7 +148,7 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define ScooterMem  NEWSTSCOOTER.scooter
 
 #define MaterieMem  STSCOOTER.materie
-#define VestitiMem  STSCOOTER.vestiti
+#define VestitiMem  Vestiario.vestiti
 #define SizeMem     STSCOOTER.sigarette
 #define PalestraMem STSCOOTER.palestra
 #define LavoroMem   STSCOOTER.lavoro
@@ -210,9 +210,12 @@ extern  int 	 antifurto;
 extern  int		 sizze;
 extern  int		 Tempo_trascorso_dal_pestaggio;
 extern  int	 	 current_testa;      // Grado di abbronzatura del tabbozzo
-extern  int	 	 current_gibbotto;   // Vestiti attuali del tabbozzo...
-extern  int	 	 current_pantaloni;
-extern  int	 	 current_scarpe;
+//extern  int          current_gibbotto;   // Vestiti attuali del tabbozzo...
+//extern  int          current_pantaloni;
+//extern  int          current_scarpe;
+#define current_gibbotto  Tabboz.global.vestiti.giubbotto
+#define current_pantaloni Tabboz.global.vestiti.pantaloni
+#define current_scarpe    Tabboz.global.vestiti.scarpe
 extern  int		 current_tipa;
 extern  int  	 sound_active;
 extern  char	 sesso; 	// M/F 29 Maggio 1999 --- Inizio...

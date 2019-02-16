@@ -78,9 +78,6 @@ int	 Fortuna;		  // Fortuna del tabbozzo
 int	 sizze;			  // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
 int	 Tempo_trascorso_dal_pestaggio; //      ( 12 Giugno 1998 - 0.6.98a )
 int	 current_testa;
-int	 current_gibbotto;
-int	 current_pantaloni;
-int	 current_scarpe;
 int	 current_tipa;
 
 int	 timer_active;
@@ -190,9 +187,6 @@ char  tmp[128];
 
 		sizze					=  0;
 		current_testa     =  0;
-		current_gibbotto  =  0;
-		current_pantaloni =  0;
-		current_scarpe    =  0;
 
 #ifndef NONETWORK
 		net_enable			=  1;

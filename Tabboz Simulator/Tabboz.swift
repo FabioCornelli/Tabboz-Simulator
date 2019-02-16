@@ -16,9 +16,9 @@ class Tabboz : NSObject {
     @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
     @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
-    @objc              var danaro      = Danaro()
+    @objc private(set) var danaro      = Danaro()
     @objc private(set) var calendario  = Calendario()
-
+    @objc private(set) var vestiti     = Vestiario()
           private      var palestra    = Palestra()
           private      var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
     
@@ -85,6 +85,7 @@ class Tabboz : NSObject {
         compleanno = .random()
         cellulare.invalidate()
         abbonamento = AbbonamentoCorrente()
+        vestiti = Vestiario()
     }
 
     // -
@@ -223,7 +224,30 @@ class Tabboz : NSObject {
         scooter.benzina = b
     }
     
-    
+    // -
+    // Vestiti
+    // -
+
+    func compraVestito(_ vestitoId: Int, hInstance: HANDLE) {
+        let vestito = Vestiario.vestiti[vestitoId]
+        
+        if danaro.paga(vestito.prezzo) {
+            vestiti.indossa(vestitoId)
+            
+            // E' necessario ridisegnare l' immagine del Tabbozzo...
+            TabbozRedraw = 1
+            
+            Fama += Int32(vestito.fama)
+            if Fama > 100 {
+                Fama=100
+            }
+        }
+        else {
+            nomoney(hInstance, Int32(VESTITI))
+        }
+        
+        Evento(hInstance)
+    }
     
 }
 
@@ -268,5 +292,13 @@ class Tabboz : NSObject {
             .map { ($0.offset, $0.element.prezzo) }
             .forEach(iteration)
     }
-    
+
+    static func enumerateVestiti(_ iteration: (Int, Int) -> Void) {
+        Vestiario
+            .vestiti
+            .enumerated()
+            .map { ($0.offset, $0.element.1) }
+            .forEach(iteration)
+    }
+
 }

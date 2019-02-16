@@ -31,7 +31,6 @@ __attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (An
 
 extern void EventiPalestra(HANDLE hInstance);
 BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-void PagaQualcosa(HWND parent);
 
 /********************************************************************/
 /* Vestiti...                                                       */
@@ -118,53 +117,6 @@ BOOL FAR PASCAL Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 }
 
 //*******************************************************************
-// Routine per il pagamento di qualunque cosa...
-//*******************************************************************
-
-void
-PagaQualcosa(HANDLE hInstance)
-{
-char	tmp[128];
-
-	if (scelta != 0) {
-		if (![Tabboz.global.danaro paga: VestitiMem[scelta].prezzo]) {
-			(void)nomoney(hInstance,VESTITI);
-		} else {
-			switch (scelta) {	/* 25 Febbraio 1999 */
-				case 1:
-				case 2:
-				case 3:
-				case 4:
-				case 5:
-				case 6:  current_gibbotto=scelta; break;
-				case 7:
-				case 8:
-				case 9:
-				case 10: current_pantaloni=scelta-6; break;
-				case 11:
-				case 12:
-				case 13:
-				case 14:
-				case 15:
-				case 16:
-				case 17: current_scarpe=scelta-10; break;
-			}
-
-			TabbozRedraw = 1;	// E' necessario ridisegnare l' immagine del Tabbozzo...
-
-	      #ifdef TABBOZ_DEBUG
-	      sprintf(tmp,"vestiti: Paga %s",MostraSoldi(VestitiMem[scelta].prezzo));
-			writelog(tmp);
-	      #endif
-	      Fama+=VestitiMem[scelta].fama;
-	      if (Fama > 100) Fama=100;
-	   }
-	   Evento(hInstance);
-	}
-}
-
-
-//*******************************************************************
 // Routine di acquisto generica
 //*******************************************************************
 
@@ -175,15 +127,16 @@ BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam
 	 int		  i;
 
 	 if (message == WM_INITDIALOG) {
-	scelta=0;
-	SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
-	sprintf(tmp, "%d/100", Fama);
-	SetDlgItemText(hDlg, 121, tmp);
+         scelta=0;
+         SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
+         sprintf(tmp, "%d/100", Fama);
+         SetDlgItemText(hDlg, 121, tmp);
 
-	for (i=101;i<120;i++) {
-		SetDlgItemText(hDlg, i, MostraSoldi(VestitiMem[i-100].prezzo));
-	}
-	return(TRUE);
+         [Tabboz enumerateVestiti:^(NSInteger i, NSInteger prezzo) {
+             SetDlgItemText(hDlg, + 100, MostraSoldi(prezzo));
+         }];
+         
+         return(TRUE);
 	}
 
 	 else if (message == WM_COMMAND)
@@ -218,7 +171,9 @@ BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam
 		return(TRUE);
 
 		 case IDOK:
-		PagaQualcosa(hDlg);
+        if (scelta != 0) {
+            [Tabboz.global compraVestito:scelta hInstance: hDlg];
+        }
 		EndDialog(hDlg, TRUE);
 		return(TRUE);
 

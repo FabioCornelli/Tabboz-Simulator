@@ -340,7 +340,6 @@ extension NEWSTSCOOTER.Filtro {
         /*               \__ voto in una materia */
     ]
     
-    // Vestiti -----------------------------------------------------------------------------------------
     
     // Per una questione di svogliatezza del programmatore, viene usata STSCOOTER anche x i vestiti.
     
