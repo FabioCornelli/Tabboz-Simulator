@@ -19,6 +19,7 @@ class Tabboz : NSObject {
     @objc private(set) var danaro      = Danaro()
     @objc private(set) var calendario  = Calendario()
     @objc private(set) var vestiti     = Vestiario()
+    @objc private(set) var tabacchi    = Tabacchi()
           private      var palestra    = Palestra()
           private      var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
     
@@ -173,7 +174,6 @@ class Tabboz : NSObject {
     func compraCellulare(_ scelta: Int, hDlg: HANDLE) {
         let nuovoCellulare = Telefono.cellulari[scelta]
         
-        
         if danaro.paga(nuovoCellulare.prezzo) {
             cellulare.prendiCellulare(nuovoCellulare)
             
@@ -249,6 +249,24 @@ class Tabboz : NSObject {
         Evento(hInstance)
     }
     
+    func compraSigarette(_ sigaretteId: Int, hInstance: HANDLE) {
+        let sigaretta = Tabacchi.sigarette[sigaretteId]
+        
+        if danaro.paga(sigaretta.prezzo) {
+            Fama += Int32(sigaretta.fama)
+            if Fama > 100 {
+                Fama = 100
+            }
+
+            tabacchi.nuovoPacchetto()
+            
+            MessageBox_MessaggioPaurosoDaSigarette(hInstance)
+            Evento(hInstance)
+        }
+        else {
+            nomoney(hInstance, Int32(TABACCAIO))
+        }
+    }
 }
 
 @objc extension Tabboz {

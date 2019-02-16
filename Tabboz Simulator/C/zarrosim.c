@@ -75,7 +75,6 @@ int	 Rapporti;	     // Rapporti Tipo <-> Tipa
 int	 Stato;		     // Quanto stai male ??? (16 Marzo 1999 - 0.8.3pr )
 u_long DDP;				  // Due di picche (log...) - long,sono ottimista...
 int	 Fortuna;		  // Fortuna del tabbozzo
-int	 sizze;			  // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
 int	 Tempo_trascorso_dal_pestaggio; //      ( 12 Giugno 1998 - 0.6.98a )
 int	 current_testa;
 int	 current_tipa;
@@ -185,7 +184,6 @@ char  tmp[128];
 			strcpy(Cognome,"In Particolare");
 			}
 
-		sizze					=  0;
 		current_testa     =  0;
 
 #ifndef NONETWORK

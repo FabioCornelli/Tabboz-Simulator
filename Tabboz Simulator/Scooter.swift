@@ -341,63 +341,6 @@ extension NEWSTSCOOTER.Filtro {
     ]
     
     
-    // Per una questione di svogliatezza del programmatore, viene usata STSCOOTER anche x i vestiti.
-    
-    static let vestiti = [
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0,"---" ),
-        STSCOOTER(0,  0, 0, 8, 0, 0, 348,  0,""    ), // -- Giubbotto "Fatiscenza"
-        STSCOOTER(0,  0, 0, 9, 0, 0, 378,  0,""    ), //
-        STSCOOTER(0,  0, 0, 7, 0, 0, 298,  0,""    ), //
-        STSCOOTER(0,  0, 0, 8, 0, 0, 248,  0,""    ), //    Giacca di pelle (3 Nuovi Giubbotti)
-        STSCOOTER(0,  0, 0, 9, 0, 0, 378,  0,""    ), //    Fatiscenza verde
-        STSCOOTER(0,  0, 0,10, 0, 0, 418,  0,""    ), //    Fatiscenza bianco
-        
-        STSCOOTER(0,  0, 0, 3, 0, 0,  90,  0,""    ), // -- Pantaloni gessati
-        STSCOOTER(0,  0, 0, 5, 0, 0, 170,  0,""    ), //    Pantaloni tuta
-        STSCOOTER(0,  0, 0, 6, 0, 0, 248,  0,""    ), //    Pantaloni in plastika
-        STSCOOTER(0,  0, 0, 5, 0, 0, 190,  0,""    ), //    Pantaloni scacchiera 21 giugno 1999
-        
-        STSCOOTER(0,  0, 0, 4, 0, 0, 122,  0,""    ), // -- Scarpe da tabbozzi...
-        STSCOOTER(0,  0, 0, 6, 0, 0, 220,  0,""    ), //    Buffalo
-        STSCOOTER(0,  0, 0, 2, 0, 0,  58,  0,""    ), //    Scarpe da tabbozzi...
-        STSCOOTER(0,  0, 0, 4, 0, 0, 142,  0,""    ), //    NUOVE Scarpe da tabbozzi...   23 Aprile 1998
-        STSCOOTER(0,  0, 0, 4, 0, 0, 142,  0,""    ), //    ""        ""
-        STSCOOTER(0,  0, 0, 5, 0, 0, 166,  0,""    ), //    ""        ""
-        STSCOOTER(0,  0, 0, 6, 0, 0, 230,  0,""    ), //    Nuove Buffalo
-    ]
-    
-    // Sigarette ---------------------------------------------------------------------------------------
-    
-    static let sigarette = [
-        STSCOOTER( 5,  5, 0, 2, 0, 0,   6,  0, "Barclay"                  ),
-        STSCOOTER( 8,  7, 0, 1, 0, 0,   6,  0, "Camel"                    ),
-        STSCOOTER( 7,  6, 0, 2, 0, 0,   6,  0, "Davidoff Superior Lights" ),
-        STSCOOTER( 7,  6, 0, 2, 0, 0,   6,  0, "Davidoff Mildnes"         ),
-        STSCOOTER(13,  9, 0, 2, 0, 0,   6,  0, "Davidoff Classic"         ),
-        STSCOOTER( 9,  7, 0, 1, 0, 0,   5,  0, "Diana Blu"                ),
-        STSCOOTER(12,  9, 0, 1, 0, 0,   5,  0, "Diana Rosse"              ),
-        STSCOOTER( 8,  7, 0, 0, 0, 0,   6,  0, "Dunhill Lights"           ),
-        STSCOOTER( 7,  5, 0, 0, 0, 0,   6,  0, "Merit"                    ),
-        STSCOOTER(14, 10, 0, 0, 0, 0,   6,  0, "Gauloises Blu"            ),
-        STSCOOTER( 7,  6, 0, 0, 0, 0,   6,  0, "Gauloises Rosse"          ),
-        STSCOOTER(13, 10, 0, 1, 0, 0,   6,  0, "Unlucky Strike"           ),
-        STSCOOTER( 9,  7, 0, 1, 0, 0,   6,  0, "Unlucky Strike Lights"    ),
-        STSCOOTER( 8,  6, 0, 2, 0, 0,   6,  0, "Malborro Medium"          ), // dovrebbero essere come le lights 4 Marzo 1999
-        STSCOOTER(12,  9, 0, 2, 0, 0,   6,  0, "Malborro Rosse"           ),
-        STSCOOTER( 8,  6, 0, 2, 0, 0,   6,  0, "Malborro Lights"          ),
-        STSCOOTER(11, 10, 0, 0, 0, 0,   5,  0, "NS Rosse"                 ),
-        STSCOOTER( 9,  8, 0, 0, 0, 0,   5,  0, "NS Mild"                  ),
-        STSCOOTER( 9,  7, 0, 1, 0, 0,   5,  0, "Poll Mon Blu"             ),
-        STSCOOTER(12,  9, 0, 1, 0, 0,   5,  0, "Poll Mon Rosse"           ),
-        STSCOOTER(12, 10, 0, 2, 0, 0,   6,  0, "Philip Morris"            ),
-        STSCOOTER( 4,  4, 0, 2, 0, 0,   6,  0, "Philip Morris Super Light"),
-        STSCOOTER(10,  9, 0, 1, 0, 0,   5,  0, "Armadis"                  ),
-        STSCOOTER(11,  9, 0, 0, 0, 0,   5,  0, "Winston"                  ),
-        //        |   |
-        //        |   \__ nicotina * 10 (7 = nicotina 0.7, 10 = nicotina 1)
-        //        \______ condensato
-    ]
-
     // Lavoro ------------------------------------------------------------------------------------------
 
     static let lavoro = [

@@ -149,7 +149,7 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 
 #define MaterieMem  STSCOOTER.materie
 #define VestitiMem  Vestiario.vestiti
-#define SizeMem     STSCOOTER.sigarette
+#define SizeMem     Tabacchi.sigarette
 #define PalestraMem STSCOOTER.palestra
 #define LavoroMem   STSCOOTER.lavoro
 #define DiscoMem    STSCOOTER.disco
@@ -187,10 +187,9 @@ extern  int 	 ScuolaRedraw;       // E' necessario ridisegnare la scuola ???
 
 extern  int     Fama;
 extern  int     Reputazione;
-//extern  int     Studio;         // Quanto vai bene a scuola (1 - 100)
-#define Studio Tabboz.global.studio
-//extern  u_long  Soldi;          // Long...per forza! lo zarro ha tanti soldi...
-#define Soldi Tabboz.global.danaro.soldi
+//extern  int     Studio;
+#define Studio  Tabboz.global.studio       // Quanto vai bene a scuola (1 - 100)
+#define Soldi   Tabboz.global.danaro.soldi // Long...per forza! lo zarro ha tanti soldi...
 extern  u_long  Paghetta;       // Paghetta Settimanale...
 extern  char    Nome[30];
 extern  char    Cognome[30];
@@ -207,13 +206,11 @@ extern  int		 giorni_di_lavoro; // Serve x calcolare lo stipendio SOLO per il pr
 extern  int     stipendio;
 #define benzina Tabboz.global.scooter.benzina_
 extern  int 	 antifurto;
-extern  int		 sizze;
+#define sizze   Tabboz.global.tabacchi.siga      // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
 extern  int		 Tempo_trascorso_dal_pestaggio;
 extern  int	 	 current_testa;      // Grado di abbronzatura del tabbozzo
-//extern  int          current_gibbotto;   // Vestiti attuali del tabbozzo...
-//extern  int          current_pantaloni;
-//extern  int          current_scarpe;
-#define current_gibbotto  Tabboz.global.vestiti.giubbotto
+
+#define current_gibbotto  Tabboz.global.vestiti.giubbotto // Vestiti attuali del tabbozzo...
 #define current_pantaloni Tabboz.global.vestiti.pantaloni
 #define current_scarpe    Tabboz.global.vestiti.scarpe
 extern  int		 current_tipa;

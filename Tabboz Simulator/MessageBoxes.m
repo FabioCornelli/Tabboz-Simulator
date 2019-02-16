@@ -62,3 +62,11 @@ void MessageBox_CheTeNeFaiDiRicaricaSenzaSim(HANDLE hDlg) {
                "Oh, che  te ne fai di una ricarica se non hai la sim ???",
                "Telefonino", MB_OK | MB_ICONINFORMATION);
 }
+
+void MessageBox_MessaggioPaurosoDaSigarette(HANDLE hDlg) {
+    char tmp[255];
+    LoadString(hInst, random(8) + 600, (LPSTR)tmp, 254);  // 600 -> 607
+    MessageBox(hDlg,
+               (LPSTR)tmp,
+               "ART. 46 L. 29/12/1990 n. 428", MB_OK | MB_ICONINFORMATION );
+}

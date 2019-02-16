@@ -57,19 +57,27 @@ FARPROC	  lpproc;
 		Tempo_trascorso_dal_pestaggio--;
 
 /* Sigarette -------------------------------------------------------- */
-	if (sizze > 0){
-		sizze--;
-		if (sizze == 0) {
-			MessageBox( hInstance,
-				"Apri il tuo pacchetto di sigarette e lo trovi disperatamente vuoto...",
-				"Sei senza sigarette !", MB_OK | MB_ICONSTOP);
-			if (Reputazione > 10) Reputazione -= 3;
-		} else if (sizze < 3)
-			MessageBox( hInstance,
-				"Ti accorgi che stai per finire le tue sizze.",
-				"Sigarette...", MB_OK | MB_ICONINFORMATION);
-		}
-
+    if (sizze > 0) {
+        switch ([Tabboz.global.tabacchi fuma]) {
+            case HoFumatoNormale:
+                break;
+                
+            case HoFumatoStanFindendo:
+                MessageBox( hInstance,
+                           "Ti accorgi che stai per finire le tue sizze.",
+                           "Sigarette...", MB_OK | MB_ICONINFORMATION);
+                
+                break;
+                
+            case HoFumatoFinite:
+                MessageBox( hInstance,
+                           "Apri il tuo pacchetto di sigarette e lo trovi disperatamente vuoto...",
+                           "Sei senza sigarette !", MB_OK | MB_ICONSTOP);
+                if (Reputazione > 10) Reputazione -= 3;
+                
+                break;
+        }
+    }
 
 /* Cellulare ----------------------------------------16 Apr 1999----- */
 

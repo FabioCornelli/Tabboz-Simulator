@@ -124,7 +124,6 @@ BOOL FAR PASCAL Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
 	 char          tmp[128];
-	 int		  i;
 
 	 if (message == WM_INITDIALOG) {
          scelta=0;
@@ -195,13 +194,12 @@ BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
 	 char      tmp_descrizione[1024];
 	 char      tmp[255];
-	 int		  i;
 
 	 if (message == WM_INITDIALOG) {
 	 if (sound_active) TabbozPlaySound(203);
 		scelta=-1; // Fino alla 0.8.51pr c'era un bug che non faceva comprare le Barclay...
 		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-		sprintf(tmp, "%d", sizze);
+		sprintf(tmp, "%ld", sizze);
 		SetDlgItemText(hDlg, 105, tmp);
 		sprintf(tmp, "Che sigarette vuoi, ragazz%c ?",ao);
 		SetDlgItemText(hDlg, 106, tmp);
@@ -256,26 +254,8 @@ BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 		 case IDOK:
 			if (scelta != -1) {
-                if (![Tabboz.global.danaro paga:SizeMem[scelta].prezzo]) {
-					nomoney(hDlg,TABACCAIO);
-				} else {
-					#ifdef TABBOZ_DEBUG
-					sprintf(tmp,"tabaccaio: Paga %s",MostraSoldi(SizeMem[scelta].prezzo));
-					writelog(tmp);
-					#endif
-					Fama+=SizeMem[scelta].fama;
-					if (Fama > 100) Fama=100;
-					sizze+=20;
-				}
-				i = random(8) + 600;
-				LoadString(hInst, i, (LPSTR)tmp, 254);  // 600 -> 607
-				MessageBox( hDlg,
-				(LPSTR)tmp,
-				"ART. 46 L. 29/12/1990 n. 428", MB_OK | MB_ICONINFORMATION );
-
-				Evento(hDlg);
-				}
-
+                [Tabboz.global compraSigarette:scelta hInstance:hDlg];
+            }
 			EndDialog(hDlg, TRUE);
 			return(TRUE);
 
