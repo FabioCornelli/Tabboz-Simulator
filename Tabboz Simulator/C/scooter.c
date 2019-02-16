@@ -43,7 +43,7 @@ void AggiornaScooter_Ex(HWND hDlg, NEWSTSCOOTER * scooter);
 void CalcolaVelocita(HWND hDlg);
 void CalcolaVelocita_Ex(HWND hDlg, NEWSTSCOOTER * scooter, int showscooter);
 
-char *MostraSpeed(void);
+const char *MostraSpeed(void);
 
 static char	*n_carburatore[]= { "12/10", "16/16", "19/19", "20/20", "24/24" , "custom" };
 static char	*n_cc[]=          { "50cc", "70cc", "90cc", "120cc", "150cc", "3969cc" };
@@ -701,24 +701,9 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 // -----------------------------------------------------------------------
 
-char	*MostraSpeed(void)
+const char	*MostraSpeed(void)
 {
-static	char   tmp[128];
-
-	switch (ScooterData.attivita)
-		{
-			case 1:  sprintf(tmp, "%ldKm/h",  ScooterData.speed);
-				 break;
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:  sprintf(tmp, "(%s)",n_attivita[ScooterData.attivita]);
-				 break;
-			default: sprintf(tmp, "");
-		};
-
-	return tmp;
+    return Tabboz.global.scooter.speedString.UTF8String;
 }
 
 

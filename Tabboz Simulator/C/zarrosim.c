@@ -1353,7 +1353,7 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 		 if (i2 == IDYES) {
 //		 	if ( (ScooterMem[i].speed + 70 + random(50)) > (ScooterData.speed + ScooterData.stato + Fortuna) ) {
-			if ( (ScooterMem[i].speed + 80 + random(40)) > (ScooterData.speed + ScooterData.stato + Fortuna) ) {
+             if ([Tabboz.global.scooter gareggiaWithCon:ScooterMem[i]]) {
 				// perdi
 				if (Reputazione > 80)
 					Reputazione-=3;

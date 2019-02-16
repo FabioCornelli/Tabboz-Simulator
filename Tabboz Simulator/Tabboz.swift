@@ -8,6 +8,57 @@
 
 import Foundation
 
+@objc class Motorino : NSObject {
+    
+    @objc enum Attivita : Int {
+        
+        case mancante     = 0
+        case funzionante  = 1
+        case ingrippato   = 2
+        case invasato     = 3
+        case parcheggiato = 4
+        case sequestrato  = 5
+        case aSecco       = 6
+        
+        var string : String {
+            switch self {
+            case .mancante:     return "mancante"
+            case .funzionante:  return "funzionante"
+            case .ingrippato:   return "ingrippato"
+            case .invasato:     return "invasato"
+            case .parcheggiato: return "parcheggiato"
+            case .sequestrato:  return "sequestrato"
+            case .aSecco:       return "a secco"
+            }
+        }
+    }
+    
+          var speed = 0
+    @objc var marmitta = 0
+    @objc var carburatore = 0
+    @objc var cc = 0
+    @objc var filtro = 0
+    @objc var prezzo = 0
+    @objc var attivita = Attivita.mancante
+    @objc var stato = 0
+    @objc var nome = ""
+    
+    @objc var speedString : String {
+        switch attivita {
+        case .mancante:    return ""
+        case .funzionante: return "\(speed)Km/h"
+        default:           return "\(attivita.string)"
+        }
+    }
+    
+    @objc func gareggia(con tipo: STSCOOTER) -> Bool {
+        let fortunaDelTipo = tipo.speed + 80 + Int(tabboz_random(40))
+        let fortunaMia     = speed + stato + Int(Fortuna)
+        return fortunaDelTipo > fortunaMia
+    }
+    
+}
+
 class Tabboz : NSObject {
     
     @objc static private(set) var global = Tabboz()
@@ -20,7 +71,7 @@ class Tabboz : NSObject {
           var palestra    = Palestra()
           var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
     
-    @objc private(set) var scooter     = NEWSTSCOOTER.scooter[0]
+    @objc private(set) var scooter     = Motorino() // NEWSTSCOOTER.scooter[0]
     @objc var cellulare   = Telefono()
     
     @objc private(set) var abbonamento = AbbonamentoCorrente(0, "")
@@ -220,9 +271,12 @@ class Tabboz : NSObject {
     // -
 
     func setScooter(_ newValue: NEWSTSCOOTER, benzina b: Int) {
-        scooter = newValue
+//        scooter = newValue
         benzina = Int32(b)
     }
+    
+    
+    
 }
 
 @objc extension Tabboz {
