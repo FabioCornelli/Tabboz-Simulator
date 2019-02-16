@@ -11,7 +11,6 @@ import Foundation
 @objc class Motorino : NSObject {
     
     @objc enum Attivita : Int {
-        
         case mancante     = 0
         case funzionante  = 1
         case ingrippato   = 2
@@ -19,25 +18,46 @@ import Foundation
         case parcheggiato = 4
         case sequestrato  = 5
         case aSecco       = 6
-        
-        var string : String {
-            switch self {
-            case .mancante:     return "mancante"
-            case .funzionante:  return "funzionante"
-            case .ingrippato:   return "ingrippato"
-            case .invasato:     return "invasato"
-            case .parcheggiato: return "parcheggiato"
-            case .sequestrato:  return "sequestrato"
-            case .aSecco:       return "a secco"
-            }
-        }
+    }
+
+    @objc enum Marmitta : Int {
+        case standard     = 0
+        case silenziosa   = 1
+        case rumorosa     = 2
+        case rumorosisima = 3
+    }
+    
+    @objc enum Carburatore : Int {
+        case _12_10 = 0
+        case _16_16 = 1
+        case _19_19 = 2
+        case _20_20 = 3
+        case _24_24 = 4
+        case custom = 5
+    }
+    
+    @objc enum CC : Int {
+        case _50cc   = 0
+        case _70cc   = 1
+        case _90cc   = 2
+        case _120cc  = 3
+        case _150cc  = 4
+        case _3969cc = 5
+    }
+    
+    @objc enum Filtro : Int {
+        case standard  = 0
+        case P1        = 1
+        case P2        = 2
+        case P2Plus    = 3
+        case extreme   = 4
     }
     
           var speed = 0
-    @objc var marmitta = 0
-    @objc var carburatore = 0
-    @objc var cc = 0
-    @objc var filtro = 0
+    @objc var marmitta = Marmitta.standard
+    @objc var carburatore = Carburatore._12_10
+    @objc var cc = CC._50cc
+    @objc var filtro = Filtro.standard
     @objc var prezzo = 0
     @objc var attivita = Attivita.mancante
     @objc var stato = 0
@@ -51,10 +71,83 @@ import Foundation
         }
     }
     
-    @objc func gareggia(con tipo: STSCOOTER) -> Bool {
+    @objc func gareggia(con tipo: NEWSTSCOOTER) -> Bool {
         let fortunaDelTipo = tipo.speed + 80 + Int(tabboz_random(40))
         let fortunaMia     = speed + stato + Int(Fortuna)
         return fortunaDelTipo > fortunaMia
+    }
+    
+}
+
+extension Motorino.Attivita {
+    
+    var string : String {
+        switch self {
+        case .mancante:     return "mancante"
+        case .funzionante:  return "funzionante"
+        case .ingrippato:   return "ingrippato"
+        case .invasato:     return "invasato"
+        case .parcheggiato: return "parcheggiato"
+        case .sequestrato:  return "sequestrato"
+        case .aSecco:       return "a secco"
+        }
+    }
+
+}
+
+extension Motorino.Marmitta {
+    
+    var string : String {
+        switch self {
+        case .standard:     return "standard"
+        case .silenziosa:   return "silenziosa"
+        case .rumorosa:     return "rumorosa"
+        case .rumorosisima: return "rumorosisima"
+        }
+    }
+    
+}
+
+extension Motorino.Carburatore {
+    
+    var string : String {
+        switch self {
+        case ._12_10: return "12/10"
+        case ._16_16: return "16/16"
+        case ._19_19: return "19/19"
+        case ._20_20: return "20/20"
+        case ._24_24: return "24/24"
+        case .custom: return "custom"
+        }
+    }
+    
+}
+
+extension Motorino.CC {
+    
+    var string : String {
+        switch self {
+        case ._50cc:   return "50cc"
+        case ._70cc:   return "70cc"
+        case ._90cc:   return "90cc"
+        case ._120cc:  return "120cc"
+        case ._150cc:  return "150cc"
+        case ._3969cc: return "3969cc"
+        }
+    }
+    
+}
+
+extension Motorino.Filtro {
+    
+    var string : String {
+        switch self {
+        case .standard:  return "standard"
+        case .P1:        return "P1"
+        case .P2:        return "P2"
+        case .P2Plus:    return "P2+"
+        case .extreme:   return "Extreme"
+        }
     }
     
 }
@@ -291,7 +384,11 @@ class Tabboz : NSObject {
     var documento:               Int    { return (compleanno.giorno * 13)
                                                + (compleanno.mese.rawValue * 3)
                                                + 6070                             }
-    
+    var marmittaString:          String { return scooter.marmitta.string          }
+    var carburatoreString:       String { return scooter.cc.string                }
+    var ccString:                String { return scooter.carburatore.string       }
+    var filtroString:            String { return scooter.filtro.string            }
+
     static let palestraCostoLampada = 14
     
     static func palestraCostoAbbonamento(_ a: AbbonamentiPalestra) -> Int {
