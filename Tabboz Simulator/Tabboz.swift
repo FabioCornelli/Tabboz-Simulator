@@ -242,6 +242,7 @@ class Tabboz : NSObject {
                                                + (compleanno.mese.rawValue * 3)
                                                + 6070                               }
     var nomeScooter:             String { return scooter.nome                       }
+    var attivitaScooter:         String { return scooter.attivita.string            }
     var speedString:             String { return scooter.speedString                }
     var marmittaString:          String { return scooter.scooter.marmitta.string    }
     var carburatoreString:       String { return scooter.scooter.cc.string          }

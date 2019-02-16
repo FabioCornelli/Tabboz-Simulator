@@ -44,14 +44,6 @@ void CalcolaVelocita(HWND hDlg);
 
 const char *MostraSpeed(void);
 
-static char	*n_carburatore[]= { "12/10", "16/16", "19/19", "20/20", "24/24" , "custom" };
-static char	*n_cc[]=          { "50cc", "70cc", "90cc", "120cc", "150cc", "3969cc" };
-static char	*n_marmitta[]=    { "standard", "silenziosa", "rumorosa", "rumorosissima" };
-static char	*n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
-
-		 char	*n_attivita[]=    { "mancante", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
-
-int	antifurto;
 
 int	PezziMem[] =
 	{ 400,	500,  600,		/* marmitte    */
@@ -65,7 +57,7 @@ void CalcolaVelocita(HWND hDlg) {
     if (ScooterData.attivitaCalcolata != 1) {
         char   buf[128];
         
-        sprintf(buf,"Il tuo scooter e' %s.",n_attivita[ScooterData.attivita]);
+        sprintf(buf,"Il tuo scooter e' %s.", Tabboz.global.attivitaScooter.UTF8String);
         MessageBox( hDlg, buf, "Attenzione", MB_OK | MB_ICONINFORMATION);
         return;
     }
@@ -195,7 +187,7 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
                 SetDlgItemText(hDlg, 105, ScooterData.attivita == 4 ? "Usa scooter" : "Parcheggia scooter");
             }
             else{
-                sprintf(buf, "Mi spieghi come fai a parcheggiare lo scooter visto che e' %s ???",n_attivita[ScooterData.attivita]);
+                sprintf(buf, "Mi spieghi come fai a parcheggiare lo scooter visto che e' %s ???",Tabboz.global.attivitaScooter.UTF8String);
 				 MessageBox( hDlg,
 				   buf,
 				   "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
@@ -245,7 +237,7 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 				 break;
 
-			default: sprintf(buf, "Mi spieghi come fai a far benzina allo scooter visto che e' %s ???",n_attivita[ScooterData.attivita]);
+			default: sprintf(buf, "Mi spieghi come fai a far benzina allo scooter visto che e' %s ???",Tabboz.global.attivitaScooter.UTF8String);
 				 MessageBox( hDlg,
 				   buf,
 					"Fai benza", MB_OK | MB_ICONQUESTION);
@@ -498,10 +490,10 @@ char 	tmp[128];
         SetDlgItemText(hDlg, 107, Tabboz.global.scooter.benzinaString.UTF8String);
 
 		SetDlgItemText(hDlg, 110, MostraSpeed());
-		SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
-		SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
-		SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
-		SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
+		SetDlgItemText(hDlg, 111, Tabboz.global.marmittaString.UTF8String);
+		SetDlgItemText(hDlg, 112, Tabboz.global.carburatoreString.UTF8String);
+		SetDlgItemText(hDlg, 113, Tabboz.global.ccString.UTF8String);
+		SetDlgItemText(hDlg, 114, Tabboz.global.filtroString.UTF8String);
 		sprintf(tmp, "%ld%%", stato);
         SetDlgItemText(hDlg, 115, tmp);
 

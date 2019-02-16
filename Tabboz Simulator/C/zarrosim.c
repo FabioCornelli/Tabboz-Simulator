@@ -1335,7 +1335,7 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		      return(TRUE);
 				}
 		 if (ScooterData.attivita != 1) {
-				sprintf(buf,"Purtroppo non pui gareggiare visto che il tuo scooter e' %s.",n_attivita[ScooterData.attivita]);
+				sprintf(buf,"Purtroppo non pui gareggiare visto che il tuo scooter e' %s.",Tabboz.global.attivitaScooter.UTF8String);
 				MessageBox( hDlg, buf, "Gareggia con lo scooter", MB_OK | MB_ICONINFORMATION);
 				return(TRUE);
 				}

@@ -180,7 +180,7 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			}
 
 			if ((ScooterData.attivita != 1) && (sesso == 'M')) {
-				sprintf(buf,"Finche' il tuo scooter restera' %s non potremo uscire insieme...",n_attivita[ScooterData.attivita]);
+				sprintf(buf,"Finche' il tuo scooter restera' %s non potremo uscire insieme...",Tabboz.global.attivitaScooter.UTF8String);
 				MessageBox( hDlg, buf, "Risistema la scooter", MB_OK | MB_ICONINFORMATION);
 				return(TRUE);
 			}

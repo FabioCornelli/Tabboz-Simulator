@@ -217,7 +217,6 @@ extern  int  	 sound_active;
 extern  char	 sesso; 	// M/F 29 Maggio 1999 --- Inizio...
 extern  char	 ao;
 extern  char  	 un_una[];
-extern  char 	 *n_attivita[];		//  7 Maggio 1998
 extern  int      euro;
 
 #ifdef TABBOZ_DEBUG                	// Sistema di Debug... [12 Giugno 1998]
