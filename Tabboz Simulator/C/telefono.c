@@ -193,7 +193,7 @@ BOOL FAR PASCAL        Cellular(HWND hDlg, WORD message, WORD wParam, LONG lPara
 					  "Telefonino", MB_YESNO | MB_ICONQUESTION);
 					if (scelta == IDYES) {
                         [Tabboz.global.cellulare invalidate];
-					  Soldi+=offerta;
+                        [Tabboz.global.danaro deposita:offerta];
 					} else
 					  MessageBox( hDlg,
 						 "Allora vai a farti fottere, pirletta !",

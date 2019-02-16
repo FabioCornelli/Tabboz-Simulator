@@ -99,8 +99,8 @@ void	Giorno(HANDLE hInstance)
 			MessageBox( hInstance, tmp,
 				  "Stipendio !", MB_OK | MB_ICONINFORMATION);
 
-			Soldi+=stipendietto;
-
+            [Tabboz.global.danaro deposita:stipendietto];
+            
 			#ifdef TABBOZ_DEBUG
 			sprintf(tmp,"giorno: Stipendio (%s)",MostraSoldi(stipendietto));
 			writelog(tmp);
@@ -269,7 +269,7 @@ BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 	} else {
 		sprintf(tmp, "ammess%c",ao);		/* promossa/o */
-		Soldi+=200;
+        [Tabboz.global.danaro deposita:200];
 		#ifdef TABBOZ_DEBUG
 		writelog("giorno: Pagella... Promosso...");
 		#endif

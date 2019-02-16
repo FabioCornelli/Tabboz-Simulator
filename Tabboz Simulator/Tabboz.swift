@@ -16,6 +16,7 @@ class Tabboz : NSObject {
     @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
     @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
+    @objc              var danaro      = Danaro()
     @objc private(set) var calendario  = Calendario()
 
           private      var palestra    = Palestra()
@@ -44,7 +45,7 @@ class Tabboz : NSObject {
         if (studio >= 40) {
             if attesa == 0 {
                 attesa = ATTESAMAX
-                Soldi += 10
+                danaro.deposita(10)
                 Evento(hDlg)
             }
             else {
@@ -56,7 +57,7 @@ class Tabboz : NSObject {
             MessageBox_QuandoAndraiMeglioAScuolaPotrai(hDlg)
         }
 
-        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi))
+        SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)))
     }
     
     func calcolaStudio() {
@@ -79,6 +80,7 @@ class Tabboz : NSObject {
     }
     
     func resetMe() {
+        danaro.setta(5)
         calendario = Calendario()
         compleanno = .random()
         cellulare.invalidate()
@@ -102,17 +104,13 @@ class Tabboz : NSObject {
             return
         }
         
-        if (abbonamento.prezzo > Soldi) {
-            nomoney(hDlg, Int32(PALESTRA))
-            return
+        if danaro.paga(abbonamento.prezzo) {
+            palestra.abbonati(a: abbonamento, aPartireDa: calendario.giornoDellAnno)
+            Evento(hDlg);
         }
         else {
-            Soldi -= UInt(abbonamento.prezzo)
+            nomoney(hDlg, Int32(PALESTRA))
         }
-
-        palestra.abbonati(a: abbonamento, aPartireDa: calendario.giornoDellAnno)
-        
-        Evento(hDlg);
     }
 
     func vaiInPalestra(_ hDlg: HANDLE) {
@@ -133,10 +131,7 @@ class Tabboz : NSObject {
     }
     
     func faiLaLampada(_ hDlg: HANDLE) {
-        if Tabboz.palestraCostoLampada > Soldi {
-            nomoney(hDlg, Int32(PALESTRA))
-        }
-        else {
+        if danaro.paga(Tabboz.palestraCostoLampada) {
             if (current_testa < 3) {
                 // Grado di abbronzatura
                 current_testa += 1
@@ -158,10 +153,11 @@ class Tabboz : NSObject {
             if sound_active != 0 {
                 TabbozPlaySound(202)
             }
-            
-            Soldi -= UInt(Tabboz.palestraCostoLampada)
         }
-        
+        else {
+            nomoney(hDlg, Int32(PALESTRA))
+        }
+            
         if tabboz_random(5 + Fortuna) == 0 {
             Evento(hDlg)
         }
@@ -176,19 +172,18 @@ class Tabboz : NSObject {
     func compraCellulare(_ scelta: Int, hDlg: HANDLE) {
         let nuovoCellulare = Telefono.cellulari[scelta]
         
-        if (Soldi < nuovoCellulare.prezzo) {
-            // Controlla se ha abbastanza soldi...
-            nomoney(hDlg, Int32(CELLULRABBONAM))
-            EndDialog(hDlg, true);
+        
+        if danaro.paga(nuovoCellulare.prezzo) {
+            cellulare.prendiCellulare(nuovoCellulare)
+            
+            Fama += Int32(nuovoCellulare.fama)
+            
+            if Fama > 100 {
+                Fama = 100
+            }
         }
-        
-        Soldi -= UInt(nuovoCellulare.prezzo)
-        cellulare.prendiCellulare(nuovoCellulare)
-        
-        Fama += Int32(nuovoCellulare.fama)
-        
-        if Fama > 100 {
-            Fama = 100
+        else {
+            nomoney(hDlg, Int32(CELLULRABBONAM))
         }
         
         EndDialog(hDlg, true);
@@ -197,14 +192,17 @@ class Tabboz : NSObject {
     func compraAbbonamento(_ scelta: Int, _ hDlg: HANDLE) {
         let nuovoAbbonamento = STABB.abbonamenti[scelta]
         
-        if (Soldi < STABB.abbonamenti[scelta].prezzo) {
+        if danaro.soldi < STABB.abbonamenti[scelta].prezzo {
             // Controlla se ha abbastanza soldi...
             
             nomoney(hDlg, Int32(CELLULRABBONAM));
             EndDialog(hDlg, true);
+            return
         }
 
+
         if abbonamento.accredita(nuovoAbbonamento) {
+            _ = danaro.paga(nuovoAbbonamento.prezzo)
             if sound_active != 0 && cellulare.attivo {
                 TabbozPlaySound(602)
             }

@@ -60,8 +60,9 @@ BOOL FAR PASCAL Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 					current_gibbotto=19;
 					current_pantaloni=19;
 					TabbozRedraw = 1;	// E' necessario ridisegnare l' immagine del Tabbozzo...
-					Soldi-=COSTO_VESTITO_NATALIZIO;
-					}
+                    __attribute__((unused)) int x = [Tabboz.global.danaro paga:COSTO_VESTITO_NATALIZIO];
+
+                }
 			}
 
 		return(TRUE);
@@ -126,11 +127,9 @@ PagaQualcosa(HANDLE hInstance)
 char	tmp[128];
 
 	if (scelta != 0) {
-		if (VestitiMem[scelta].prezzo > Soldi) {
+		if (![Tabboz.global.danaro paga: VestitiMem[scelta].prezzo]) {
 			(void)nomoney(hInstance,VESTITI);
 		} else {
-			Soldi-= VestitiMem[scelta].prezzo;
-
 			switch (scelta) {	/* 25 Febbraio 1999 */
 				case 1:
 				case 2:
@@ -302,10 +301,9 @@ BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 		 case IDOK:
 			if (scelta != -1) {
-				if (SizeMem[scelta].prezzo > Soldi) {
+                if (![Tabboz.global.danaro paga:SizeMem[scelta].prezzo]) {
 					nomoney(hDlg,TABACCAIO);
 				} else {
-					Soldi-= SizeMem[scelta].prezzo;
 					#ifdef TABBOZ_DEBUG
 					sprintf(tmp,"tabaccaio: Paga %s",MostraSoldi(SizeMem[scelta].prezzo));
 					writelog(tmp);

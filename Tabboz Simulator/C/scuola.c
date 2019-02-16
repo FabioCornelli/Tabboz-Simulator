@@ -73,8 +73,7 @@ BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 					  "Corrompi i professori", MB_YESNO | MB_ICONQUESTION);
 
 				if (i2 == IDYES) {
-					if (Soldi >= i) {
-						 Soldi-=i;
+					if ([Tabboz.global.danaro paga:i]) {
 						 #ifdef TABBOZ_DEBUG
 						 sprintf(tmp,"scuola: Corrompi un professore per %s",MostraSoldi(i));
 						 writelog(tmp);

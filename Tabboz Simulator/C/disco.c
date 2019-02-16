@@ -71,7 +71,7 @@ long	Prezzo;
 			  if (Fama > 2) Fama-=1;
 			} else {
 			  if (sound_active) TabbozPlaySound(303 + random(3));  // suoni: 0303 -> 0305
-			  Soldi-= Prezzo;
+              __attribute__((unused)) int x = [Tabboz.global.danaro paga:Prezzo];
 			  #ifdef TABBOZ_DEBUG
 			  sprintf(tmp,"discoteca: Paga %s",MostraSoldi(DiscoMem[numdisco].prezzo));
 			  writelog(tmp);

@@ -146,9 +146,10 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 				if ((AbbonamentData.creditorest >= 2) && CellularData.attivo)
                     [Tabboz.global.abbonamento addebita: -2];
-				else
-					Soldi-=5;
-
+                else {
+                    __attribute__((unused)) int x = [Tabboz.global.danaro paga:5];
+                }
+                
 				#ifdef TABBOZ_DEBUG
 				sprintf(tmp,"tipa: Telefona alla tipa//o (%s)",MostraSoldi(5));
 				writelog(tmp);
@@ -193,7 +194,7 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 				return(TRUE);
 			}
 
-			if (Soldi < 15) {
+			if (![Tabboz.global.danaro paga:15]) {
 				if (sesso == 'M')
 					MessageBox( hDlg,
 					 "Se mi vuoi portare fuori, cerca di avere almeno un po' di soldi...",
@@ -205,7 +206,6 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 				return(TRUE);
 			}
 
-			Soldi-=15;
 			#ifdef TABBOZ_DEBUG
 			sprintf(tmp,"tipa: Esci con la tipa/o (%s)",MostraSoldi(15));
 			writelog(tmp);
@@ -217,7 +217,7 @@ BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			if ( FigTipa > Fama) Fama++;
 			if (Fama > 100) Fama=100;
 
-//            [Tabboz.global.scooter cons]
+            [Tabboz.global.scooter consumaWithBenza:3];
 			
 			CalcolaVelocita(hDlg);
 

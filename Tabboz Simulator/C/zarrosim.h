@@ -189,7 +189,8 @@ extern  int     Fama;
 extern  int     Reputazione;
 //extern  int     Studio;         // Quanto vai bene a scuola (1 - 100)
 #define Studio Tabboz.global.studio
-extern  u_long  Soldi;          // Long...per forza! lo zarro ha tanti soldi...
+//extern  u_long  Soldi;          // Long...per forza! lo zarro ha tanti soldi...
+#define Soldi Tabboz.global.danaro.soldi
 extern  u_long  Paghetta;       // Paghetta Settimanale...
 extern  char    Nome[30];
 extern  char    Cognome[30];

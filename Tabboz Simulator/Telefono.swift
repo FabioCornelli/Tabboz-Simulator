@@ -141,8 +141,6 @@ class AbbonamentoCorrente : NSObject {
         case .abbonamento:
             // Abbonamento, no problem...
             
-            Soldi -= UInt(nuovoAbbonamento.prezzo)
-            
             creditorest = nuovoAbbonamento.creditoRestante
             nome        = String(nuovoAbbonamento.nome)
             
@@ -154,7 +152,6 @@ class AbbonamentoCorrente : NSObject {
             if ((creditorest > -1) &&
                 (nome == nuovoAbbonamento.nome))
             {
-                Soldi -= UInt(nuovoAbbonamento.prezzo)
                 creditorest += nuovoAbbonamento.creditoRestante
                 
                 return true

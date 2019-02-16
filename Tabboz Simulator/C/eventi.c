@@ -161,7 +161,7 @@ FARPROC	  lpproc;
 
 	if (x_giornoset == 6) {		/* Il Sabato c'e' la paghetta... */
 		if (Studio >= 45) {
-			Soldi+=Paghetta;
+            [Tabboz.global.danaro deposita:Paghetta];
 			#ifdef TABBOZ_DEBUG
 			sprintf(tmp,"eventi: Paghetta (%s)",MostraSoldi(Paghetta));
 			writelog(tmp);
@@ -169,7 +169,7 @@ FARPROC	  lpproc;
 
 			if (Studio >= 80) {
 				if (sound_active) TabbozPlaySound(1100);
-				Soldi+=Paghetta;
+                [Tabboz.global.danaro deposita:Paghetta];
 				#ifdef TABBOZ_DEBUG
 				writelog("eventi: Paghetta doppia !!!");
 				#endif
@@ -180,7 +180,7 @@ FARPROC	  lpproc;
 			}
 		} else {
 			if (sound_active) TabbozPlaySound(1200);
-			Soldi+=(Paghetta / 2);
+            [Tabboz.global.danaro deposita:Paghetta/2];
 			#ifdef TABBOZ_DEBUG
 			sprintf(tmp,"eventi: Meta' paghetta (%s)...",MostraSoldi(Paghetta));
 			writelog(tmp);

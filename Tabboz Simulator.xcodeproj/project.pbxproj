@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F4DA426220FC25A008DC569 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4DA425220FC25A008DC569 /* main.swift */; };
 		3F54DC1C2210991100794232 /* stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.m */; };
+		3F7D15A82217EF9B00DB786D /* Danaro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A72217EF9B00DB786D /* Danaro.swift */; };
 		3F9031A32214D8EB00C9A2C3 /* Scooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A22214D8EB00C9A2C3 /* Scooter.swift */; };
 		3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A4221504FD00C9A2C3 /* Telefono.swift */; };
 		3F9031A722150C3A00C9A2C3 /* Tempo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A622150C3A00C9A2C3 /* Tempo.swift */; };
@@ -48,6 +49,7 @@
 		3F4DA422220FC25A008DC569 /* Tabboz Simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Tabboz Simulator"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4DA425220FC25A008DC569 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
+		3F7D15A72217EF9B00DB786D /* Danaro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Danaro.swift; sourceTree = "<group>"; };
 		3F9031A22214D8EB00C9A2C3 /* Scooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scooter.swift; sourceTree = "<group>"; };
 		3F9031A4221504FD00C9A2C3 /* Telefono.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telefono.swift; sourceTree = "<group>"; };
 		3F9031A622150C3A00C9A2C3 /* Tempo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				3F9031A4221504FD00C9A2C3 /* Telefono.swift */,
 				3F9031A622150C3A00C9A2C3 /* Tempo.swift */,
 				3F9031A822153D2E00C9A2C3 /* Palestra.swift */,
+				3F7D15A72217EF9B00DB786D /* Danaro.swift */,
 				3FC9F54722139BA60019B93A /* KnownDialogs.swift */,
 				3FC9F54D2214C8020019B93A /* MessageBoxes.h */,
 				3FC9F54E2214CB930019B93A /* MessageBoxes.m */,
@@ -213,6 +216,7 @@
 				3F9031A722150C3A00C9A2C3 /* Tempo.swift in Sources */,
 				3FED2040220FC7E000AC38D7 /* disco.c in Sources */,
 				3FED205A220FCA3500AC38D7 /* prompt.c in Sources */,
+				3F7D15A82217EF9B00DB786D /* Danaro.swift in Sources */,
 				3F4DA426220FC25A008DC569 /* main.swift in Sources */,
 				3F9031A922153D2E00C9A2C3 /* Palestra.swift in Sources */,
 				3FC9F54C2214ACB70019B93A /* Tabboz.swift in Sources */,

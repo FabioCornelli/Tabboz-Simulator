@@ -63,7 +63,6 @@ int	 ScuolaRedraw;	/* 27 Febbraio 1999 - 0.8.3pr */
 
 int    Fama;
 int    Reputazione;
-u_long Soldi;          // Long...per forza! lo zarro ha tanti soldi...
 u_long Paghetta;       // Paghetta Settimanale...
 char   Nome[30];		  // Nome del Tabbozzo
 char   Cognome[30];	  // Cognome del Tabbozzo ( 3 Marzo 1998 - 0.5.6a )
@@ -149,7 +148,6 @@ int	i;
 char  tmp[128];
 
 		TabbozRedraw 		=  1;
-		Soldi					= 10;
 		Paghetta				= 30;
 		Reputazione			=  0;
 		Fama					=  0;
@@ -818,14 +816,14 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 			LoadString(hInst, 13, tmp, sizeof(tmp));  /* Dino... */
 			if (! strcmp(tmp,buf)) {
-				Soldi=Soldi+1000;
+                [Tabboz.global.danaro deposita:1000];
 				Reputazione=random(4);
 				Fama=random(40);
 			}
 
 			LoadString(hInst, 14, tmp, sizeof(tmp));  /* Fratello di Dino... */
 			if (! strcmp(tmp,buf)) {
-				Soldi=Soldi+1000;
+				[Tabboz.global.danaro deposita:1000];
 				Reputazione=random(30);
 				Fama=random(5);
 			}
@@ -836,7 +834,7 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			}
 
 			if (! strcmp(Caccia,buf)) {	/* Caccia fa' aumentare i dindi... */
-				Soldi=Soldi+10000;
+				[Tabboz.global.danaro deposita:10000];
 				Fama=100;
 			}
 

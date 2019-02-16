@@ -211,31 +211,36 @@ BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			case 2:
 			case 3:
 			case 6:
-				 if (Soldi < 10) {
-					sprintf(buf, "Al distributore automatico puoi fare un minimo di %s di benzina...",MostraSoldi(10));
-					MessageBox( hDlg,
-					  buf,
-					  "Fai benza", MB_OK | MB_ICONQUESTION);
-					break;
-					}
-
-				 Soldi-=10;
-				 #ifdef TABBOZ_DEBUG
-					sprintf(tmp,"scooter: Paga benzina (%s)",MostraSoldi(10));
-					writelog(tmp);
-
-				 #endif
-
-                [Tabboz.global.scooter faiIlPieno];
-
-				 CalcolaVelocita(hDlg);
-
-				 sprintf(buf, "Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
-				 MessageBox( hDlg,
-				    buf,
-				    "Fai benza", MB_OK | MB_ICONINFORMATION);
-
-				 break;
+                if ([Tabboz.global.danaro paga:10]) {
+                    sprintf(buf,
+                            "Al distributore automatico puoi fare un minimo di %s di benzina...",
+                            MostraSoldi(10));
+                    
+                    MessageBox(hDlg,
+                               buf,
+                               "Fai benza", MB_OK | MB_ICONQUESTION);
+                }
+                
+                else {
+#ifdef TABBOZ_DEBUG
+                    sprintf(tmp,"scooter: Paga benzina (%s)",MostraSoldi(10));
+                    writelog(tmp);
+#endif
+                    
+                    [Tabboz.global.scooter faiIlPieno];
+                    
+                    CalcolaVelocita(hDlg);
+                    
+                    sprintf(buf,
+                            "Fai %s di benzina e riempi lo scooter...",
+                            MostraSoldi(10));
+                    
+                    MessageBox(hDlg,
+                               buf,
+                               "Fai benza", MB_OK | MB_ICONINFORMATION);
+                }
+                
+                break;
 
 			default: sprintf(buf, "Mi spieghi come fai a far benzina allo scooter visto che e' %s ???",Tabboz.global.attivitaScooter.UTF8String);
 				 MessageBox( hDlg,
@@ -352,8 +357,7 @@ static long          offerta;  /* importante lo static !!! */
             
 
             [Tabboz.global.scooter distruggi];
-            
-		Soldi = Soldi + offerta;
+            [Tabboz.global.danaro deposita:offerta];
 
 		#ifdef TABBOZ_DEBUG
 			sprintf(tmp,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
@@ -400,7 +404,7 @@ static long       costo;  // Importante lo static !!!
 
 			case IDOK:
 
-				if (costo > Soldi)
+				if (![Tabboz.global.danaro paga:costo])
 					nomoney(hDlg,SCOOTER);
 				else {
 
@@ -414,7 +418,6 @@ static long       costo;  // Importante lo static !!!
 
                     [Tabboz.global.scooter ripara];
                     
-					Soldi-=costo;
 					CalcolaVelocita(hDlg);
 				}
 				EndDialog(hDlg, TRUE);
@@ -555,12 +558,12 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		 case 130:	/* marmitte ----------------------------------------------------------- */
 	    case 131:
 	    case 132:
-		if (Soldi < PezziMem[wParam - 130]) {
-			nomoney(hDlg,SCOOTER);
-			return(TRUE);
-		}
-		Soldi -= PezziMem[wParam - 130];
-		#ifdef TABBOZ_DEBUG
+            if (![Tabboz.global.danaro paga:PezziMem[wParam - 130]]) {
+                nomoney(hDlg,SCOOTER);
+                return(TRUE);
+            }
+
+        #ifdef TABBOZ_DEBUG
 		sprintf(tmp,"scooter: Paga marmitta (%s)",MostraSoldi(PezziMem[wParam - 130]));
 		writelog(tmp);
 		#endif
@@ -574,11 +577,10 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	    case 134:
 	    case 135:
 	    case 136:
-			if (Soldi < PezziMem[wParam - 130]) {
+            if (![Tabboz.global.danaro paga:PezziMem[wParam - 130]]) {
 				nomoney(hDlg,SCOOTER);
 				return(TRUE);
 			}
-			Soldi -= PezziMem[wParam - 130];
 			#ifdef TABBOZ_DEBUG
 			sprintf(tmp,"scooter: Paga carburatore (%s)",MostraSoldi(PezziMem[wParam - 130]));
 			writelog(tmp);
@@ -593,11 +595,10 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		 case 138:
 		 case 139:
 		 case 140:
-			if (Soldi < PezziMem[wParam - 130]) {
+            if (![Tabboz.global.danaro paga:PezziMem[wParam - 130]]) {
 				nomoney(hDlg,SCOOTER);
 				return(TRUE);
 			}
-			Soldi -= PezziMem[wParam - 130];
 			#ifdef TABBOZ_DEBUG
 			sprintf(tmp,"scooter: Paga cilindro e pistone (%s)",MostraSoldi(PezziMem[wParam - 130]));
 			writelog(tmp);
@@ -614,11 +615,10 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		 case 142:
 		 case 143:
 		 case 144:
-			if (Soldi < PezziMem[wParam - 130]) {
+            if (![Tabboz.global.danaro paga:PezziMem[wParam - 130]]) {
 				nomoney(hDlg,SCOOTER);
 				return(TRUE);
 			}
-			Soldi -= PezziMem[wParam - 130];
 			#ifdef TABBOZ_DEBUG
 			sprintf(tmp,"scooter: Paga filtro dell' aria (%s)",MostraSoldi(PezziMem[wParam - 130]));
 			writelog(tmp);
@@ -684,7 +684,7 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
 				MessageBox( hDlg,
 				  tmp,
 				  "Incentivi", MB_OK | MB_ICONINFORMATION);
-				Soldi+=1000;
+                [Tabboz.global.danaro deposita:1000];
 				#ifdef TABBOZ_DEBUG
 				sprintf(tmp,"scooter: Imcentivo rottamazione %s",MostraSoldi(1000));
 				writelog(tmp);
@@ -694,14 +694,14 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
                                   benzin:0];           /* serbatoio vuoto    7 Maggio 1998    */
                 [Tabboz.global.scooter distruggi];
             }
-			if (ScooterMem[scelta].prezzo > Soldi) {
+            
+			if (![Tabboz.global.danaro paga:ScooterMem[scelta].prezzo]) {
 				MessageBox( hDlg,
 				  "Ti piacerebbe comprare lo scooter, vero ?\nPurtroppo, non hai abbastanza soldi...",
 				  "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
 				if (Reputazione > 3 )
 					 Reputazione-=1;
 			} else {
-				Soldi-=ScooterMem[scelta].prezzo;
 				#ifdef TABBOZ_DEBUG
 				sprintf(tmp,"scooter: Acquista uno scooter per %s",MostraSoldi(ScooterMem[scelta].prezzo));
 				writelog(tmp);
