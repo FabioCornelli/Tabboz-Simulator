@@ -60,7 +60,7 @@ import Foundation
     @objc var filtro = Filtro.standard
     @objc var prezzo = 0
     @objc var attivita = Attivita.mancante
-    @objc var stato = 0
+    @objc var stato = -1
           var nome = ""
     
     @objc var speedString : String {
@@ -75,6 +75,19 @@ import Foundation
         let fortunaDelTipo = tipo.speed + 80 + Int(tabboz_random(40))
         let fortunaMia     = speed + stato + Int(Fortuna)
         return fortunaDelTipo > fortunaMia
+    }
+    
+    @objc func ripara() {
+        stato = 100
+    }
+    
+    @objc func danneggia(_ danno: Int) {
+        stato -= danno
+    }
+    
+    @objc func distruggi() {
+        stato = -1
+        attivita = .mancante
     }
     
 }

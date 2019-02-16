@@ -201,8 +201,6 @@ char  tmp[128];
 		PortNumber			= 79;
 #endif
 
-		ScooterData.stato	= -1;
-
 }
 
 //*******************************************************************
@@ -1349,7 +1347,8 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		    buf,
 		    "Gareggia con lo scooter", MB_YESNO | MB_ICONQUESTION);
 
-		 if (ScooterData.stato > 30) ScooterData.stato-=random(2);
+		 if (ScooterData.stato > 30)
+             [Tabboz.global.scooter danneggia:random(2)];
 
 		 if (i2 == IDYES) {
 //		 	if ( (ScooterMem[i].speed + 70 + random(50)) > (ScooterData.speed + ScooterData.stato + Fortuna) ) {
@@ -1489,7 +1488,7 @@ void nomoney(HWND parent,int tipo)
 			if (Reputazione > 7 )
 				Reputazione-=5;
 			if (ScooterData.stato > 7 )
-				ScooterData.stato-=5;
+				[Tabboz.global.scooter danneggia:5];
 		} else {
 			MessageBox( parent,
 			  "Con un sonoro calcio nel culo, vieni buttata fuori dall' officina.",

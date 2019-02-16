@@ -260,7 +260,8 @@ FARPROC	  lpproc;
                 [Tabboz.global.cellulare danneggia: random(8)];
 
 				if (caso < 17) {
-					ScooterData.stato-=35;
+                    [Tabboz.global.scooter danneggia: 35];
+					
 					lpproc = MakeProcInstance(MostraMetallone, hInst); // Camionista ---------------------
 
 					DialogBox(hInst,
@@ -272,7 +273,7 @@ FARPROC	  lpproc;
 					writelog("eventi: Scooter - Camionista...");
 					#endif
 				 } else {
-					ScooterData.stato-=20;
+                     [Tabboz.global.scooter danneggia: 20];
 					lpproc = MakeProcInstance(MostraMetallone, hInst); // Muro ! --------------------------
 
 					DialogBox(hInst,
@@ -292,8 +293,8 @@ FARPROC	  lpproc;
 				MessageBox( hInstance,
 					"Quando ti rialzi ti accorgi che il tuo scooter e' ormai ridotto ad un ammasso di rottami.",
 					"Scooter Distrutto", MB_OK | MB_ICONSTOP);
-				 ScooterData.stato=-1;
-				 ScooterData.attivita=0;
+                 
+                 [Tabboz.global.scooter distruggi];
 				 
                  [Tabboz.global setScooter:ScooterMem[0]
                                    benzina:0];

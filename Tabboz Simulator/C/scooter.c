@@ -407,8 +407,9 @@ static long          offerta;  /* importante lo static !!! */
             [Tabboz.global setScooter:ScooterMem[0] /* nessuno scooter                     */
                               benzina:0];           /* serbatoio vuoto    7 Maggio 1998    */
             
-		ScooterData.stato = -1;
 
+            [Tabboz.global.scooter distruggi];
+            
 		Soldi = Soldi + offerta;
 
 		#ifdef TABBOZ_DEBUG
@@ -468,7 +469,8 @@ static long       costo;  // Importante lo static !!!
 // Per questa cagata, crascia il tabboz all' uscita...
 //					if (sound_active) TabbozPlaySound(102);
 
-					ScooterData.stato=100;
+                    [Tabboz.global.scooter ripara];
+                    
 					Soldi-=costo;
 					CalcolaVelocita(hDlg);
 				}
@@ -748,8 +750,8 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
 
                 [Tabboz.global setScooter:ScooterMem[0] /* nessuno scooter                     */
                                   benzina:0];           /* serbatoio vuoto    7 Maggio 1998    */
-				ScooterData.stato = -1;
-				}
+                [Tabboz.global.scooter distruggi];
+            }
 			if (ScooterMem[scelta].prezzo > Soldi) {
 				MessageBox( hDlg,
 				  "Ti piacerebbe comprare lo scooter, vero ?\nPurtroppo, non hai abbastanza soldi...",
