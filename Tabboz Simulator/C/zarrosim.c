@@ -831,7 +831,7 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			}
 
 			if (! strcmp(Daniele,buf)) {	/* Murdock, ti regala una macchinina... */
-                [Tabboz.global setScooter:ScooterMem[7] benzina:850];
+                [Tabboz.global setScooter:ScooterMem[7] benzin:850];
 				Reputazione=100;
 			}
 

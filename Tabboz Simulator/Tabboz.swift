@@ -20,6 +20,7 @@ import Foundation
         case aSecco       = 6
     }
 
+    @objc var benzina_ = 0
     @objc var prezzo = 0
     @objc var attivita = Attivita.mancante
     @objc var stato = -1
@@ -51,7 +52,7 @@ import Foundation
             attivita = .ingrippato
         }
         
-        if benzina < 1 {
+        if benzina_ < 1 {
             attivita = .aSecco
         }
         
@@ -300,9 +301,9 @@ class Tabboz : NSObject {
     // Scooter
     // -
 
-    func setScooter(_ newValue: NEWSTSCOOTER, benzina b: Int) {
-//        scooter = newValue
-        benzina = Int32(b)
+    func setScooter(_ newValue: NEWSTSCOOTER, benzin b: Int) {
+        scooter.scooter = newValue
+        scooter.benzina_ = b
     }
     
     

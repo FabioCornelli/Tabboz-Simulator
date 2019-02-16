@@ -51,7 +51,6 @@ static char	*n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
 
 		 char	*n_attivita[]=    { "mancante", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
 
-int	benzina;
 int	antifurto;
 
 int	PezziMem[] =
@@ -364,7 +363,7 @@ static long          offerta;  /* importante lo static !!! */
 
 	    case IDOK:
             [Tabboz.global setScooter:ScooterMem[0] /* nessuno scooter                     */
-                              benzina:0];           /* serbatoio vuoto    7 Maggio 1998    */
+                              benzin:0];           /* serbatoio vuoto    7 Maggio 1998    */
             
 
             [Tabboz.global.scooter distruggi];
@@ -504,7 +503,7 @@ div_t  	d;
 
 		sprintf(tmp, "%s",  ScooterData.nome.UTF8String);
         SetDlgItemText(hDlg, 116, tmp);
-		d = div(benzina,10);
+		d = div((int)benzina,10);
 		sprintf(tmp, "%d.%dl", d.quot, d.rem);
         SetDlgItemText(hDlg, 107, tmp);
 
@@ -710,7 +709,7 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
 				#endif
 
                 [Tabboz.global setScooter:ScooterMem[0] /* nessuno scooter                     */
-                                  benzina:0];           /* serbatoio vuoto    7 Maggio 1998    */
+                                  benzin:0];           /* serbatoio vuoto    7 Maggio 1998    */
                 [Tabboz.global.scooter distruggi];
             }
 			if (ScooterMem[scelta].prezzo > Soldi) {
@@ -727,7 +726,7 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
 				#endif
 
                 [Tabboz.global setScooter:ScooterMem[scelta]
-                                  benzina:0];
+                                  benzin:0];
 				MessageBox( hDlg,
 				  "Fai un giro del quartiere per farti vedere con lo scooter nuovo...",
 				  "Lo scooter nuovo", MB_OK | MB_ICONINFORMATION);

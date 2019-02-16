@@ -204,7 +204,7 @@ extern  int     numeroditta;
 extern  int     impegno;
 extern  int		 giorni_di_lavoro; // Serve x calcolare lo stipendio SOLO per il primo mese...
 extern  int     stipendio;
-extern  int		 benzina;
+#define benzina Tabboz.global.scooter.benzina_
 extern  int 	 antifurto;
 extern  int		 sizze;
 extern  int		 Tempo_trascorso_dal_pestaggio;
