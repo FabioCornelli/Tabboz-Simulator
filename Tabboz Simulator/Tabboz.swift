@@ -8,122 +8,6 @@
 
 import Foundation
 
-@objc class Motorino : NSObject {
-    
-    @objc enum Attivita : Int {
-        case mancante     = 0
-        case funzionante  = 1
-        case ingrippato   = 2
-        case invasato     = 3
-        case parcheggiato = 4
-        case sequestrato  = 5
-        case aSecco       = 6
-    }
-
-    var benzina = 0
-    @objc private(set) var prezzo = 0
-    @objc private(set) var attivita = Attivita.mancante
-    @objc private(set) var stato = -1
-    @objc private(set) var nome = ""
-    
-    @objc var scooter = NEWSTSCOOTER.scooter[0]
-    
-    @objc var speedString : String {
-        switch attivita {
-        case .mancante:    return ""
-        case .funzionante: return "\(scooter.speedCalcolata)Km/h"
-        default:           return "\(attivita.string)"
-        }
-    }
-    
-    @objc var benzinaString : String {
-        return String(format: "%1.1f", Double(benzina) / 10.0)
-    }
-    
-    @objc func gareggia(con tipo: NEWSTSCOOTER) -> Bool {
-        let fortunaDelTipo = tipo.speed + 80 + Int(tabboz_random(40))
-        let fortunaMia     = scooter.speedCalcolata + stato + Int(Fortuna)
-        return fortunaDelTipo > fortunaMia
-    }
-    
-    var attivitaCalcolataEx : Attivita? {
-        var attivita = Attivita.funzionante
-        
-        if scooter.speedCalcolata <= -500  {
-            attivita = .invasato
-        }
-        else if scooter.speedCalcolata <= -1 {
-            attivita = .ingrippato
-        }
-        
-        if benzina < 1 {
-            attivita = .aSecco
-        }
-        
-        return attivita
-    }
-
-    @objc var attivitaCalcolata : Attivita {
-        return attivitaCalcolataEx ?? .funzionante
-    }
-
-    @objc func ripara() {
-        stato = 100
-    }
-    
-    @objc func danneggia(_ danno: Int) {
-        stato -= danno
-    }
-    
-    @objc func distruggi() {
-        stato = -1
-        attivita = .mancante
-    }
-    
-    @objc func consuma(benza: Int) {
-        benzina -= benza
-        
-        if benzina < 1 {
-            benzina = 0
-        }
-    }
-    
-    @objc func faiIlPieno() {
-        benzina = scooter.cc != ._3969cc
-            ? 50    /* 5 litri,  il massimo che puo' contenere... */
-            : 850   /* 85 litri, x la macchinina un po' figa...   */
-    }
-    
-    @objc func usaOParcheggia() -> Bool {
-        switch attivitaCalcolataEx ?? attivita {
-        case .funzionante:
-            attivita = .parcheggiato
-            return true
-        case .parcheggiato:
-            attivita = .funzionante
-            return true
-        default:
-            return false
-        }
-    }
-    
-}
-
-extension Motorino.Attivita {
-    
-    var string : String {
-        switch self {
-        case .mancante:     return "mancante"
-        case .funzionante:  return "funzionante"
-        case .ingrippato:   return "ingrippato"
-        case .invasato:     return "invasato"
-        case .parcheggiato: return "parcheggiato"
-        case .sequestrato:  return "sequestrato"
-        case .aSecco:       return "a secco"
-        }
-    }
-
-}
 
 class Tabboz : NSObject {
     
@@ -132,15 +16,15 @@ class Tabboz : NSObject {
     @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
     @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
-    @objc var calendario  = Calendario()
+    @objc private(set) var calendario  = Calendario()
 
-          var palestra    = Palestra()
-          var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
+          private      var palestra    = Palestra()
+          private      var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
     
-    @objc private(set) var scooter     = Motorino() // NEWSTSCOOTER.scooter[0]
-    @objc var cellulare   = Telefono()
+    @objc private(set) var scooter     = Motorino()
+    @objc private(set) var cellulare   = Telefono()
     
-    @objc private(set) var abbonamento = AbbonamentoCorrente(0, "")
+    @objc private(set) var abbonamento = AbbonamentoCorrente()
     
     @objc static func initGlobalTabboz() {
         global = Tabboz()
@@ -198,7 +82,7 @@ class Tabboz : NSObject {
         calendario = Calendario()
         compleanno = .random()
         cellulare.invalidate()
-        abbonamento = AbbonamentoCorrente(-1, "")
+        abbonamento = AbbonamentoCorrente()
     }
 
     // -

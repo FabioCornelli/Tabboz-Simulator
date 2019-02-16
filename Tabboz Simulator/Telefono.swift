@@ -129,12 +129,9 @@ class AbbonamentoCorrente : NSObject {
     @objc private(set) var creditorest: Int    // Credito Restante...
                        var nome:        String // nome del telefono
     
-    init(
-        _ creditorest: Int,
-        _ nome:        String
-    ) {
-        self.creditorest = creditorest
-        self.nome        = nome
+    override init() {
+        self.creditorest = -1
+        self.nome        = ""
         super.init()
     }
     
