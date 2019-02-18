@@ -15,6 +15,7 @@
 		3F7D15AE2218201000DB786D /* Disco.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AD2218201000DB786D /* Disco.swift */; };
 		3F7D15B02218279000DB786D /* Lavoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AF2218279000DB786D /* Lavoro.swift */; };
 		3F7D15B2221AE52900DB786D /* Scuola.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B1221AE52900DB786D /* Scuola.swift */; };
+		3F7D15B4221B085F00DB786D /* Eventi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B3221B085F00DB786D /* Eventi.swift */; };
 		3F9031A32214D8EB00C9A2C3 /* Scooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A22214D8EB00C9A2C3 /* Scooter.swift */; };
 		3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A4221504FD00C9A2C3 /* Telefono.swift */; };
 		3F9031A722150C3A00C9A2C3 /* Tempo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A622150C3A00C9A2C3 /* Tempo.swift */; };
@@ -60,6 +61,7 @@
 		3F7D15AD2218201000DB786D /* Disco.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disco.swift; sourceTree = "<group>"; };
 		3F7D15AF2218279000DB786D /* Lavoro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lavoro.swift; sourceTree = "<group>"; };
 		3F7D15B1221AE52900DB786D /* Scuola.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scuola.swift; sourceTree = "<group>"; };
+		3F7D15B3221B085F00DB786D /* Eventi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eventi.swift; sourceTree = "<group>"; };
 		3F9031A22214D8EB00C9A2C3 /* Scooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scooter.swift; sourceTree = "<group>"; };
 		3F9031A4221504FD00C9A2C3 /* Telefono.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telefono.swift; sourceTree = "<group>"; };
 		3F9031A622150C3A00C9A2C3 /* Tempo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				3FED203D220FC7B800AC38D7 /* C */,
 				3F4DA425220FC25A008DC569 /* main.swift */,
 				3FC9F54B2214ACB70019B93A /* Tabboz.swift */,
+				3F7D15B3221B085F00DB786D /* Eventi.swift */,
 				3F9031A22214D8EB00C9A2C3 /* Scooter.swift */,
 				3F9031A4221504FD00C9A2C3 /* Telefono.swift */,
 				3F9031A622150C3A00C9A2C3 /* Tempo.swift */,
@@ -246,6 +249,7 @@
 				3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */,
 				3F7D15B02218279000DB786D /* Lavoro.swift in Sources */,
 				3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */,
+				3F7D15B4221B085F00DB786D /* Eventi.swift in Sources */,
 				3FED2060220FCA3500AC38D7 /* scooter.c in Sources */,
 				3FED205C220FCA3500AC38D7 /* readkey.c in Sources */,
 				3FC9F54822139BA60019B93A /* KnownDialogs.swift in Sources */,

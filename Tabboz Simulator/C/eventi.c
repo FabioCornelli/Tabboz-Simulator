@@ -57,51 +57,10 @@ FARPROC	  lpproc;
 		Tempo_trascorso_dal_pestaggio--;
 
 /* Sigarette -------------------------------------------------------- */
-    if (sizze > 0) {
-        switch ([Tabboz.global.tabacchi fuma]) {
-            case HoFumatoNormale:
-                break;
-                
-            case HoFumatoStanFindendo:
-                MessageBox( hInstance,
-                           "Ti accorgi che stai per finire le tue sizze.",
-                           "Sigarette...", MB_OK | MB_ICONINFORMATION);
-                
-                break;
-                
-            case HoFumatoFinite:
-                MessageBox( hInstance,
-                           "Apri il tuo pacchetto di sigarette e lo trovi disperatamente vuoto...",
-                           "Sei senza sigarette !", MB_OK | MB_ICONSTOP);
-                if (Reputazione > 10) Reputazione -= 3;
-                
-                break;
-        }
-    }
+    [Tabboz.global eventiSigaretteWithHDlg:hInstance];
 
 /* Cellulare ----------------------------------------16 Apr 1999----- */
-
-	if ((AbbonamentData.creditorest > 0) && (CellularData.attivo)) {
-        [Tabboz.global.abbonamento addebita: -1];
-		if (Fama < 55) Fama++;
-		if (AbbonamentData.creditorest == 0) {
-			MessageBox( hInstance,
-				"Cerchi di telefonare e ti accorgi di aver finito i soldi a tua disposizione...",
-				"Telefonino", MB_OK | MB_ICONSTOP);
-		} else if (AbbonamentData.creditorest < 3)
-			MessageBox( hInstance,
-				"Ti accorgi che stai per finire la ricarica del tuo telefonino.",
-				"Telefonino", MB_OK | MB_ICONINFORMATION);
-		}
-
-	if (CellularData.morente) { // Cellulate 'morente'...
-        [Tabboz.global.cellulare invalidate];
-        
-			MessageBox( hInstance,
-					"Dopo una vita di duro lavoro, a furia di prendere botte, il tuo cellulare si spacca...",
-					"Telefonino", MB_OK | MB_ICONSTOP);
-					}
-
+    [Tabboz.global eventiCellulareWithHDlg:hInstance];
 
 /* Rapporti Tipa ---------------------------------------------------- */
 
@@ -136,67 +95,10 @@ FARPROC	  lpproc;
 	}
 
 /* Lavoro ----------------------------------------------------------- */
-
-	if (impegno > 3) {
-		i=random(7)-3;
-		if (i > 0)
-            [Tabboz.global.lavoro impegnati];
-		}
-
-	if (numeroditta > 0) {
-		i=random(impegno * 2 + Fortuna * 3);
-		if (i < 2) {					/* perdi il lavoro */
-            [Tabboz.global.lavoro disimpegnati];
-            
-			// LoadString(hInst, (1040 + i), (LPSTR)messaggio, 255);  /* 1041 -> 1050 */
-			// MessageBox( hInstance,
-			//	(LPSTR)messaggio,
-			//	"Perdi il lavoro...", MB_OK | MB_ICONSTOP);
-
-			if (sound_active) TabbozPlaySound(504);
-
-			sprintf(tmp,"Un bel giorno ti svegli e scopri di essere stat%c licenziat%c.",ao,ao);
-			MessageBox( hInstance, tmp,
-				"Perdi il lavoro...", MB_OK | MB_ICONSTOP);
-
-		}
-	}
-
+    [Tabboz.global eventiLavoroWithHDlg:hInstance];
 
 /* Paghetta --------------------------------------------------------- */
-
-	if (x_giornoset == 6) {		/* Il Sabato c'e' la paghetta... */
-		if (Studio >= 45) {
-            [Tabboz.global.danaro deposita:Paghetta];
-			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"eventi: Paghetta (%s)",MostraSoldi(Paghetta));
-			writelog(tmp);
-			#endif
-
-			if (Studio >= 80) {
-				if (sound_active) TabbozPlaySound(1100);
-                [Tabboz.global.danaro deposita:Paghetta];
-				#ifdef TABBOZ_DEBUG
-				writelog("eventi: Paghetta doppia !!!");
-				#endif
-
-				MessageBox( hInstance,
-				"Visto che vai bene a scuola, ti diamo il doppio della paghetta...",
-				  "Paghetta settimanale", MB_OK | MB_ICONINFORMATION);
-			}
-		} else {
-			if (sound_active) TabbozPlaySound(1200);
-            [Tabboz.global.danaro deposita:Paghetta/2];
-			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"eventi: Meta' paghetta (%s)...",MostraSoldi(Paghetta));
-			writelog(tmp);
-			#endif
-
-			MessageBox( hInstance,
-			"Finche' non andrai bene a scuola, ti daremo solo meta' della paghetta...",
-			  "Paghetta settimanale", MB_OK | MB_ICONINFORMATION);
-			}
-	}
+    [Tabboz.global eventiPaghettaWithHDlg:hInstance];
 
 /* Eventi casuali --------------------------------------------------- */
 		  caso = random(100+(Fortuna*2));

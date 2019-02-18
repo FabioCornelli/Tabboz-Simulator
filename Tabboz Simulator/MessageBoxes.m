@@ -88,3 +88,52 @@ void MessageBox_ConciatoCosiNonPuoEntrare(HANDLE hDlg) {
                "Mi dispiace signore, conciato cosi', qui non puo' entrare...\nVenga vestito meglio la prossima volta, signore.",
                "Selezione all' ingresso", MB_OK | MB_ICONINFORMATION);
 }
+
+void MessageBox_TiAccorgiCheStaiPerFinireLeSizze(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Ti accorgi che stai per finire le tue sizze.",
+               "Sigarette...", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ApriIlPacchettoDisperatameneteVuoto(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Apri il tuo pacchetto di sigarette e lo trovi disperatamente vuoto...",
+               "Sei senza sigarette !", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_CerchiDiTelefonareMaHaiFinitoISoldi(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Cerchi di telefonare e ti accorgi di aver finito i soldi a tua disposizione...",
+               "Telefonino", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_StaiPerFinireLaRicarica(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Ti accorgi che stai per finire la ricarica del tuo telefonino.",
+               "Telefonino", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_IlTuoCellulareSiSpacca(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Dopo una vita di duro lavoro, a furia di prendere botte, il tuo cellulare si spacca...",
+               "Telefonino", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_PerdiIlLavoro(HANDLE hDlg) {
+    sprintf(tmp,"Un bel giorno ti svegli e scopri di essere stat%c licenziat%c.",ao,ao);
+    MessageBox( hDlg, tmp,
+               "Perdi il lavoro...", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_DoppiaPaghetta(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Visto che vai bene a scuola, ti diamo il doppio della paghetta...",
+               "Paghetta settimanale", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_MetaPaghetta(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Finche' non andrai bene a scuola, ti daremo solo meta' della paghetta...",
+               "Paghetta settimanale", MB_OK | MB_ICONINFORMATION);
+}
+

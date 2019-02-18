@@ -61,13 +61,13 @@ import Foundation
 
 @objc enum Giorni : Int {
     
-    case lunedi    = 0
-    case martedi   = 1
-    case mercoledi = 2
-    case giovedi   = 3
-    case venerdi   = 4
-    case sabato    = 5
-    case domenica  = 6
+    case lunedi    = 1
+    case martedi   = 2
+    case mercoledi = 3
+    case giovedi   = 4
+    case venerdi   = 5
+    case sabato    = 6
+    case domenica  = 7
     
     var string: String {
         switch self {
