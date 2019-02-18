@@ -12,17 +12,22 @@ import Foundation
 class Tabboz : NSObject {
     
     @objc static private(set) var global = Tabboz()
+
+    @objc              var fama        : Int =         0
+    @objc              var reputazione : Int =         0
+    @objc              var fortuna     : Int =         0 /* Uguale a me...               */
+    @objc private      var stato       : Int =       100
     
-    @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
+    @objc private      var attesa      : Int = ATTESAMAX // Tempo prima che ti diano altri soldi...
     
-    @objc private(set) var danaro      = Danaro()
+    @objc private(set) var danaro      = Danaro(quanti: 5)
     @objc private(set) var calendario  = Calendario()
     @objc private(set) var scuola      = Scuole()
     @objc private(set) var vestiti     = Vestiario()
     @objc private(set) var tipa        = Fiddhiola()
     @objc private(set) var tabacchi    = Tabacchi()
           private      var palestra    = Palestra()
-          private      var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
+          private      var compleanno  = GiornoDellAnno.random()
     @objc private(set) var scooter     = Motorino()
     @objc private(set) var cellulare   = Telefono()
     @objc private(set) var abbonamento = AbbonamentoCorrente()
@@ -32,12 +37,7 @@ class Tabboz : NSObject {
     @objc static func initGlobalTabboz() {
         global = Tabboz()
     }
-    
-    override init() {
-        attesa = ATTESAMAX
-        super.init()
-    }
-    
+
 }
 
 @objc extension Tabboz {
@@ -61,16 +61,6 @@ class Tabboz : NSObject {
         SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)))
     }
     
-    func resetMe() {
-        tipa.molla()
-        danaro.setta(5)
-        calendario = Calendario()
-        compleanno = .random()
-        cellulare.invalidate()
-        abbonamento = AbbonamentoCorrente()
-        vestiti = Vestiario()
-    }
-
     // -
     // Palestra
     // -
@@ -105,8 +95,8 @@ class Tabboz : NSObject {
                 TabbozPlaySound(201)
             }
             
-            if Fama < 82 {
-                Fama += 1
+            if fama < 82 {
+                fama += 1
             }
             
             EventiPalestra(hDlg)
@@ -119,15 +109,15 @@ class Tabboz : NSObject {
             if (current_testa < 3) {
                 // Grado di abbronzatura
                 current_testa += 1
-                if Fama < 20 { Fama += 1 }    // Da 0 a 3 punti in piu' di fama
-                if Fama < 45 { Fama += 1 }    // ( secondo quanta se ne ha gia')
-                if Fama < 96 { Fama += 1 }
+                if fama < 20 { fama += 1 }    // Da 0 a 3 punti in piu' di fama
+                if fama < 45 { fama += 1 }    // ( secondo quanta se ne ha gia')
+                if fama < 96 { fama += 1 }
             }
             else {
                 // Carbonizzato...
                 current_testa = 4;
-                if Fama > 8        { Fama -= 8 }
-                if Reputazione > 5 { Reputazione -= 5 }
+                if fama > 8        { fama -= 8 }
+                if reputazione > 5 { reputazione -= 5 }
                 
                 MessageBox_EccessivaEsposizioneAiRaggiUltravioletti(hDlg)
             }
@@ -142,7 +132,7 @@ class Tabboz : NSObject {
             nomoney(hDlg, Int32(PALESTRA))
         }
             
-        if tabboz_random(5 + Fortuna) == 0 {
+        if tabboz_random(5 + fortuna) == 0 {
             Evento(hDlg)
         }
         
@@ -159,10 +149,10 @@ class Tabboz : NSObject {
         if danaro.paga(nuovoCellulare.prezzo) {
             cellulare.prendiCellulare(nuovoCellulare)
             
-            Fama += Int32(nuovoCellulare.fama)
+            fama += nuovoCellulare.fama
             
-            if Fama > 100 {
-                Fama = 100
+            if fama > 100 {
+                fama = 100
             }
         }
         else {
@@ -196,7 +186,17 @@ class Tabboz : NSObject {
             MessageBox_CheTeNeFaiDiRicaricaSenzaSim(hDlg)
         }
     }
-        
+
+    // -
+    // Scooter
+    // -
+
+    func gareggia(con tipo: NEWSTSCOOTER) -> Bool {
+        let fortunaDelTipo = tipo.speed + 80 + tabboz_random(40)
+        let fortunaMia     = scooter.scooter.speedCalcolata + scooter.stato + fortuna
+        return fortunaDelTipo > fortunaMia
+    }
+
     // -
     // Vestiti
     // -
@@ -210,9 +210,9 @@ class Tabboz : NSObject {
             // E' necessario ridisegnare l' immagine del Tabbozzo...
             TabbozRedraw = 1
             
-            Fama += Int32(vestito.fama)
-            if Fama > 100 {
-                Fama=100
+            fama += vestito.fama
+            if fama > 100 {
+                fama=100
             }
         }
         else {
@@ -226,9 +226,9 @@ class Tabboz : NSObject {
         let sigaretta = Tabacchi.sigarette[sigaretteId]
         
         if danaro.paga(sigaretta.prezzo) {
-            Fama += Int32(sigaretta.fama)
-            if Fama > 100 {
-                Fama = 100
+            fama += sigaretta.fama
+            if fama > 100 {
+                fama = 100
             }
 
             tabacchi.nuovoPacchetto()
@@ -258,7 +258,7 @@ class Tabboz : NSObject {
         let prezzo = sesso == UInt8(ascii: "M") ? disco.prezzo : disco.prezzo - 10
         
         if danaro.soldi >= prezzo {
-            if disco.cc > Fama && sesso == UInt8(ascii: "M") {
+            if disco.cc > fama && sesso == UInt8(ascii: "M") {
                 /* check selezione all'ingresso */
                 
                 if sound_active != 0 {
@@ -267,12 +267,12 @@ class Tabboz : NSObject {
                 
                 MessageBox_ConciatoCosiNonPuoEntrare(hDlg)
                 
-                if Reputazione > 2 {
-                    Reputazione -= 1
+                if reputazione > 2 {
+                    reputazione -= 1
                 }
                 
-                if Fama > 2 {
-                    Fama -= 1
+                if fama > 2 {
+                    fama -= 1
                 }
             }
             else {
@@ -283,15 +283,15 @@ class Tabboz : NSObject {
                 
                 _ = danaro.paga(prezzo)
                 
-                Fama += Int32(disco.fama)
-                Reputazione += Int32(disco.xxx)
+                fama += disco.fama
+                reputazione += disco.xxx
                 
-                if Fama > 100 {
-                    Fama = 100
+                if fama > 100 {
+                    fama = 100
                 }
                 
-                if Reputazione > 100 {
-                    Reputazione = 100
+                if reputazione > 100 {
+                    reputazione = 100
                 }
             }
         }

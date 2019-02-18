@@ -27,7 +27,7 @@ import Foundation
                 $0(hDlg)
             }
         
-        let caso = tabboz_random(100 + Int(Fortuna) * 2)
+        let caso = tabboz_random(100 + fortuna * 2)
         
         [
             ( 1...10): eventiCasualiMetalloniEManovali,
@@ -64,8 +64,8 @@ import Foundation
                 
             case .finite:
                 MessageBox_ApriIlPacchettoDisperatameneteVuoto(hDlg)
-                if Reputazione > 10 {
-                    Reputazione -= 3
+                if reputazione > 10 {
+                    reputazione -= 3
                 }
             }
         }
@@ -75,8 +75,8 @@ import Foundation
         if abbonamento.creditorest > 0 && cellulare.attivo {
             abbonamento.addebita(1)
             
-            if Fama < 55 {
-                Fama += 0
+            if fama < 55 {
+                fama += 0
             }
             
             if abbonamento.creditorest == 0 {
@@ -101,7 +101,7 @@ import Foundation
         }
         
         if tipa.rapporto > 0 && tipa.rapporto < 98 {
-            let i = tabboz_random(tipa.rapporto + Int(Fortuna) + Int(Fama)) + 1
+            let i = tabboz_random(tipa.rapporto + fortuna + fama) + 1
             if i < 11 {
                 /* da 1 a 10, la donna ti molla... */
                 if sound_active != 0 {
@@ -109,9 +109,9 @@ import Foundation
                 }
                 
                 MessageBox_LaTipaTiMolla(hDlg, Int32(i))
-                Reputazione -= Int32(11 - i)
-                if Reputazione < 0 {
-                    Reputazione = 0
+                reputazione -= 11 - i
+                if reputazione < 0 {
+                    reputazione = 0
                 }
             }
         }
@@ -125,7 +125,7 @@ import Foundation
         }
         
         if lavoro.ditta > 0 {
-            if tabboz_random(lavoro.impegno_ * 2 + Int(Fortuna) * 3) < 2 {
+            if tabboz_random(lavoro.impegno_ * 2 + fortuna * 3) < 2 {
                 /* perdi il lavoro */
                 lavoro.disimpegnati()
                 
@@ -173,9 +173,9 @@ import Foundation
             return
         }
         
-        Reputazione -= Int32(caso)
-        if Reputazione < 0 {
-            Reputazione = 0
+        reputazione -= caso
+        if reputazione < 0 {
+            reputazione = 0
         }
         
         let i = 100 + tabboz_random(100)
@@ -196,9 +196,9 @@ import Foundation
                 MetalloEMagutto(107, hDlg: hDlg)
             }
 
-            Reputazione -= 2
-            if Reputazione < 0 {
-                Reputazione = 0
+            reputazione -= 2
+            if reputazione < 0 {
+                reputazione = 0
             }
 
             if scooter.stato <= 0 {
@@ -212,11 +212,11 @@ import Foundation
             
         case 21:            fallthrough  // + gravi
         case 22:            fallthrough  //  |
-        case 23: Fama -= 5; fallthrough  //  |
+        case 23: fama -= 5; fallthrough  //  |
         case 24:            fallthrough  //  |
-        case 25: Fama -= 1; fallthrough  //  |
+        case 25: fama -= 1; fallthrough  //  |
         case 26:            fallthrough  //  |
-        case 27: Fama -= 1; fallthrough  //  |
+        case 27: fama -= 1; fallthrough  //  |
         case 28:            fallthrough  // \|/
         case 29:            fallthrough  // - gravi
         case 30:
@@ -249,21 +249,21 @@ import Foundation
     func eventiCasualiTipaCiProva(caso: Int, hDlg: HANDLE) {
         // Una tipa/o ci prova... 7 Maggio 1999
         
-        guard Fama >= 35 else {
+        guard fama >= 35 else {
             // Figosita' < 35 = nessuna speranza...
             return
         }
         
-        figTemp = tabboz_random(Fama - Int32(30)) + 30 // Figosita' minima tipa = 30...
+        figTemp = Int32(tabboz_random(fama - 30) + 30) // Figosita' minima tipa = 30...
         if MessageBox_QualcunoTiCaga(hDlg, tabboz_random(20), figTemp) == IDNO {
             
             // Se non hai gia' una tipa e rifiuti una figona...
             if figTemp >= 79 && tipa.rapporto < 1 && sesso == Int8("M") {
                 MessageBox_RifiutiUnaFigona(hDlg)
-                Reputazione -= 4
+                reputazione -= 4
                 
-                if Reputazione < 0 {
-                    Reputazione = 0
+                if reputazione < 0 {
+                    reputazione = 0
                 }
                 
                 return
@@ -283,14 +283,14 @@ import Foundation
                     rapporto: 45 + tabboz_random(15)
                 )
                 
-                Fama += Int32(tipa.figTipa) / 10
-                if Fama > 100 {
-                    Fama = 100
+                fama += tipa.figTipa / 10
+                if fama > 100 {
+                    fama = 100
                 }
                 
-                Reputazione += Int32(tipa.figTipa) / 13
-                if Reputazione > 100 {
-                    Reputazione = 100
+                reputazione += tipa.figTipa / 13
+                if reputazione > 100 {
+                    reputazione = 100
                 }
             }
         }

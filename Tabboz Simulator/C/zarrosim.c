@@ -61,17 +61,13 @@ int	 TabbozRedraw;	/* 26 Febbraio 1999 - 0.8.3pr */
 int	 ScuolaRedraw;	/* 27 Febbraio 1999 - 0.8.3pr */
 // DOPO LE CARATTERISTIKE
 
-int    Fama;
-int    Reputazione;
 u_long Paghetta;       // Paghetta Settimanale...
 char   Nome[30];		  // Nome del Tabbozzo
 char   Cognome[30];	  // Cognome del Tabbozzo ( 3 Marzo 1998 - 0.5.6a )
 char	 City[50];	     // Citta' di nascita
 char   Residenza[50];  // Citta' dove vive ( 11 Marzo 2000 - 0.9.0beta
 char	 Street[50];	  // Dove sto' tipo abita ( 4 Marzo 1998 - 0.5.6a )
-int	 Stato;		     // Quanto stai male ??? (16 Marzo 1999 - 0.8.3pr )
 u_long DDP;				  // Due di picche (log...) - long,sono ottimista...
-int	 Fortuna;		  // Fortuna del tabbozzo
 int	 Tempo_trascorso_dal_pestaggio; //      ( 12 Giugno 1998 - 0.6.98a )
 int	 current_testa;
 
@@ -136,15 +132,10 @@ static void CalcolaSesso(void)
 
 void ResetMe(int primavolta)
 {
-int	i;
 char  tmp[128];
 
 		TabbozRedraw 		=  1;
 		Paghetta				= 30;
-		Reputazione			=  0;
-		Fama					=  0;
-		Rapporti				=  0;
-		Stato					=100;
 
 		strcpy(Residenza,"Milano");
 
@@ -153,12 +144,7 @@ char  tmp[128];
 		LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1));
 		sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
 
-		for (i=1;i<10;i++)
-			MaterieMem[i].xxx=0;
-
-		CalcolaStudio();
-
-        [Tabboz.global resetMe];
+        [Tabboz initGlobalTabboz];
     
 		if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
 			STARTcmdShow		=  1;
@@ -262,7 +248,6 @@ void InitTabboz(void)
 	 // Inizializza un po' di variabile...
 	 boolean_shutdown=0;		  /* 0=resta dentro, 1=uscita, 2=shutdown 19 Giugno 1999 / 14 Ottoble 1999 */
 
-	 Fortuna=0;					     /* Uguale a me...               */
 
     ImgSelector=0;              /* W l' arte di arrangiarsi...  */
 	 timer_active=1;             			 /* 10 Giugno  1998 */
@@ -1334,7 +1319,7 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 		 if (i2 == IDYES) {
 //		 	if ( (ScooterMem[i].speed + 70 + random(50)) > (ScooterData.speed + ScooterData.stato + Fortuna) ) {
-             if ([Tabboz.global.scooter gareggiaWithCon:ScooterMem[i]]) {
+             if ([Tabboz.global gareggiaWithCon:ScooterMem[i]]) {
 				// perdi
 				if (Reputazione > 80)
 					Reputazione-=3;

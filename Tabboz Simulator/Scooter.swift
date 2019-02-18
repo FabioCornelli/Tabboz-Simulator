@@ -131,13 +131,7 @@ class NEWSTSCOOTER : NSObject {
     @objc var benzinaString : String {
         return String(format: "%1.1f", Double(benzina) / 10.0)
     }
-    
-    @objc func gareggia(con tipo: NEWSTSCOOTER) -> Bool {
-        let fortunaDelTipo = tipo.speed + 80 + Int(tabboz_random(40))
-        let fortunaMia     = scooter.speedCalcolata + stato + Int(Fortuna)
-        return fortunaDelTipo > fortunaMia
-    }
-    
+        
     var attivitaCalcolataEx : Attivita? {
         var attivita = Attivita.funzionante
         

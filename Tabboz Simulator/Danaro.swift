@@ -12,11 +12,10 @@ class Danaro : NSObject {
     
     @objc private(set) var soldi = 5
     
-    func setta(_ x: Int) {
-        // For initialization only
-        soldi = x
+    init(quanti: Int) {
+        soldi = quanti
     }
-    
+        
 }
 
 @objc extension Danaro {

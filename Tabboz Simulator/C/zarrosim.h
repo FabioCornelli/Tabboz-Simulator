@@ -185,9 +185,11 @@ extern  int 	 ScuolaRedraw;       // E' necessario ridisegnare la scuola ???
 
 #define Attesa            Tabboz.global.attesa
 
-extern  int     Fama;
-extern  int     Reputazione;
-//extern  int     Studio;
+#define Fama              Tabboz.global.fama
+#define Reputazione       Tabboz.global.reputazione
+#define Fortuna           Tabboz.global.fortuna              // Fortuna del tabbozzo
+#define Stato             Tabboz.global.stato                // Quanto stai male ??? (16 Marzo 1999 - 0.8.3pr )
+
 #define Studio            Tabboz.global.scuola.studio        // Quanto vai bene a scuola (1 - 100)
 #define Soldi             Tabboz.global.danaro.soldi         // Long...per forza! lo zarro ha tanti soldi...
 extern  u_long  Paghetta;       // Paghetta Settimanale...
@@ -196,10 +198,8 @@ extern  char    Cognome[30];
 #define Nometipa          Tabboz.global.tipa.nome.UTF8String
 #define FigTipa           Tabboz.global.tipa.figTipa         // Figosita' della tipa
 #define Rapporti          Tabboz.global.tipa.rapporto        // Rapporti Tipo <-> Tipa
-extern  int		 Stato;
 extern  u_long	 DDP;
 extern  int		 AttPaghetta;
-extern  int		 Fortuna;
 
 #define numeroditta       Tabboz.global.lavoro.ditta
 #define impegno           Tabboz.global.lavoro.impegno_
