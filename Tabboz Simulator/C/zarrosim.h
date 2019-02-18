@@ -222,6 +222,10 @@ extern  char	 sesso; 	// M/F 29 Maggio 1999 --- Inizio...
 extern  char	 ao;
 extern  char  	 un_una[];
 extern  int      euro;
+extern char    nomeTemp[30];
+extern int    figTemp;
+
+static char * figNomTemp = nomeTemp;
 
 #ifdef TABBOZ_DEBUG                	// Sistema di Debug... [12 Giugno 1998]
 extern  FILE	 *debugfile;
@@ -279,9 +283,10 @@ extern  BOOL FAR PASCAL        Spegnimi(HWND hDlg, WORD message, WORD wParam, LO
 extern  BOOL FAR PASCAL        Network(HWND hDlg, WORD message, WORD wParam, LONG lParam); 	/* 25 Giugno 1998 */
 extern  BOOL FAR PASCAL	       MostraSalutieBaci(HWND hDlg, WORD message, WORD wParam, LONG lParam); /* 4 Gennaio 1999 */
 extern  BOOL FAR PASCAL        Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam); 	/* 31 Marzo 1999 */
-
 BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
 extern  void  TabbozAddKey(char *key,char *v);
 extern  char  *TabbozReadKey(char *key,char *buf);

@@ -40,10 +40,8 @@ extern	char	nomeTemp[];
 
 void Evento(HANDLE hInstance)
 {
-int 		  caso,i;
+int 		  caso;
 char 		  tmp[128];
-FARPROC	  lpproc;
-
     didLog = true;
     
 	if (Fortuna < 0) Fortuna = 0;		/* Prima che qualcuno bari... */
@@ -63,36 +61,8 @@ FARPROC	  lpproc;
     [Tabboz.global eventiCellulareWithHDlg:hInstance];
 
 /* Rapporti Tipa ---------------------------------------------------- */
-
-	if (Rapporti > 3) {
-		i=random(5)-3;
-		if (i > 0) Rapporti--;
-		}
-
-	if (Rapporti > 0)
-		if (Rapporti < 98) {
-		i=random( ((Rapporti + Fortuna + Fama )* 3) + 1 ) + 1;
-		if (i < 11) {					/* da 1 a 10, la donna ti molla... */
-			if (sound_active) TabbozPlaySound(603);
-            [Tabboz.global.tipa molla];
-			
-			if (sesso == 'M') {
-				LoadString(hInst, (1040 + i), (LPSTR)messaggio, 255);  /* 1041 -> 1050 */
-				MessageBox( hInstance,
-					(LPSTR)messaggio,
-					"La tipa ti molla...", MB_OK | MB_ICONSTOP);
-			} else {
-				LoadString(hInst, (1340 + i), (LPSTR)messaggio, 255);  /* 1041 -> 1050 */
-				MessageBox( hInstance,
-					(LPSTR)messaggio,
-					"Vieni mollata...", MB_OK | MB_ICONSTOP);
-			}
-
-			Reputazione-=(11 - i);	// quelle con numero piu' basso, sono peggiori...
-			if (Reputazione < 0) Reputazione = 0;
-		}
-	}
-
+    [Tabboz.global eventiTipaWithHDlg:hInstance];
+    
 /* Lavoro ----------------------------------------------------------- */
     [Tabboz.global eventiLavoroWithHDlg:hInstance];
 
@@ -100,7 +70,7 @@ FARPROC	  lpproc;
     [Tabboz.global eventiPaghettaWithHDlg:hInstance];
 
 /* Eventi casuali --------------------------------------------------- */
-		  caso = random(100+(Fortuna*2));
+    caso = random(100+(Fortuna*2));
 
 //	caso = 21;	/* TEST - TEST - TEST - TEST - TEST - TEST - TEST */
 
@@ -124,33 +94,8 @@ FARPROC	  lpproc;
 		case  8:
 		case  9:
 		case 10:
-
-		if (sesso == 'F') break; // Se sei una tipa non vieni pestata...
-
-		Reputazione-=caso;
-		if (Reputazione < 0) Reputazione = 0;
-
-		lpproc = MakeProcInstance(MostraMetallone, hInst);
-
-		/* 12 GIUGNO 1998 - LE FINESTRE 100,101 E 102 FANNO CRASCHIARE TUTTO ! */
-		/* TEMPORANEA SOLUZIONE: */
-		/* i=103 + random(3);	// 103 - 105 <-------------------------------- */
-
-		i=100 + random(6);	/* 100 - 105 */
-
-		#ifdef TABBOZ_DEBUG
-		sprintf(tmp,"eventi: Metallaro n. %d",i);
-		writelog(tmp);
-		#endif
-
-		DialogBox(hInst,
-			 MAKEINTRESOURCE(i),
-			 hInstance,
-			 lpproc);
-		FreeProcInstance(lpproc);
-
-		Tempo_trascorso_dal_pestaggio=5;
-		break;;
+                 [Tabboz.global eventiCasualiMetalloniEManovaliWithCaso:caso hDlg:hInstance];
+                 break;;
 
 // -------------- Scooter -----------------------------------------------------------------------
 
@@ -163,77 +108,24 @@ FARPROC	  lpproc;
 		case 17:
 		case 18:
 		case 19:
-		case 20: if ((ScooterData.stato != -1) & (ScooterData.attivita == 1)) {
-                [Tabboz.global.cellulare danneggia: random(8)];
-
-				if (caso < 17) {
-                    [Tabboz.global.scooter danneggia: 35];
-					
-					lpproc = MakeProcInstance(MostraMetallone, hInst); // Camionista ---------------------
-
-					DialogBox(hInst,
-						MAKEINTRESOURCE(106),
-						hInstance,
-						lpproc);
-					FreeProcInstance(lpproc);
-					#ifdef TABBOZ_DEBUG
-					writelog("eventi: Scooter - Camionista...");
-					#endif
-				 } else {
-                     [Tabboz.global.scooter danneggia: 20];
-					lpproc = MakeProcInstance(MostraMetallone, hInst); // Muro ! --------------------------
-
-					DialogBox(hInst,
-						MAKEINTRESOURCE(107),
-						hInstance,
-						lpproc);
-					FreeProcInstance(lpproc);
-					#ifdef TABBOZ_DEBUG
-					writelog("eventi: Scooter - Muro...");
-					#endif
-				 }
-
-			 Reputazione-=2;
-			 if (Reputazione < 0) Reputazione = 0;
-
-			 if (ScooterData.stato <= 0) {
-				MessageBox( hInstance,
-					"Quando ti rialzi ti accorgi che il tuo scooter e' ormai ridotto ad un ammasso di rottami.",
-					"Scooter Distrutto", MB_OK | MB_ICONSTOP);
-                 
-                 [Tabboz.global.scooter distruggi];
-				 
-				 #ifdef TABBOZ_DEBUG
-				 writelog("eventi: Lo scooter si e' completamente distrutto...");
-				 #endif
-
-				}
-			 }
-			 break;;
+		case 20:
+                [Tabboz.global eventiCasualiScooterWithCaso:caso hDlg:hInstance];
+                 break;;
 
 // -------------- Figosita' --------------------------------------------------------------------
 
-		case 21:           // + gravi
-		case 22:	   //  |
-		case 23: Fama-=5;  //  |
-		case 24:           //  |
-		case 25: Fama-=1;  //  |
-		case 26:	   //  |
-		case 27: Fama-=1;  //  |
-		case 28:	   // \|/
-		case 29:	   // - gravi
-		case 30: LoadString(hInst, (1000 + caso), (LPSTR)messaggio, 255);
-			 sprintf(tmp,"Sei fortunat%c...",ao);
-			 MessageBox( hInstance,
-				(LPSTR)messaggio,tmp, MB_OK | MB_ICONSTOP);
-			 Fama-=2;
-			 if (Fama < 0) Fama = 0;
-
-			 #ifdef TABBOZ_DEBUG
-			 writelog("eventi: Evento riguardante la figosita'...");
-			 #endif
-
-			 break;;
+		case 21:
+		case 22:
+		case 23:
+		case 24:
+		case 25:
+		case 26:
+		case 27:
+		case 28:
+		case 29:
+		case 30:
+                 [Tabboz.global eventiCasualiFigositaWithCaso:caso hDlg:hInstance];
+                 break;;
 
 // -------------- Skuola --------------------------------------------------------------------------
 
@@ -246,116 +138,21 @@ FARPROC	  lpproc;
 		case 37:
 		case 38:
 		case 39:
-		case 40:// Durante i giorni di vacanza non ci sono eventi riguardanti la scuola
-			if (x_vacanza == 0) {
-				i=random(9)+1;	// Fino alla versione 0.5 c'era scritto 10 ed era un bug...
-				LoadString(hInst, (1000 + caso), (LPSTR)messaggio, 255);
-				strcat(messaggio,MaterieMem[i].nome.UTF8String);
-				MessageBox( hInstance,
-					(LPSTR)messaggio,
-					"Scuola...", MB_OK | MB_ICONSTOP);
-
-				if (MaterieMem[i].xxx >= 2) MaterieMem[i].xxx-=2;
-				CalcolaStudio();
-				#ifdef TABBOZ_DEBUG
-				writelog("eventi: Evento riguardante la scuola");
-				#endif
-				ScuolaRedraw=1;	/* E' necessario ridisegnare la finestra della scuola... */
-			}
-
-			break;;
+		case 40:
+                 [Tabboz.global eventiCasualiFigositaWithCaso:caso hDlg:hInstance];
+                 break;;
 
 // -------------- Tipa/o ---------------------------------------------------------------------------
 
 		case 41:
-		case 42: // Una tipa/o ci prova... 7 Maggio 1999
-
-			if (Fama < 35) break; // Figosita' < 35 = nessuna speranza...
-
-			figTemp=random(Fama-30)+30; // Figosita' minima tipa = 30...
-
-			if (sesso == 'M') {
-				LoadString(hInst, (200+random(20)), (LPSTR)nomeTemp, 30); // 200 -> 219 [nomi tipe]
-				sprintf(tmp,"Una tipa, di nome %s (Figosita' %d/100), ci prova con te'...\nCi stai ???",nomeTemp,figTemp);
-			} else {
-				LoadString(hInst, (1200+random(20)), (LPSTR)nomeTemp, 30); // 200 -> 219 [nomi tipi]
-				sprintf(tmp,"Una tipo, di nome %s (Figosita' %d/100), ci prova con te'...\nCi stai ???",nomeTemp,figTemp);
-				}
-
-			if ( MessageBox( hInstance, tmp, "Qualcuno ti caga...", MB_YESNO ) == IDNO) {
-				if ((figTemp >= 79) && (Rapporti < 1) && (sesso == 'M') ) { // Se non hai gia' una tipa e rifiuti una figona...
-						MessageBox( hInstance,
-						"Appena vengono a sapere che non ti vuoi mettere insieme ad una figona come quella, i tuoi amici ti prendono a scarpate.",
-						"Idiota...", MB_OK | MB_ICONSTOP);
-						Reputazione-=4;
-						if (Reputazione < 0) Reputazione=0;
-						}
-				break;
-				}
-
-			// Controlla che tu non abbia gia' una tipa -------------------------
-			if (Rapporti > 0) { // hai gia' una tipa..<<<<<<<<<<<<<<<<<<<<<<<<<<<
-				lpproc = MakeProcInstance(DueDonne, hInst);
-				if (sesso == 'M')
-					DialogBox(hInst,
-						MAKEINTRESOURCE(92),
-						hInstance,
-						lpproc);
-				else
-					DialogBox(hInst,
-						MAKEINTRESOURCE(192),
-						hInstance,
-						lpproc);
-				FreeProcInstance(lpproc);
-			} else {
-                // bravo, no hai una tipa...<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                [Tabboz.global.tipa nuovaTipaWithNome:[NSString stringWithUTF8String:nomeTemp]
-                                             figosita:figTemp
-                                             rapporto:45+random(15)];
-                
-				Fama+=FigTipa / 10; if (Fama > 100) Fama=100;
-				Reputazione+= FigTipa / 13; if (Reputazione > 100) Reputazione=100;
-			}
-
-			#ifdef TABBOZ_DEBUG
-			writelog("eventi: Una tipa//o ci prova...");
-			#endif
-			break;;
+		case 42:
+                 [Tabboz.global eventiCasualiTipaCiProvaWithCaso:caso hDlg:hInstance];
+                 break;;
 
 
 		case 43: // Domande inutili... 11 Giugno 1999
 		case 44:
-
-            if ((Rapporti > 0) && (sesso == 'M')) {
-				if (caso == 43) {
-					i=MessageBox( hInstance,
-						"Mi ami ???",
-						"Domande inutili della Tipa...", MB_YESNO | MB_ICONQUESTION);
-					if (i != IDYES) {
-							MessageBox( hInstance,
-								"Sei sempre il solito stronzo.. non capisco perche' resto ancora con uno come cosi'...",
-								"Risposta sbagliata...", MB_OK | MB_ICONSTOP);
-							Rapporti-=45;
-							if (Rapporti < 5) Rapporti=5;
-							}
-				} else {
-					i=MessageBox( hInstance,
-						"Ma sono ingrassata ???",
-						"Domande inutili della Tipa...", MB_YESNO | MB_ICONQUESTION);
-					if (i != IDNO) {
-							MessageBox( hInstance,
-								"Sei un bastardo, non capisci mai i miei problemi...",
-								"Risposta sbagliata...", MB_OK | MB_ICONSTOP);
-							Rapporti-=20;
-							if (Rapporti < 5) Rapporti=5;
-							}
-
-				}
-            }
-
-			#ifdef TABBOZ_DEBUG
-			writelog("eventi: Domande inutili della tipa...");
-			#endif
+                 [Tabboz.global eventiCasualiDomandeInutiliWithCaso:caso hDlg:hInstance];
 			break;;
 
 		case 45:
@@ -371,19 +168,11 @@ FARPROC	  lpproc;
 
 		case 49:
 		case 50:
-				if (CellularData.attivo) {
-                    [Tabboz.global.cellulare danneggia: random(8)];
-                    MessageBox( hInstance,
-						"Il telefonino di cade di tasca e vola per terra...",
-						"Telefonino", MB_OK | MB_ICONSTOP);
-					#ifdef TABBOZ_DEBUG
-					writelog("eventi: Telefonino - Cade...");
-					#endif
-				 }
-				break;;
+                 [Tabboz.global eventiCasualiTelefoninoWithCaso:caso hDlg:hInstance];
+                 break;;
 
 		default:
-		;;
+                 ;;
 		 }
 	}
 

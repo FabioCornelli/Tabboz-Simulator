@@ -94,7 +94,7 @@ ATOM RegisterClass(WNDCLASS * wc) {
     return 0;
 }
 
-INTRESOURCE MAKEINTRESOURCE_Real(int a, char * n) {
+INTRESOURCE MAKEINTRESOURCE_Real(int a, const char * n) {
     return (INTRESOURCE) {
         .number = a,
         .n = n,

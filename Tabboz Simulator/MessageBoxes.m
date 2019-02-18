@@ -9,6 +9,7 @@
 #import "C/os.h"
 
 static char tmp[1024];
+static char tmp1[1024];
 
 void MessageBox_(HANDLE hDlg) {
 }
@@ -137,3 +138,87 @@ void MessageBox_MetaPaghetta(HANDLE hDlg) {
                "Paghetta settimanale", MB_OK | MB_ICONINFORMATION);
 }
 
+void MessageBox_LaTipaTiMolla(HANDLE hDlg, int scusa) {
+    if (sesso == 'M') {
+        LoadString(hDlg, (1040 + scusa), (LPSTR)tmp, 255);  /* 1041 -> 1050 */
+        MessageBox( hDlg,
+                   (LPSTR)tmp,
+                   "La tipa ti molla...", MB_OK | MB_ICONSTOP);
+    } else {
+        LoadString(hDlg, (1340 + scusa), (LPSTR)tmp, 255);  /* 1041 -> 1050 */
+        MessageBox( hDlg,
+                   (LPSTR)tmp,
+                   "Vieni mollata...", MB_OK | MB_ICONSTOP);
+    }
+}
+
+void MessageBox_ScooterRidottoAdUnAmmassoDiRottami(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Quando ti rialzi ti accorgi che il tuo scooter e' ormai ridotto ad un ammasso di rottami.",
+               "Scooter Distrutto", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_SeiFortunato(HANDLE hDlg, int caso) {
+    sprintf(tmp,"Sei fortunat%c...",ao);
+    
+    LoadString(hInst, (1000 + caso), (LPSTR)tmp1, 255);
+    MessageBox(hDlg,
+               (LPSTR)tmp1,tmp, MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_Scuola(HANDLE hDlg, int caso, int materia) {
+    LoadString(hInst, (1000 + caso), (LPSTR)tmp, 255);
+    strcat(tmp,MaterieMem[materia].nome.UTF8String);
+    MessageBox( hDlg,
+               (LPSTR)tmp,
+               "Scuola...", MB_OK | MB_ICONSTOP);
+}
+
+int MessageBox_QualcunoTiCaga(HANDLE hDlg, int nome, int figTemp) {
+    if (sesso == 'M') {
+        LoadString(hDlg, (200+nome), (LPSTR)nomeTemp, 30); // 200 -> 219 [nomi tipe]
+        sprintf(tmp,"Una tipa, di nome %s (Figosita' %d/100), ci prova con te'...\nCi stai ???",nomeTemp,figTemp);
+    } else {
+        LoadString(hDlg, (1200+nome), (LPSTR)nomeTemp, 30); // 200 -> 219 [nomi tipi]
+        sprintf(tmp,"Una tipo, di nome %s (Figosita' %d/100), ci prova con te'...\nCi stai ???",nomeTemp,figTemp);
+    }
+    
+    return MessageBox(hDlg, tmp, "Qualcuno ti caga...", MB_YESNO);
+}
+
+void MessageBox_RifiutiUnaFigona(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Appena vengono a sapere che non ti vuoi mettere insieme ad una figona come quella, i tuoi amici ti prendono a scarpate.",
+               "Idiota...", MB_OK | MB_ICONSTOP);
+}
+
+int MessageBox_MiAmi(HANDLE hDlg) {
+    return MessageBox( hDlg,
+                      "Mi ami ???",
+                      "Domande inutili della Tipa...", MB_YESNO | MB_ICONQUESTION);
+    
+}
+
+void MessageBox_SeiIlSolitoStronzo(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Sei sempre il solito stronzo.. non capisco perche' resto ancora con uno come cosi'...",
+               "Risposta sbagliata...", MB_OK | MB_ICONSTOP);
+}
+
+int MessageBox_MaSonoIngrassata(HANDLE hDlg) {
+    return MessageBox( hDlg,
+                      "Ma sono ingrassata ???",
+                      "Domande inutili della Tipa...", MB_YESNO | MB_ICONQUESTION);
+}
+
+void MessageBox_SeiUnBastardo(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Sei un bastardo, non capisci mai i miei problemi...",
+               "Risposta sbagliata...", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_IlTelefoninoCadeDiTasca(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Il telefonino di cade di tasca e vola per terra...",
+               "Telefonino", MB_OK | MB_ICONSTOP);
+}

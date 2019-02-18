@@ -182,7 +182,7 @@ void LoadString(HANDLE hinst, int b, LPSTR ptr, int size);
 int LoadCursor(HANDLE hinst, INTRESOURCE b);
 ATOM RegisterClass(WNDCLASS * wc);
 
-INTRESOURCE MAKEINTRESOURCE_Real(int a, char * n);
+INTRESOURCE MAKEINTRESOURCE_Real(int a, const char * n);
 
 #define STRINGY(s) #s
 #define MAKEINTRESOURCE(x) MAKEINTRESOURCE_Real(x, STRINGY(x) )
