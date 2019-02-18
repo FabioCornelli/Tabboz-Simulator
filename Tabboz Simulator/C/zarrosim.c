@@ -149,9 +149,6 @@ char  tmp[128];
 		Fama					=  0;
 		Rapporti				=  0;
 		Stato					=100;
-		impegno				=  0;
-		giorni_di_lavoro	=	0;
-		numeroditta			=  0;
 
 		strcpy(Residenza,"Milano");
 		Nometipa[0]=0;
@@ -837,9 +834,9 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 				CalcolaStudio();
 				if ( Rapporti > 1 )
 					Rapporti=100;
-				impegno=100;
-				numeroditta=1;
-            stipendio=5000;
+                [Tabboz.global.lavoro assumiWithPresso:1
+                                          impegnoDelta:90
+                                        stipendioDelta:4000];
 			}
 
 

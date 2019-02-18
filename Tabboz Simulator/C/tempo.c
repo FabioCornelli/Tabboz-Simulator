@@ -81,34 +81,26 @@ void	Giorno(HANDLE hInstance)
 	/* ---------------> S T I P E N D I O <--------------- */
 
 	if (impegno > 0)  {
-		giorni_di_lavoro+=1; // C' era scritto =+1 al posto di +=1
+        [Tabboz.global.lavoro lavoraGiorno];
 
-		if ((x_giorno == 27) && (giorni_di_lavoro > 3)) {
-		long stipendietto;		/* Stipendio calcolato secondo i giorni effettivi di lavoro */
-
-			if ( giorni_di_lavoro > 29)
-				stipendietto=(long) stipendio;
-			else
-				stipendietto= (long)stipendio * (long)giorni_di_lavoro / 30;
-
-			giorni_di_lavoro=1;
-
-			sprintf(tmp,"Visto che sei stat%c %s brav%c dipendente sottomess%c, ora ti arriva il tuo misero stipendio di %s",
-					ao, un_una, ao, ao, MostraSoldi(stipendietto));
-
-			MessageBox( hInstance, tmp,
-				  "Stipendio !", MB_OK | MB_ICONINFORMATION);
-
-            [Tabboz.global.danaro deposita:stipendietto];
-            
-			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"giorno: Stipendio (%s)",MostraSoldi(stipendietto));
-			writelog(tmp);
-			#endif
-
-
-		}
-
+        if (x_giorno == 27) {
+            /* Stipendio calcolato secondo i giorni effettivi di lavoro */
+            long stipendietto = [Tabboz.global.lavoro prendiStipendioMese];
+            if (stipendietto != -1) {
+                sprintf(tmp,"Visto che sei stat%c %s brav%c dipendente sottomess%c, ora ti arriva il tuo misero stipendio di %s",
+                        ao, un_una, ao, ao, MostraSoldi(stipendietto));
+                
+                MessageBox( hInstance, tmp,
+                           "Stipendio !", MB_OK | MB_ICONINFORMATION);
+                
+                [Tabboz.global.danaro deposita:stipendietto];
+                
+#ifdef TABBOZ_DEBUG
+                sprintf(tmp,"giorno: Stipendio (%s)",MostraSoldi(stipendietto));
+                writelog(tmp);
+#endif
+            }
+        }
 	}
 
     /* ---------------> P A L E S T R A <---------------    21 Apr 1998	*/

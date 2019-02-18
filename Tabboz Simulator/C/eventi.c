@@ -139,17 +139,15 @@ FARPROC	  lpproc;
 
 	if (impegno > 3) {
 		i=random(7)-3;
-		if (i > 0) impegno--;
+		if (i > 0)
+            [Tabboz.global.lavoro impegnati];
 		}
 
 	if (numeroditta > 0) {
 		i=random(impegno * 2 + Fortuna * 3);
 		if (i < 2) {					/* perdi il lavoro */
-			impegno=0;
-			giorni_di_lavoro=0;
-			stipendio=0;
-			numeroditta=0;
-
+            [Tabboz.global.lavoro disimpegnati];
+            
 			// LoadString(hInst, (1040 + i), (LPSTR)messaggio, 255);  /* 1041 -> 1050 */
 			// MessageBox( hInstance,
 			//	(LPSTR)messaggio,

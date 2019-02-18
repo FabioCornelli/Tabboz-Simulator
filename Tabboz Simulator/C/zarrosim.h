@@ -151,7 +151,7 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define VestitiMem  Vestiario.vestiti
 #define SizeMem     Tabacchi.sigarette
 #define PalestraMem STSCOOTER.palestra
-#define LavoroMem   STSCOOTER.lavoro
+#define LavoroMem   Carceri.lavoro
 #define DiscoMem    Club.disco
 
 #define CellularData Tabboz.global.cellulare
@@ -183,13 +183,13 @@ extern  int 	 ScuolaRedraw;       // E' necessario ridisegnare la scuola ???
 
 // DOPO LE CARATTERISTIKE...
 
-#define Attesa Tabboz.global.attesa
+#define Attesa            Tabboz.global.attesa
 
 extern  int     Fama;
 extern  int     Reputazione;
 //extern  int     Studio;
-#define Studio  Tabboz.global.studio       // Quanto vai bene a scuola (1 - 100)
-#define Soldi   Tabboz.global.danaro.soldi // Long...per forza! lo zarro ha tanti soldi...
+#define Studio            Tabboz.global.studio               // Quanto vai bene a scuola (1 - 100)
+#define Soldi             Tabboz.global.danaro.soldi         // Long...per forza! lo zarro ha tanti soldi...
 extern  u_long  Paghetta;       // Paghetta Settimanale...
 extern  char    Nome[30];
 extern  char    Cognome[30];
@@ -200,19 +200,22 @@ extern  int		 Stato;
 extern  u_long	 DDP;
 extern  int		 AttPaghetta;
 extern  int		 Fortuna;
-extern  int     numeroditta;
-extern  int     impegno;
-extern  int		 giorni_di_lavoro; // Serve x calcolare lo stipendio SOLO per il primo mese...
-extern  int     stipendio;
-#define benzina Tabboz.global.scooter.benzina_
-extern  int 	 antifurto;
-#define sizze   Tabboz.global.tabacchi.siga      // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
-extern  int		 Tempo_trascorso_dal_pestaggio;
-extern  int	 	 current_testa;      // Grado di abbronzatura del tabbozzo
 
-#define current_gibbotto  Tabboz.global.vestiti.giubbotto // Vestiti attuali del tabbozzo...
+#define numeroditta       Tabboz.global.lavoro.ditta
+#define impegno           Tabboz.global.lavoro.impegno_
+#define giorni_di_lavoro  Tabboz.global.lavoro.giorniDiLavoro // Serve x calcolare lo stipendio SOLO per il primo mese...
+#define stipendio         Tabboz.global.lavoro.stipendio_
+
+#define benzina           Tabboz.global.scooter.benzina_
+extern  int 	 antifurto;
+#define sizze             Tabboz.global.tabacchi.siga         // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
+extern  int		 Tempo_trascorso_dal_pestaggio;
+extern  int	 	 current_testa;                               // Grado di abbronzatura del tabbozzo
+
+#define current_gibbotto  Tabboz.global.vestiti.giubbotto     // Vestiti attuali del tabbozzo...
 #define current_pantaloni Tabboz.global.vestiti.pantaloni
 #define current_scarpe    Tabboz.global.vestiti.scarpe
+
 extern  int		 current_tipa;
 extern  int  	 sound_active;
 extern  char	 sesso; 	// M/F 29 Maggio 1999 --- Inizio...

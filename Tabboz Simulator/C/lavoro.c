@@ -29,10 +29,6 @@
 #include "zarrosim.h"
 __attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
-int    numeroditta;
-int    impegno;
-int    stipendio;
-int    giorni_di_lavoro;
 int    punti_scheda;
 
 BOOL FAR PASCAL ElencoDitte(HWND hDlg, WORD message, WORD wParam, LONG lParam);
@@ -167,11 +163,10 @@ static    int	  Lcheck;
 			}
 
 		if (( Reputazione + Fortuna + random(80) ) > random(200))   {
-			impegno=10 + random(20);
-         giorni_di_lavoro=1;
-			stipendio=1000 + (random(10) * 100);
-			numeroditta=n_ditta;
-
+            [Tabboz.global.lavoro assumiWithPresso:n_ditta
+                                      impegnoDelta:random(20)
+                                    stipendioDelta:random(10) * 100];
+            
 			if (sesso == 'M')
 				sprintf(tmp, "SEI STATO ASSUNTO ! Ora sei un felice dipendente della %s !", LavoroMem[n_ditta].nome.UTF8String);
 			else
@@ -204,10 +199,7 @@ static    int	  Lcheck;
 		  "Licenziati", MB_YESNO | MB_ICONQUESTION);
 
 		if (accetto == IDYES) {
-			numeroditta=0;
-			impegno=0;
-         giorni_di_lavoro=0;
-			stipendio=0;
+            [Tabboz.global.lavoro disimpegnati];
 			Evento(hDlg);
 			}
 		AggiornaLavoro(hDlg);

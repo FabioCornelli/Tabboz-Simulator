@@ -22,11 +22,11 @@ class Tabboz : NSObject {
     @objc private(set) var tabacchi    = Tabacchi()
           private      var palestra    = Palestra()
           private      var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
-    
     @objc private(set) var scooter     = Motorino()
     @objc private(set) var cellulare   = Telefono()
-    
     @objc private(set) var abbonamento = AbbonamentoCorrente()
+    @objc private(set) var lavoro      = Carceri()
+
     
     @objc static func initGlobalTabboz() {
         global = Tabboz()
@@ -326,6 +326,7 @@ class Tabboz : NSObject {
         
         Evento(hDlg)
     }
+    
 }
 
 @objc extension Tabboz {

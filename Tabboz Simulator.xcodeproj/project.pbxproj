@@ -13,6 +13,7 @@
 		3F7D15AA2217FF8D00DB786D /* Vestitiario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A92217FF8D00DB786D /* Vestitiario.swift */; };
 		3F7D15AC22180EEF00DB786D /* Tabacchi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AB22180EEF00DB786D /* Tabacchi.swift */; };
 		3F7D15AE2218201000DB786D /* Disco.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AD2218201000DB786D /* Disco.swift */; };
+		3F7D15B02218279000DB786D /* Lavoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AF2218279000DB786D /* Lavoro.swift */; };
 		3F9031A32214D8EB00C9A2C3 /* Scooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A22214D8EB00C9A2C3 /* Scooter.swift */; };
 		3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A4221504FD00C9A2C3 /* Telefono.swift */; };
 		3F9031A722150C3A00C9A2C3 /* Tempo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A622150C3A00C9A2C3 /* Tempo.swift */; };
@@ -56,6 +57,7 @@
 		3F7D15A92217FF8D00DB786D /* Vestitiario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vestitiario.swift; sourceTree = "<group>"; };
 		3F7D15AB22180EEF00DB786D /* Tabacchi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabacchi.swift; sourceTree = "<group>"; };
 		3F7D15AD2218201000DB786D /* Disco.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disco.swift; sourceTree = "<group>"; };
+		3F7D15AF2218279000DB786D /* Lavoro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lavoro.swift; sourceTree = "<group>"; };
 		3F9031A22214D8EB00C9A2C3 /* Scooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scooter.swift; sourceTree = "<group>"; };
 		3F9031A4221504FD00C9A2C3 /* Telefono.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telefono.swift; sourceTree = "<group>"; };
 		3F9031A622150C3A00C9A2C3 /* Tempo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				3F7D15A92217FF8D00DB786D /* Vestitiario.swift */,
 				3F7D15AD2218201000DB786D /* Disco.swift */,
 				3F7D15AB22180EEF00DB786D /* Tabacchi.swift */,
+				3F7D15AF2218279000DB786D /* Lavoro.swift */,
 				3FC9F54722139BA60019B93A /* KnownDialogs.swift */,
 				3FC9F54D2214C8020019B93A /* MessageBoxes.h */,
 				3FC9F54E2214CB930019B93A /* MessageBoxes.m */,
@@ -237,6 +240,7 @@
 				3FED205F220FCA3500AC38D7 /* zarrosim.c in Sources */,
 				3F54DC1C2210991100794232 /* stubs.m in Sources */,
 				3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */,
+				3F7D15B02218279000DB786D /* Lavoro.swift in Sources */,
 				3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */,
 				3FED2060220FCA3500AC38D7 /* scooter.c in Sources */,
 				3FED205C220FCA3500AC38D7 /* readkey.c in Sources */,

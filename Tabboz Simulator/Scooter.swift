@@ -353,23 +353,6 @@ extension NEWSTSCOOTER.Filtro {
         /*               \__ voto in una materia */
     ]
     
-    
-    // Lavoro ------------------------------------------------------------------------------------------
-
-    static let lavoro = [
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "---"                      ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Magneti Budelli"          ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Diamine"                  ),
-        STSCOOTER(1,  0, 0, 0, 0, 0,   0,  0, "Testmec"                  ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Ti Impalo Bene Bene"      ),
-        STSCOOTER(1,  0, 0, 0, 0, 0,   0,  0, "October"                  ),
-        STSCOOTER(1,  0, 0, 0, 0, 0,   0,  0, "Arlond's"                 ),
-        STSCOOTER(1,  0, 0, 0, 0, 0,   0,  0, "286 - Computer d' annata" ), // 14/01/2000
-        STSCOOTER(1,  0, 0, 0, 0, 0,   0,  0, "Ricopio"                  ), // 14/01/2000
-        //        |
-        //        \__ lavoro fuori porta (solo con lo scooter puoi arrivarci...)
-    ]
-    
 }
 
 @objc extension NEWSTSCOOTER {
