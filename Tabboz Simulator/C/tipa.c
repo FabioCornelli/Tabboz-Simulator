@@ -283,9 +283,9 @@ Dopo questa tragica esperienza anche %s sparisce...",Nometipa,nomeTemp,nomeTemp)
 			  return(TRUE);
 
 			case 102:	   // Preferisci quella nuova...
-				sprintf(Nometipa,"%s",nomeTemp);
-				FigTipa=figTemp;
-				Rapporti=30+random(15);
+                [Tabboz.global.tipa nuovaTipaWithNome:[NSString stringWithUTF8String:nomeTemp]
+                                             figosita:figTemp
+                                             rapporto:30+random(15)];
 				Fama+=FigTipa / 10; if (Fama > 100) Fama=100;
 				Reputazione+= FigTipa / 13; if (Reputazione > 100) Reputazione=100;
 				EndDialog(hDlg, TRUE);
@@ -367,9 +367,9 @@ BOOL FAR PASCAL CercaTipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 					lpproc);
 				FreeProcInstance(lpproc);
 				} else { // bravo, no hai una tipa...
-					sprintf(Nometipa,"%s",nomeTemp);
-					FigTipa=figTemp;
-					Rapporti=30+random(15);
+                    [Tabboz.global.tipa nuovaTipaWithNome:[NSString stringWithUTF8String:nomeTemp]
+                                                 figosita:figTemp
+                                                 rapporto:30+random(15)];
 					Fama+=FigTipa / 10; if (Fama > 100) Fama=100;
 					Reputazione+= FigTipa / 13; if (Reputazione > 100) Reputazione=100;
 			}

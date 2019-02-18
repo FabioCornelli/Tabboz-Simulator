@@ -193,9 +193,9 @@ extern  int     Reputazione;
 extern  u_long  Paghetta;       // Paghetta Settimanale...
 extern  char    Nome[30];
 extern  char    Cognome[30];
-extern  char	 Nometipa[30];
-extern  int		 FigTipa;
-extern  int		 Rapporti;
+#define Nometipa          Tabboz.global.tipa.nome.UTF8String
+#define FigTipa           Tabboz.global.tipa.figTipa         // Figosita' della tipa
+#define Rapporti          Tabboz.global.tipa.rapporto        // Rapporti Tipo <-> Tipa
 extern  int		 Stato;
 extern  u_long	 DDP;
 extern  int		 AttPaghetta;
@@ -216,7 +216,7 @@ extern  int	 	 current_testa;                               // Grado di abbronza
 #define current_pantaloni Tabboz.global.vestiti.pantaloni
 #define current_scarpe    Tabboz.global.vestiti.scarpe
 
-extern  int		 current_tipa;
+#define current_tipa      Tabboz.global.tipa.currentTipa
 extern  int  	 sound_active;
 extern  char	 sesso; 	// M/F 29 Maggio 1999 --- Inizio...
 extern  char	 ao;

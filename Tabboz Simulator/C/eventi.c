@@ -74,9 +74,8 @@ FARPROC	  lpproc;
 		i=random( ((Rapporti + Fortuna + Fama )* 3) + 1 ) + 1;
 		if (i < 11) {					/* da 1 a 10, la donna ti molla... */
 			if (sound_active) TabbozPlaySound(603);
-			Rapporti=0;
-			FigTipa=0;
-
+            [Tabboz.global.tipa molla];
+			
 			if (sesso == 'M') {
 				LoadString(hInst, (1040 + i), (LPSTR)messaggio, 255);  /* 1041 -> 1050 */
 				MessageBox( hInstance,
@@ -308,10 +307,12 @@ FARPROC	  lpproc;
 						hInstance,
 						lpproc);
 				FreeProcInstance(lpproc);
-			} else { // bravo, no hai una tipa...<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-				sprintf(Nometipa,"%s",nomeTemp);
-				FigTipa=figTemp;
-				Rapporti=45+random(15);
+			} else {
+                // bravo, no hai una tipa...<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                [Tabboz.global.tipa nuovaTipaWithNome:[NSString stringWithUTF8String:nomeTemp]
+                                             figosita:figTemp
+                                             rapporto:45+random(15)];
+                
 				Fama+=FigTipa / 10; if (Fama > 100) Fama=100;
 				Reputazione+= FigTipa / 13; if (Reputazione > 100) Reputazione=100;
 			}

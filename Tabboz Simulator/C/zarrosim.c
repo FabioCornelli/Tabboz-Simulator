@@ -66,18 +66,14 @@ int    Reputazione;
 u_long Paghetta;       // Paghetta Settimanale...
 char   Nome[30];		  // Nome del Tabbozzo
 char   Cognome[30];	  // Cognome del Tabbozzo ( 3 Marzo 1998 - 0.5.6a )
-char   Nometipa[30];	  // Nome della tipa
 char	 City[50];	     // Citta' di nascita
 char   Residenza[50];  // Citta' dove vive ( 11 Marzo 2000 - 0.9.0beta
 char	 Street[50];	  // Dove sto' tipo abita ( 4 Marzo 1998 - 0.5.6a )
-int	 FigTipa;	     // Figosita' della tipa
-int	 Rapporti;	     // Rapporti Tipo <-> Tipa
 int	 Stato;		     // Quanto stai male ??? (16 Marzo 1999 - 0.8.3pr )
 u_long DDP;				  // Due di picche (log...) - long,sono ottimista...
 int	 Fortuna;		  // Fortuna del tabbozzo
 int	 Tempo_trascorso_dal_pestaggio; //      ( 12 Giugno 1998 - 0.6.98a )
 int	 current_testa;
-int	 current_tipa;
 
 int	 timer_active;
 int	 fase_di_avvio;
@@ -151,7 +147,6 @@ char  tmp[128];
 		Stato					=100;
 
 		strcpy(Residenza,"Milano");
-		Nometipa[0]=0;
 
 		LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
 

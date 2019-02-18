@@ -19,6 +19,7 @@ class Tabboz : NSObject {
     @objc private(set) var calendario  = Calendario()
     @objc private(set) var scuola      = Scuole()
     @objc private(set) var vestiti     = Vestiario()
+    @objc private(set) var tipa        = Fiddhiola()
     @objc private(set) var tabacchi    = Tabacchi()
           private      var palestra    = Palestra()
           private      var compleanno  = GiornoDellAnno(giorno: 1, mese: .gennaio)
@@ -61,6 +62,7 @@ class Tabboz : NSObject {
     }
     
     func resetMe() {
+        tipa.molla()
         danaro.setta(5)
         calendario = Calendario()
         compleanno = .random()
