@@ -10,6 +10,45 @@ import Foundation
 
 @objc extension Tabboz {
     
+    func eventi(hDlg: HANDLE) {
+        didLog = ObjCBool(true)
+        
+        Giorno(hDlg)
+        
+        [
+            eventiPestaggio,
+            eventiSigarette,
+            eventiCellulare,
+            eventiTipa,
+            eventiLavoro,
+            eventiPaghetta,
+        ]
+            .forEach {
+                $0(hDlg)
+            }
+        
+        let caso = tabboz_random(100 + Int(Fortuna) * 2)
+        
+        [
+            ( 1...10): eventiCasualiMetalloniEManovali,
+            (11...20): eventiCasualiScooter,
+            (21...30): eventiCasualiFigosita,
+            (31...40): eventiCasualiScuola,
+            (41...42): eventiCasualiTipaCiProva,
+            (43...44): eventiCasualiDomandeInutili,
+            (50...50): eventiCasualiTelefonino,
+        ]
+            .first(where: { (range, _) in range.contains(caso) })?
+            .value(caso, hDlg)
+        
+    }
+    
+    func eventiPestaggio(hDlg: HANDLE) {
+        if Tempo_trascorso_dal_pestaggio > 0 {
+            Tempo_trascorso_dal_pestaggio -= 1
+        }
+    }
+    
     func eventiSigarette(hDlg: HANDLE) {
         guard tabacchi.siga > 0 else {
             return
