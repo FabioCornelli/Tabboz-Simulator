@@ -147,7 +147,7 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 
 #define ScooterMem  NEWSTSCOOTER.scooter
 
-#define MaterieMem  STSCOOTER.materie
+#define MaterieMem  Tabboz.global.scuola.materie
 #define VestitiMem  Vestiario.vestiti
 #define SizeMem     Tabacchi.sigarette
 #define PalestraMem STSCOOTER.palestra
@@ -188,7 +188,7 @@ extern  int 	 ScuolaRedraw;       // E' necessario ridisegnare la scuola ???
 extern  int     Fama;
 extern  int     Reputazione;
 //extern  int     Studio;
-#define Studio            Tabboz.global.studio               // Quanto vai bene a scuola (1 - 100)
+#define Studio            Tabboz.global.scuola.studio        // Quanto vai bene a scuola (1 - 100)
 #define Soldi             Tabboz.global.danaro.soldi         // Long...per forza! lo zarro ha tanti soldi...
 extern  u_long  Paghetta;       // Paghetta Settimanale...
 extern  char    Nome[30];

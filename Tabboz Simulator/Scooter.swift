@@ -8,47 +8,6 @@
 
 import Foundation
 
-// Structure Definitions
-// -
-
-// INFORMAZIONI SUGLI SCOOTER  (ora usato solo per cose generiche...)
-class STSCOOTER : NSObject {
-    
-    @objc var speed:    Int    // velocita' massima
-    @objc var cc:       Int    // cilindrata
-    @objc var xxx:      Int    // [future espansioni]
-    @objc var fama:     Int    // figosita' scooter
-    @objc var mass:     Int    // massa sooter
-    @objc var maneuver: Int    // manovrabilita'
-    @objc var prezzo:   Int    // costo dello scooter (modifiche incluse)
-    @objc var stato:    Int    // quanto e' intero (in percuntuale); -1 nessuno scooter
-    @objc var nome:     String // nome dello scooter
-    
-    init(
-        _ speed:    Int,
-        _ cc:       Int,
-        _ xxx:      Int,
-        _ fama:     Int,
-        _ mass:     Int,
-        _ maneuver: Int,
-        _ prezzo:   Int,
-        _ stato:    Int,
-        _ nome:     String
-    ) {
-        self.speed    = speed
-        self.cc       = cc
-        self.xxx      = xxx
-        self.fama     = fama
-        self.mass     = mass
-        self.maneuver = maneuver
-        self.prezzo   = prezzo
-        self.stato    = stato
-        self.nome     = nome
-        super.init()
-    }
-    
-}
-
 // NUOVE INFORMAZIONI SUGLI SCOOTER - 28 Aprile 1998
 
 class NEWSTSCOOTER : NSObject {
@@ -330,30 +289,6 @@ extension NEWSTSCOOTER.Filtro {
 // -
 // Static Data
 // -
-
-@objc extension STSCOOTER {
-
-    // Materie -----------------------------------------------------------------------------------------
-
-    // Per una questione di svogliatezza del programmatore, viene usata STSCOOTER anche x i vestiti,
-    // le materie scolastiche e qualche altra cosa che adesso non mi viene in mente...
-    
-    static let materie = [
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "---"                  ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Agraria"              ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Fisica"               ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Attivita' culturali"  ), // fine alla 0.6.3 era "culurali..."
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Attivita' matematiche"),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Scienze industriali"  ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Elettrochimica"       ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Petrolchimica"        ),
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Filosofia aziendale"  ), // fino alla 0.5.3 "aziendale" aveva due zeta...
-        STSCOOTER(0,  0, 0, 0, 0, 0,   0,  0, "Metallurgia"          ),
-        /*               |                       */
-        /*               \__ voto in una materia */
-    ]
-    
-}
 
 @objc extension NEWSTSCOOTER {
     

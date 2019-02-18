@@ -215,7 +215,7 @@ char tmp[128];
 void
 CalcolaStudio()
 {
-    [Tabboz.global calcolaStudio];
+    [Tabboz.global.scuola calcolaStudio];
 }
 
 

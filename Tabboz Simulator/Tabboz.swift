@@ -14,10 +14,10 @@ class Tabboz : NSObject {
     @objc static private(set) var global = Tabboz()
     
     @objc private(set) var attesa : Int // Tempo prima che ti diano altri soldi...
-    @objc private(set) var studio : Int // Quanto vai bene a scuola (1 - 100)
     
     @objc private(set) var danaro      = Danaro()
     @objc private(set) var calendario  = Calendario()
+    @objc private(set) var scuola      = Scuole()
     @objc private(set) var vestiti     = Vestiario()
     @objc private(set) var tabacchi    = Tabacchi()
           private      var palestra    = Palestra()
@@ -34,7 +34,6 @@ class Tabboz : NSObject {
     
     override init() {
         attesa = ATTESAMAX
-        studio = 0
         super.init()
     }
     
@@ -43,7 +42,7 @@ class Tabboz : NSObject {
 @objc extension Tabboz {
     
     func chiediPaghettaExtra(_ hDlg: HANDLE) {
-        if (studio >= 40) {
+        if (scuola.studio >= 40) {
             if attesa == 0 {
                 attesa = ATTESAMAX
                 danaro.deposita(10)
@@ -59,25 +58,6 @@ class Tabboz : NSObject {
         }
 
         SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)))
-    }
-    
-    func calcolaStudio() {
-        var i2 = 0
-        
-        for materia in STSCOOTER.materie {
-            i2 += materia.xxx
-        }
-
-        studio = (i2 * 10) / 9
-    }
-    
-    /// Azzera le materie...
-    func azzeraMaterie() {
-        studio = 0
-        
-        for materia in STSCOOTER.materie {
-            materia.xxx = 0
-        }
     }
     
     func resetMe() {
@@ -214,14 +194,7 @@ class Tabboz : NSObject {
             MessageBox_CheTeNeFaiDiRicaricaSenzaSim(hDlg)
         }
     }
-    
-    // -
-    // Scooter
-    // -
-
-    func _setScooter(_ newValue: NEWSTSCOOTER, benzin b: Int) {
-    }
-    
+        
     // -
     // Vestiti
     // -
