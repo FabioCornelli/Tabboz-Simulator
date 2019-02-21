@@ -224,6 +224,7 @@ extern  char  	 un_una[];
 extern  int      euro;
 extern char    nomeTemp[30];
 extern int    figTemp;
+extern char natale2;
 
 static char * figNomTemp = nomeTemp;
 
@@ -287,6 +288,7 @@ BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
 extern  void  TabbozAddKey(char *key,char *v);
 extern  char  *TabbozReadKey(char *key,char *buf);

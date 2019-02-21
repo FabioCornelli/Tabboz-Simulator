@@ -207,7 +207,7 @@ void PlaySound(void * a, void * b, int c) {
     if (log_window) printf("    play sound"); didLog = true;
 }
 
-int MessageBox(HANDLE h, char * msg, char * title, int flags) {
+int MessageBox(HANDLE h, const char * msg, const char * title, int flags) {
     if (log_window) printf("    messagebox flags: x %x\n", flags);
     if (log_window) printf("    messagebox title: %s\n", title);
     if (log_window) printf("    messagebox text:\n%s\n", msg);

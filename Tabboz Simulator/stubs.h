@@ -210,7 +210,7 @@ void DrawMenuBar(HANDLE h);
 void SetTimer(HANDLE h, int msg, int msec, void *);
 void KillTimer(HANDLE h, int msg);
 void PlaySound(void *, void *, int);
-int MessageBox(HANDLE h, char * msg, char * title, int flags);
+int MessageBox(HANDLE h, const char * msg, const char * title, int flags);
 void GetDlgItemText(HANDLE h, int param, char * buf, size_t size);
 void sndPlaySound(char * filename, int flags);
 int GetSystemMetrics(int x);

@@ -222,3 +222,49 @@ void MessageBox_IlTelefoninoCadeDiTasca(HANDLE hDlg) {
                "Il telefonino di cade di tasca e vola per terra...",
                "Telefonino", MB_OK | MB_ICONSTOP);
 }
+
+void MessageBox_AnnoFunesto(HANDLE hDlg) {
+    MessageBox(hDlg,
+               "Anno bisesto, anno funesto...",
+               "Anno Bisestile",
+               MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_TiArrivaIlMiseroStipendio(HANDLE hDlg, NSInteger stipendietto) {
+    sprintf(tmp,"Visto che sei stat%c %s brav%c dipendente sottomess%c, ora ti arriva il tuo misero stipendio di %s",
+            ao, un_una, ao, ao, MostraSoldi(stipendietto));
+    
+    MessageBox( hDlg, tmp,
+               "Stipendio !", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_UltimoGiornoDiScuola(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Da domani iniziano le vacanza estive !",
+               "Ultimo giorno di scuola", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_PrimoGiornoDiScuola(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Questa mattina devi tornare a scuola...",
+               "Primo giorno di scuola", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ConBabboStupisciTutti(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Con il tuo vestito da Babbo Natale riesci a stupire tutti...",
+               "Natale...", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ToglitiQuelDannatoVestito(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Natale e' gia' passato... Togliti quel dannato vestito...",
+               "Natale...", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_Vacanza(HANDLE hDlg, NSString * nome, NSString * descrizione) {
+    MessageBox( hDlg,
+               descrizione.UTF8String,
+               nome.UTF8String,
+               MB_OK | MB_ICONINFORMATION);
+}
