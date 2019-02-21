@@ -46,196 +46,54 @@ void DescrizioneTipo(int f);
 # pragma argsused
 BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-		 char          buf[128];
-		 char 	  		tmp[128];
 		 FARPROC	  		lpproc;
-		 int				lasciaoraddoppia;
 
-	 if (message == WM_INITDIALOG) {
-		if (sesso == 'M') spostamento=0; else spostamento=100;
-		AggiornaTipa(hDlg);
-		tipahDlg=hDlg;
-		return(TRUE);
-		}
-
-	 else if (message == WM_COMMAND)
-	 {
-	switch (wParam)
-	{
-		 case 110:			// Cerca tipa
-			lpproc = MakeProcInstance(CercaTipa, hInst);
-			DialogBox(hInst,
-					MAKEINTRESOURCE(CERCATIPA + spostamento),
-					hDlg,
-					lpproc);
-			FreeProcInstance(lpproc);
-
-			AggiornaTipa(hDlg);
-		return(TRUE);
-
-		 case 111:			// Lascia tipa
-		if (Rapporti <= 0)  {
-			if (sesso == 'M')
-				MessageBox( hDlg,
-					 "Scusa, che ragazza avresti intenzione di lasciare ???",
-					"Lascia Tipa", MB_OK | MB_ICONINFORMATION);
-			else
-				MessageBox( hDlg,
-					 "Scusa, che tipo avresti intenzione di lasciare, visto che sei sola come un cane ???",
-					"Lascia Tipo", MB_OK | MB_ICONINFORMATION);
-			return(TRUE);
-			}
-
-
-		sprintf(tmp,"Sei proprio sicuro di voler lasciare %s ?",Nometipa);
-
-		if (sesso == 'M')
-			lasciaoraddoppia=MessageBox( hDlg,
-			  tmp,
-			  "Lascia tipa", MB_YESNO | MB_ICONQUESTION);
-		else
-			lasciaoraddoppia=MessageBox( hDlg,
-			  tmp,
-			  "Molla tipo", MB_YESNO | MB_ICONQUESTION);
-
-		if (lasciaoraddoppia == IDYES) {
-			if (sound_active) TabbozPlaySound(603);
-			Rapporti=0;
-
-			if ((FigTipa >= 79) && (sesso == 'M')) {
-				MessageBox( hDlg,
-				 "Appena vengono a sapere quello che hai fatto, i tuoi amici ti prendono a scarpate.\nQualcuno, piu' furbo di te, va a consolarla...",
-				"Idiota...", MB_OK | MB_ICONINFORMATION);
-				Reputazione-=8;
-				if (Reputazione < 0) Reputazione=0;
-				}
-
-			if ((FigTipa <= 40) && (sesso == 'M')) {
-				Reputazione+=4;
-				if (Reputazione > 100) Reputazione=100;
-				}
-
-			Evento(hDlg);
-			}
-		AggiornaTipa(hDlg);
-		return(TRUE);
-
-		 case 112:
-			if (Rapporti <= 0)  {
-				if (sesso == 'M')
-					MessageBox( hDlg,
-					 "Scusa, che ragazza vorresti chiamare ???",
-					 "Non sei molto intelligente...", MB_OK | MB_ICONINFORMATION);
-				else
-					MessageBox( hDlg,
-					 "Scusa, che ragazzo vorresti chiamare, visto che sei sola ???",
-					 "Non sei molto intelligente...", MB_OK | MB_ICONINFORMATION);
-				return(TRUE);
-			}
-
-			if ((Soldi <= 5) &&
-                ((AbbonamentData.creditorest < 2) &&
-                 (!CellularData.attivo)))
-            {
-				MessageBox( hDlg,
-				 """Sei fai ancora una telefonata, ti spezzo le gambe"", disse tuo padre con un accetta in mano...",
-				 "Non toccare quel telefono...", MB_OK | MB_ICONSTOP);
-			} else {
-				if (sound_active) TabbozPlaySound(602);
-				// 5 Maggio 1999 - Telefono di casa o telefonino ???
-
-				if ((AbbonamentData.creditorest >= 2) && CellularData.attivo)
-                    [Tabboz.global.abbonamento addebita: -2];
-                else {
-                    __attribute__((unused)) int x = [Tabboz.global.danaro paga:5];
-                }
+    if (message == WM_INITDIALOG) {
+        if (sesso == 'M') spostamento=0; else spostamento=100;
+        AggiornaTipa(hDlg);
+        tipahDlg=hDlg;
+        return(TRUE);
+    }
+    
+    else if (message == WM_COMMAND)
+    {
+        switch (wParam)
+        {
+            case 110:			// Cerca tipa
+                lpproc = MakeProcInstance(CercaTipa, hInst);
+                DialogBox(hInst,
+                          MAKEINTRESOURCE(CERCATIPA + spostamento),
+                          hDlg,
+                          lpproc);
+                FreeProcInstance(lpproc);
                 
-				#ifdef TABBOZ_DEBUG
-				sprintf(tmp,"tipa: Telefona alla tipa//o (%s)",MostraSoldi(5));
-				writelog(tmp);
-				#endif
-				if (Rapporti <= 60) Rapporti++;
-			}
-			AggiornaTipa(hDlg);
-			return(TRUE);
-
-
-		 case 113:
-			if (Rapporti <= 0)  {
-				if (sesso == 'M')
-					MessageBox( hDlg,
-					 "Scusa, con che tipa vorresti uscire ???",
-					 "Non sei molto intelligente...", MB_OK | MB_ICONINFORMATION);
-				else
-					MessageBox( hDlg,
-					 "Scusa, ma con chi vorresti uscire, ???",
-					 "Non sei molto intelligente...", MB_OK | MB_ICONINFORMATION);
-				return(TRUE);
-			}
-
-			if ((ScooterData.stato <= 0) && (sesso == 'M')) {
-				MessageBox( hDlg,
-				 "Finche' non comprerai lo scooter, non usciremo piu' insieme...",
-				 "Compra lo scooter", MB_OK | MB_ICONSTOP);
-				return(TRUE);
-			}
-
-			if ((ScooterData.attivita != 1) && (sesso == 'M')) {
-				sprintf(buf,"Finche' il tuo scooter restera' %s non potremo uscire insieme...",Tabboz.global.attivitaScooter.UTF8String);
-				MessageBox( hDlg, buf, "Risistema la scooter", MB_OK | MB_ICONINFORMATION);
-				return(TRUE);
-			}
-
-
-			if ((ScooterData.stato <= 35) && (sesso == 'M')) {
-				MessageBox( hDlg,
-				 "Finche' non riparerai lo scooter, non usciremo piu' insieme...",
-				 "Ripara lo scooter", MB_OK | MB_ICONSTOP);
-				return(TRUE);
-			}
-
-			if (![Tabboz.global.danaro paga:15]) {
-				if (sesso == 'M')
-					MessageBox( hDlg,
-					 "Se mi vuoi portare fuori, cerca di avere almeno un po' di soldi...",
-					 "Sei povero", MB_OK | MB_ICONSTOP);
-				else
-					MessageBox( hDlg,
-					 "Oh tipa... cioe' non posso pagare sempre tutto io, cioe' ohhhh...",
-					 "Che palle", MB_OK | MB_ICONSTOP);
-				return(TRUE);
-			}
-
-			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"tipa: Esci con la tipa/o (%s)",MostraSoldi(15));
-			writelog(tmp);
-			#endif
-
-			Rapporti+=5;
-			if (Rapporti > 100) Rapporti=100;
-
-			if ( FigTipa > Fama) Fama++;
-			if (Fama > 100) Fama=100;
-
-            [Tabboz.global.scooter consumaWithBenza:3];
-			
-			CalcolaVelocita(hDlg);
-
-			AggiornaTipa(hDlg);
-			return(TRUE);
-
-		 case IDCANCEL:
-		 case IDOK:
-			tipahDlg=0; // Non si sa' mai...
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		 default:
-			return(TRUE);
-	}
-	 }
-
-	 return(FALSE);
+                AggiornaTipa(hDlg);
+                return(TRUE);
+                
+            case 111:			// Lascia tipa
+                [Tabboz.global lasciaTipaWithHDlg:hDlg];
+                return(TRUE);
+                
+            case 112:
+                [Tabboz.global chiamaTipaWithHDlg:hDlg];
+                return(TRUE);
+                
+            case 113:
+                [Tabboz.global esciCollaTipaWithHDlg:hDlg];
+                return(TRUE);
+                
+            case IDCANCEL:
+            case IDOK:
+                tipahDlg = 0; // Non si sa' mai...
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
+                
+            default:
+                return(TRUE);
+        }
+    }
+    
+    return(FALSE);
 }
 
 
@@ -263,33 +121,12 @@ BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 			switch (wParam)
 			{
 			case 101:		// Ottima scelta...
-			  if (sesso == 'M')
-					sprintf(tmp,"Mentre sei appartato con la %s, arriva la tua ragazza, %s, ti tira uno schiaffo e ti lascia.\
-Capendo finalmente di che pasta sei fatto, anche la %s si allontana...",nomeTemp,Nometipa,nomeTemp);
-			  else
-					sprintf(tmp,"%s viene a sapere che di %s, gli spacca la faccia e ti molla...\
-Dopo questa tragica esperienza anche %s sparisce...",Nometipa,nomeTemp,nomeTemp);
-
-			  Rapporti=0;
-			  Reputazione-=8;
-			  if (Reputazione < 0) Reputazione=0;
-			  Fama-=4;
-			  if (Fama < 0) Fama=0;
-
-			  MessageBox( hDlg,
-				tmp ,
-				"La vita e' bella", MB_OK | MB_ICONSTOP);
-			  EndDialog(hDlg, TRUE);
-			  return(TRUE);
+                    [Tabboz.global entrambeWithHDlg:hDlg];
+                    return(TRUE);
 
 			case 102:	   // Preferisci quella nuova...
-                [Tabboz.global.tipa nuovaTipaWithNome:[NSString stringWithUTF8String:nomeTemp]
-                                             figosita:figTemp
-                                             rapporto:30+random(15)];
-				Fama+=FigTipa / 10; if (Fama > 100) Fama=100;
-				Reputazione+= FigTipa / 13; if (Reputazione > 100) Reputazione=100;
-				EndDialog(hDlg, TRUE);
-				return(TRUE);
+                    [Tabboz.global nuovaWithHDlg:hDlg];
+                    return(TRUE);
 
 			case IDCANCEL: // Resti con la tua vecchia ragazza, bravo...
 			default:
@@ -335,66 +172,22 @@ BOOL FAR PASCAL CercaTipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		return(TRUE);
 	}
 
-	 else if (message == WM_COMMAND)
-	 {
-		switch (wParam)
-		{
-		 case IDCANCEL:
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		 case 101:
-			// Calcola se ce la fa o meno con la tipa... ------------------------------------
-
-			if ( ((figTemp * 2) + random(50)) <= ( Fama + Reputazione + random(30)) )   {
-				// E' andata bene... ----------------------------------------------------
-
-				if (sesso == 'M')
-					MessageBox( hDlg,
-						"Con il tuo fascino nascosto da tabbozzo, seduci la tipa e ti ci metti insieme." ,
-						"E' andata bene !", MB_OK | MB_ICONINFORMATION);
-				else
-					MessageBox( hDlg,
-						"Ora non ti puoi piu' lamentare di essere sola..." ,
-						"Qualcono ti caga...", MB_OK | MB_ICONINFORMATION);
-
-				// ...ma comunque controlla che tu non abbia gia' una tipa -------------------------
-				if (Rapporti > 0) { // hai gia' una tipa..
-					FARPROC lpproc = MakeProcInstance(DueDonne, hInst);
-					DialogBox(hInst,
-					MAKEINTRESOURCE(92 + spostamento),
-					hDlg,
-					lpproc);
-				FreeProcInstance(lpproc);
-				} else { // bravo, no hai una tipa...
-                    [Tabboz.global.tipa nuovaTipaWithNome:[NSString stringWithUTF8String:nomeTemp]
-                                                 figosita:figTemp
-                                                 rapporto:30+random(15)];
-					Fama+=FigTipa / 10; if (Fama > 100) Fama=100;
-					Reputazione+= FigTipa / 13; if (Reputazione > 100) Reputazione=100;
-			}
-			} else {
-				FARPROC lpproc;
-
-				// 2 di picche... -------------------------------------------------------
-				if (sound_active) TabbozPlaySound(601);
-
-				lpproc = MakeProcInstance(DueDiPicche, hInst);
-				DialogBox(hInst,
-					MAKEINTRESOURCE(95),
-					hDlg,
-					lpproc);
-				FreeProcInstance(lpproc);
-
-			}
-			Evento(hDlg);
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		 default:
-			return(TRUE);
-		}
-	 }
+     else if (message == WM_COMMAND)
+     {
+         switch (wParam)
+         {
+             case IDCANCEL:
+                 EndDialog(hDlg, TRUE);
+                 return(TRUE);
+                 
+             case 101:
+                 [Tabboz.global provaciWithHDlg:hDlg];
+                 return(TRUE);
+                 
+             default:
+                 return(TRUE);
+         }
+     }
 
 	 return(FALSE);
 }
@@ -451,13 +244,7 @@ BOOL FAR PASCAL DueDiPicche(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	 char          tmp[1024];
 	 static int	  i;
 
-	 if (message == WM_INITDIALOG) {	// un giorno fortunato...
-		DDP++;				// log due di picche...
-		Reputazione-=2;                 // decremento reputazione
-		if (Reputazione < 0) Reputazione=0;
-
-		Fama-=2;			// decremento figosita'
-		if (Fama < 0) Fama=0;
+	 if (message == WM_INITDIALOG) {
 
 	// IN QUESTA PARTE C'ERA UN BUG CHE FACEVA CRASCIARE IL TABBOZ SIMULATOR...
 

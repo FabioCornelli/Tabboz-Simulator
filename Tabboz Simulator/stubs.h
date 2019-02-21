@@ -74,7 +74,7 @@ typedef struct TabbozFARPROC FARPROC;
 
 struct TabbozINTRESOURCE {
     int number;
-    char * n;
+    const char * n;
 };
 
 typedef struct TabbozINTRESOURCE INTRESOURCE;

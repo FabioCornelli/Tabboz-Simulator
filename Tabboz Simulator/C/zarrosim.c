@@ -742,7 +742,6 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
 	 char          buf[128];
 	 char          tmp[128];
-	 int		  		i;
 
 	 if (message == WM_INITDIALOG) {
 		sprintf(tmp, "%s", Andrea);
@@ -785,38 +784,24 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 			LoadString(hInst, 13, tmp, sizeof(tmp));  /* Dino... */
 			if (! strcmp(tmp,buf)) {
-                [Tabboz.global.danaro deposita:1000];
-				Reputazione=random(4);
-				Fama=random(40);
+                [Tabboz.global cheatDino];
 			}
 
 			LoadString(hInst, 14, tmp, sizeof(tmp));  /* Fratello di Dino... */
 			if (! strcmp(tmp,buf)) {
-				[Tabboz.global.danaro deposita:1000];
-				Reputazione=random(30);
-				Fama=random(5);
+                [Tabboz.global cheatFratelloDiDino];
 			}
 
 			if (! strcmp(Daniele,buf)) {	/* Murdock, ti regala una macchinina... */
-                [Tabboz.global.scooter regalaMacchinina];
-				Reputazione=100;
+                [Tabboz.global cheatDaniele];
 			}
 
 			if (! strcmp(Caccia,buf)) {	/* Caccia fa' aumentare i dindi... */
-				[Tabboz.global.danaro deposita:10000];
-				Fama=100;
+                [Tabboz.global cheatCaccia];
 			}
 
-
 			if (! strcmp(Andrea,buf)) {	/* Io porto la scuola e la tipa al 100% */
-				for (i=1;i<10;i++)
-					MaterieMem[i].xxx=10;
-				CalcolaStudio();
-				if ( Rapporti > 1 )
-					Rapporti=100;
-                [Tabboz.global.lavoro assumiWithPresso:1
-                                          impegnoDelta:90
-                                        stipendioDelta:4000];
+                [Tabboz.global cheatAndrea];
 			}
 
 
@@ -1414,73 +1399,7 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 void nomoney(HWND parent,int tipo)
 {
- char tmp[256];
- switch (tipo) {
-	case DISCO:
-		sprintf(tmp,"Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\n Un energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
-		MessageBox( parent, tmp,
-		  "Bella figura", MB_OK | MB_ICONSTOP);
-		if (Reputazione > 3 )
-			Reputazione-=1;
-		break;;
-	case VESTITI:
-		sprintf(tmp,"Con cosa avresti intenzione di pagare, stronzett%c ??? Caramelle ???",ao);
-		MessageBox( parent, tmp,
-		  "Bella figura", MB_OK | MB_ICONSTOP);
-		if (Fama > 12 )
-		   Fama-=3;
-		if (Reputazione > 4 )
-		   Reputazione-=2;
-		break;;
-	case PALESTRA:
-		if (sesso == 'M') {
-			MessageBox( parent,
-				"L' enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna e ti scaraventa fuori dalla palestra.",
-				  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-		} else {
-			MessageBox( parent,
-				"L' enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.",
-				  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-		}
-		if (Fama > 14 )
-			Fama-=4;	/* Ah,ah ! fino al 10 Jan 1999 c'era scrittto Reputazione-=4... */
-		if (Reputazione > 18 )
-			Reputazione-=4;
-		break;;
-	case SCOOTER:
-		if (sesso == 'M') {
-			MessageBox( parent,
-			  "L' enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall' officina.",
-			  "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-			if (Reputazione > 7 )
-				Reputazione-=5;
-			if (ScooterData.stato > 7 )
-				[Tabboz.global.scooter danneggia:5];
-		} else {
-			MessageBox( parent,
-			  "Con un sonoro calcio nel culo, vieni buttata fuori dall' officina.",
-			  "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-			if (Reputazione > 6 )
-				Reputazione-=4;
-			if (Fama > 3 )
-				Fama-=2;
-		}
-		break;;
-	case TABACCAIO:
-		sprintf(tmp,"Fai fuori dal mio locale, brut%c pezzente !, esclama il tabaccaio con un AK 47 in mano...",ao);
-		MessageBox( parent, tmp,
-		  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-		if (Fama > 2)
-			Fama-=1;
-		break;;
-	case CELLULRABBONAM:
-		sprintf(tmp,"Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
-		MessageBox( parent, tmp,
-		  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-		if (Fama > 2)
-			Fama-=1;
-		break;
-	}
+    [Tabboz.global noMoneyWithHDlg:parent tipo:tipo];
 }
 
 //*******************************************************************

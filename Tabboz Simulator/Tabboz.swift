@@ -13,7 +13,7 @@ class Tabboz : NSObject {
     
     @objc static private(set) var global = Tabboz()
 
-    @objc              var fama        : Int =         0
+                       var fama        : Int =         0
     @objc              var reputazione : Int =         0
     @objc              var fortuna     : Int =         0 /* Uguale a me...               */
     @objc private      var stato       : Int =       100
@@ -302,11 +302,391 @@ class Tabboz : NSObject {
         Evento(hDlg)
     }
     
+    // -
+    // Tipa
+    // -
+    
+    func lasciaTipa(hDlg: HANDLE) {
+        if tipa.rapporto <= 0  {
+            MessageBox_CheTipoAvrestiIntenzioneDiLasciare(hDlg)
+            return
+        }
+        
+        let lasciaoraddoppia = MessageBox_SeiSicuroDiVolerLasciare(hDlg, tipa.nome)
+        
+        if lasciaoraddoppia == IDYES {
+            if sound_active != 0 {
+                TabbozPlaySound(603)
+            }
+            
+            tipa.rapporto = 0
+            
+            if (tipa.figTipa >= 79) && (sesso == Int8("M")) {
+                MessageBox_PrendonoAScarpate(hDlg)
+                
+                reputazione -= 8
+                if reputazione < 0 {
+                    reputazione = 0
+                }
+            }
+            
+            if (tipa.figTipa <= 40) && (sesso == Int8("M")) {
+                reputazione += 4
+                
+                if reputazione > 100 {
+                  reputazione = 100
+                }
+            }
+            
+            Evento(hDlg);
+        }
+        
+        AggiornaTipa(hDlg);
+    }
+    
+    func chiamaTipa(hDlg: HANDLE) {
+        if tipa.rapporto <= 0  {
+            MessageBox_ChiVorrestiChiamare(hDlg)
+            return
+        }
+        
+        if (danaro.soldi <= 5) &&
+            ((abbonamento.creditorest < 2) && !cellulare.attivo)
+        {
+            MessageBox_SeFaiAncoraUnaTelefonataTiSpezzoLeGambe(hDlg)
+        } else {
+            if sound_active != 0 {
+                TabbozPlaySound(602)
+            }
+            
+            // 5 Maggio 1999 - Telefono di casa o telefonino ???
+            
+            if ((abbonamento.creditorest >= 2) && cellulare.attivo) {
+                abbonamento.addebita(-2)
+            }
+            else {
+                _ = danaro.paga(5)
+            }
+            
+            if tipa.rapporto <= 60 {
+                tipa.rapporto += 1
+            }
+        }
+        
+        AggiornaTipa(hDlg)
+    }
+    
+    func esciCollaTipa(hDlg: HANDLE) {
+        if (tipa.rapporto <= 0)  {
+            MessageBox_ConChiVorrestiUscire(hDlg)
+            return
+        }
+        
+        if (scooter.stato <= 0) && (sesso == Int8("M")) {
+            MessageBox_CompraLoScooter(hDlg)
+            return
+        }
+        
+        if (scooter.attivita != .funzionante) && (sesso == Int8("M"))  {
+            MessageBox_RisistemaScooter(hDlg, scooter.attivita.string)
+            return
+        }
+        
+        if (scooter.stato <= 35) && (sesso == Int8("M"))  {
+            MessageBox_RiparaLoScooter(hDlg)
+            return
+        }
+        
+        if (!danaro.paga(15)) {
+            MessageBox_NonPossoPagareTuttoIo(hDlg)
+            return
+        }
+        
+        tipa.rapporto += 5
+        
+        if tipa.rapporto > 100 {
+            tipa.rapporto = 100
+        }
+
+        if tipa.figTipa > fama {
+            fama += 1
+        }
+        
+        if fama > 100 {
+            fama = 100
+        }
+
+        scooter.consuma(benza: 3)
+        
+        CalcolaVelocita(hDlg);
+        AggiornaTipa(hDlg);
+    }
+    
+    func entrambe(hDlg: HANDLE) {
+        MessageBox_MentreSeiAppartatoTiTiraETiLascia(hDlg, tipa.nome, String(utf8String: figNomTemp))
+        
+        tipa.rapporto = 0
+        
+        reputazione -= 8
+        if reputazione < 0 {
+            reputazione = 0
+        }
+        
+        fama -= 4
+        if fama < 0 {
+            fama = 0
+        }
+        
+        EndDialog(hDlg, true)
+    }
+    
+    func nuova(hDlg: HANDLE) {
+        tipa.nuovaTipa(
+            nome: String(utf8String: figNomTemp)!,
+            figosita: Int(figTemp),
+            rapporto: 30 + tabboz_random(15)
+        )
+        
+        fama += tipa.figTipa / 10
+        if fama > 100 {
+            fama = 100
+        }
+        
+        reputazione += tipa.figTipa / 13
+        if reputazione > 100 {
+            reputazione = 100
+        }
+        
+        EndDialog(hDlg, true)
+    }
+    
+    func provaci(hDlg: HANDLE) {
+        // Calcola se ce la fa o meno con la tipa... ------------------------------------
+        
+        let puntiTipa = (tipa.figTipa * 2) + tabboz_random(50)
+        let puntiMiei = fama + reputazione + tabboz_random(30)
+        
+        if puntiTipa <= puntiMiei {
+            // E' andata bene... ----------------------------------------------------
+            
+            MessageBox_ConIlTuoFacinoSeduciLaTipa(hDlg)
+            
+            // ...ma comunque controlla che tu non abbia gia' una tipa -------------------------
+            
+            if tipa.rapporto > 0 {
+                // hai gia' una tipa..
+                LeDueDonne(hDlg: hDlg)
+            }
+            else {
+                // bravo, no hai una tipa...
+                tipa.nuovaTipa(nome: String(utf8String: figNomTemp)!,
+                               figosita: Int(figTemp),
+                               rapporto: 30 + tabboz_random(15))
+                
+                fama += tipa.figTipa / 10
+                if (fama > 100) { fama=100 }
+                
+                reputazione += tipa.figTipa / 13
+                if reputazione > 100 {
+                    reputazione = 100
+                }
+            }
+        }
+        else {
+            // 2 di picche... -------------------------------------------------------
+            
+                                    // un giorno fortunato...
+            
+            DDP += 1                // log due di picche...
+            
+            reputazione -= 2        // decremento reputazione
+            if reputazione < 0 {
+                reputazione = 0
+            }
+            
+            fama -= 2               // decremento figosita'
+            if fama < 0 {
+              fama=0
+            }
+            
+            if sound_active != 0 {
+                TabbozPlaySound(601)
+            }
+            
+            IlDueDiPicche(hDlg: hDlg)
+        }
+        
+        Evento(hDlg)
+        EndDialog(hDlg, true)
+    }
+    
+    // -
+    // Scuola
+    // -
+    
+    func studia(hDlg: HANDLE) {
+        if CheckVacanza(hDlg) {
+            if reputazione > 10 {    /* Studiare costa fatica...          */
+                reputazione -= 5     /* (oltre che Reputazione e Fama...) */
+            }
+            
+            if fama > 5 {
+                fama -= 1
+            }
+            
+            scuola.materie[Int(scelta)].xxx += 1
+            
+            if scuola.materie[Int(scelta)].xxx > 10 {
+              scuola.materie[Int(scelta)].xxx = 10
+            }
+            
+            Aggiorna(hDlg)
+            Evento(hDlg)
+        }
+    }
+    
+    func noMoney(hDlg parent: HANDLE, tipo: Int) {
+        switch (tipo) {
+            
+        case DISCO:
+            MessageBox_ButtafuoriTiDepositaInUnCassonetto(parent)
+            
+            if reputazione > 3 {
+                reputazione -= 1
+            }
+            
+            break
+            
+        case VESTITI:
+            MessageBox_ConCosaPaghi(parent)
+            
+            if fama > 12 {
+                fama -= 3
+            }
+            
+            if reputazione > 4 {
+                reputazione -= 2
+            }
+            
+            break
+            
+        case PALESTRA:
+            MessageBox_IstruttoreTiSuonaComeUnaZampogna(parent)
+            
+            if fama > 14 {
+                fama -= 4    /* Ah,ah ! fino al 10 Jan 1999 c'era scrittto Reputazione-=4... */
+            }
+            
+            if reputazione > 18 {
+                reputazione -= 4
+            }
+            
+            break
+            
+        case SCOOTER:
+            MessageBox_IlMeccanicoTiRiempieDiPugni(parent)
+            
+            if (sesso == Int8("M")) {
+                if reputazione > 7 {
+                    reputazione -= 5
+                }
+                
+                if scooter.stato > 7 {
+                    scooter.danneggia(5)
+                }
+            }
+            else {
+                if reputazione > 6 {
+                    reputazione -= 4
+                }
+                
+                if fama > 3 {
+                    fama -= 2
+                }
+            }
+            
+            break
+            
+        case TABACCAIO:
+            MessageBox_FuoriDalMioLocale(parent)
+            
+            if fama > 2 {
+                fama -= 1
+            }
+            
+            break
+            
+        case CELLULRABBONAM:
+            MessageBox_NonTiSeiAccortoDiNonAvareSoldi(parent)
+            
+            if (fama > 2) {
+                fama -= 1
+            }
+            
+            break
+            
+        default:
+            break
+        }
+    }
+    
+}
+
+func MetalloEMagutto(_ i: Int, hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(MostraMetallone(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Metalloni & Manovali".withCString { string in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(Int32(i), string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc)
+}
+
+func LeDueDonne(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(DueDonne(a, b, c, d)) },
+        hDlg
+    )
+    
+    let dialog = sesso == Int8("M") ? 92 : 192
+    
+    "Due Donne".withCString { string in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(Int32(dialog), string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc)
+}
+
+func IlDueDiPicche(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(DueDiPicche(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Due Di Picche".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(95, string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc)
 }
 
 @objc extension Tabboz {
     
-    var scadenzaPalestraString : String { return palestra.scadenzaString            }
+    @objc(fama) var fama_:       Int    { return fama                               }
+    
+    var scadenzaPalestraString:  String { return palestra.scadenzaString            }
     var calendarioString:        String { return calendario.giornoSettimana.string
                                                + " "
                                                + calendario.giornoDellAnno.string   }

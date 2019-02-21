@@ -268,3 +268,174 @@ void MessageBox_Vacanza(HANDLE hDlg, NSString * nome, NSString * descrizione) {
                nome.UTF8String,
                MB_OK | MB_ICONINFORMATION);
 }
+
+void MessageBox_CheTipoAvrestiIntenzioneDiLasciare(HANDLE hDlg) {
+    if (sesso == 'M')
+        MessageBox( hDlg,
+                   "Scusa, che ragazza avresti intenzione di lasciare ???",
+                   "Lascia Tipa", MB_OK | MB_ICONINFORMATION);
+    else
+        MessageBox( hDlg,
+                   "Scusa, che tipo avresti intenzione di lasciare, visto che sei sola come un cane ???",
+                   "Lascia Tipo", MB_OK | MB_ICONINFORMATION);
+}
+
+int MessageBox_SeiSicuroDiVolerLasciare(HANDLE hDlg, NSString * tipa) {
+    sprintf(tmp,"Sei proprio sicuro di voler lasciare %s ?", tipa.UTF8String);
+    
+    if (sesso == 'M')
+        return MessageBox( hDlg,
+                          tmp,
+                          "Lascia tipa", MB_YESNO | MB_ICONQUESTION);
+    else
+        return MessageBox( hDlg,
+                          tmp,
+                          "Molla tipo", MB_YESNO | MB_ICONQUESTION);
+    
+}
+
+void MessageBox_PrendonoAScarpate(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Appena vengono a sapere quello che hai fatto, i tuoi amici ti prendono a scarpate.\nQualcuno, piu' furbo di te, va a consolarla...",
+               "Idiota...", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ChiVorrestiChiamare(HANDLE hDlg) {
+    if (sesso == 'M')
+        MessageBox( hDlg,
+                   "Scusa, che ragazza vorresti chiamare ???",
+                   "Non sei molto intelligente...", MB_OK | MB_ICONINFORMATION);
+    else
+        MessageBox( hDlg,
+                   "Scusa, che ragazzo vorresti chiamare, visto che sei sola ???",
+                   "Non sei molto intelligente...", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_SeFaiAncoraUnaTelefonataTiSpezzoLeGambe(HANDLE hDlg) {
+    MessageBox( hDlg,
+               """Sei fai ancora una telefonata, ti spezzo le gambe"", disse tuo padre con un accetta in mano...",
+               "Non toccare quel telefono...", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_ConChiVorrestiUscire(HANDLE hDlg) {
+    if (sesso == 'M')
+        MessageBox( hDlg,
+                   "Scusa, con che tipa vorresti uscire ???",
+                   "Non sei molto intelligente...", MB_OK | MB_ICONINFORMATION);
+    else
+        MessageBox( hDlg,
+                   "Scusa, ma con chi vorresti uscire, ???",
+                   "Non sei molto intelligente...", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_CompraLoScooter(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Finche' non comprerai lo scooter, non usciremo piu' insieme...",
+               "Compra lo scooter", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_RisistemaScooter(HANDLE hDlg, NSString * attivita) {
+    sprintf(tmp,"Finche' il tuo scooter restera' %s non potremo uscire insieme...",attivita.UTF8String);
+    MessageBox( hDlg, tmp, "Risistema la scooter", MB_OK | MB_ICONINFORMATION);
+}
+
+
+void MessageBox_RiparaLoScooter(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Finche' non riparerai lo scooter, non usciremo piu' insieme...",
+               "Ripara lo scooter", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_NonPossoPagareTuttoIo(HANDLE hDlg) {
+    if (sesso == 'M')
+        MessageBox( hDlg,
+                   "Se mi vuoi portare fuori, cerca di avere almeno un po' di soldi...",
+                   "Sei povero", MB_OK | MB_ICONSTOP);
+    else
+        MessageBox( hDlg,
+                   "Oh tipa... cioe' non posso pagare sempre tutto io, cioe' ohhhh...",
+                   "Che palle", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_MentreSeiAppartatoTiTiraETiLascia(HANDLE hDlg, NSString * vecchiaTipa, NSString * nuovaTipa) {
+    if (sesso == 'M')
+        sprintf(tmp,
+                "Mentre sei appartato con la %s, arriva la tua ragazza, %s, ti tira uno schiaffo e ti lascia.\
+                Capendo finalmente di che pasta sei fatto, anche la %s si allontana...",
+                nuovaTipa.UTF8String,
+                vecchiaTipa.UTF8String,
+                nuovaTipa.UTF8String);
+    else
+        sprintf(tmp,
+                "%s viene a sapere che di %s, gli spacca la faccia e ti molla...\
+                Dopo questa tragica esperienza anche %s sparisce...",
+                vecchiaTipa.UTF8String,
+                nuovaTipa.UTF8String,
+                nuovaTipa.UTF8String);
+    
+    MessageBox( hDlg,
+               tmp ,
+               "La vita e' bella", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_ConIlTuoFacinoSeduciLaTipa(HANDLE hDlg) {
+    if (sesso == 'M')
+        MessageBox( hDlg,
+                   "Con il tuo fascino nascosto da tabbozzo, seduci la tipa e ti ci metti insieme." ,
+                   "E' andata bene !", MB_OK | MB_ICONINFORMATION);
+    else
+        MessageBox( hDlg,
+                   "Ora non ti puoi piu' lamentare di essere sola..." ,
+                   "Qualcono ti caga...", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ButtafuoriTiDepositaInUnCassonetto(HANDLE hDlg) {
+    sprintf(tmp,"Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\n Un energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
+    MessageBox( hDlg, tmp,
+               "Bella figura", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_ConCosaPaghi(HANDLE hDlg) {
+    sprintf(tmp,"Con cosa avresti intenzione di pagare, stronzett%c ??? Caramelle ???",ao);
+    MessageBox( hDlg, tmp,
+               "Bella figura", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_IstruttoreTiSuonaComeUnaZampogna(HANDLE hDlg) {
+    if (sesso == 'M') {
+        MessageBox( hDlg,
+                   "L' enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna e ti scaraventa fuori dalla palestra.",
+                   "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+    }
+    else {
+        MessageBox( hDlg,
+                   "L' enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.",
+                   "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+    }
+    
+}
+
+void MessageBox_IlMeccanicoTiRiempieDiPugni(HANDLE hDlg) {
+    if (sesso == 'M') {
+        MessageBox( hDlg,
+                   "L' enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall' officina.",
+                   "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
+    }
+    else {
+        MessageBox( hDlg,
+                   "Con un sonoro calcio nel culo, vieni buttata fuori dall' officina.",
+                   "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
+    }
+}
+
+void MessageBox_FuoriDalMioLocale(HANDLE hDlg) {
+    sprintf(tmp,"Fai fuori dal mio locale, brut%c pezzente !, esclama il tabaccaio con un AK 47 in mano...",ao);
+    MessageBox( hDlg, tmp,
+               "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_NonTiSeiAccortoDiNonAvareSoldi(HANDLE hDlg) {
+    sprintf(tmp,"Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
+    MessageBox( hDlg, tmp,
+               "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+}

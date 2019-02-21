@@ -141,21 +141,8 @@ BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 
 		case 103:                    /* Studia */
-			if (! CheckVacanza(hDlg)) {
-				if (Reputazione > 10 )	/* Studiare costa fatica... */
-					Reputazione-=5; /* (oltre che Reputazione e Fama...) */
-
-				if (Fama > 5 )
-					Fama-=1;
-
-				MaterieMem[scelta].xxx+=1;
-				if (MaterieMem[scelta].xxx > 10) MaterieMem[scelta].xxx=10;
-
-				Aggiorna(hDlg);
-				Evento(hDlg);
-				}
-
-			return(TRUE);
+            [Tabboz.global studiaWithHDlg:hDlg];
+            return(TRUE);
 
 		 case 110:
 		 case 111:

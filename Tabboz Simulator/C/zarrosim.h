@@ -289,10 +289,14 @@ BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam)
 BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL DueDiPicche(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
 extern  void  TabbozAddKey(char *key,char *v);
 extern  char  *TabbozReadKey(char *key,char *buf);
 extern  void  TabbozPlaySound(int number);
+
+BOOL CheckVacanza(HWND parent);
+void Aggiorna(HWND parent);
 
 #ifdef PROMPT_ACTIVE
 extern  BOOL FAR PASCAL        Prompt(HWND hDlg, WORD message, WORD wParam, LONG lParam); 	/* iniziato il 15 Maggio 1998 */
