@@ -45,18 +45,17 @@ BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		scelta=1;
 		SendMessage(GetDlgItem(hDlg, 110), BM_SETCHECK, TRUE, 0L); /* Seleziona agraria */
 
-		sprintf(tmp, "Corrompi il prof di %s",MaterieMem[1].nome.UTF8String);
+		sprintf(tmp, "Corrompi il prof di %s",[Tabboz.global nomeDellaMateria:scelta].UTF8String);
 		SetDlgItemText(hDlg, 101, tmp);
 		if (sesso == 'M')
-			sprintf(tmp, "Minaccia il prof di %s",MaterieMem[1].nome.UTF8String);
+			sprintf(tmp, "Minaccia il prof di %s",[Tabboz.global nomeDellaMateria:scelta].UTF8String);
 		else
-			sprintf(tmp, "Seduci il prof di %s",MaterieMem[1].nome.UTF8String);
+			sprintf(tmp, "Seduci il prof di %s",[Tabboz.global nomeDellaMateria:scelta].UTF8String);
 
 		SetDlgItemText(hDlg, 102, tmp);
-		sprintf(tmp, "Studia %s",MaterieMem[1].nome.UTF8String);
+		sprintf(tmp, "Studia %s",[Tabboz.global nomeDellaMateria:scelta].UTF8String);
 		SetDlgItemText(hDlg, 103, tmp);
 
-      CalcolaStudio();
 		ScriviVoti(hDlg);  /* Scrive i voti, soldi, reputazione e studio nelle apposite caselle */
 		return(TRUE);
 
@@ -85,13 +84,13 @@ BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 		 case 117:
 		 case 118:
 			scelta=wParam-109;
-			sprintf(tmp, "Corrompi il prof di %s",MaterieMem[scelta].nome.UTF8String); SetDlgItemText(hDlg, 101, tmp);
+            sprintf(tmp, "Corrompi il prof di %s",[Tabboz.global nomeDellaMateria:scelta].UTF8String); SetDlgItemText(hDlg, 101, tmp);
 			if (sesso == 'M')
-				sprintf(tmp, "Minaccia il prof di %s",MaterieMem[scelta].nome.UTF8String);
+				sprintf(tmp, "Minaccia il prof di %s",[Tabboz.global nomeDellaMateria:scelta].UTF8String);
 			else
-				sprintf(tmp, "Seduci il prof di %s",MaterieMem[scelta].nome.UTF8String);
+				sprintf(tmp, "Seduci il prof di %s",[Tabboz.global nomeDellaMateria:scelta].UTF8String);
 			SetDlgItemText(hDlg, 102, tmp);
-			sprintf(tmp, "Studia %s",MaterieMem[scelta].nome.UTF8String);
+			sprintf(tmp, "Studia %s",[Tabboz.global nomeDellaMateria:scelta].UTF8String);
             SetDlgItemText(hDlg, 103, tmp);
 			return(TRUE);
 
@@ -113,47 +112,38 @@ BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 void
 ScriviVoti(HWND parent)
 {
-int i;
-char tmp[128];
-	ScuolaRedraw=0;
-
-   SetDlgItemText(parent, 104, MostraSoldi(Soldi));
-   sprintf(tmp, "%d/100", Reputazione);
-   SetDlgItemText(parent, 105, tmp);
-   sprintf(tmp, "%ld/100", Studio);
-   SetDlgItemText(parent, 106, tmp);
-
-   for (i=1;i<10;i++) {
-	sprintf(tmp, "%ld",MaterieMem[i].xxx);
-	SetDlgItemText(parent, i + 119, tmp);
-   }
+    int i;
+    char tmp[128];
+    ScuolaRedraw=0;
+    
+    SetDlgItemText(parent, 104, MostraSoldi(Soldi));
+    sprintf(tmp, "%d/100", Reputazione);
+    SetDlgItemText(parent, 105, tmp);
+    sprintf(tmp, "%d/100", Studio);
+    SetDlgItemText(parent, 106, tmp);
+    
+    for (i=1;i<10;i++) {
+        sprintf(tmp, "%ld",[Tabboz.global votoDellaMateria:i]);
+        SetDlgItemText(parent, i + 119, tmp);
+    }
 }
-
-/* Calcola Studio */
-void
-CalcolaStudio()
-{
-    [Tabboz.global.scuola calcolaStudio];
-}
-
 
 /* Aggiorna */
 void
 Aggiorna(HWND parent)
 {
-char tmp[128];
-
-  CalcolaStudio();
-
-  if (ScuolaRedraw == 1) ScriviVoti(parent);
-
-  SetDlgItemText(parent, 104, MostraSoldi(Soldi));
-  sprintf(tmp, "%d/100", Reputazione);
-  SetDlgItemText(parent, 105, tmp);
-  sprintf(tmp, "%ld/100", Studio);
-  SetDlgItemText(parent, 106, tmp);
-
-  sprintf(tmp, "%ld",MaterieMem[scelta].xxx);
-  SetDlgItemText(parent, scelta + 119, tmp);
-
+    char tmp[128];
+    
+    if (ScuolaRedraw == 1) ScriviVoti(parent);
+    
+    SetDlgItemText(parent, 104, MostraSoldi(Soldi));
+    
+    sprintf(tmp, "%d/100", Reputazione);
+    SetDlgItemText(parent, 105, tmp);
+    
+    sprintf(tmp, "%d/100", Studio);
+    SetDlgItemText(parent, 106, tmp);
+    
+    sprintf(tmp, "%ld",[Tabboz.global votoDellaMateria:scelta]);
+    SetDlgItemText(parent, scelta + 119, tmp);
 }

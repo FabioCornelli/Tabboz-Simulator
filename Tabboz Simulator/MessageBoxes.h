@@ -28,7 +28,7 @@ void MessageBox_MetaPaghetta(HANDLE hDlg);
 void MessageBox_LaTipaTiMolla(HANDLE hDlg, int scusa);
 void MessageBox_ScooterRidottoAdUnAmmassoDiRottami(HANDLE hDlg);
 void MessageBox_SeiFortunato(HANDLE hDlg, int caso);
-void MessageBox_Scuola(HANDLE hDlg, int caso, int materia);
+void MessageBox_Scuola(HANDLE hDlg, int caso, const char * materia);
 int  MessageBox_QualcunoTiCaga(HANDLE hDlg, int nome, int figTemp);
 void MessageBox_RifiutiUnaFigona(HANDLE hDlg);
 int  MessageBox_MiAmi(HANDLE hDlg);
@@ -99,3 +99,7 @@ void MessageBox_ComeFaiAParcheggiareLoScooterVistoCheE(HANDLE hDlg, const char *
 void MessageBox_ComeFaiAFarBenzinaAlloScooterSeNonLoHai(HANDLE hDlg);
 void MessageBox_AlDistributorePuoiFareUnMinimoDi(HANDLE hDlg, const char * soldi);
 void MessageBox_FaiBenzaERiempi(HANDLE hDlg, const char * soldi);
+void MessageBox_VaBeneAPaghettaInPiu(HANDLE hDlg, const char * soldi);
+void MessageBox_VediDiScordarteloDovraPassareMoltoTempo(HANDLE hDlg);
+void MessageBox_QuandoAndraiMeglioAScuola(HANDLE hDlg);
+void MessageBox_NonPensarciNeancheLontanamente(HANDLE hDlg);

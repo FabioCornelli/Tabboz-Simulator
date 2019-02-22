@@ -166,9 +166,9 @@ void MessageBox_SeiFortunato(HANDLE hDlg, int caso) {
                (LPSTR)tmp1,tmp, MB_OK | MB_ICONSTOP);
 }
 
-void MessageBox_Scuola(HANDLE hDlg, int caso, int materia) {
+void MessageBox_Scuola(HANDLE hDlg, int caso, const char * materia) {
     LoadString(hInst, (1000 + caso), (LPSTR)tmp, 255);
-    strcat(tmp,MaterieMem[materia].nome.UTF8String);
+    strcat(tmp, materia);
     MessageBox( hDlg,
                (LPSTR)tmp,
                "Scuola...", MB_OK | MB_ICONSTOP);
@@ -692,4 +692,29 @@ void MessageBox_FaiBenzaERiempi(HANDLE hDlg, const char * soldi) {
     MessageBox(hDlg,
                tmp,
                "Fai benza", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_VaBeneAPaghettaInPiu(HANDLE hDlg, const char * soldi) {
+    sprintf(tmp,"Va bene... ti daremo %s di paghetta in piu'...", soldi);
+    MessageBox( hDlg, tmp,
+               "Aumento paghetta !", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_VediDiScordarteloDovraPassareMoltoTempo(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Vedi di scordartelo... Dovra' passare molto tempo prima che ti venga aumentata la paghetta...",
+               "Errore irrecuperabile", MB_OK | MB_ICONHAND);
+}
+
+void MessageBox_QuandoAndraiMeglioAScuola(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Quando andrai meglio a scuola, forse...",
+               "Errore irrecuperabile", MB_OK | MB_ICONHAND);
+}
+
+void MessageBox_NonPensarciNeancheLontanamente(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Non pensarci neanche lontanamente...",
+               "Errore irrecuperabile", MB_OK | MB_ICONHAND);
+    
 }

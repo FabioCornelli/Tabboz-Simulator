@@ -8,10 +8,10 @@
 
 import Foundation
 
-class Materie : NSObject {
+class Materie {
     
-    @objc var xxx:      Int    // [future espansioni]
-    @objc var nome:     String // nome dello scooter
+    var xxx:      Int    // [future espansioni]
+    var nome:     String // nome dello scooter
     
     init(
         _ xxx:      Int,
@@ -19,35 +19,35 @@ class Materie : NSObject {
     ) {
         self.xxx      = xxx
         self.nome     = nome
-        super.init()
     }
     
 }
 
-class Scuole : NSObject {
+class Scuole {
     
-    @objc private(set) var studio: Int  = 0 // Quanto vai bene a scuola (1 - 100)
-
-    @objc func calcolaStudio() {
+    /// Quanto vai bene a scuola (1 - 100)
+    var studio: Int {
+        
+        // Calcola Studio
+        
         var i2 = 0
         
         for materia in materie {
             i2 += materia.xxx
         }
         
-        studio = (i2 * 10) / 9
+        return (i2 * 10) / 9
     }
-    
+
+
     /// Azzera le materie...
-    @objc func azzeraMaterie() {
-        studio = 0
-        
+    func azzeraMaterie() {
         for materia in materie {
             materia.xxx = 0
         }
     }
 
-    @objc var promosso: Bool {
+    var promosso: Bool {
         var k = 0
         
         for i in 1 ..< 10 {
@@ -58,7 +58,7 @@ class Scuole : NSObject {
         return k > 4
     }
     
-    @objc let materie = [
+    let materie = [
         Materie(0, "---"                  ),
         Materie(0, "Agraria"              ),
         Materie(0, "Fisica"               ),

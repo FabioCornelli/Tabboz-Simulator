@@ -34,7 +34,6 @@ import Foundation
     
     func cheatAndrea() {
         scuola.materie.dropFirst().forEach { $0.xxx = 10 }
-        CalcolaStudio()
         
         if tipa.rapporto > 1 {
             tipa.rapporto = 100

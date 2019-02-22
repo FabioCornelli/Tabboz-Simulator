@@ -76,7 +76,7 @@ import Foundation
                     danaro.deposita(200)
                 }
                 
-                LaPagella(hDlg: hInstance)
+                FaiLaPagella(hDlg: hInstance)
             }
             
             if calendario.giornoDellAnno.giorno > 15 {
@@ -206,19 +206,3 @@ struct Vacanza {
     }
     
 }
-
-func LaPagella(hDlg: HANDLE) {
-    let lpproc = MakeProcInstance(
-        { (a, b, c, d) in ObjCBool(MostraPagella(a, b, c, d)) },
-        hDlg
-    )
-    
-    _ = "La Pagella".withCString({ (string) in
-        DialogBox(hInst,
-                  MAKEINTRESOURCE_Real(110, string),
-                  hDlg,
-                  lpproc);
-        FreeProcInstance(lpproc);
-    })
-}
-

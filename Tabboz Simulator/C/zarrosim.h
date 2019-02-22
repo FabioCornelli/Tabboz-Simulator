@@ -189,7 +189,7 @@ extern  int 	 ScuolaRedraw;       // E' necessario ridisegnare la scuola ???
 #define Fortuna           Tabboz.global.fortuna              // Fortuna del tabbozzo
 #define Stato             Tabboz.global.stato                // Quanto stai male ??? (16 Marzo 1999 - 0.8.3pr )
 
-#define Studio            Tabboz.global.scuola.studio        // Quanto vai bene a scuola (1 - 100)
+#define Studio            Tabboz.global.studio        // Quanto vai bene a scuola (1 - 100)
 #define Soldi             Tabboz.global.soldi         // Long...per forza! lo zarro ha tanti soldi...
 extern  u_long  Paghetta;       // Paghetta Settimanale...
 extern  char    Nome[30];
@@ -312,7 +312,6 @@ extern  BOOL FAR PASCAL        Prompt(HWND hDlg, WORD message, WORD wParam, LONG
 
 
 extern  void FineProgramma(char *caller);
-extern  void CalcolaStudio(void);
 extern  char *MostraSoldi(u_long i);
 
 extern  char   *RRKey(char *xKey);		// 29 Novembre 1998
@@ -326,7 +325,6 @@ extern  void	closelog(void);
 extern  void    nomoney(HWND parent,int tipo);
 extern  void    AggiornaPrincipale(HANDLE);
 extern  void    Giorno(HANDLE hInstance);
-extern  void    CalcolaStudio(void);
 extern  void    CalcolaVelocita(HANDLE hDlg);
 extern  void    InitTabboz(void);
 extern  void    AggiornaTipa(HWND hDlg);

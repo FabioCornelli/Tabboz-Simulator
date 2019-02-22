@@ -1187,60 +1187,41 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 # pragma argsused
 BOOL FAR PASCAL Famiglia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-	 char        tmp[1024];
-
-	 if (message == WM_INITDIALOG) {
-		sprintf(tmp,"Papa', mi dai %s ?",MostraSoldi(100));
-		SetDlgItemText(hDlg, 103, tmp);
-		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-		SetDlgItemText(hDlg, 105, MostraSoldi(Paghetta));
-		return(TRUE);
-	} else if (message == WM_COMMAND) {
-		switch (LOWORD(wParam))
-		{
-			case 101:                   /* Chiedi aumento paghetta */
-				if (Studio > 40) {
-					if (((Studio - Paghetta +  Fortuna) > ( 75 + random(50))) & (Paghetta < 96) ) {
-						sprintf(tmp,"Va bene... ti daremo %s di paghetta in piu'...",MostraSoldi(5));
-						MessageBox( hDlg, tmp,
-						  "Aumento paghetta !", MB_OK | MB_ICONINFORMATION);
-						Paghetta+=5;
-						Evento(hDlg);
-					} else {
-						MessageBox( hDlg,
-						"Vedi di scordartelo... Dovra' passare molto tempo prima che ti venga aumentata la paghetta...",
-							"Errore irrecuperabile", MB_OK | MB_ICONHAND);
-						Evento(hDlg);
-					}
-				} else {
-					MessageBox( hDlg,
-						"Quando andrai meglio a scuola, forse...",
-						"Errore irrecuperabile", MB_OK | MB_ICONHAND);
-			}
-			SetDlgItemText(hDlg, 105, MostraSoldi(Paghetta));
-			return(TRUE);
-
-		 case 102:                   // Chiedi paghetta extra
-                [Tabboz.global chiediPaghettaExtra:hDlg];
-			return(TRUE);
-
-		 case 103:                   // Papa, mi dai 100000 lire ?
-			if (sound_active) TabbozPlaySound(801);
-				MessageBox( hDlg,
-					"Non pensarci neanche lontanamente...",
-					"Errore irrecuperabile", MB_OK | MB_ICONHAND);
-				Evento(hDlg);
-				return(TRUE);
-
-		 case IDOK:
-		 case IDCANCEL:
-				EndDialog(hDlg, TRUE);
-				return(TRUE);
-
-		 default:
-				return(TRUE);
-		 }
-	 }
+    char        tmp[1024];
+    
+    if (message == WM_INITDIALOG) {
+        sprintf(tmp,"Papa', mi dai %s ?",MostraSoldi(100));
+        SetDlgItemText(hDlg, 103, tmp);
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        SetDlgItemText(hDlg, 105, MostraSoldi(Paghetta));
+        return(TRUE);
+    }
+    else {
+         if (message == WM_COMMAND) {
+             switch (LOWORD(wParam))
+             {
+                 case 101:                   // Chiedi aumento paghetta
+                     [Tabboz.global chiediAumentoPaghettaWithHDlg:hDlg];
+                     return(TRUE);
+                     
+                 case 102:                   // Chiedi paghetta extra
+                     [Tabboz.global chiediPaghettaExtra:hDlg];
+                     return(TRUE);
+                     
+                 case 103:                   // Papa, mi dai 100000 lire ?
+                     [Tabboz.global papaMiDai100KLireWithHDlg:hDlg];
+                     return(TRUE);
+                     
+                 case IDOK:
+                 case IDCANCEL:
+                     EndDialog(hDlg, TRUE);
+                     return(TRUE);
+                     
+                 default:
+                     return(TRUE);
+             }
+         }
+     }
 
 	 return(FALSE);
 }
@@ -1335,7 +1316,7 @@ char tmp[128];
 	 sprintf(tmp, "%d/100", Reputazione);	// Reputazione
 	 SetDlgItemText(parent, 152, tmp);
 
-	 sprintf(tmp, "%ld/100", Studio);		// Profitto scolastico
+	 sprintf(tmp, "%d/100", Studio);		// Profitto scolastico
 	 SetDlgItemText(parent, 153, tmp);
 
 	 if ( Rapporti != 0 ) {

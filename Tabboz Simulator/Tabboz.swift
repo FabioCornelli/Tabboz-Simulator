@@ -22,7 +22,7 @@ class Tabboz : NSObject {
     
           private(set) var danaro      = Danaro(quanti: 5)
           private(set) var calendario  = Calendario()
-    @objc private(set) var scuola      = Scuole()
+          private(set) var scuola      = Scuole()
           private(set) var vestiti     = Vestiario()
           private(set) var tipa        = Fiddhiola()
     @objc private(set) var tabacchi    = Tabacchi()
@@ -41,25 +41,6 @@ class Tabboz : NSObject {
 }
 
 @objc extension Tabboz {
-    
-    func chiediPaghettaExtra(_ hDlg: HANDLE) {
-        if (scuola.studio >= 40) {
-            if attesa == 0 {
-                attesa = ATTESAMAX
-                danaro.deposita(10)
-                Evento(hDlg)
-            }
-            else {
-                MessageBox_NonPuoiContinuamenteChiedereSoldi(hDlg)
-                Evento(hDlg)
-            }
-        }
-        else {
-            MessageBox_QuandoAndraiMeglioAScuolaPotrai(hDlg)
-        }
-
-        SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)))
-    }
     
     // -
     // Palestra
@@ -1260,6 +1241,60 @@ class Tabboz : NSObject {
         Evento(hDlg)
         AggiornaLavoro(hDlg)
     }
+
+    // -
+    // Famiglia
+    // -
+
+    func chiediPaghettaExtra(_ hDlg: HANDLE) {
+        if (scuola.studio >= 40) {
+            if attesa == 0 {
+                attesa = ATTESAMAX
+                danaro.deposita(10)
+                Evento(hDlg)
+            }
+            else {
+                MessageBox_NonPuoiContinuamenteChiedereSoldi(hDlg)
+                Evento(hDlg)
+            }
+        }
+        else {
+            MessageBox_QuandoAndraiMeglioAScuolaPotrai(hDlg)
+        }
+        
+        SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)))
+    }
+
+    func chiediAumentoPaghetta(hDlg: HANDLE) {
+        if (scuola.studio > 40) {
+            if ((scuola.studio - Int(Paghetta) + fortuna) >
+                ( 75 + tabboz_random(50)))
+                && (Int(Paghetta) < 96)
+            {
+                MessageBox_VaBeneAPaghettaInPiu(hDlg, MostraSoldi(5))
+                Paghetta += 5
+                Evento(hDlg)
+            } else {
+                MessageBox_VediDiScordarteloDovraPassareMoltoTempo(hDlg)
+                Evento(hDlg)
+            }
+        }
+        else {
+            MessageBox_QuandoAndraiMeglioAScuola(hDlg)
+        }
+        
+        SetDlgItemText(hDlg, 105, MostraSoldi(Paghetta));
+    }
+    
+    func papaMiDai100KLire(hDlg: HANDLE) {
+        if sound_active != 0 {
+            TabbozPlaySound(801)
+        }
+        
+        MessageBox_NonPensarciNeancheLontanamente(hDlg)
+        
+        Evento(hDlg)
+    }
     
     // -
     // Compagnia
@@ -1660,6 +1695,23 @@ func FaiRiparaScooter(hDlg: HANDLE) {
     FreeProcInstance(lpproc)
 }
 
+func FaiLaPagella(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(MostraPagella(a, b, c, d)) },
+        hDlg
+    )
+    
+    "La Pagella".withCString { (string) in
+        _ =  DialogBox(hInst,
+                       MAKEINTRESOURCE_Real(110, string),
+                       hDlg,
+                       lpproc)
+    }
+    
+    FreeProcInstance(lpproc);
+}
+
+
 @objc extension Tabboz {
     
     @objc(fama)        var X:    Int    { return fama                               }
@@ -1674,6 +1726,8 @@ func FaiRiparaScooter(hDlg: HANDLE) {
     var nomeTipa:                String { return tipa.nome                          }
     var figTipa:                 Int32  { return Int32(tipa.figTipa)                }
     var rapporto:                Int32  { return Int32(tipa.rapporto)               }
+    var studio:                  Int32  { return Int32(scuola.studio)               }
+    var promosso:                Bool   { return scuola.promosso                    }
     var scadenzaPalestraString:  String { return palestra.scadenzaString            }
     var calendarioString:        String { return calendario.giornoSettimana.string
                                                + " "
@@ -1720,6 +1774,23 @@ func FaiRiparaScooter(hDlg: HANDLE) {
             .enumerated()
             .map { ($0.offset, $0.element.1) }
             .forEach(iteration)
+    }
+
+    func enumerateMaterie(_ iteration: (Int, String) -> Void) {
+        scuola
+            .materie
+            .dropFirst()
+            .enumerated()
+            .map { ($0.offset, $0.element.nome) }
+            .forEach(iteration)
+    }
+
+    func nomeDellaMateria(_ materia: Int) -> String {
+        return scuola.materie[materia].nome
+    }
+
+    func votoDellaMateria(_ materia: Int) -> Int {
+        return scuola.materie[materia].xxx
     }
 
 }

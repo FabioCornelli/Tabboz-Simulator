@@ -236,13 +236,12 @@ import Foundation
         
         let i = tabboz_random(9) + 1; // Fino alla versione 0.5 c'era scritto 10 ed era un bug...
         
-        MessageBox_Scuola(hDlg, Int32(caso), Int32(i))
+        MessageBox_Scuola(hDlg, Int32(caso), scuola.materie[i].nome)
         
         if scuola.materie[i].xxx >= 2 {
             scuola.materie[i].xxx -= 2
         }
         
-        CalcolaStudio();
         ScuolaRedraw = 1 /* E' necessario ridisegnare la finestra della scuola... */
     }
     

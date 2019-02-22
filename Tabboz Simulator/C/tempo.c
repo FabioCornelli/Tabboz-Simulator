@@ -54,56 +54,51 @@ void	Giorno(HANDLE hInstance)
 BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
 	 char          tmp[1024];
-	 int i,k;
 
 	 if (message == WM_INITDIALOG) {
-	k=0;
-	for (i=1;i<10;i++) {
-		if (MaterieMem[i].xxx < 6) k++;		/* k = materie insuff o grav. insuf. */
-		if (MaterieMem[i].xxx < 4) k++;		/* k = materie insuff o grav. insuf. */
-		sprintf(tmp, "%ld",MaterieMem[i].xxx);
-		SetDlgItemText(hDlg, i + 119, tmp);
-	}
+         [Tabboz.global enumerateMaterie:^(NSInteger i, NSString * _Nonnull nome) {
+             SetDlgItemText(hDlg, (int)i + 119, nome.UTF8String);
+         }];
 
-	if (Fama > 75)					// Condotta... + un e' figo, + sembra un bravo ragazzo...
-		SetDlgItemText(hDlg, 129, "8");
-	else
-    	SetDlgItemText(hDlg, 129, "9");
+         if (Fama > 75)					// Condotta... + un e' figo, + sembra un bravo ragazzo...
+             SetDlgItemText(hDlg, 129, "8");
+         else
+             SetDlgItemText(hDlg, 129, "9");
+         
+         if (Tabboz.global.promosso) {
+             if (sound_active) TabbozPlaySound(401);
+             sprintf(tmp, "NON ammess%c",ao);		/* bocciata/o */
+#ifdef TABBOZ_DEBUG
+             writelog("giorno: Pagella... Bocciato !!!");
+#endif
+             
+         } else {
+             sprintf(tmp, "ammess%c",ao);		/* promossa/o */
+#ifdef TABBOZ_DEBUG
+             writelog("giorno: Pagella... Promosso...");
+#endif
+         }
+         
+         SetDlgItemText(hDlg, 119, tmp);
+         return(TRUE);
+     }
 
-	if (Tabboz.global.scuola.promosso) {
-		if (sound_active) TabbozPlaySound(401);
-		sprintf(tmp, "NON ammess%c",ao);		/* bocciata/o */
-		#ifdef TABBOZ_DEBUG
-		writelog("giorno: Pagella... Bocciato !!!");
-		#endif
-
-	} else {
-		sprintf(tmp, "ammess%c",ao);		/* promossa/o */
-		#ifdef TABBOZ_DEBUG
-		writelog("giorno: Pagella... Promosso...");
-		#endif
-	}
-
-	SetDlgItemText(hDlg, 119, tmp);
-	return(TRUE);
-	}
-
-    else if (message == WM_COMMAND)
-    {
-	switch (wParam)
-	{
-	    case IDCANCEL:
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
-
-	    case IDOK:
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
-
-	    default:
-		return(TRUE);
-	}
-    }
+     else if (message == WM_COMMAND)
+     {
+         switch (wParam)
+         {
+             case IDCANCEL:
+                 EndDialog(hDlg, TRUE);
+                 return(TRUE);
+                 
+             case IDOK:
+                 EndDialog(hDlg, TRUE);
+                 return(TRUE);
+                 
+             default:
+                 return(TRUE);
+         }
+     }
 
     return(FALSE);
 }
