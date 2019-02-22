@@ -1431,6 +1431,10 @@ class Tabboz : NSObject {
         SetDlgItemText(hDlg, 104, "\(reputazione)/100")
     }
     
+    // ------------------------------------------------------------------------------------------
+    //  Controlla se e' un giorno di vacanza...
+    // ------------------------------------------------------------------------------------------
+    
     func cellularVacanza(hDlg: HWND) -> Bool {
         if calendario.vacanza != 2 {
             return true
@@ -1441,7 +1445,6 @@ class Tabboz : NSObject {
                        "Telefonino",
                        MB_OK | MB_ICONINFORMATION)
             return false
-            
         }
     }
     

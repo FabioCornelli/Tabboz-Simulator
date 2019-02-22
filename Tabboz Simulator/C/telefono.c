@@ -31,22 +31,6 @@
 __attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 // ------------------------------------------------------------------------------------------
-//  Controlla se e' un giorno di vacanza...
-// ------------------------------------------------------------------------------------------
-
-static int CellularVacanza(HWND hDlg)
-{
-	if ( x_vacanza != 2 )
-		return(0);
-	else {
-		MessageBox( hDlg,
-		  "Stranamente, in un giorno di vacanza, il negozio e' chiuso...",
-				"Telefonino", MB_OK | MB_ICONINFORMATION);
-		return(-1);
-	}
-}
-
-// ------------------------------------------------------------------------------------------
 //  Compra Cellulare
 // ------------------------------------------------------------------------------------------
 
