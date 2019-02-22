@@ -8,11 +8,11 @@
 
 import Foundation
 
-class Vestiario : NSObject {
+class Vestiario {
     
-    @objc              var giubbotto : Int = 0
-    @objc              var pantaloni : Int = 0
-    @objc private(set) var scarpe    : Int = 0
+                 var giubbotto : Int = 0
+                 var pantaloni : Int = 0
+    private(set) var scarpe    : Int = 0
     
     @objc func indossa(_ vestito: Int) {
         /* 25 Febbraio 1999 */

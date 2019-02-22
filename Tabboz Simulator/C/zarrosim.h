@@ -211,9 +211,9 @@ extern  int 	 antifurto;
 extern  int		 Tempo_trascorso_dal_pestaggio;
 extern  int	 	 current_testa;                               // Grado di abbronzatura del tabbozzo
 
-#define current_gibbotto  Tabboz.global.vestiti.giubbotto     // Vestiti attuali del tabbozzo...
-#define current_pantaloni Tabboz.global.vestiti.pantaloni
-#define current_scarpe    Tabboz.global.vestiti.scarpe
+#define current_gibbotto  Tabboz.global.giubbotto     // Vestiti attuali del tabbozzo...
+#define current_pantaloni Tabboz.global.pantaloni
+#define current_scarpe    Tabboz.global.scarpe
 
 #define current_tipa      Tabboz.global.tipa.currentTipa
 extern  int  	 sound_active;

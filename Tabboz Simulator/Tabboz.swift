@@ -23,7 +23,7 @@ class Tabboz : NSObject {
           private(set) var danaro      = Danaro(quanti: 5)
           private(set) var calendario  = Calendario()
     @objc private(set) var scuola      = Scuole()
-    @objc private(set) var vestiti     = Vestiario()
+          private(set) var vestiti     = Vestiario()
     @objc private(set) var tipa        = Fiddhiola()
     @objc private(set) var tabacchi    = Tabacchi()
           private      var palestra    = Palestra()
@@ -1619,6 +1619,9 @@ func FaiRiparaScooter(hDlg: HANDLE) {
     
     var soldi:                   Int    { return danaro.soldi                       }
     var vacanza:                 Int32  { return calendario.vacanza                 }
+    var giubbotto:               Int32  { return Int32(vestiti.giubbotto)           }
+    var pantaloni:               Int32  { return Int32(vestiti.pantaloni)           }
+    var scarpe:                  Int32  { return Int32(vestiti.scarpe)              }    
     var scadenzaPalestraString:  String { return palestra.scadenzaString            }
     var calendarioString:        String { return calendario.giornoSettimana.string
                                                + " "
