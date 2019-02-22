@@ -460,6 +460,17 @@ class Tabboz : NSObject {
         EndDialog(hDlg, true)
     }
     
+    func CalcolaVelocita(_ hDlg: HANDLE) {
+        if scooter.attivitaCalcolata != .funzionante {
+            MessageBox(
+                hDlg,
+                "Il tuo scooter e' \(scooter.attivitaCalcolata.string).",
+                "Attenzione",
+                MB_OK | MB_ICONINFORMATION
+            )
+        }
+    }
+    
     // -
     // Vestiti
     // -
@@ -1741,12 +1752,8 @@ func FaiLaPagella(hDlg: HANDLE) {
                                                + 6070                               }
     var nomeScooter:             String { return scooter.nome                       }
     var attivitaScooter:         String { return scooter.attivita.string            }
-    var speedString:             String { return scooter.speedString                }
-    var marmittaString:          String { return scooter.scooter.marmitta.string    }
-    var carburatoreString:       String { return scooter.scooter.cc.string          }
-    var ccString:                String { return scooter.scooter.carburatore.string }
-    var filtroString:            String { return scooter.scooter.filtro.string      }
-
+    var benzinaString:           String { return scooter.benzinaString              }
+    
     static let palestraCostoLampada = 14
     
     static func palestraCostoAbbonamento(_ a: AbbonamentiPalestra) -> Int {
@@ -1794,4 +1801,12 @@ func FaiLaPagella(hDlg: HANDLE) {
         return scuola.materie[materia].xxx
     }
 
+}
+
+class ScooterData : NSObject { }
+
+@objc extension ScooterData {
+    static var stato:    Int               { return Tabboz.global.scooter.stato    }
+    static var attivita: Motorino.Attivita { return Tabboz.global.scooter.attivita }
+    static var prezzo:   Int               { return Tabboz.global.scooter.prezzo   }
 }

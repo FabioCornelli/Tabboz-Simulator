@@ -290,6 +290,11 @@ extension NEWSTSCOOTER.Filtro {
 
 @objc extension NEWSTSCOOTER {
     
+    var marmittaString:          String { return marmitta.string    }
+    var carburatoreString:       String { return cc.string          }
+    var ccString:                String { return carburatore.string }
+    var filtroString:            String { return filtro.string      }
+
     static let scooter = [
         NEWSTSCOOTER(  0, .standard,   ._12_10, ._50cc,   .standard,    0, "Nessuno scooter",            0),
         NEWSTSCOOTER( 65, .standard,   ._12_10, ._50cc,   .standard, 2498, "Magutty Firecow",            5),

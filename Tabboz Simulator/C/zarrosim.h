@@ -142,8 +142,6 @@ ATTESAMAX   		= 5,
 typedef unsigned long   u_long;	// 28 Novembre 1998
 
 
-#define ScooterData Tabboz.global.scooter
-
 #define ScooterMem  NEWSTSCOOTER.scooter
 
 #define MaterieMem  Tabboz.global.scuola.materie

@@ -45,8 +45,6 @@ extern void SaveFileDlg(HWND hwnd);
 static void SalvaTutto(void);
 static void CaricaTutto(void);
 
-#define ScooterData Tabboz.global.scooter
-
 // PRIMA LE VARIABILI GENERIKE...
 
 int    cheat;
