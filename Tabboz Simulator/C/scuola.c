@@ -31,7 +31,6 @@ __attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (An
 
 void ScriviVoti(HWND parent);
 void Aggiorna(HWND parent);
-BOOL CheckVacanza(HWND parent);
 
 /********************************************************************/
 /* Scuola...							    */
@@ -41,7 +40,6 @@ BOOL CheckVacanza(HWND parent);
 BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
     char          tmp[128];
-    int		  i,i2;
 
     if (message == WM_INITDIALOG) {
 		scelta=1;
@@ -66,79 +64,12 @@ BOOL FAR PASCAL Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	switch (wParam)
 	{
 		case 101:                    /* Corrompi i professori */
-			if (! CheckVacanza(hDlg)) {
-				i=30 + (random(30) * 2); /* 21 Apr 1998 - I valori dei soldi e' meglio che siano sempre pari, in modo da facilitare la divisione x gli euro... */
-				sprintf(tmp,"Ma... forse per %s potrei dimenticare i tuoi ultimi compiti in classe...",MostraSoldi(i) );
-				i2=MessageBox( hDlg, tmp,
-					  "Corrompi i professori", MB_YESNO | MB_ICONQUESTION);
-
-				if (i2 == IDYES) {
-					if ([Tabboz.global.danaro paga:i]) {
-						 #ifdef TABBOZ_DEBUG
-						 sprintf(tmp,"scuola: Corrompi un professore per %s",MostraSoldi(i));
-						 writelog(tmp);
-						 #endif
-						 MaterieMem[scelta].xxx+=3;
-						 if (MaterieMem[scelta].xxx > 10 )
-						MaterieMem[scelta].xxx=10;
-					} else {
-						 if (MaterieMem[scelta].xxx < 2 )
-						MaterieMem[scelta].xxx-=2;
-						 MessageBox( hDlg,
-				"Cosa ??? Prima cerchi di corrompermi, poi si scopre che non hai abbastanza soldi !!!",
-				  "Errore critico", MB_OK | MB_ICONSTOP);
-					}
-				}
-
-				Evento(hDlg);
-				Aggiorna(hDlg);
-			}
+            [Tabboz.global corrompiIProfessoriWithHDlg:hDlg];
 			return(TRUE);
 
 		case 102:                    /* Minaccia-Seduci i professori */
-			if (! CheckVacanza(hDlg)) {
-				if (sesso == 'M') { // Maschietto - minaccia prof.
-					if ((Reputazione >= 30) || (random(10) < 1)) {
-						MaterieMem[scelta].xxx+=2;
-						if (MaterieMem[scelta].xxx > 10) MaterieMem[scelta].xxx=10;
-					} else {
-						if (sound_active) TabbozPlaySound(402);
-						MessageBox( hDlg,
-					"Cosa ??? Credi di farmi paura piccolo pezzettino di letame vestito da zarro... Deve ancora nasce chi puo' minacciarmi...",
-					  "Bella figura", MB_OK | MB_ICONINFORMATION);
-						if (Reputazione > 3 )
-							Reputazione-=2;
-
-						if (MaterieMem[scelta].xxx > 2 )
-							MaterieMem[scelta].xxx-=1;
-					}
-				} else { // Femminuccia - seduci prof.
-					if ((Fama >= 50) || (random(10) < 2)) {
-						MaterieMem[scelta].xxx+=2;
-						if (MaterieMem[scelta].xxx > 10) MaterieMem[scelta].xxx=10;
-					} else {
-						if (sound_active) TabbozPlaySound(402);
-						MessageBox( hDlg,
-							"Infastidito dalla tua presenza, il prof ti manda via a calci.",
-							"Bella figura", MB_OK | MB_ICONINFORMATION);
-						if (Reputazione > 3 )
-							Reputazione-=2;
-
-						if (MaterieMem[scelta].xxx > 2 )
-							MaterieMem[scelta].xxx-=1;
-					}
-				}
-
-
-
-
-				Aggiorna(hDlg);
-				Evento(hDlg);
-				}
-
-			return(TRUE);
-
-
+            [Tabboz.global minacciaIProfessoriWithHDlg:hDlg];
+            return(TRUE);
 
 		case 103:                    /* Studia */
             [Tabboz.global studiaWithHDlg:hDlg];
@@ -225,16 +156,4 @@ char tmp[128];
   sprintf(tmp, "%ld",MaterieMem[scelta].xxx);
   SetDlgItemText(parent, scelta + 119, tmp);
 
-}
-
-BOOL
-CheckVacanza(HWND parent)
-{
-	if ( x_vacanza != 0 ) {
-		MessageBox( parent,
-			"Non puoi andare a scuola in un giorno di vacanza !",
-				"Scuola", MB_OK | MB_ICONINFORMATION);
-		return(TRUE);
-	} else
-		return(FALSE);
 }

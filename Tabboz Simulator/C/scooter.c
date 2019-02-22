@@ -665,68 +665,12 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
     {
 	switch (wParam)
 	{
-	    case 101:                   /* Compra Scooter Malagutty	  */
+	    case 101:           /* Compra Scooter Malagutty	  */
 	    case 102:			/* Compra Scooter di altre marche */
-		scelta = -1;
-		lpproc = MakeProcInstance(AcquistaScooter, hInst);
-		DialogBox(hInst,
-			MAKEINTRESOURCE(wParam - 101 + 78),
-			hDlg,
-			lpproc);
-		FreeProcInstance(lpproc);
-		if (scelta != -1) {
-			if (ScooterData.stato != -1) {
-				sprintf(tmp,"Per il tuo vecchio scooter da rottamare ti diamo %s di supervalutazione...",MostraSoldi(1000));
-				MessageBox( hDlg,
-				  tmp,
-				  "Incentivi", MB_OK | MB_ICONINFORMATION);
-                [Tabboz.global.danaro deposita:1000];
-				#ifdef TABBOZ_DEBUG
-				sprintf(tmp,"scooter: Imcentivo rottamazione %s",MostraSoldi(1000));
-				writelog(tmp);
-				#endif
-
-                [Tabboz.global.scooter distruggi];
-            }
-            
-			if (![Tabboz.global.danaro paga:ScooterMem[scelta].prezzo]) {
-				MessageBox( hDlg,
-				  "Ti piacerebbe comprare lo scooter, vero ?\nPurtroppo, non hai abbastanza soldi...",
-				  "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-				if (Reputazione > 3 )
-					 Reputazione-=1;
-			} else {
-				#ifdef TABBOZ_DEBUG
-				sprintf(tmp,"scooter: Acquista uno scooter per %s",MostraSoldi(ScooterMem[scelta].prezzo));
-				writelog(tmp);
-				#endif
-
-                [Tabboz.global.scooter compraScooter:scelta];
-                
-				MessageBox( hDlg,
-				  "Fai un giro del quartiere per farti vedere con lo scooter nuovo...",
-				  "Lo scooter nuovo", MB_OK | MB_ICONINFORMATION);
-                                Reputazione+=4;
-				if (Reputazione > 100) Reputazione=100;
-			}
-			Evento(hDlg);
-		}
-		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-		return(TRUE);
+            [Tabboz.global compraScooterWithMarca:wParam - 101 hDlg:hInst];
+            return(TRUE);
 
 	    case 103:
-		if (ScooterData.stato != -1) {
-			lpproc = MakeProcInstance(VendiScooter, hInst);
-				 DialogBox(hInst,
-				 MAKEINTRESOURCE(VENDISCOOTER),
-				 hDlg,
-				 lpproc);
-			FreeProcInstance(lpproc);
-		} else MessageBox( hDlg,
-			  "Scusa, ma quale scooter avresti intenzione di vendere visto che non ne hai neanche uno ???",
-			  "Vendi lo scooter", MB_OK | MB_ICONQUESTION);
-
-		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 		return(TRUE);
 
 	    case IDCANCEL:

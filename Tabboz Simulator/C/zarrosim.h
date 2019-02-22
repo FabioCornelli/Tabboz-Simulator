@@ -142,7 +142,6 @@ ATTESAMAX   		= 5,
 typedef unsigned long   u_long;	// 28 Novembre 1998
 
 
-
 #define ScooterData Tabboz.global.scooter
 
 #define ScooterMem  NEWSTSCOOTER.scooter
@@ -284,18 +283,22 @@ extern  BOOL FAR PASCAL        Spegnimi(HWND hDlg, WORD message, WORD wParam, LO
 extern  BOOL FAR PASCAL        Network(HWND hDlg, WORD message, WORD wParam, LONG lParam); 	/* 25 Giugno 1998 */
 extern  BOOL FAR PASCAL	       MostraSalutieBaci(HWND hDlg, WORD message, WORD wParam, LONG lParam); /* 4 Gennaio 1999 */
 extern  BOOL FAR PASCAL        Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam); 	/* 31 Marzo 1999 */
+
 BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL DueDiPicche(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL ElencoDitte(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL CercaLavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
 extern  void  TabbozAddKey(char *key,char *v);
 extern  char  *TabbozReadKey(char *key,char *buf);
 extern  void  TabbozPlaySound(int number);
 
-BOOL CheckVacanza(HWND parent);
 void Aggiorna(HWND parent);
 
 #ifdef PROMPT_ACTIVE
@@ -322,5 +325,26 @@ extern  void    CalcolaStudio(void);
 extern  void    CalcolaVelocita(HANDLE hDlg);
 extern  void    InitTabboz(void);
 extern  void    AggiornaTipa(HWND hDlg);
-extern  void    EventiPalestra(HANDLE hInstance);
-extern void     AggiornaPalestra(HWND parent);
+extern  void    AggiornaPalestra(HWND parent);
+extern  void    AggiornaLavoro(HWND hDlg);
+extern  int     GiornoDiLavoro(HWND hDlg, const char *s);
+
+// Numero di ditte
+#define NUM_DITTE 8
+
+extern int      punti_scheda;
+
+extern char     Risposte1[3];
+extern char     Risposte2[3];
+extern char     Risposte3[3];
+
+static char *   Risposte_1 = Risposte1;
+static char *   Risposte_2 = Risposte2;
+static char *   Risposte_3 = Risposte3;
+
+extern int      scheda;    /* numero scheda del quiz ( 0 - 9 ) */
+extern int      accetto;
+
+extern int      Rcheck;
+extern int      Lcheck;
+

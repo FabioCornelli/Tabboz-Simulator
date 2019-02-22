@@ -412,7 +412,6 @@ void MessageBox_IstruttoreTiSuonaComeUnaZampogna(HANDLE hDlg) {
                    "L' enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.",
                    "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
     }
-    
 }
 
 void MessageBox_IlMeccanicoTiRiempieDiPugni(HANDLE hDlg) {
@@ -438,4 +437,162 @@ void MessageBox_NonTiSeiAccortoDiNonAvareSoldi(HANDLE hDlg) {
     sprintf(tmp,"Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
     MessageBox( hDlg, tmp,
                "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_TroviICancelliInrimediabilmenteChiusi(HANDLE hDlg) {
+    sprintf(tmp,"Arrivat%c davanti ai cancelli della ditta li trovi inrimediabilmente chiusi...",ao);
+    MessageBox( hDlg, tmp, "Cerca Lavoro", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ForseNonTiRicordiCheHaiGiaUnLavoro(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Forse non ti ricordi che hai gia' un lavoro...",
+               "Cerca Lavoro", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_AlloraSparisci(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Allora sparisci...",
+               "Cerca Lavoro", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_PercheDovremmoAssumereChiNonSaMettereCrocette(HANDLE hDlg) {
+    if (sesso == 'M')
+        MessageBox( hDlg, "Mi spieghi perche' dovremmo assumere qualcuno che non e' neanche in grado di mettere delle crocette su un foglio ???", "Sei un po' stupido...", MB_OK | MB_ICONQUESTION);
+    else
+        MessageBox( hDlg, "Signorina,mi spieghi perche' dovremmo assumere qualcuno che non e' neanche in grado di mettere delle crocette su un foglio ???", "Sei un po' stupida...", MB_OK | MB_ICONQUESTION);
+}
+
+void MessageBox_SeiStatoAssunto(HANDLE hDlg, NSString * nome) {
+    if (sesso == 'M')
+        sprintf(tmp, "SEI STATO ASSUNTO ! Ora sei un felice dipendente della %s !", nome.UTF8String);
+    else
+        sprintf(tmp, "SEI STATO ASSUNTA ! Ora sei una felice dipendente della %s !", nome.UTF8String);
+    
+    MessageBox( hDlg, tmp, "Hai trovato lavoro !", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_NonSeiRiuscitoASuperareIlTest(HANDLE hDlg) {
+    if (sesso == 'M')
+        MessageBox( hDlg,
+                   "Mi dispiace ragazzo, ma non sei riuscito a superare il test... Ora puoi anche portare la tua brutta faccia fuori dal mio ufficio, prima che ti faccia buttare fuori a calci... Grazie e arrivederci...",
+                   "Cerca Lavoro", MB_OK | MB_ICONINFORMATION);
+    else
+        MessageBox( hDlg,
+                   "Mi dispiace signorina, ma non e' riuscito a superare il test... Se ne vada immediatamente, grazie...",
+                   "Cerca Lavoro", MB_OK | MB_ICONINFORMATION);
+}
+
+int MessageBox_VuoiDareLeDimissioni(HANDLE hDlg, NSString * ditta) {    
+    sprintf(tmp,"Sei proprio sicur%c di voler dare le dimissioni dalla %s ?",ao,LavoroMem[numeroditta].nome.UTF8String);
+    return MessageBox( hDlg,
+                      tmp,
+                      "Licenziati", MB_YESNO | MB_ICONQUESTION);
+}
+
+void MessageBox_ForsePotremmoDartiQualcosina(HANDLE hDlg) {
+    sprintf(tmp,"Forse per questa volta potremmo darti qualcosina in piu'...");
+    MessageBox( hDlg, tmp,
+               "Chiedi aumento salario", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_VediDiScordartelo(HANDLE hDlg) {
+    sprintf(tmp,"Forse per questa volta potremmo darti qualcosina in piu'...");
+    MessageBox( hDlg, tmp,
+               "Chiedi aumento salario", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_EventiPalestra(HANDLE hDlg, int evento) {
+    LoadString(hInst, (1100 + evento), (LPSTR)tmp, 255);
+    MessageBox( hDlg,
+               (LPSTR)tmp,
+               "Palestra...", MB_OK | MB_ICONSTOP);
+}
+
+int MessageBox_PerTantoPotreiDimenticare(HANDLE hDlg, int i) {
+    sprintf(tmp,"Ma... forse per %s potrei dimenticare i tuoi ultimi compiti in classe...", MostraSoldi(i) );
+    return MessageBox( hDlg, tmp,
+                  "Corrompi i professori", MB_YESNO | MB_ICONQUESTION);
+
+}
+
+void MessageBox_ConQualeScooterVorrestiGarggiare(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Con quale scooter vorresti gareggiare, visto che non lo possiedi ?",
+               "Gareggia con lo scooter", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_PurtroppoNonPuoiGareggiareVistoCheLoScooterE(HANDLE hDlg, NSString * attivita) {
+    sprintf(tmp, "Purtroppo non pui gareggiare visto che il tuo scooter e' %s.", attivita.UTF8String);
+    MessageBox(hDlg, tmp, "Gareggia con lo scooter", MB_OK | MB_ICONINFORMATION);
+}
+
+int MessageBox_AccettiLaSfidaDi(HANDLE hDlg, NSString * scooter) {
+    sprintf(tmp,"Accetti la sfida con un tabbozzo che ha un %s ?", scooter.UTF8String);
+    return MessageBox( hDlg,
+                      tmp,
+                      "Gareggia con lo scooter", MB_YESNO | MB_ICONQUESTION);
+}
+
+void MessageBox_DopoPochiMetriSiVedeLInferiorita(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Dopo pochi metri si vede l' inferiorita' del tuo scooter...",
+               "Hai perso", MB_OK | MB_ICONSTOP);
+
+}
+
+void MessageBox_BruciInPartenza(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Con il tuo scooter, bruci l' avversario in partenza...",
+               "Hai vinto", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ConLaScarsaReputazioneTuttiTrovanoDiMeglio(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Con la scarsa reputazione che hai, tutti trovano qualcosa di meglio da fare piuttosto che venire.",
+               "Chiama la Compagnia", MB_OK | MB_ICONSTOP);
+    
+}
+
+void MessageBox_ChiTiHaPicchiatoNonSiFaraVedere(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Dopo aver visto i tuoi amici, chi ti ha picchiato non si fara' piu' vedere in giro x un bel pezzo...",
+               "Chiama la Compagnia", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_AncheITuiAmiciVengonoScacagnati(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Anche i tuoi amici, al gran completo, vengono sacagnati di botte da chi ti aveva picchiato, accorgendosi cosi' che non sei solo tu ad essere una chiavica, ma lo sono anche loro...",
+               "Chiama la Compagnia", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_VistoCheNonCeNessunoTuttiSeNeVanno(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Visto che non c'e' nessuno da minacciare, tutti se ne vanno avviliti...",
+               "Chiama la Compagnia (perche'?)", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_PerIlTuoVecchioScooterTiDiamoSupervalutazione(HANDLE hDlg, const char * soldi) {
+    sprintf(tmp,"Per il tuo vecchio scooter da rottamare ti diamo %s di supervalutazione...", soldi);
+    MessageBox( hDlg,
+               tmp,
+               "Incentivi", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_TiPiacerebbeComprareLoScooter(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Ti piacerebbe comprare lo scooter, vero ?\nPurtroppo, non hai abbastanza soldi...",
+               "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
+}
+
+void MessageBox_FaiUnGiroPerFartiVedere(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Fai un giro del quartiere per farti vedere con lo scooter nuovo...",
+               "Lo scooter nuovo", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_MaQualeScooterVendi(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Scusa, ma quale scooter avresti intenzione di vendere visto che non ne hai neanche uno ???",
+               "Vendi lo scooter", MB_OK | MB_ICONQUESTION);
 }

@@ -14,7 +14,7 @@ class Tabboz : NSObject {
     @objc static private(set) var global = Tabboz()
 
                        var fama        : Int =         0
-    @objc              var reputazione : Int =         0
+                       var reputazione : Int =         0
     @objc              var fortuna     : Int =         0 /* Uguale a me...               */
     @objc private      var stato       : Int =       100
     
@@ -99,7 +99,7 @@ class Tabboz : NSObject {
                 fama += 1
             }
             
-            EventiPalestra(hDlg)
+            eventiPalestra(hDlg)
             AggiornaPalestra(hDlg)
         }
     }
@@ -137,6 +137,24 @@ class Tabboz : NSObject {
         }
         
         AggiornaPalestra(hDlg)
+    }
+    
+    func eventiPalestra(_ hDlg: HANDLE) {
+        /********************************************************************/
+        /* EVENTI PALESTRA - 14 Luglio 1998                                 */
+        /********************************************************************/
+        
+        let i = tabboz_random(29 + (fortuna / 2))
+        
+        if (i > 9) {
+            return    /* eventi: 0 - 10) */
+        }
+        
+        MessageBox_EventiPalestra(hDlg, Int32(i))
+        
+        if reputazione > 10 {
+            reputazione -= 4
+        }
     }
     
     // -
@@ -197,6 +215,51 @@ class Tabboz : NSObject {
         return fortunaDelTipo > fortunaMia
     }
 
+    func compraScooter(marca: Int, hDlg: HANDLE) {
+        scelta = -1
+        
+        FaiAquistaScooter(marca: Int32(marca), hDlg: hDlg)
+        
+        if (scelta != -1) {
+            if (scooter.stato != -1) {
+                MessageBox_PerIlTuoVecchioScooterTiDiamoSupervalutazione(hDlg, MostraSoldi(1000))
+                danaro.deposita(1000)
+                scooter.distruggi()
+            }
+            
+            if !danaro.paga(NEWSTSCOOTER.scooter[Int(scelta)].prezzo) {
+                MessageBox_TiPiacerebbeComprareLoScooter(hDlg)
+                if reputazione > 3 {
+                    reputazione-=1;
+                }
+            } else {
+                scooter.compraScooter(Int(scelta))
+                
+                MessageBox_FaiUnGiroPerFartiVedere(hDlg)
+                
+                reputazione += 4
+                if reputazione > 100 {
+                    reputazione = 100
+                    
+                }
+            }
+            Evento(hDlg);
+        }
+        
+        SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)));
+    }
+    
+    func vendiScooter(hDlg: HANDLE) {
+        if scooter.stato != -1 {
+            FaiVendiScooter(hDlg: hDlg)
+        }
+        else {
+            MessageBox_MaQualeScooterVendi(hDlg)
+        }
+        
+        SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)))
+    }
+    
     // -
     // Vestiti
     // -
@@ -524,6 +587,98 @@ class Tabboz : NSObject {
     // Scuola
     // -
     
+    func corrompiIProfessori(hDlg: HANDLE) {
+        if !CheckVacanza(hDlg) {
+            let i = 30 + (tabboz_random(30) * 2); /* 21 Apr 1998 - I valori dei soldi e' meglio che siano sempre pari, in modo da facilitare la divisione x gli euro... */
+            
+            let i2 = MessageBox_PerTantoPotreiDimenticare(hDlg, Int32(i))
+            
+            if (i2 == IDYES) {
+                if danaro.paga(i) {
+                    scuola.materie[Int(scelta)].xxx += 3
+                    
+                    if scuola.materie[Int(scelta)].xxx > 10 {
+                        scuola.materie[Int(scelta)].xxx = 10
+                    }
+                }
+                else {
+                    if scuola.materie[Int(scelta)].xxx < 2 {
+                        scuola.materie[Int(scelta)].xxx -= 2
+                    }
+                    
+                    MessageBox( hDlg,
+                    "Cosa ??? Prima cerchi di corrompermi, poi si scopre che non hai abbastanza soldi !!!",
+                    "Errore critico", MB_OK | MB_ICONSTOP);
+                }
+            }
+
+            Evento(hDlg);
+            Aggiorna(hDlg);
+        }
+    }
+    
+    func minacciaIProfessori(hDlg: HANDLE) {
+        if !CheckVacanza(hDlg) {
+            if sesso == Int8("M") {
+                // Maschietto - minaccia prof.
+                
+                if (reputazione >= 30) || (tabboz_random(10) < 1) {
+                    scuola.materie[Int(scelta)].xxx += 2
+                    if (scuola.materie[Int(scelta)].xxx > 10) {
+                        scuola.materie[Int(scelta)].xxx = 10
+                    }
+                }
+                else {
+                    if sound_active != 0 {
+                        TabbozPlaySound(402)
+                    }
+                    
+                    MessageBox( hDlg,
+                    "Cosa ??? Credi di farmi paura piccolo pezzettino di letame vestito da zarro... Deve ancora nasce chi puo' minacciarmi...",
+                    "Bella figura", MB_OK | MB_ICONINFORMATION)
+                    
+                    if reputazione > 3  {
+                        reputazione -= 2
+                    }
+                    
+                    if scuola.materie[Int(scelta)].xxx > 2 {
+                        scuola.materie[Int(scelta)].xxx -= 1
+                    }
+                }
+            }
+            else {
+                // Femminuccia - seduci prof.
+                
+                if ((fama >= 50) || (tabboz_random(10) < 2)) {
+                    scuola.materie[Int(scelta)].xxx += 2
+                    if scuola.materie[Int(scelta)].xxx > 10 {
+                      scuola.materie[Int(scelta)].xxx = 10
+                    }
+                } else {
+                    if sound_active != 0 {
+                        TabbozPlaySound(402)
+                    }
+                    
+                    MessageBox( hDlg,
+                    "Infastidito dalla tua presenza, il prof ti manda via a calci.",
+                    "Bella figura", MB_OK | MB_ICONINFORMATION);
+                    
+                    if reputazione > 3 {
+                        reputazione -= 2
+                    }
+                    
+                    if (scuola.materie[Int(scelta)].xxx > 2 ) {
+                        scuola.materie[Int(scelta)].xxx -= 1
+                    }
+                }
+            }
+            
+            Aggiorna(hDlg);
+            Evento(hDlg);
+        }
+        
+    }
+    
     func studia(hDlg: HANDLE) {
         if CheckVacanza(hDlg) {
             if reputazione > 10 {    /* Studiare costa fatica...          */
@@ -545,6 +700,20 @@ class Tabboz : NSObject {
         }
     }
     
+    
+    func CheckVacanza(_ hDlg: HANDLE) -> Bool {
+        if calendario.vacanza != 0 {
+            MessageBox(hDlg,
+                       "Non puoi andare a scuola in un giorno di vacanza !",
+                       "Scuola",
+                       MB_OK | MB_ICONINFORMATION)
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
     func noMoney(hDlg parent: HANDLE, tipo: Int) {
         switch (tipo) {
             
@@ -630,6 +799,326 @@ class Tabboz : NSObject {
         }
     }
     
+    // -
+    // Lavori
+    // -
+    
+    func cercaLavoro(hDlg: HANDLE) {
+        if calendario.vacanza == 2 {
+            MessageBox_TroviICancelliInrimediabilmenteChiusi(hDlg);
+            return
+        }
+        
+        if lavoro.ditta > 0  {
+            MessageBox_ForseNonTiRicordiCheHaiGiaUnLavoro(hDlg);
+            return
+        }
+        
+        Rcheck = 0
+        Lcheck = 0
+        
+        let n_ditta = tabboz_random(NUM_DITTE) + 1;
+        
+
+        let accetto = VaiACercaLavoro(n_ditta: n_ditta, hDlg: hDlg)
+        
+        if accetto == IDNO { // Viva la finezza...
+            MessageBox_AlloraSparisci(hDlg)
+            return
+        }
+        
+        scheda = tabboz_random(9)
+        punti_scheda = 0;
+        
+        FaiLaScheda(scheda: scheda, hDlg: hDlg)
+        
+        /* Facciamo finta che la scheda venga effettivamente tenuta in considerazione...            */
+        /* forse in un futuro verranno controllate le risposte, ma per ora non servono a nulla.     */
+        
+        /* 24 Maggio 1998 - v0.6.94                        */
+        /* Le risposte cominciano a venire controllate.... */
+        
+        for i in 0 ..< 3 {
+            if (Risposte_1.advanced(by: i).pointee != 0) {
+                Rcheck += 1
+            }
+        }
+        
+        for i in 0 ..< 3 {
+            if (Risposte_2.advanced(by: i).pointee != 0) {
+                Rcheck += 10
+            }
+        }
+        
+        for i in 0 ..< 3 {
+            if (Risposte_3.advanced(by: i).pointee != 0) {
+                Rcheck += 100
+            }
+        }
+        
+        if Rcheck != 111 {
+            MessageBox_PercheDovremmoAssumereChiNonSaMettereCrocette(hDlg)
+            AggiornaLavoro(hDlg);
+            return
+        }
+        
+        if (( reputazione + fortuna + tabboz_random(80) ) > tabboz_random(200))   {
+            lavoro.assumi(
+                presso: Int(n_ditta),
+                impegnoDelta: tabboz_random(20),
+                stipendioDelta: tabboz_random(10) * 100
+            )
+            
+            MessageBox_SeiStatoAssunto(hDlg, Carceri.lavoro[Int(n_ditta)].nome);
+        } else {
+            MessageBox_NonSeiRiuscitoASuperareIlTest(hDlg)
+            
+            if reputazione > 10 {
+                reputazione -= 2
+            }
+        }
+        
+        Evento(hDlg);
+        AggiornaLavoro(hDlg);
+    }
+    
+    func licenziati(hDlg: HANDLE) {
+        if GiornoDiLavoro(hDlg, "Licenziati") {
+            return
+        }
+        
+        if MessageBox_VuoiDareLeDimissioni(hDlg, Carceri.lavoro[lavoro.ditta].nome) == IDYES {
+            lavoro.disimpegnati()
+            Evento(hDlg)
+        }
+        
+        AggiornaLavoro(hDlg)
+    }
+    
+    func chiediAumentoSalario(hDlg: HANDLE) {
+        if GiornoDiLavoro(hDlg, "Chiedi aumento salario") {
+            return
+        }
+        
+        if (lavoro.impegno_ > 90) {
+            if ((30 + fortuna) > (30 + tabboz_random(50))) {
+                MessageBox_ForsePotremmoDartiQualcosina(hDlg)
+                lavoro.stipendio_ += ((tabboz_random(1)+1) * 100)
+                lavoro.impegno_ -= 30
+                Evento(hDlg);
+            } else {
+                MessageBox_VediDiScordartelo(hDlg);
+                lavoro.impegno_ -= 20
+                Evento(hDlg)
+            }
+        } else {
+            MessageBox( hDlg,
+                        "Che cosa vorresti ??? SCORDATELO !!!!",
+                        "Chiedi aumento salario", MB_OK | MB_ICONHAND);
+        }
+        
+        AggiornaLavoro(hDlg);
+    }
+    
+    func faiIlLeccaculo(hDlg: HANDLE) {
+        if sesso == Int8("M") { if (GiornoDiLavoro(hDlg, "Fai il leccaculo")) { return } }
+        else                  { if (GiornoDiLavoro(hDlg, "Fai la leccaculo")) { return } }
+        
+        if sound_active != 0 {
+            TabbozPlaySound(503)
+        }
+        
+        if reputazione > 20 {
+            reputazione -= 1
+        }
+        
+        if lavoro.impegno_ < 99 {
+           lavoro.impegno_ += 1
+        }
+        
+        if tabboz_random(fortuna + 3) == 0 {
+            Evento(hDlg)
+        }
+        
+        AggiornaLavoro(hDlg)
+    }
+    
+    func elencoDitte(hDlg: HANDLE) {
+        if lavoro.ditta == 0 {
+            FaiElencoDitte(hDlg: hDlg)
+        }
+        else {
+            FaiCercaLavoro(ditta: Int32(lavoro.ditta), hDlg: hDlg)
+        }
+    }
+    
+    func sciopera(hDlg: HANDLE) {
+        if GiornoDiLavoro(hDlg, "Sciopera") {
+            return
+        }
+        
+        if sound_active != 0 {
+            TabbozPlaySound(502)
+        }
+        
+        if reputazione < 85 {
+            reputazione += 10
+        }
+        
+        if lavoro.impegno_ > 19 {
+            lavoro.impegno_ -= 15
+        }
+        
+        if tabboz_random(fortuna + 3) == 0 {
+            Evento(hDlg)
+        }
+        
+        Evento(hDlg)
+        AggiornaLavoro(hDlg)
+    }
+    
+    func lavora(hDlg: HANDLE) {
+        if GiornoDiLavoro(hDlg, "Lavora") {
+            return
+        }
+
+        if lavoro.impegno_ < 85 {
+            lavoro.impegno_ += 1
+        }
+        
+        if sound_active != 0 {
+            TabbozPlaySound(501)
+        }
+        
+        Evento(hDlg)
+        AggiornaLavoro(hDlg)
+    }
+    
+    // -
+    // Compagnia
+    // -
+    
+    func gareggia(hDlg: HANDLE) {
+        if scooter.stato <= 0 {
+            MessageBox_ConQualeScooterVorrestiGarggiare(hDlg)
+            return
+        }
+        
+        if scooter.attivita != .funzionante {
+            MessageBox_PurtroppoNonPuoiGareggiareVistoCheLoScooterE(hDlg, scooter.attivita.string)
+            return
+        }
+        
+        if sound_active != 0 {
+            TabbozPlaySound(701)
+        }
+        
+        let i = 1 + tabboz_random(6)    // 28 Aprile 1998 - (E' cambiato tutto cio' che riguarda gli scooter...)
+        
+        let i2 = MessageBox_AccettiLaSfidaDi(hDlg, NEWSTSCOOTER.scooter[i].nome)
+        
+        if scooter.stato > 30 {
+            scooter.danneggia(tabboz_random(2))
+        }
+        
+        if (i2 == IDYES) {
+            //             if ( (ScooterMem[i].speed + 70 + random(50)) > (ScooterData.speed + ScooterData.stato + Fortuna) ) {
+            if gareggia(con: NEWSTSCOOTER.scooter[i]) {
+                // perdi
+                
+                if reputazione > 80 {
+                    reputazione -= 3
+                }
+                
+                if reputazione > 10 {
+                    reputazione -= 2
+                }
+                
+                MessageBox_DopoPochiMetriSiVedeLInferiorita(hDlg)
+            }
+            else {
+                // vinci
+                reputazione += 10
+                
+                if reputazione > 100 {
+                  reputazione = 100
+                }
+                
+                MessageBox_BruciInPartenza(hDlg)
+            }
+        }
+        else {
+            // Se non accetti la sfida, perdi rep...
+            
+            if reputazione > 80 {
+                reputazione -= 3
+            }
+            
+            if reputazione > 10 {
+                reputazione -= 2
+            }
+        }
+        
+        scooter.consuma(benza: 5)
+        CalcolaVelocita(hDlg)
+        
+        Evento(hDlg)
+        SetDlgItemText(hDlg, 104, "\(reputazione)/100")
+    }
+    
+    func esciConLaCompagnia(hDlg: HANDLE) {
+                                // Uscendo con la propria compagnia si puo' arrivare
+                                // solamente a reputazione = 57
+        if reputazione < 57 {
+            reputazione += 1
+        }
+        
+        if reputazione < 37 {   // Se la rep e' bassa, sale + in fretta
+            reputazione += 1
+        }
+        
+        if reputazione < 12 {
+            reputazione += 1
+        }
+        
+        Evento(hDlg);
+        EndDialog(hDlg, true);
+    }
+    
+    func minacciaQualcuno(hDlg: HANDLE) {
+        /* 12 Giugno 1998 - Qualche mese dopo gli altri pulsanti della finestra... */
+        
+        if (reputazione < 16) {
+            MessageBox_ConLaScarsaReputazioneTuttiTrovanoDiMeglio(hDlg)
+            Evento(hDlg)
+            return
+        }
+        
+        if (Tempo_trascorso_dal_pestaggio > 0) {
+            if (tabboz_random(2) == 1) {
+                MessageBox_ChiTiHaPicchiatoNonSiFaraVedere(hDlg)
+                
+                if reputazione < 80 {
+                    reputazione += 3
+                }
+            }
+            else {
+                MessageBox_AncheITuiAmiciVengonoScacagnati(hDlg)
+                
+                if reputazione < 95 {
+                    reputazione += 5
+                }
+            }
+            
+            Evento(hDlg);
+        }
+        else {
+            MessageBox_VistoCheNonCeNessunoTuttiSeNeVanno(hDlg)
+        }
+        
+        SetDlgItemText(hDlg, 104, "\(reputazione)/100")
+    }
+    
 }
 
 func MetalloEMagutto(_ i: Int, hDlg: HANDLE) {
@@ -682,9 +1171,112 @@ func IlDueDiPicche(hDlg: HANDLE) {
     FreeProcInstance(lpproc)
 }
 
+func VaiACercaLavoro(n_ditta: Int32, hDlg: HANDLE) -> Int32 {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(CercaLavoro(a, b, c, d)) },
+        hDlg
+    )
+
+    "Cerca Lavoro".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(389 + n_ditta, string),
+                      hDlg,
+                      lpproc)
+    }
+
+    FreeProcInstance(lpproc);
+    
+    return accetto
+}
+
+func FaiLaScheda(scheda: Int32, hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(CercaLavoro(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Fai La Scheda".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(200 + scheda, string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc);
+}
+
+func FaiElencoDitte(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(ElencoDitte(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Elenco Ditte".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(210, string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc);
+}
+
+func FaiCercaLavoro(ditta: Int32, hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(CercaLavoro(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Cerca Lavoro".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(289 + ditta, string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc);
+}
+
+func GiornoDiLavoro(_ hDlg: HANDLE, _ x: String) -> Bool {
+    return x.withCString({ GiornoDiLavoro(hDlg, $0) }) != 0
+}
+
+func FaiAquistaScooter(marca: Int32, hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(AcquistaScooter(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Acquista Scooter".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(78 + marca, string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc);
+}
+
+func FaiVendiScooter(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(VendiScooter(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Vendi Scooter".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(Int32(VENDISCOOTER), string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc);
+}
+
 @objc extension Tabboz {
     
-    @objc(fama) var fama_:       Int    { return fama                               }
+    @objc(fama)        var X:    Int    { return fama                               }
+    @objc(reputazione) var Y:    Int    { return reputazione                        }
     
     var scadenzaPalestraString:  String { return palestra.scadenzaString            }
     var calendarioString:        String { return calendario.giornoSettimana.string

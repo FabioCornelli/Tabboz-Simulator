@@ -29,7 +29,6 @@
 __attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
-extern void EventiPalestra(HANDLE hInstance);
 BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
 /********************************************************************/
@@ -395,37 +394,4 @@ void RunVestiti(HWND hDlg,int numero)
 				"Vestiti", MB_OK | MB_ICONINFORMATION);
 	}
 }
-
-
-
-/********************************************************************/
-/* EVENTI PALESTRA - 14 Luglio 1998                                 */
-/********************************************************************/
-
-void EventiPalestra(HANDLE hInstance)
-{
-int i;
-char messaggio[128];
-
-	i=random(29 + (Fortuna / 2));
-
-	if (i > 9) return;	/* eventi: 0 - 10) */
-
-	LoadString(hInst, (1100 + i), (LPSTR)messaggio, 255);
-
-	MessageBox( hInstance,
-	(LPSTR)messaggio,
-		"Palestra...", MB_OK | MB_ICONSTOP);
-
-	if (Reputazione > 10)
-		Reputazione-=4;
-
-
-#ifdef TABBOZ_DEBUG
-	writelog("eventi: Evento riguardante la palestra");
-#endif
-
-}
-
-
 
