@@ -615,3 +615,81 @@ void MessageBox_CheTelefoninoVuoiVendere(HANDLE hDlg) {
                "Che telefonino vuoi vendere, pirletta ?",
                "Telefonino", MB_OK | MB_ICONINFORMATION);
 }
+
+int MessageBox_VuoiComperareUnMeravigliosoVestitoNatalizio(HANDLE hDlg, NSInteger soldi) {
+    sprintf(tmp,"Vuoi comperare, per %s, un meraviglioso vestito da Babbo Natale ?",MostraSoldi(soldi));
+    return MessageBox( hDlg,
+                      tmp,
+                      "Offerte Natalizie...", MB_YESNO | MB_ICONQUESTION);
+}
+
+void MessageBox_IlConcessionarioEChiuso(HANDLE hDlg, const char * titolo) {
+    sprintf(tmp,"Oh, tip%c... oggi il concessionario e' chiuso...",ao);
+    MessageBox( hDlg,
+               tmp,
+               titolo, MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_MaQualeScooterAvrestiIntenzioneDiTruccare(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Scusa, ma quale scooter avresti intenzione di truccare visto che non ne hai neanche uno ???",
+               "Trucca lo scooter", MB_OK | MB_ICONQUESTION);
+}
+
+void MessageBox_CheMotiviHaiPerVolerRiparareLoScooter(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Che motivi hai per voleer riparare il tuo scooter\nvisto che e' al 100% di efficienza ???",
+               "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
+}
+
+void MessageBox_ComeFaiAFartiRiparareLoScooterSeNonLoHai(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Mi spieghi come fai a farti riparare lo scooter se non lo hai ???",
+               "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
+}
+
+void MessageBox_IlMeccanicoEChiuso(HANDLE hDlg) {
+    sprintf(tmp,"Oh, tip%c... oggi il meccanico e' chiuso...",ao);
+    MessageBox( hDlg,
+               tmp,
+               "Ripara lo scooter", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_ComeFaiAParcheggiareLoScooterSeNonLoHai(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Mi spieghi come fai a parcheggiare lo scooter se non lo hai ???",
+               "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
+}
+
+void MessageBox_ComeFaiAParcheggiareLoScooterVistoCheE(HANDLE hDlg, const char * attivita) {
+    sprintf(tmp, "Mi spieghi come fai a parcheggiare lo scooter visto che e' %s ???", attivita);
+    MessageBox(hDlg,
+               tmp,
+               "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
+}
+
+void MessageBox_ComeFaiAFarBenzinaAlloScooterSeNonLoHai(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Mi spieghi come fai a far benzina allo scooter se non lo hai ???",
+               "Fai benza", MB_OK | MB_ICONQUESTION);
+}
+
+void MessageBox_AlDistributorePuoiFareUnMinimoDi(HANDLE hDlg, const char * soldi) {
+    sprintf(tmp,
+            "Al distributore automatico puoi fare un minimo di %s di benzina...",
+            soldi);
+    
+    MessageBox(hDlg,
+               tmp,
+               "Fai benza", MB_OK | MB_ICONQUESTION);
+}
+
+void MessageBox_FaiBenzaERiempi(HANDLE hDlg, const char * soldi) {
+    sprintf(tmp,
+            "Fai %s di benzina e riempi lo scooter...",
+            MostraSoldi(10));
+    
+    MessageBox(hDlg,
+               tmp,
+               "Fai benza", MB_OK | MB_ICONINFORMATION);
+}

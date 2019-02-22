@@ -153,6 +153,10 @@ class NEWSTSCOOTER : NSObject {
         return attivitaCalcolataEx ?? .funzionante
     }
     
+    var costoRiparazioni : Int {
+        return prezzo / 100 * (100 - stato) + 10
+    }
+    
     @objc func compraScooter(_ scooterId: Int) {
         scooter = NEWSTSCOOTER.scooter[scooterId]
     }

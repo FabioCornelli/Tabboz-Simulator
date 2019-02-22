@@ -243,6 +243,124 @@ class Tabboz : NSObject {
     // Scooter
     // -
 
+    func aquistaDalConcessionario(hDlg: HANDLE) {
+        if calendario.vacanza == 2 {
+            MessageBox_IlConcessionarioEChiuso(hDlg, "Concessionario")
+            return
+        }
+        
+        FaiAquistaScooterDalConcessionario(hDlg: hDlg)
+        Evento(hDlg)
+        AggiornaScooter(hDlg)
+    }
+    
+    func truccaScooter(hDlg: HANDLE) {
+        if scooter.stato != -1 {
+            if calendario.vacanza != 2 {
+                FaiTruccaScooter(hDlg: hDlg)
+                Evento(hDlg)
+                AggiornaScooter(hDlg)
+            }
+            else {
+                MessageBox_IlConcessionarioEChiuso(hDlg, "Trucca lo scooter")
+            }
+        }
+        else {
+            MessageBox_MaQualeScooterAvrestiIntenzioneDiTruccare(hDlg)
+        }
+        
+        switch scooter.attivita { /* 7 Maggio 1998 */
+        case .parcheggiato: SetDlgItemText(hDlg, 105, "Usa scooter")
+        default:            SetDlgItemText(hDlg, 105, "Parcheggia scooter");
+        }
+        
+        Evento(hDlg)
+    }
+    
+    func vaiARiparaScooter(hDlg: HANDLE) {
+        if scooter.stato != -1 {
+            if scooter.stato == 100 {
+                MessageBox_CheMotiviHaiPerVolerRiparareLoScooter(hDlg)
+            }
+            else {
+                if calendario.vacanza != 2 {
+                    FaiRiparaScooter(hDlg: hDlg)
+                    AggiornaScooter(hDlg);
+                } else {
+                    MessageBox_IlMeccanicoEChiuso(hDlg)
+                }
+            }
+            
+            return
+        }
+        else {
+          MessageBox_ComeFaiAFartiRiparareLoScooterSeNonLoHai(hDlg)
+        }
+        
+        Evento(hDlg);
+    }
+    
+    func parcheggiaOUsaScooter(hDlg: HANDLE) {
+        if scooter.stato < 0 {
+            MessageBox_ComeFaiAParcheggiareLoScooterSeNonLoHai(hDlg)
+            return
+        }
+        
+        if scooter.usaOParcheggia() {
+            SetDlgItemText(hDlg, 105, "\(scooter.attivita == .parcheggiato ? "Usa scooter" : "Parcheggia scooter")")
+        }
+        else {
+            MessageBox_ComeFaiAParcheggiareLoScooterVistoCheE(hDlg, scooter.attivita.string)
+        }
+        
+        AggiornaScooter(hDlg)
+    }
+    
+    func faiBenzina(hDlg: HANDLE) {
+        if scooter.stato < 0 {
+             MessageBox_ComeFaiAFarBenzinaAlloScooterSeNonLoHai(hDlg)
+        }
+        
+        if danaro.paga(10) {
+            MessageBox_AlDistributorePuoiFareUnMinimoDi(hDlg, MostraSoldi(10))
+        }
+        else {
+            switch scooter.attivita {
+                
+            case .funzionante: fallthrough
+            case .ingrippato:  fallthrough
+            case .invasato:    fallthrough
+            case .aSecco:
+                
+                scooter.faiIlPieno()
+                CalcolaVelocita(hDlg)
+                MessageBox_FaiBenzaERiempi(hDlg, MostraSoldi(10))
+                
+            default:
+                MessageBox_ComeFaiAParcheggiareLoScooterVistoCheE(hDlg, scooter.attivita.string)
+            }
+        }
+        
+        AggiornaScooter(hDlg)
+        Evento(hDlg)
+    }
+
+    // -
+
+    func riparaScooter(hDlg: HANDLE) {
+        if !danaro.paga(scooter.costoRiparazioni) {
+            noMoney(hDlg: hDlg, tipo: SCOOTER)
+        }
+        else {
+            scooter.ripara()
+            CalcolaVelocita(hDlg)
+        }
+        
+        EndDialog(hDlg, true)
+    }
+    
+    // -
+    
     func gareggia(con tipo: NEWSTSCOOTER) -> Bool {
         let fortunaDelTipo = tipo.speed + 80 + tabboz_random(40)
         let fortunaMia     = scooter.scooter.speedCalcolata + scooter.stato + fortuna
@@ -264,9 +382,10 @@ class Tabboz : NSObject {
             if !danaro.paga(NEWSTSCOOTER.scooter[Int(scelta)].prezzo) {
                 MessageBox_TiPiacerebbeComprareLoScooter(hDlg)
                 if reputazione > 3 {
-                    reputazione-=1;
+                    reputazione -= 1
                 }
-            } else {
+            }
+            else {
                 scooter.compraScooter(Int(scelta))
                 
                 MessageBox_FaiUnGiroPerFartiVedere(hDlg)
@@ -298,6 +417,66 @@ class Tabboz : NSObject {
         }
         
         SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)))
+    }
+    
+    // -
+    
+    static let prezziDeiPezzi = [
+        400, 500, 600,        // marmitte
+        300, 470, 650,   800, // carburatori
+        200, 400, 800,  1000, // cc
+         50, 120, 270,   400, // filtro
+    ]
+    
+    func compraMarmitta(wParam: Int, hDlg: HANDLE) {
+        if !danaro.paga(Tabboz.prezziDeiPezzi[wParam - 130]) {
+            noMoney(hDlg: hDlg, tipo: SCOOTER)
+            return
+        }
+        
+        scooter.scooter.marmitta = NEWSTSCOOTER.Marmitta(rawValue: wParam - 129)!
+        
+        CalcolaVelocita(hDlg)
+        EndDialog(hDlg, true)
+    }
+    
+    func compraCarburatore(wParam: Int, hDlg: HANDLE) {
+        if !danaro.paga(Tabboz.prezziDeiPezzi[wParam - 130]) {
+            noMoney(hDlg: hDlg, tipo: SCOOTER)
+            return
+        }
+        
+        scooter.scooter.carburatore = NEWSTSCOOTER.Carburatore(rawValue: wParam - 132)!
+        
+        CalcolaVelocita(hDlg)
+        EndDialog(hDlg, true)
+    }
+    
+    func compraCilindro(wParam: Int, hDlg: HANDLE) {
+        if !danaro.paga(Tabboz.prezziDeiPezzi[wParam - 130]) {
+            noMoney(hDlg: hDlg, tipo: SCOOTER)
+            return
+        }
+        
+        /* Piccolo bug della versione 0.6.91, qui c'era scritto ScooterData.marmitta */
+        /* al posto di ScooterData.cc :-) */
+        
+        scooter.scooter.cc = NEWSTSCOOTER.Cilindrata(rawValue: wParam - 136)!
+        
+        CalcolaVelocita(hDlg)
+        EndDialog(hDlg, true)
+    }
+    
+    func compraFiltro(wParam: Int, hDlg: HANDLE) {
+        if !danaro.paga(Tabboz.prezziDeiPezzi[wParam - 130]) {
+            noMoney(hDlg: hDlg, tipo: SCOOTER)
+            return
+        }
+        
+        scooter.scooter.cc = NEWSTSCOOTER.Cilindrata(rawValue: wParam - 140)!
+        
+        CalcolaVelocita(hDlg)
+        EndDialog(hDlg, true)
     }
     
     // -
@@ -1173,6 +1352,32 @@ class Tabboz : NSObject {
         }
     }
     
+    func compraVestitoNatalizio(hDlg: HANDLE) {
+        /* Vestito da Babbo Natale... 11 Marzo 1999 */
+        
+        let costoVestitoNatalizio = 58
+        
+        if ((calendario.mese == .dicembre) &&
+            (danaro.soldi >= costoVestitoNatalizio))
+        {
+            if ((calendario.giorno  > 14) &&
+                (calendario.giorno  < 25) &&
+                (vestiti.giubbotto != 19) &&
+                (vestiti.pantaloni != 19))
+            {
+                let scelta = MessageBox_VuoiComperareUnMeravigliosoVestitoNatalizio(hDlg, costoVestitoNatalizio)
+                
+                if (scelta == IDYES) {
+                    vestiti.giubbotto = 19
+                    vestiti.pantaloni = 19
+                    
+                    TabbozRedraw = 1;    // E' necessario ridisegnare l' immagine del Tabbozzo...
+                    
+                    _ = danaro.paga(costoVestitoNatalizio)
+                }
+            }
+        }
+    }
 }
 
 func MetalloEMagutto(_ i: Int, hDlg: HANDLE) {
@@ -1352,6 +1557,54 @@ func FaiAbbonaCellulare(hDlg: HANDLE) {
     "Abbona Cellulare".withCString { (string) in
         _ = DialogBox(hInst,
                       MAKEINTRESOURCE_Real(Int32(CELLULRABBONAM), string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc)
+}
+
+func FaiAquistaScooterDalConcessionario(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(Concessionario(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Acquista Scooter".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(Int32(ACQUISTASCOOTER), string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc)
+}
+
+func FaiTruccaScooter(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(TruccaScooter(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Trucca Scooter".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(73, string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc)
+}
+
+func FaiRiparaScooter(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(RiparaScooter(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Ripara Scooter".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(Int32(RIPARASCOOTER), string),
                       hDlg,
                       lpproc)
     }

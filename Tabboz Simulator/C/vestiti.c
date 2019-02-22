@@ -38,34 +38,14 @@ BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam
 # pragma argsused
 BOOL FAR PASCAL Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-	 char          tmp[128];
-	 FARPROC       lpproc;
+    FARPROC       lpproc;
 
-	 if (message == WM_INITDIALOG) {
-		SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
-
-		/* Vestito da Babbo Natale... 11 Marzo 1999 */
-#define COSTO_VESTITO_NATALIZIO 58
-
-		if ((x_mese == 12) && (Soldi >= COSTO_VESTITO_NATALIZIO))
-			if ((x_giorno > 14) && ( x_giorno < 25) && ( current_gibbotto!=19) && (current_pantaloni!=19)) {
-				int scelta;
-				sprintf(tmp,"Vuoi comperare, per %s, un meraviglioso vestito da Babbo Natale ?",MostraSoldi(COSTO_VESTITO_NATALIZIO));
-				scelta=MessageBox( hDlg,
-					tmp,
-					"Offerte Natalizie...", MB_YESNO | MB_ICONQUESTION);
-				if (scelta == IDYES) {
-					current_gibbotto=19;
-					current_pantaloni=19;
-					TabbozRedraw = 1;	// E' necessario ridisegnare l' immagine del Tabbozzo...
-                    __attribute__((unused)) int x = [Tabboz.global.danaro paga:COSTO_VESTITO_NATALIZIO];
-
-                }
-			}
-
-		return(TRUE);
-
-	 }else if (message == WM_COMMAND) {
+    if (message == WM_INITDIALOG) {
+         SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
+         [Tabboz.global compraVestitoNatalizioWithHDlg:hDlg];
+         return(TRUE);
+    }
+    else if (message == WM_COMMAND) {
 
 		switch (wParam) {
 

@@ -20,10 +20,6 @@ class Danaro : NSObject {
         soldi += daPosare
     }
     
-}
-
-@objc extension Danaro {
-    
     func paga(_ daPagare: Int) -> Bool {
         // Controlla se ha abbastanza soldi...
         guard soldi >= daPagare else { return false }

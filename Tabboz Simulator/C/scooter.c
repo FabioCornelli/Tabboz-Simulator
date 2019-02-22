@@ -70,200 +70,60 @@ void CalcolaVelocita(HWND hDlg) {
 # pragma argsused
 BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-    char          buf[128];
     char          tmp[128];
-    FARPROC       lpproc;
-
+    
     if (message == WM_INITDIALOG) {
-	SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-
-	sprintf(tmp, "Parcheggia scooter");               SetDlgItemText(hDlg, 105, tmp); /* 7 Maggio 1998 */
-
-	if (ScooterData.stato != -1) {
-		AggiornaScooter(hDlg);
-		if (ScooterData.attivita == 4) {
-			sprintf(tmp, "Usa scooter");
-			SetDlgItemText(hDlg, 105, tmp);
-			}
-	}
-
-	return(TRUE);
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        
+        sprintf(tmp, "Parcheggia scooter");
+        SetDlgItemText(hDlg, 105, tmp); /* 7 Maggio 1998 */
+        
+        if (ScooterData.stato != -1) {
+            AggiornaScooter(hDlg);
+            if (ScooterData.attivita == 4) {
+                sprintf(tmp, "Usa scooter");
+                SetDlgItemText(hDlg, 105, tmp);
+            }
+        }
+        
+        return(TRUE);
     }
-
+    
     else if (message == WM_COMMAND)
     {
-	switch (wParam)
-	{
-	    case 101:
-		if ( x_vacanza == 2 ) {
-			sprintf(tmp,"Oh, tip%c... oggi il concessionario e' chiuso...",ao);
-			MessageBox( hDlg,
-			  tmp,
-			  "Concessionario", MB_OK | MB_ICONINFORMATION);
-			return(TRUE);
-		}
-
-		lpproc = MakeProcInstance(Concessionario, hInst);
-		DialogBox(hInst,
-			  MAKEINTRESOURCE(ACQUISTASCOOTER),
-			  hDlg,
-			  lpproc);
-		FreeProcInstance(lpproc);
-		Evento(hDlg);
-		AggiornaScooter(hDlg);
-		return(TRUE);
-
-	    case 102:                   /* Trucca */
-		if (ScooterData.stato != -1) {
-			if ( x_vacanza != 2 ) {
-				/* 28 Aprile 1998 La procedura per truccare gli scooter cambia completamente... */
-				lpproc = MakeProcInstance(TruccaScooter, hInst);
-				DialogBox(hInst,
-				    MAKEINTRESOURCE(73),
-				    hDlg,
-				    lpproc);
-
-				FreeProcInstance(lpproc);
-				Evento(hDlg);
-				AggiornaScooter(hDlg);
-
-				return(TRUE);
-			} else {
-				sprintf(tmp,"Oh, tip%c... oggi il meccanico e' chiuso...",ao);
-				MessageBox( hDlg, tmp,
-				"Trucca lo scooter", MB_OK | MB_ICONINFORMATION);
-			}
-		} else MessageBox( hDlg,
-			  "Scusa, ma quale scooter avresti intenzione di truccare visto che non ne hai neanche uno ???",
-			  "Trucca lo scooter", MB_OK | MB_ICONQUESTION);
-
-		sprintf(tmp, "Parcheggia scooter");	/* 7 Maggio 1998 */
-		SetDlgItemText(hDlg, 105, tmp);
-
-		if (ScooterData.attivita == 4) {
-			sprintf(tmp, "Usa scooter");
-			SetDlgItemText(hDlg, 105, tmp);
-			}
-
-		Evento(hDlg);
-		return(TRUE);
-
-	    case 103:                   /* Ripara */
-			if (ScooterData.stato != -1) {
-				if (ScooterData.stato == 100)
-					MessageBox( hDlg,
-						"Che motivi hai per voleer riparare il tuo scooter\nvisto che e' al 100% di efficienza ???",
-						"Ripara lo scooter", MB_OK | MB_ICONQUESTION);
-				else {
-					if ( x_vacanza != 2 ) {
-						lpproc = MakeProcInstance(RiparaScooter, hInst);
-							DialogBox(hInst,
-							MAKEINTRESOURCE(RIPARASCOOTER),
-							hDlg,lpproc);
-						FreeProcInstance(lpproc);
-						AggiornaScooter(hDlg);
-					} else {
-						sprintf(tmp,"Oh, tip%c... oggi il meccanico e' chiuso...",ao);
-						MessageBox( hDlg, tmp,
-							"Ripara lo scooter", MB_OK | MB_ICONINFORMATION);
-						}
-					}
-				return(TRUE);
-			} else MessageBox( hDlg,
-				  "Mi spieghi come fai a farti riparare lo scooter se non lo hai ???",
-				  "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
-			Evento(hDlg);
-			return(TRUE);
-
-		 case 105:                   /* Parcheggia / Usa Scooter	7 Maggio 1998 */
-		if (ScooterData.stato < 0) {
-			MessageBox( hDlg,
-			  "Mi spieghi come fai a parcheggiare lo scooter se non lo hai ???",
-			  "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
-			return(TRUE);
-			}
-
-            if ([Tabboz.global.scooter usaOParcheggia]) {
-                SetDlgItemText(hDlg, 105, ScooterData.attivita == 4 ? "Usa scooter" : "Parcheggia scooter");
-            }
-            else{
-                sprintf(buf, "Mi spieghi come fai a parcheggiare lo scooter visto che e' %s ???",Tabboz.global.attivitaScooter.UTF8String);
-				 MessageBox( hDlg,
-				   buf,
-				   "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
-            }
-
-		AggiornaScooter(hDlg);
-		return(TRUE);
-
-
-	    case 106:                   /* Fai Benzina	8 Maggio 1998 */
-		if (ScooterData.stato < 0) {
-			MessageBox( hDlg,
-			  "Mi spieghi come fai a far benzina allo scooter se non lo hai ???",
-			  "Fai benza", MB_OK | MB_ICONQUESTION);
-			return(TRUE);
-			}
-
-		switch (ScooterData.attivita)
-		{
-			case 1:
-			case 2:
-			case 3:
-			case 6:
-                if ([Tabboz.global.danaro paga:10]) {
-                    sprintf(buf,
-                            "Al distributore automatico puoi fare un minimo di %s di benzina...",
-                            MostraSoldi(10));
-                    
-                    MessageBox(hDlg,
-                               buf,
-                               "Fai benza", MB_OK | MB_ICONQUESTION);
-                }
+        switch (wParam)
+        {
+            case 101:
+                [Tabboz.global aquistaDalConcessionarioWithHDlg:hDlg];
+                return(TRUE);
                 
-                else {
-#ifdef TABBOZ_DEBUG
-                    sprintf(tmp,"scooter: Paga benzina (%s)",MostraSoldi(10));
-                    writelog(tmp);
-#endif
-                    
-                    [Tabboz.global.scooter faiIlPieno];
-                    
-                    CalcolaVelocita(hDlg);
-                    
-                    sprintf(buf,
-                            "Fai %s di benzina e riempi lo scooter...",
-                            MostraSoldi(10));
-                    
-                    MessageBox(hDlg,
-                               buf,
-                               "Fai benza", MB_OK | MB_ICONINFORMATION);
-                }
-                
-                break;
+            case 102:                   /* Trucca */
+                [Tabboz.global truccaScooterWithHDlg:hDlg];
+                return(TRUE);
 
-			default: sprintf(buf, "Mi spieghi come fai a far benzina allo scooter visto che e' %s ???",Tabboz.global.attivitaScooter.UTF8String);
-				 MessageBox( hDlg,
-				   buf,
-					"Fai benza", MB_OK | MB_ICONQUESTION);
-		};
+            case 103:                   /* Ripara */
+                [Tabboz.global vaiARiparaScooterWithHDlg:hDlg];
+                return(TRUE);
 
-		AggiornaScooter(hDlg);
-		Evento(hDlg);
-		return(TRUE);
+            case 105:                   /* Parcheggia / Usa Scooter	7 Maggio 1998 */
+                [Tabboz.global parcheggiaOUsaScooterWithHDlg:hDlg];
+                return(TRUE);
 
+            case 106:                   /* Fai Benzina	8 Maggio 1998 */
+                [Tabboz.global faiBenzinaWithHDlg:hDlg];
+                return(TRUE);
 
-	    case IDCANCEL:
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
+            case IDCANCEL:
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
 
-	    case IDOK:
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
+            case IDOK:
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
 
-	    default:
-		return(TRUE);
-	}
+            default:
+                return(TRUE);
+        }
     }
 
     return(FALSE);
@@ -369,45 +229,26 @@ BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 # pragma argsused
 BOOL FAR PASCAL RiparaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-		 char       tmp[128];
 static long       costo;  // Importante lo static !!!
 
 	if (message == WM_INITDIALOG) {
 		// Calcola il costo della riparazione dello scooter...
-		costo= (ScooterData.prezzo / 100 * (100 - ScooterData.stato)) + 10;
+		costo = (ScooterData.prezzo / 100 * (100 - ScooterData.stato)) + 10;
 
 		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 		SetDlgItemText(hDlg, 105, MostraSoldi(costo));
 
 		return(TRUE);
-
-	} else if (message == WM_COMMAND) {
+	}
+    else if (message == WM_COMMAND) {
 		switch (wParam) {
 
-			case IDCANCEL:
-
+            case IDCANCEL:
 				EndDialog(hDlg, TRUE);
 				return(TRUE);
 
 			case IDOK:
-
-				if (![Tabboz.global.danaro paga:costo])
-					nomoney(hDlg,SCOOTER);
-				else {
-
-					#ifdef TABBOZ_DEBUG
-					sprintf(tmp,"scooter: Paga riparazione (%s)",MostraSoldi(costo));
-					writelog(tmp);
-					#endif
-
-// Per questa cagata, crascia il tabboz all' uscita...
-//					if (sound_active) TabbozPlaySound(102);
-
-                    [Tabboz.global.scooter ripara];
-                    
-					CalcolaVelocita(hDlg);
-				}
-				EndDialog(hDlg, TRUE);
+                [Tabboz.global riparaScooterWithHDlg:hDlg];
 				return(TRUE);
 
 			default:
@@ -519,111 +360,63 @@ void AggiornaScooter(HWND hDlg) {
 # pragma argsused
 BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-	 char      tmp[128];
-	 int		  i;
+    int		  i;
 
     if (message == WM_INITDIALOG) {
-	SetDlgItemText(hDlg, 109, Tabboz.global.nomeScooter.UTF8String);
-	SetDlgItemText(hDlg, 105, Tabboz.global.carburatoreString.UTF8String);
-	SetDlgItemText(hDlg, 106, Tabboz.global.marmittaString.UTF8String);
-	SetDlgItemText(hDlg, 107, Tabboz.global.ccString.UTF8String);
-	SetDlgItemText(hDlg, 108, Tabboz.global.filtroString.UTF8String );
-
-	SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-
-	for (i=110;i<125;i++) {
-		SetDlgItemText(hDlg, i, MostraSoldi(PezziMem[i-110]));
-	}
-
-	return(TRUE);
-	}
+        SetDlgItemText(hDlg, 109, Tabboz.global.nomeScooter.UTF8String);
+        SetDlgItemText(hDlg, 105, Tabboz.global.carburatoreString.UTF8String);
+        SetDlgItemText(hDlg, 106, Tabboz.global.marmittaString.UTF8String);
+        SetDlgItemText(hDlg, 107, Tabboz.global.ccString.UTF8String);
+        SetDlgItemText(hDlg, 108, Tabboz.global.filtroString.UTF8String );
+        
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        
+        for (i=110;i<125;i++) {
+            SetDlgItemText(hDlg, i, MostraSoldi(PezziMem[i-110]));
+        }
+        
+        return(TRUE);
+    }
 
     else if (message == WM_COMMAND)
     {
-	switch (wParam)
-	{
-		 case 130:	/* marmitte ----------------------------------------------------------- */
-	    case 131:
-	    case 132:
-            if (![Tabboz.global.danaro paga:PezziMem[wParam - 130]]) {
-                nomoney(hDlg,SCOOTER);
+        switch (wParam)
+        {
+            case 130:	/* marmitte ----------------------------------------------------------- */
+            case 131:
+            case 132:
+                [Tabboz.global compraMarmittaWithWParam:wParam hDlg:hDlg];
                 return(TRUE);
-            }
-
-        #ifdef TABBOZ_DEBUG
-		sprintf(tmp,"scooter: Paga marmitta (%s)",MostraSoldi(PezziMem[wParam - 130]));
-		writelog(tmp);
-		#endif
-
-		ScooterData.scooter.marmitta = (wParam - 129); /* (1 - 3 ) */
-		CalcolaVelocita(hDlg);
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
-
-	    case 133:   /* carburatore -------------------------------------------------------- */
-	    case 134:
-	    case 135:
-	    case 136:
-            if (![Tabboz.global.danaro paga:PezziMem[wParam - 130]]) {
-				nomoney(hDlg,SCOOTER);
-				return(TRUE);
-			}
-			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"scooter: Paga carburatore (%s)",MostraSoldi(PezziMem[wParam - 130]));
-			writelog(tmp);
-			#endif
-
-			ScooterData.scooter.carburatore = (wParam - 132 );  /* ( 1 - 4 ) */
-			CalcolaVelocita(hDlg);
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		 case 137:	/* cc ----------------------------------------------------------------- */
-		 case 138:
-		 case 139:
-		 case 140:
-            if (![Tabboz.global.danaro paga:PezziMem[wParam - 130]]) {
-				nomoney(hDlg,SCOOTER);
-				return(TRUE);
-			}
-			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"scooter: Paga cilindro e pistone (%s)",MostraSoldi(PezziMem[wParam - 130]));
-			writelog(tmp);
-			#endif
-
-			/* Piccolo bug della versione 0.6.91, qui c'era scritto ScooterData.marmitta */
-			/* al posto di ScooterData.cc :-) */
-			ScooterData.scooter.cc = (wParam - 136); /* ( 1 - 4 ) */
-			CalcolaVelocita(hDlg);
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		 case 141:   /* filtro dell' aria -------------------------------------------------- */
-		 case 142:
-		 case 143:
-		 case 144:
-            if (![Tabboz.global.danaro paga:PezziMem[wParam - 130]]) {
-				nomoney(hDlg,SCOOTER);
-				return(TRUE);
-			}
-			#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"scooter: Paga filtro dell' aria (%s)",MostraSoldi(PezziMem[wParam - 130]));
-			writelog(tmp);
-			#endif
-
-			ScooterData.scooter.filtro = (wParam - 140); /* (1 - 4) */
-			CalcolaVelocita(hDlg);
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		case IDOK:
-		case IDCANCEL:
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-	    default:
-		return(TRUE);
-	}
+                
+            case 133:   /* carburatore -------------------------------------------------------- */
+            case 134:
+            case 135:
+            case 136:
+                [Tabboz.global compraCarburatoreWithWParam:wParam hDlg:hDlg];
+                return(TRUE);
+                
+            case 137:	/* cc ----------------------------------------------------------------- */
+            case 138:
+            case 139:
+            case 140:
+                [Tabboz.global compraCarburatoreWithWParam:wParam hDlg:hDlg];
+                return(TRUE);
+                
+            case 141:   /* filtro dell' aria -------------------------------------------------- */
+            case 142:
+            case 143:
+            case 144:
+                [Tabboz.global compraFiltroWithWParam:wParam hDlg:hDlg];
+                return(TRUE);
+                
+            case IDOK:
+            case IDCANCEL:
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
+                
+            default:
+                return(TRUE);
+        }
     }
 
     return(FALSE);

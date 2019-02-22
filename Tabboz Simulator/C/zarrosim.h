@@ -283,6 +283,9 @@ extern  BOOL FAR PASCAL        Spegnimi(HWND hDlg, WORD message, WORD wParam, LO
 extern  BOOL FAR PASCAL        Network(HWND hDlg, WORD message, WORD wParam, LONG lParam); 	/* 25 Giugno 1998 */
 extern  BOOL FAR PASCAL	       MostraSalutieBaci(HWND hDlg, WORD message, WORD wParam, LONG lParam); /* 4 Gennaio 1999 */
 extern  BOOL FAR PASCAL        Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam); 	/* 31 Marzo 1999 */
+extern  BOOL FAR PASCAL        Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL        TruccaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL        RiparaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
 BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam);
@@ -330,6 +333,7 @@ extern  void    AggiornaTipa(HWND hDlg);
 extern  void    AggiornaPalestra(HWND parent);
 extern  void    AggiornaLavoro(HWND hDlg);
 extern  void    AggiornaCell(HWND hDlg);
+extern  void    AggiornaScooter(HWND hDlg);
 extern  int     GiornoDiLavoro(HWND hDlg, const char *s);
 
 // Numero di ditte
