@@ -15,8 +15,8 @@ import Foundation
         
         if
             calendario.annoBisesto == 1  &&
-            calendario.giorno      == 29 &&
-            calendario.mese        == .febbraio
+            calendario.giornoDellAnno.giorno == 29 &&
+            calendario.giornoDellAnno.mese   == .febbraio
         {
             MessageBox_AnnoFunesto(hInstance)
         }
@@ -34,7 +34,7 @@ import Foundation
         if lavoro.impegno_ > 0  {
             lavoro.lavoraGiorno()
             
-            if calendario.giorno == 27 {
+            if calendario.giornoDellAnno.giorno == 27 {
                 /* Stipendio calcolato secondo i giorni effettivi di lavoro */
                 let stipendietto = lavoro.prendiStipendioMese()
                 
@@ -55,10 +55,10 @@ import Foundation
         /* Hai gia' ricevuto gli auguri di natale ??? 04/01/1999*/
         natale2 = 0
 
-        switch calendario.mese {
+        switch calendario.giornoDellAnno.mese {
             
         case .gennaio:                   /* Gennaio --------------------------------------------------------- */
-            if calendario.giorno < 7 {
+            if calendario.giornoDellAnno.giorno < 7 {
                 calendario.vacanza = 1
                 if tipa.rapporto > 0 {
                     tipa.currentTipa = 1 /* 6 Maggio 1999 - Tipa vestita da Babbo Natale...*/
@@ -67,11 +67,11 @@ import Foundation
             break;                       /* Vacanze di Natale */
             
         case .giugno:                    /* Giugno ---------------------------------------------------------- */
-            if (calendario.giorno == 15) {
+            if calendario.giornoDellAnno.giorno == 15 {
                 MessageBox_UltimoGiornoDiScuola(hInstance)
             }
     
-            if calendario.giorno == 22 { /* Pagella */
+            if calendario.giornoDellAnno.giorno == 22 { /* Pagella */
                 if scuola.promosso {
                     danaro.deposita(200)
                 }
@@ -79,7 +79,7 @@ import Foundation
                 LaPagella(hDlg: hInstance)
             }
             
-            if calendario.giorno > 15 {
+            if calendario.giornoDellAnno.giorno > 15 {
                 calendario.vacanza = 1
             }
             
@@ -100,11 +100,11 @@ import Foundation
             break;
             
         case .settembre:                 /* Settembre ------------------------------------------------------- */
-            if calendario.giorno < 15 {
+            if calendario.giornoDellAnno.giorno < 15 {
                 calendario.vacanza = 1
             }
             
-            if calendario.giorno == 15 {
+            if calendario.giornoDellAnno.giorno == 15 {
                 MessageBox_PrimoGiornoDiScuola(hInstance)
                 scuola.azzeraMaterie()
             }
@@ -112,7 +112,7 @@ import Foundation
             break;
             
         case .dicembre:                  /* Dicembre -------------------------------------------------------- */
-            if calendario.giorno > 22  {
+            if calendario.giornoDellAnno.giorno > 22  {
                 calendario.vacanza = 1   /* Vacanze di Natale */
                 
                 if tipa.rapporto > 0  {
@@ -120,7 +120,7 @@ import Foundation
                 }
             }
             
-            if (calendario.giorno == 25) &&
+            if (calendario.giornoDellAnno.giorno == 25) &&
                 ((vestiti.pantaloni == 19) &&
                     (vestiti.giubbotto == 19))
             {
@@ -132,7 +132,7 @@ import Foundation
                 }
             }
             
-            if (calendario.giorno == 28) &&
+            if (calendario.giornoDellAnno.giorno == 28) &&
                 ((vestiti.pantaloni == 19) || (vestiti.giubbotto == 19)) {
                 MessageBox_ToglitiQuelDannatoVestito(hInstance)
                 fama -= 5
@@ -159,8 +159,8 @@ import Foundation
             Vacanza
                 .vacanze
                 .filter { vacanza in
-                    vacanza.mese == calendario.mese.rawValue &&
-                    vacanza.giorno == calendario.giorno
+                    vacanza.mese == calendario.giornoDellAnno.mese.rawValue &&
+                    vacanza.giorno == calendario.giornoDellAnno.giorno
                 }
                 .forEach { vacanza in
                     MessageBox_Vacanza(hInstance,

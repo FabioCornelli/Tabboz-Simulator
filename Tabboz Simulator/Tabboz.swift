@@ -21,7 +21,7 @@ class Tabboz : NSObject {
           private      var attesa      : Int = ATTESAMAX // Tempo prima che ti diano altri soldi...
     
           private(set) var danaro      = Danaro(quanti: 5)
-    @objc private(set) var calendario  = Calendario()
+          private(set) var calendario  = Calendario()
     @objc private(set) var scuola      = Scuole()
     @objc private(set) var vestiti     = Vestiario()
     @objc private(set) var tipa        = Fiddhiola()
@@ -1357,11 +1357,11 @@ class Tabboz : NSObject {
         
         let costoVestitoNatalizio = 58
         
-        if ((calendario.mese == .dicembre) &&
+        if ((calendario.giornoDellAnno.mese == .dicembre) &&
             (danaro.soldi >= costoVestitoNatalizio))
         {
-            if ((calendario.giorno  > 14) &&
-                (calendario.giorno  < 25) &&
+            if ((calendario.giornoDellAnno.giorno  > 14) &&
+                (calendario.giornoDellAnno.giorno  < 25) &&
                 (vestiti.giubbotto != 19) &&
                 (vestiti.pantaloni != 19))
             {
@@ -1618,13 +1618,14 @@ func FaiRiparaScooter(hDlg: HANDLE) {
     @objc(reputazione) var Y:    Int    { return reputazione                        }
     
     var soldi:                   Int    { return danaro.soldi                       }
+    var vacanza:                 Int32  { return calendario.vacanza                 }
     var scadenzaPalestraString:  String { return palestra.scadenzaString            }
     var calendarioString:        String { return calendario.giornoSettimana.string
                                                + " "
                                                + calendario.giornoDellAnno.string   }
     var compleannoString:        String { return compleanno.string                  }
     var compleannoGiorno:        Int32  { return Int32(compleanno.giorno)           }
-    var compleannoMese:          Mese   { return compleanno.mese                    }
+    var compleannoMese:          Int    { return compleanno.mese.rawValue           }
     var documento:               Int    { return (compleanno.giorno * 13)
                                                + (compleanno.mese.rawValue * 3)
                                                + 6070                               }

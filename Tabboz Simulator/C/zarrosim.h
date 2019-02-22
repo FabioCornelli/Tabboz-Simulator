@@ -162,7 +162,7 @@ typedef unsigned long   u_long;	// 28 Novembre 1998
 #define x_mese           Tabboz.global.calendario.mese
 #define x_anno_bisesto   Tabboz.global.calendario.annoBisesto
 #define x_giornoset      Tabboz.global.calendario.giornoSettimana
-#define x_vacanza        Tabboz.global.calendario.vacanza
+#define x_vacanza        Tabboz.global.vacanza
 
 #ifdef PROMPT_ACTIVE
 extern	int  prompt_mode;

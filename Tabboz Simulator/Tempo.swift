@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc enum Mese : Int {
+enum Mese : Int {
     
     case gennaio   = 1
     case febbraio  = 2
@@ -59,7 +59,7 @@ import Foundation
     
 }
 
-@objc enum Giorni : Int {
+enum Giorni : Int {
     
     case lunedi    = 1
     case martedi   = 2
@@ -100,7 +100,7 @@ struct GiornoDellAnno : Equatable {
         
         // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
         if fraUnMese.giorno > fraUnMese.mese.giorni {
-            fraUnMese.giorno = fraUnMese.mese.giorni;
+            fraUnMese.giorno = fraUnMese.mese.giorni
         }
         
         return fraUnMese
@@ -138,18 +138,14 @@ struct GiornoDellAnno : Equatable {
     
 }
 
-@objc class Calendario : NSObject {
+class Calendario {
     
-                       var giornoDellAnno  = GiornoDellAnno(giorno: 30, mese: .settembre)
+                 var giornoDellAnno  = GiornoDellAnno(giorno: 30, mese: .settembre)
     
-    @objc private(set) var annoBisesto     = Int32(0) // Anno Bisestile - 12 Giugno 1999
-    @objc private(set) var giornoSettimana = Giorni.lunedi
+    private(set) var annoBisesto     = Int32(0) // Anno Bisestile - 12 Giugno 1999
+    private(set) var giornoSettimana = Giorni.lunedi
     
-    @objc              var vacanza         = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
-    
-}
-
-@objc extension Calendario {
+                 var vacanza         = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
     
     func nuovoGiorno() {
         giornoDellAnno.giorno += 1
@@ -161,15 +157,11 @@ struct GiornoDellAnno : Equatable {
             }
         }
         
-        if mese == .gennaio {
+        if giornoDellAnno.mese == .gennaio {
             annoBisesto = (annoBisesto + 1) % 4
         }
         
         giornoSettimana = Giorni(rawValue: (giornoSettimana.rawValue + 1) % 7) ?? .lunedi
     }
     
-    var giornoSettimanaString : String { return giornoSettimana.string       }
-    var giorno                : Int32  { return Int32(giornoDellAnno.giorno) }
-    var mese                  : Mese   { return giornoDellAnno.mese          }
-
 }
