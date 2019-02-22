@@ -18,9 +18,9 @@ class Tabboz : NSObject {
     @objc              var fortuna     : Int =         0 /* Uguale a me...               */
     @objc private      var stato       : Int =       100
     
-    @objc private      var attesa      : Int = ATTESAMAX // Tempo prima che ti diano altri soldi...
+          private      var attesa      : Int = ATTESAMAX // Tempo prima che ti diano altri soldi...
     
-    @objc private(set) var danaro      = Danaro(quanti: 5)
+          private(set) var danaro      = Danaro(quanti: 5)
     @objc private(set) var calendario  = Calendario()
     @objc private(set) var scuola      = Scuole()
     @objc private(set) var vestiti     = Vestiario()
@@ -1617,6 +1617,7 @@ func FaiRiparaScooter(hDlg: HANDLE) {
     @objc(fama)        var X:    Int    { return fama                               }
     @objc(reputazione) var Y:    Int    { return reputazione                        }
     
+    var soldi:                   Int    { return danaro.soldi                       }
     var scadenzaPalestraString:  String { return palestra.scadenzaString            }
     var calendarioString:        String { return calendario.giornoSettimana.string
                                                + " "

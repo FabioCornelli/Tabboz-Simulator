@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Danaro : NSObject {
+class Danaro {
     
-    @objc private(set) var soldi = 5
+    private(set) var soldi = 5
     
     init(quanti: Int) {
         soldi = quanti
