@@ -253,7 +253,6 @@ void InitTabboz(void)
 	 timer_active=1;             			 /* 10 Giugno  1998 */
 	 fase_di_avvio=1;				 		    /* 11 Giugno  1998 */
 	 Tempo_trascorso_dal_pestaggio=0;    /* 12 Giugno  1998 */
-	 current_tipa=0;							 /* 6  Maggio  1999 */
 
 #ifdef PROMPT_ACTIVE
 /* definitivamente rimosso il 		   10 Gennaio 1999 */

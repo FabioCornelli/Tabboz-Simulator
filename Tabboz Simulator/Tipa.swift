@@ -8,21 +8,21 @@
 
 import Foundation
 
-class Fiddhiola : NSObject {
+class Fiddhiola {
 
-    @objc private(set) var nome = ""        // Nome della tipa
-    @objc              var currentTipa = 0
-    @objc private(set) var figTipa = 0
-    @objc              var rapporto = 0
+    private(set) var nome        = "" // Nome della tipa
+                 var currentTipa =  0 // 6  Maggio  1999
+    private(set) var figTipa     =  0
+                 var rapporto    =  0
  
-    @objc func nuovaTipa(nome: String, figosita: Int, rapporto: Int) {
+    func nuovaTipa(nome: String, figosita: Int, rapporto: Int) {
         self.nome = nome
         self.figTipa = figosita
         self.rapporto = rapporto
         self.currentTipa = 0
     }
     
-    @objc func molla() {
+    func molla() {
         self.rapporto = 0
         self.figTipa = 0
     }

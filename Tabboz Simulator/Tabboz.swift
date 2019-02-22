@@ -24,7 +24,7 @@ class Tabboz : NSObject {
           private(set) var calendario  = Calendario()
     @objc private(set) var scuola      = Scuole()
           private(set) var vestiti     = Vestiario()
-    @objc private(set) var tipa        = Fiddhiola()
+          private(set) var tipa        = Fiddhiola()
     @objc private(set) var tabacchi    = Tabacchi()
           private      var palestra    = Palestra()
           private      var compleanno  = GiornoDellAnno.random()
@@ -656,6 +656,54 @@ class Tabboz : NSObject {
         }
         
         AggiornaTipa(hDlg)
+    }
+    
+    func palpatina(hDlg: HANDLE) {
+        if tipa.rapporto < 0 {
+            //            MessageBox( hWnd, "Brutto porco, che cazzo tocchi ?", "Palpatina...", MB_OK | MB_ICONSTOP);
+            //            if (sound_active) TabbozPlaySound(604);
+            //            AggiornaTipa(tipahDlg);
+        }
+        else if tipa.rapporto < (20 + (tipa.figTipa / 2)) {
+            // + e' figa, - te la da' (perla di saggezza)
+            
+            if sound_active != 0  {
+                TabbozPlaySound(604)
+            }
+            
+            MessageBox(hDlg,
+                       "Brutto porco, che cazzo tocchi ?",
+                       "Palpatina...",
+                       MB_OK)
+            
+            if tipa.rapporto > 5 {
+                tipa.rapporto -= 3
+            }
+            
+            AggiornaTipa(tipahDlg);
+        }
+        else if (tipa.rapporto < (30 + (tipa.figTipa / 2))) {
+            MessageBox(hDlg,
+                       "Dai, smettila... Voi uomini pensato solo a quello...",
+                       "Palpatina...",
+                       MB_OK | MB_ICONQUESTION)
+        }
+        else {
+            MessageBox(hDlg,
+                       "Mmhhhhhhhh.........",
+                       "Palpatina...",
+                       MB_OK | MB_ICONINFORMATION)
+            
+            _ = tipa.rapporto + 3 // NOTE: Original bug!
+            
+            if (tipa.rapporto < 100) {
+                tipa.rapporto = 100
+            }
+            
+            Giorno(hDlg)
+            AggiornaTipa(tipahDlg)
+        }
+        
     }
     
     func esciCollaTipa(hDlg: HANDLE) {
@@ -1621,7 +1669,11 @@ func FaiRiparaScooter(hDlg: HANDLE) {
     var vacanza:                 Int32  { return calendario.vacanza                 }
     var giubbotto:               Int32  { return Int32(vestiti.giubbotto)           }
     var pantaloni:               Int32  { return Int32(vestiti.pantaloni)           }
-    var scarpe:                  Int32  { return Int32(vestiti.scarpe)              }    
+    var scarpe:                  Int32  { return Int32(vestiti.scarpe)              }
+    var currentTipa:             Int32  { return Int32(tipa.currentTipa)            }
+    var nomeTipa:                String { return tipa.nome                          }
+    var figTipa:                 Int32  { return Int32(tipa.figTipa)                }
+    var rapporto:                Int32  { return Int32(tipa.rapporto)               }
     var scadenzaPalestraString:  String { return palestra.scadenzaString            }
     var calendarioString:        String { return calendario.giornoSettimana.string
                                                + " "

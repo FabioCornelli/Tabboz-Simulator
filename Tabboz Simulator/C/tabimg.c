@@ -405,42 +405,27 @@ long FAR PASCAL BMPTipaWndProc(HWND hWnd, WORD msg,
 				  WORD wParam, LONG lParam)
 {
     
-	switch(msg) {
-        case WM_CREATE:	return WMTipaCreate(hWnd,NULL); // NOTE: Quick compile fix -- (LPCREATESTRUCT)lParam);
-		 case WM_DESTROY: return WMTipaDestroy(hWnd);
-		 case WM_PAINT:	return WMTipaPaint(hWnd);
-		 case WM_LBUTTONDOWN:
-//								sprintf(tmp,"%d %d",LOWORD(lParam),HIWORD(lParam));
-//								MessageBox( 0, tmp, "BMPTipa", MB_OK );
-								if ((((LOWORD(lParam)>=138) && (LOWORD(lParam)<=170)) && // Coordinate Tette
-									  ((HIWORD(lParam)>= 50) && (HIWORD(lParam)<= 65))) ||
-									 (((LOWORD(lParam)>=104) && (LOWORD(lParam)<=136)) && // Coordinate Culo
-									  ((HIWORD(lParam)>= 78) && (HIWORD(lParam)<=166)))) {
-		// Palpatina...
-		if (Rapporti < 0) {
-//			MessageBox( hWnd, "Brutto porco, che cazzo tocchi ?", "Palpatina...", MB_OK | MB_ICONSTOP);
-//			if (sound_active) TabbozPlaySound(604);
-//			AggiornaTipa(tipahDlg);
-		} else if (Rapporti < (20 + (FigTipa/2)) ) { // + e' figa, - te la da' (perla di saggezza)
-			if (sound_active) TabbozPlaySound(604);
-			MessageBox( hWnd, "Brutto porco, che cazzo tocchi ?", "Palpatina...", MB_OK);
-			if (Rapporti > 5) Rapporti-=3;
-			AggiornaTipa(tipahDlg);
-		} else if (Rapporti < (30 + (FigTipa/2)) ) {
-			MessageBox( hWnd, "Dai, smettila... Voi uomini pensato solo a quello...", "Palpatina...", MB_OK | MB_ICONQUESTION);
-		} else {
-			MessageBox( hWnd, "Mmhhhhhhhh.........", "Palpatina...", MB_OK | MB_ICONINFORMATION);
-            __attribute__((unused)) int x = (Rapporti+3); // NOTE: Original bug!
-			if (Rapporti < 100) Rapporti=100;
-			Giorno(hWnd);
-			AggiornaTipa(tipahDlg);
-		}
-
-		}
-		return(0);
-
-	}
-	return DefWindowProc(hWnd,msg,wParam,lParam);
+    switch(msg) {
+        case WM_CREATE:      return WMTipaCreate(hWnd,NULL); // NOTE: Quick compile fix -- (LPCREATESTRUCT)lParam);
+        case WM_DESTROY:     return WMTipaDestroy(hWnd);
+        case WM_PAINT:	     return WMTipaPaint(hWnd);
+        case WM_LBUTTONDOWN:
+            // sprintf(tmp,"%d %d",LOWORD(lParam),HIWORD(lParam));
+            // MessageBox( 0, tmp, "BMPTipa", MB_OK );
+            
+            if ((((LOWORD(lParam)>=138) && (LOWORD(lParam)<=170)) && // Coordinate Tette
+                 ((HIWORD(lParam)>= 50) && (HIWORD(lParam)<= 65))) ||
+                (((LOWORD(lParam)>=104) && (LOWORD(lParam)<=136)) && // Coordinate Culo
+                 ((HIWORD(lParam)>= 78) && (HIWORD(lParam)<=166))))
+            {
+                // Palpatina...
+                [Tabboz.global palpatinaWithHDlg:hWnd];
+            }
+            
+            return(0);
+    }
+    
+    return DefWindowProc(hWnd,msg,wParam,lParam);
 }
 
 /*********************************************************************/

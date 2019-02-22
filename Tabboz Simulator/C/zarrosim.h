@@ -194,9 +194,10 @@ extern  int 	 ScuolaRedraw;       // E' necessario ridisegnare la scuola ???
 extern  u_long  Paghetta;       // Paghetta Settimanale...
 extern  char    Nome[30];
 extern  char    Cognome[30];
-#define Nometipa          Tabboz.global.tipa.nome.UTF8String
-#define FigTipa           Tabboz.global.tipa.figTipa         // Figosita' della tipa
-#define Rapporti          Tabboz.global.tipa.rapporto        // Rapporti Tipo <-> Tipa
+#define Nometipa          Tabboz.global.nomeTipa.UTF8String
+#define FigTipa           Tabboz.global.figTipa         // Figosita' della tipa
+#define Rapporti          Tabboz.global.rapporto        // Rapporti Tipo <-> Tipa
+#define current_tipa      Tabboz.global.currentTipa
 extern  u_long	 DDP;
 extern  int		 AttPaghetta;
 
@@ -215,7 +216,6 @@ extern  int	 	 current_testa;                               // Grado di abbronza
 #define current_pantaloni Tabboz.global.pantaloni
 #define current_scarpe    Tabboz.global.scarpe
 
-#define current_tipa      Tabboz.global.tipa.currentTipa
 extern  int  	 sound_active;
 extern  char	 sesso; 	// M/F 29 Maggio 1999 --- Inizio...
 extern  char	 ao;
