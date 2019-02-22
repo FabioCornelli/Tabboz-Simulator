@@ -24,30 +24,30 @@ class Lavori : NSObject {
     
 }
 
-@objc class Carceri : NSObject {
+class Carceri : NSObject {
     
-    @objc private(set) var ditta          : Int = 0
+    private(set) var ditta          : Int = 0
     
-    @objc              var impegno_       : Int = 0
-    @objc              var stipendio_     : Int = 0
-    @objc private(set) var giorniDiLavoro : Int = 0
+                 var impegno_       : Int = 0
+                 var stipendio_     : Int = 0
+    private(set) var giorniDiLavoro : Int = 0 // Serve x calcolare lo stipendio SOLO per il primo mese...
 
-    @objc func impegnati() {
+    func impegnati() {
         impegno_ -= 1
     }
     
-    @objc func disimpegnati() {
+    func disimpegnati() {
         impegno_ = 0
         giorniDiLavoro = 0
         stipendio_ = 0
         ditta = 0
     }
     
-    @objc func lavoraGiorno() {
+    func lavoraGiorno() {
         giorniDiLavoro += 1
     }
     
-    @objc func prendiStipendioMese() -> Int {
+    func prendiStipendioMese() -> Int {
         guard giorniDiLavoro > 3 else {
             return -1
         }
@@ -61,7 +61,7 @@ class Lavori : NSObject {
         return stipendio
     }
     
-    @objc func assumi(presso: Int, impegnoDelta: Int, stipendioDelta: Int) {
+    func assumi(presso: Int, impegnoDelta: Int, stipendioDelta: Int) {
         ditta = presso
         giorniDiLavoro = 1
         stipendio_ = 1000 + stipendioDelta

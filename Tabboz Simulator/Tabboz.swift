@@ -31,8 +31,7 @@ class Tabboz : NSObject {
     @objc private(set) var scooter     = Motorino()
           private(set) var cellulare   = Telefono()
           private(set) var abbonamento = AbbonamentoCorrente()
-    @objc private(set) var lavoro      = Carceri()
-
+          private(set) var lavoro      = Carceri()
     
     @objc static func initGlobalTabboz() {
         global = Tabboz()
@@ -1756,6 +1755,9 @@ func FaiLaPagella(hDlg: HANDLE) {
     var nomeCellulare:           String { return cellulare.displayName              }
     var nomeAbbonamento:         String { return abbonamento.nomeDisplay            }
     var creditoAbbonamento:      String { return abbonamento.creditoDisplay         }
+    var ditta:                   Int32  { return Int32(lavoro.ditta)                }
+    var impegno_:                Int32  { return Int32(lavoro.impegno_)             }
+    var stipendio_:              Int32  { return Int32(lavoro.stipendio_)           }
 
     static let palestraCostoLampada = 14
     

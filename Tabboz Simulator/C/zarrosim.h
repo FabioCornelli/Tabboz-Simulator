@@ -199,12 +199,10 @@ extern  char    Cognome[30];
 extern  u_long	 DDP;
 extern  int		 AttPaghetta;
 
-#define numeroditta       Tabboz.global.lavoro.ditta
-#define impegno           Tabboz.global.lavoro.impegno_
-#define giorni_di_lavoro  Tabboz.global.lavoro.giorniDiLavoro // Serve x calcolare lo stipendio SOLO per il primo mese...
-#define stipendio         Tabboz.global.lavoro.stipendio_
+#define numeroditta       Tabboz.global.ditta
+#define impegno           Tabboz.global.impegno_
+#define stipendio         Tabboz.global.stipendio_
 
-#define benzina           Tabboz.global.scooter.benzina_
 extern  int 	 antifurto;
 #define sizze             Tabboz.global.siga         // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
 extern  int		 Tempo_trascorso_dal_pestaggio;
