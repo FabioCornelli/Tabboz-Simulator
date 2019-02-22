@@ -15,14 +15,14 @@ class Danaro : NSObject {
     init(quanti: Int) {
         soldi = quanti
     }
-        
-}
-
-@objc extension Danaro {
     
     func deposita(_ daPosare: Int) {
         soldi += daPosare
     }
+    
+}
+
+@objc extension Danaro {
     
     func paga(_ daPagare: Int) -> Bool {
         // Controlla se ha abbastanza soldi...

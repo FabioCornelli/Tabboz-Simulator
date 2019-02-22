@@ -26,7 +26,7 @@ class Materie : NSObject {
 
 class Scuole : NSObject {
     
-    @objc private(set) var studio : Int  = 0 // Quanto vai bene a scuola (1 - 100)
+    @objc private(set) var studio: Int  = 0 // Quanto vai bene a scuola (1 - 100)
 
     @objc func calcolaStudio() {
         var i2 = 0
@@ -47,6 +47,17 @@ class Scuole : NSObject {
         }
     }
 
+    @objc var promosso: Bool {
+        var k = 0
+        
+        for i in 1 ..< 10 {
+            if (materie[i].xxx < 4) { k += 1 }
+            if (materie[i].xxx < 6) { k += 1 }
+        }
+        
+        return k > 4
+    }
+    
     @objc let materie = [
         Materie(0, "---"                  ),
         Materie(0, "Agraria"              ),

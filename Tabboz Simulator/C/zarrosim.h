@@ -294,6 +294,8 @@ BOOL FAR PASCAL ElencoDitte(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL CercaLavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+BOOL FAR PASCAL CompraCellulare(HWND hDlg, WORD message, WORD wParam, LONG lParam);     /* 31 Marzo 1999 */
+BOOL FAR PASCAL AbbonaCellulare(HWND hDlg, WORD message, WORD wParam, LONG lParam);     /* 31 Marzo 1999 */
 
 extern  void  TabbozAddKey(char *key,char *v);
 extern  char  *TabbozReadKey(char *key,char *buf);
@@ -327,6 +329,7 @@ extern  void    InitTabboz(void);
 extern  void    AggiornaTipa(HWND hDlg);
 extern  void    AggiornaPalestra(HWND parent);
 extern  void    AggiornaLavoro(HWND hDlg);
+extern  void    AggiornaCell(HWND hDlg);
 extern  int     GiornoDiLavoro(HWND hDlg, const char *s);
 
 // Numero di ditte

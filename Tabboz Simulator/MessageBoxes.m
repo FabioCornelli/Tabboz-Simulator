@@ -596,3 +596,22 @@ void MessageBox_MaQualeScooterVendi(HANDLE hDlg) {
                "Scusa, ma quale scooter avresti intenzione di vendere visto che non ne hai neanche uno ???",
                "Vendi lo scooter", MB_OK | MB_ICONQUESTION);
 }
+
+int MessageBox_TiPossoDare(HANDLE hDlg, NSInteger offerta) {
+    sprintf(tmp,"Ti posso dare %s per il tuo telefonino... vuoi vendermelo ?",MostraSoldi(offerta));
+    return MessageBox( hDlg,
+                      tmp,
+                      "Telefonino", MB_YESNO | MB_ICONQUESTION);
+}
+
+void MessageBox_AlloraVaiAFartiFottere(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Allora vai a farti fottere, pirletta !",
+               "Telefonino", MB_OK | MB_ICONINFORMATION);
+}
+
+void MessageBox_CheTelefoninoVuoiVendere(HANDLE hDlg) {
+    MessageBox( hDlg,
+               "Che telefonino vuoi vendere, pirletta ?",
+               "Telefonino", MB_OK | MB_ICONINFORMATION);
+}

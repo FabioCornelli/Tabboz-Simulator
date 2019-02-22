@@ -323,49 +323,40 @@ BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lPara
 # pragma argsused
 BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-       char          tmp[128]; /* Arghhhh ! fino alla 0.8.0 qui c'era un 30 che faceva crashiare tutto !!!! */
-static long          offerta;  /* importante lo static !!! */
-       ldiv_t        lx;
-
+    static long          offerta;  /* importante lo static !!! */
+    ldiv_t        lx;
+    
     if (message == WM_INITDIALOG) {
-	lx=ldiv(ScooterData.prezzo, 100L);
-	if ( (ScooterData.attivita == 1) || (ScooterData.attivita == 4) ) /* 0.8.1pr 28 Novembre 1998 - Se lo scooter e' sputtanato, vale meno... */
-		offerta=(lx.quot * (ScooterData.stato - 10 - random(10)));
-	else
-		offerta=(lx.quot * (ScooterData.stato - 50 - random(10)));
-
-	if (offerta < 50) offerta = 50;          /* se vale meno di 50.000 nessuno lo vuole... */
-		/* 0.8.1pr 28 Novembre 1998 - se vale meno di 50.000, viene pagato 50.000      */
-
-	AggiornaScooter(hDlg);
-
-	SetDlgItemText(hDlg, 118, MostraSoldi(offerta));
-	return(TRUE);
-	}
+        lx=ldiv(ScooterData.prezzo, 100L);
+        if ( (ScooterData.attivita == 1) || (ScooterData.attivita == 4) ) /* 0.8.1pr 28 Novembre 1998 - Se lo scooter e' sputtanato, vale meno... */
+            offerta=(lx.quot * (ScooterData.stato - 10 - random(10)));
+        else
+            offerta=(lx.quot * (ScooterData.stato - 50 - random(10)));
+        
+        if (offerta < 50) offerta = 50;          /* se vale meno di 50.000 nessuno lo vuole... */
+        /* 0.8.1pr 28 Novembre 1998 - se vale meno di 50.000, viene pagato 50.000      */
+        
+        AggiornaScooter(hDlg);
+        
+        SetDlgItemText(hDlg, 118, MostraSoldi(offerta));
+        return(TRUE);
+    }
 
     else if (message == WM_COMMAND)
     {
-	switch (wParam)
-	{
-	    case IDCANCEL:
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
-
-	    case IDOK:
-            [Tabboz.global.scooter distruggi];
-            [Tabboz.global.danaro deposita:offerta];
-
-		#ifdef TABBOZ_DEBUG
-			sprintf(tmp,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
-			writelog(tmp);
-		#endif
-
-		EndDialog(hDlg, TRUE);
-		return(TRUE);
-
-	    default:
-		return(TRUE);
-	}
+        switch (wParam) {
+                
+            case IDCANCEL:
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
+                
+            case IDOK:
+                [Tabboz.global vendiScooterWithOfferta:offerta hDlg:hDlg];
+                return(TRUE);
+                
+            default:
+                return(TRUE);
+        }
     }
 
     return(FALSE);
@@ -653,12 +644,9 @@ const char	*MostraSpeed(void)
 # pragma argsused
 BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-    char          tmp[128];
-    FARPROC       lpproc;
-
     if (message == WM_INITDIALOG) {
-	SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-	return(TRUE);
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        return(TRUE);
     }
 
     else if (message == WM_COMMAND)
@@ -671,7 +659,8 @@ BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam
             return(TRUE);
 
 	    case 103:
-		return(TRUE);
+            [Tabboz.global vaiAVendiScooterWithHDlg:hDlg];
+            return(TRUE);
 
 	    case IDCANCEL:
 		EndDialog(hDlg, TRUE);

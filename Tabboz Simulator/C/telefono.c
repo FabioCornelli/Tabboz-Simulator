@@ -162,75 +162,36 @@ void AggiornaCell(HWND hDlg)
 #pragma argsused
 BOOL FAR PASCAL        Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam) 	/* 31 Marzo 1999 */
 {
-	 char 			tmp[128];
-	 FARPROC       lpproc;
-	 long			   offerta;
-	 int				scelta;
-	 if (message == WM_INITDIALOG) {
+    if (message == WM_INITDIALOG) {
 		AggiornaCell(hDlg);
 		return(TRUE);
-	 } else if (message == WM_COMMAND) {
+    }
+    else if (message == WM_COMMAND) {
 		switch (LOWORD(wParam)) {
-		case 110:
-			if (CellularVacanza(hDlg) == 0) {
-				lpproc = MakeProcInstance(CompraCellulare, hInst);
-				DialogBox(hInst,
-					MAKEINTRESOURCE(COMPRACELLULAR),
-					hDlg,
-					lpproc);
-				FreeProcInstance(lpproc);
-				AggiornaCell(hDlg);
-				}
-			return(TRUE);
+            case 110:
+                [Tabboz.global vaiACompraCellulareWithHDlg:hDlg];
+                return(TRUE);
 
-		case 111:
-			if (CellularVacanza(hDlg) == 0) {
-				if (CellularData.attivo) {
-					offerta=CellularData.prezzo/2 + 15;
-					sprintf(tmp,"Ti posso dare %s per il tuo telefonino... vuoi vendermelo ?",MostraSoldi(offerta));
-					scelta=MessageBox( hDlg,
-					  tmp,
-					  "Telefonino", MB_YESNO | MB_ICONQUESTION);
-					if (scelta == IDYES) {
-                        [Tabboz.global.cellulare invalidate];
-                        [Tabboz.global.danaro deposita:offerta];
-					} else
-					  MessageBox( hDlg,
-						 "Allora vai a farti fottere, pirletta !",
-						 "Telefonino", MB_OK | MB_ICONINFORMATION);
-				} else {
-					MessageBox( hDlg,
-					  "Che telefonino vuoi vendere, pirletta ?",
-					  "Telefonino", MB_OK | MB_ICONINFORMATION);
-					}
-				AggiornaCell(hDlg);
-				}
-			return(TRUE);
+            case 111:
+                [Tabboz.global vendiCellulareWithHDlg:hDlg];
+                return(TRUE);
 
-		case 112:
-			if (CellularVacanza(hDlg) == 0) {
-				lpproc = MakeProcInstance(AbbonaCellulare, hInst);
-				DialogBox(hInst,
-					MAKEINTRESOURCE(CELLULRABBONAM),
-					hDlg,
-					lpproc);
-				FreeProcInstance(lpproc);
-				AggiornaCell(hDlg);
-			}
-			return(TRUE);
+            case 112:
+                [Tabboz.global vaiAdAbbonaCellulareWithHDlg:hDlg];
+                return(TRUE);
 
-		case 150:
-		case IDOK:
-		case IDCANCEL:
-			EndDialog(hDlg, TRUE);
-			return(TRUE);
-
-		default:
-			return(TRUE);
-		}
-	 }
-
-	 return(FALSE);
+            case 150:
+            case IDOK:
+            case IDCANCEL:
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
+                
+            default:
+                return(TRUE);
+        }
+    }
+    
+    return(FALSE);
 }
 
 

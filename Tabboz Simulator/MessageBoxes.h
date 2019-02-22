@@ -85,3 +85,6 @@ void MessageBox_PerIlTuoVecchioScooterTiDiamoSupervalutazione(HANDLE hDlg, const
 void MessageBox_TiPiacerebbeComprareLoScooter(HANDLE hDlg);
 void MessageBox_FaiUnGiroPerFartiVedere(HANDLE hDlg);
 void MessageBox_MaQualeScooterVendi(HANDLE hDlg);
+int  MessageBox_TiPossoDare(HANDLE hDlg, NSInteger offerta);
+void MessageBox_AlloraVaiAFartiFottere(HANDLE hDlg);
+void MessageBox_CheTelefoninoVuoiVendere(HANDLE hDlg);

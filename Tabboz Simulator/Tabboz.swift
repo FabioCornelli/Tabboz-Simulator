@@ -161,6 +161,41 @@ class Tabboz : NSObject {
     // Telefono
     // -
 
+    func vaiACompraCellulare(hDlg: HANDLE) {
+        if cellularVacanza(hDlg: hDlg) {
+            FaiCompraCellulare(hDlg: hDlg)
+            AggiornaCell(hDlg)
+        }
+    }
+
+    func vendiCellulare(hDlg: HANDLE) {
+        if cellularVacanza(hDlg: hDlg) {
+            if cellulare.attivo {
+                let offerta = cellulare.prezzo / 2 + 15
+
+                if MessageBox_TiPossoDare(hDlg, offerta) == IDYES {
+                    cellulare.invalidate()
+                    danaro.deposita(offerta)
+                } else {
+                    MessageBox_AlloraVaiAFartiFottere(hDlg)
+                }
+            } else {
+                MessageBox_CheTelefoninoVuoiVendere(hDlg)
+            }
+            
+            AggiornaCell(hDlg)
+        }
+    }
+    
+    func vaiAdAbbonaCellulare(hDlg: HANDLE) {
+        if cellularVacanza(hDlg: hDlg) {
+            FaiAbbonaCellulare(hDlg: hDlg)
+            AggiornaCell(hDlg)
+        }
+    }
+    
+    // - //
+    
     func compraCellulare(_ scelta: Int, hDlg: HANDLE) {
         let nuovoCellulare = Telefono.cellulari[scelta]
         
@@ -190,7 +225,6 @@ class Tabboz : NSObject {
             EndDialog(hDlg, true);
             return
         }
-
 
         if abbonamento.accredita(nuovoAbbonamento) {
             _ = danaro.paga(nuovoAbbonamento.prezzo)
@@ -249,7 +283,13 @@ class Tabboz : NSObject {
         SetDlgItemText(hDlg, 104, MostraSoldi(UInt(danaro.soldi)));
     }
     
-    func vendiScooter(hDlg: HANDLE) {
+    func vendiScooter(offerta: Int, hDlg: HANDLE) {
+        scooter.distruggi()
+        danaro.deposita(offerta)
+        EndDialog(hDlg, true)
+    }
+    
+    func vaiAVendiScooter(hDlg: HANDLE) {
         if scooter.stato != -1 {
             FaiVendiScooter(hDlg: hDlg)
         }
@@ -1119,6 +1159,20 @@ class Tabboz : NSObject {
         SetDlgItemText(hDlg, 104, "\(reputazione)/100")
     }
     
+    func cellularVacanza(hDlg: HWND) -> Bool {
+        if calendario.vacanza != 2 {
+            return true
+        }
+        else {
+            MessageBox(hDlg,
+                       "Stranamente, in un giorno di vacanza, il negozio e' chiuso...",
+                       "Telefonino",
+                       MB_OK | MB_ICONINFORMATION)
+            return false
+            
+        }
+    }
+    
 }
 
 func MetalloEMagutto(_ i: Int, hDlg: HANDLE) {
@@ -1184,7 +1238,7 @@ func VaiACercaLavoro(n_ditta: Int32, hDlg: HANDLE) -> Int32 {
                       lpproc)
     }
 
-    FreeProcInstance(lpproc);
+    FreeProcInstance(lpproc)
     
     return accetto
 }
@@ -1202,7 +1256,7 @@ func FaiLaScheda(scheda: Int32, hDlg: HANDLE) {
                       lpproc)
     }
     
-    FreeProcInstance(lpproc);
+    FreeProcInstance(lpproc)
 }
 
 func FaiElencoDitte(hDlg: HANDLE) {
@@ -1218,7 +1272,7 @@ func FaiElencoDitte(hDlg: HANDLE) {
                       lpproc)
     }
     
-    FreeProcInstance(lpproc);
+    FreeProcInstance(lpproc)
 }
 
 func FaiCercaLavoro(ditta: Int32, hDlg: HANDLE) {
@@ -1234,7 +1288,7 @@ func FaiCercaLavoro(ditta: Int32, hDlg: HANDLE) {
                       lpproc)
     }
     
-    FreeProcInstance(lpproc);
+    FreeProcInstance(lpproc)
 }
 
 func GiornoDiLavoro(_ hDlg: HANDLE, _ x: String) -> Bool {
@@ -1254,7 +1308,7 @@ func FaiAquistaScooter(marca: Int32, hDlg: HANDLE) {
                       lpproc)
     }
     
-    FreeProcInstance(lpproc);
+    FreeProcInstance(lpproc)
 }
 
 func FaiVendiScooter(hDlg: HANDLE) {
@@ -1270,7 +1324,39 @@ func FaiVendiScooter(hDlg: HANDLE) {
                       lpproc)
     }
     
-    FreeProcInstance(lpproc);
+    FreeProcInstance(lpproc)
+}
+
+func FaiCompraCellulare(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(CompraCellulare(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Compra Cellulare".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(Int32(COMPRACELLULAR), string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc)
+}
+
+func FaiAbbonaCellulare(hDlg: HANDLE) {
+    let lpproc = MakeProcInstance(
+        { (a, b, c, d) in ObjCBool(AbbonaCellulare(a, b, c, d)) },
+        hDlg
+    )
+    
+    "Abbona Cellulare".withCString { (string) in
+        _ = DialogBox(hInst,
+                      MAKEINTRESOURCE_Real(Int32(CELLULRABBONAM), string),
+                      hDlg,
+                      lpproc)
+    }
+    
+    FreeProcInstance(lpproc)
 }
 
 @objc extension Tabboz {

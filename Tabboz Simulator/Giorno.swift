@@ -72,6 +72,10 @@ import Foundation
             }
     
             if calendario.giorno == 22 { /* Pagella */
+                if scuola.promosso {
+                    danaro.deposita(200)
+                }
+                
                 LaPagella(hDlg: hInstance)
             }
             

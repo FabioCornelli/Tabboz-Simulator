@@ -70,7 +70,7 @@ BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	else
     	SetDlgItemText(hDlg, 129, "9");
 
-	if (k > 4) {
+	if (Tabboz.global.scuola.promosso) {
 		if (sound_active) TabbozPlaySound(401);
 		sprintf(tmp, "NON ammess%c",ao);		/* bocciata/o */
 		#ifdef TABBOZ_DEBUG
@@ -79,7 +79,6 @@ BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 	} else {
 		sprintf(tmp, "ammess%c",ao);		/* promossa/o */
-        [Tabboz.global.danaro deposita:200];
 		#ifdef TABBOZ_DEBUG
 		writelog("giorno: Pagella... Promosso...");
 		#endif
