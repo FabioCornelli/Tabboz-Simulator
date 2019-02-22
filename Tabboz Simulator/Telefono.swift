@@ -10,7 +10,7 @@ import Foundation
 
 // INFORMAZIONI SUI TELEFONINI  31 Marzo 1999
 
-class Telefono : NSObject {
+class Telefono {
 
     struct Cellulare {
         
@@ -36,11 +36,11 @@ class Telefono : NSObject {
         self.cellulare = (cellulare, 100)
     }
     
-    @objc func invalidate() {
+    func invalidate() {
         self.cellulare = nil
     }
     
-    @objc func danneggia(_ danno: Int) {
+    func danneggia(_ danno: Int) {
         guard let (cellulare, vecchioStato) = self.cellulare else {
             return
         }
@@ -66,10 +66,10 @@ class Telefono : NSObject {
         Cellulare(10, 990, "Macro TAC 8900"),
     ]
     
-    @objc var attivo      : Bool   { return cellulare == nil }
-    @objc var displayName : String { return cellulare.map { $0.cellulare.nome }  ?? ""    }
-    @objc var morente     : Bool   { return cellulare.map { $0.stato  == 1 }     ?? false }
-    @objc var prezzo      : Int    { return cellulare.map { $0.cellulare.prezzo} ?? 0     }
+    var attivo      : Bool   { return cellulare == nil }
+    var displayName : String { return cellulare.map { $0.cellulare.nome }  ?? ""    }
+    var morente     : Bool   { return cellulare.map { $0.stato  == 1 }     ?? false }
+    var prezzo      : Int    { return cellulare.map { $0.cellulare.prezzo} ?? 0     }
 
 }
 
@@ -126,8 +126,8 @@ struct STABB {
 
 class AbbonamentoCorrente : NSObject {
 
-    @objc private(set) var creditorest: Int    // Credito Restante...
-                       var nome:        String // nome del telefono
+    private(set) var creditorest: Int    // Credito Restante...
+                 var nome:        String // nome del telefono
     
     override init() {
         self.creditorest = -1
@@ -162,15 +162,15 @@ class AbbonamentoCorrente : NSObject {
         }
     }
     
-    @objc func addebita(_ soldi: Int) {
+    func addebita(_ soldi: Int) {
         creditorest -= soldi
     }
     
-    @objc var nomeDisplay : String {
+    var nomeDisplay : String {
         return creditorest > -1 ? nome : ""
     }
     
-    @objc var creditoDisplay : String {
+    var creditoDisplay : String {
         let credito = String(cString: MostraSoldi(UInt(creditorest)))
         return creditorest > -1 ? credito : ""
     }

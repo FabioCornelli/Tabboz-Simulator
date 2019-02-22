@@ -29,8 +29,8 @@ class Tabboz : NSObject {
           private      var palestra    = Palestra()
           private      var compleanno  = GiornoDellAnno.random()
     @objc private(set) var scooter     = Motorino()
-    @objc private(set) var cellulare   = Telefono()
-    @objc private(set) var abbonamento = AbbonamentoCorrente()
+          private(set) var cellulare   = Telefono()
+          private(set) var abbonamento = AbbonamentoCorrente()
     @objc private(set) var lavoro      = Carceri()
 
     
@@ -1753,7 +1753,10 @@ func FaiLaPagella(hDlg: HANDLE) {
     var nomeScooter:             String { return scooter.nome                       }
     var attivitaScooter:         String { return scooter.attivita.string            }
     var benzinaString:           String { return scooter.benzinaString              }
-    
+    var nomeCellulare:           String { return cellulare.displayName              }
+    var nomeAbbonamento:         String { return abbonamento.nomeDisplay            }
+    var creditoAbbonamento:      String { return abbonamento.creditoDisplay         }
+
     static let palestraCostoLampada = 14
     
     static func palestraCostoAbbonamento(_ a: AbbonamentiPalestra) -> Int {

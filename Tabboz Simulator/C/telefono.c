@@ -103,7 +103,7 @@ BOOL FAR PASCAL   AbbonaCellulare(HWND hDlg, WORD message, WORD wParam, LONG lPa
 
     if (message == WM_INITDIALOG) {
 		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-        SetDlgItemText(hDlg, 105, AbbonamentData.nomeDisplay.UTF8String);
+        SetDlgItemText(hDlg, 105, Tabboz.global.nomeAbbonamento.UTF8String);
          
          [Tabboz enumerateAbbonamenti:^(NSInteger i, NSInteger prezzo) {
              SetDlgItemText(hDlg, 110 + (int)i, MostraSoldi((int)prezzo));
@@ -153,9 +153,9 @@ BOOL FAR PASCAL   AbbonaCellulare(HWND hDlg, WORD message, WORD wParam, LONG lPa
 void AggiornaCell(HWND hDlg)
 {
     SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-    SetDlgItemText(hDlg, 120, CellularData.displayName.UTF8String);    
-    SetDlgItemText(hDlg, 121, AbbonamentData.nomeDisplay.UTF8String);    // Abbonamento
-    SetDlgItemText(hDlg, 122, AbbonamentData.creditoDisplay.UTF8String); // Credito
+    SetDlgItemText(hDlg, 120, Tabboz.global.nomeCellulare.UTF8String);
+    SetDlgItemText(hDlg, 121, Tabboz.global.nomeAbbonamento.UTF8String);    // Abbonamento
+    SetDlgItemText(hDlg, 122, Tabboz.global.creditoAbbonamento.UTF8String); // Credito
 }
 
 
