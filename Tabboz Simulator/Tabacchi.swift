@@ -12,8 +12,8 @@ class Sigarette : NSObject {
     
     @objc var speed:    Int
     @objc var cc:       Int
-    @objc var fama:     Int
-    @objc var prezzo:   Int
+          var fama:     Int
+          var prezzo:   Int
     @objc var nome:     String
     
     init(
@@ -22,22 +22,21 @@ class Sigarette : NSObject {
         _ fama:     Int,
         _ prezzo:   Int,
         _ nome:     String
-        ) {
+    ) {
         self.speed    = speed
         self.cc       = cc
         self.fama     = fama
         self.prezzo   = prezzo
         self.nome     = nome
-        super.init()
     }
     
 }
 
 class Tabacchi : NSObject {
     
-    @objc private(set) var siga = 0
+    private(set) var siga = 0
     
-    @objc enum HoFumato : Int {
+    enum HoFumato : Int {
         case normale      = 0
         case stanFindendo = 1
         case finite       = 2
@@ -47,7 +46,7 @@ class Tabacchi : NSObject {
         siga += 20
     }
     
-    @objc func fuma() -> HoFumato {
+    func fuma() -> HoFumato {
         siga -= 1
         
         switch siga {

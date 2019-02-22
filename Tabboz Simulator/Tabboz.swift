@@ -25,7 +25,7 @@ class Tabboz : NSObject {
           private(set) var scuola      = Scuole()
           private(set) var vestiti     = Vestiario()
           private(set) var tipa        = Fiddhiola()
-    @objc private(set) var tabacchi    = Tabacchi()
+          private(set) var tabacchi    = Tabacchi()
           private      var palestra    = Palestra()
           private      var compleanno  = GiornoDellAnno.random()
     @objc private(set) var scooter     = Motorino()
@@ -1728,6 +1728,7 @@ func FaiLaPagella(hDlg: HANDLE) {
     var rapporto:                Int32  { return Int32(tipa.rapporto)               }
     var studio:                  Int32  { return Int32(scuola.studio)               }
     var promosso:                Bool   { return scuola.promosso                    }
+    var siga:                    Int32  { return Int32(tabacchi.siga)               }
     var scadenzaPalestraString:  String { return palestra.scadenzaString            }
     var calendarioString:        String { return calendario.giornoSettimana.string
                                                + " "

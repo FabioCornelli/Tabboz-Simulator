@@ -208,7 +208,7 @@ extern  int		 AttPaghetta;
 
 #define benzina           Tabboz.global.scooter.benzina_
 extern  int 	 antifurto;
-#define sizze             Tabboz.global.tabacchi.siga         // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
+#define sizze             Tabboz.global.siga         // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
 extern  int		 Tempo_trascorso_dal_pestaggio;
 extern  int	 	 current_testa;                               // Grado di abbronzatura del tabbozzo
 
