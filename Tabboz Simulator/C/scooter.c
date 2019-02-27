@@ -304,7 +304,7 @@ char 	tmp[128];
         SetDlgItemText(hDlg, 116, scooter.nome.UTF8String);
         SetDlgItemText(hDlg, 107, Tabboz.global.benzinaString.UTF8String);
 
-		SetDlgItemText(hDlg, 110, Tabboz.global.scooter.speedString.UTF8String);
+		SetDlgItemText(hDlg, 110, Tabboz.global.speed.UTF8String);
 		SetDlgItemText(hDlg, 111, scooter.marmittaString.UTF8String);
 		SetDlgItemText(hDlg, 112, scooter.carburatoreString.UTF8String);
 		SetDlgItemText(hDlg, 113, scooter.ccString.UTF8String);
@@ -319,7 +319,7 @@ char 	tmp[128];
 
 void AggiornaScooter(HWND hDlg) {
     if (ScooterData.stato != -1) {
-        AggiornaScooter_Ex(hDlg, Tabboz.global.scooter.scooter, ScooterData.stato);
+        AggiornaScooter_Ex(hDlg, Tabboz.global.scooter, ScooterData.stato);
 
     } else {
         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
@@ -347,10 +347,10 @@ BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
     if (message == WM_INITDIALOG) {
         SetDlgItemText(hDlg, 109, Tabboz.global.nomeScooter.UTF8String);
-        SetDlgItemText(hDlg, 105, Tabboz.global.scooter.scooter.carburatoreString.UTF8String);
-        SetDlgItemText(hDlg, 106, Tabboz.global.scooter.scooter.marmittaString.UTF8String);
-        SetDlgItemText(hDlg, 107, Tabboz.global.scooter.scooter.ccString.UTF8String);
-        SetDlgItemText(hDlg, 108, Tabboz.global.scooter.scooter.filtroString.UTF8String );
+        SetDlgItemText(hDlg, 105, Tabboz.global.carburatore.UTF8String);
+        SetDlgItemText(hDlg, 106, Tabboz.global.marmitta.UTF8String);
+        SetDlgItemText(hDlg, 107, Tabboz.global.cilindro.UTF8String);
+        SetDlgItemText(hDlg, 108, Tabboz.global.filtro.UTF8String);
         
         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
         

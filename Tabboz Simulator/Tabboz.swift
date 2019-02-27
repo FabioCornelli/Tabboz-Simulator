@@ -16,9 +16,9 @@ class Tabboz : NSObject {
                        var fama        : Int =         0
                        var reputazione : Int =         0
     @objc              var fortuna     : Int =         0 /* Uguale a me...               */
-    @objc private      var stato       : Int =       100
+    @objc private(set) var stato       : Int =       100
     
-          private      var attesa      : Int = ATTESAMAX // Tempo prima che ti diano altri soldi...
+          private(set) var attesa      : Int = ATTESAMAX // Tempo prima che ti diano altri soldi...
     
           private(set) var danaro      = Danaro(quanti: 5)
           private(set) var calendario  = Calendario()
@@ -26,9 +26,9 @@ class Tabboz : NSObject {
           private(set) var vestiti     = Vestiario()
           private(set) var tipa        = Fiddhiola()
           private(set) var tabacchi    = Tabacchi()
-          private      var palestra    = Palestra()
-          private      var compleanno  = GiornoDellAnno.random()
-    @objc private(set) var scooter     = Motorino()
+          private(set) var palestra    = Palestra()
+          private(set) var compleanno  = GiornoDellAnno.random()
+          private(set) var scooter     = Motorino()
           private(set) var cellulare   = Telefono()
           private(set) var abbonamento = AbbonamentoCorrente()
           private(set) var lavoro      = Carceri()
@@ -1729,6 +1729,8 @@ func FaiLaPagella(hDlg: HANDLE) {
     
     @objc(fama)        var X:    Int    { return fama                               }
     @objc(reputazione) var Y:    Int    { return reputazione                        }
+
+    @objc(scooter)     var Z:    NEWSTSCOOTER { return scooter.scooter              }
     
     var soldi:                   Int    { return danaro.soldi                       }
     var vacanza:                 Int32  { return calendario.vacanza                 }
@@ -1755,6 +1757,11 @@ func FaiLaPagella(hDlg: HANDLE) {
     var nomeScooter:             String { return scooter.nome                       }
     var attivitaScooter:         String { return scooter.attivita.string            }
     var benzinaString:           String { return scooter.benzinaString              }
+    var carburatore:             String { return scooter.scooter.carburatore.string }
+    var marmitta:                String { return scooter.scooter.marmitta.string    }
+    var cilindro:                String { return scooter.scooter.cc.string          }
+    var filtro:                  String { return scooter.scooter.filtro.string      }
+    var speed:                   String { return scooter.speedString                }
     var nomeCellulare:           String { return cellulare.displayName              }
     var nomeAbbonamento:         String { return abbonamento.nomeDisplay            }
     var creditoAbbonamento:      String { return abbonamento.creditoDisplay         }

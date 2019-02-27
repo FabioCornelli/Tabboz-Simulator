@@ -99,7 +99,7 @@ class NEWSTSCOOTER : NSObject {
     
 }
 
-@objc class Motorino : NSObject {
+class Motorino {
     
     @objc enum Attivita : Int {
         case mancante     = 0
@@ -111,16 +111,18 @@ class NEWSTSCOOTER : NSObject {
         case aSecco       = 6
     }
     
-    var benzina = 0
+    private(set) var benzina  = 0
+    private(set) var prezzo   = 0
+    private(set) var attivita = Attivita.mancante
+    private(set) var stato    = -1
     
-    @objc private(set) var prezzo = 0
-    @objc private(set) var attivita = Attivita.mancante
-    @objc private(set) var stato = -1
-    @objc private(set) var nome = ""
+    private(set) var scooter  = NEWSTSCOOTER.scooter[0]
     
-    @objc var scooter = NEWSTSCOOTER.scooter[0]
+    var nome : String {
+        return scooter.nome
+    }
     
-    @objc var speedString : String {
+    var speedString : String {
         switch attivita {
         case .mancante:    return ""
         case .funzionante: return "\(scooter.speedCalcolata)Km/h"
@@ -128,7 +130,7 @@ class NEWSTSCOOTER : NSObject {
         }
     }
     
-    @objc var benzinaString : String {
+    var benzinaString : String {
         return String(format: "%1.1f", Double(benzina) / 10.0)
     }
         
@@ -149,7 +151,7 @@ class NEWSTSCOOTER : NSObject {
         return attivita
     }
     
-    @objc var attivitaCalcolata : Attivita {
+    var attivitaCalcolata : Attivita {
         return attivitaCalcolataEx ?? .funzionante
     }
     
@@ -157,19 +159,19 @@ class NEWSTSCOOTER : NSObject {
         return prezzo / 100 * (100 - stato) + 10
     }
     
-    @objc func compraScooter(_ scooterId: Int) {
+    func compraScooter(_ scooterId: Int) {
         scooter = NEWSTSCOOTER.scooter[scooterId]
     }
     
-    @objc func ripara() {
+    func ripara() {
         stato = 100
     }
     
-    @objc func danneggia(_ danno: Int) {
+    func danneggia(_ danno: Int) {
         stato -= danno
     }
     
-    @objc func distruggi() {
+    func distruggi() {
         stato = -1
         attivita = .mancante
         
@@ -177,7 +179,7 @@ class NEWSTSCOOTER : NSObject {
         benzina = 0                       /* serbatoio vuoto    7 Maggio 1998    */
     }
     
-    @objc func consuma(benza: Int) {
+     func consuma(benza: Int) {
         benzina -= benza
         
         if benzina < 1 {
@@ -185,13 +187,13 @@ class NEWSTSCOOTER : NSObject {
         }
     }
     
-    @objc func faiIlPieno() {
+    func faiIlPieno() {
         benzina = scooter.cc != ._3969cc
             ? 50    /* 5 litri,  il massimo che puo' contenere... */
             : 850   /* 85 litri, x la macchinina un po' figa...   */
     }
     
-    @objc func usaOParcheggia() -> Bool {
+    func usaOParcheggia() -> Bool {
         switch attivitaCalcolataEx ?? attivita {
         case .funzionante:
             attivita = .parcheggiato
@@ -204,7 +206,7 @@ class NEWSTSCOOTER : NSObject {
         }
     }
     
-    @objc func regalaMacchinina() {
+    func regalaMacchinina() {
         scooter = NEWSTSCOOTER.scooter[7]
         benzina = 850
     }
