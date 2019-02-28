@@ -11,32 +11,32 @@ import Foundation
 @objc extension Tabboz {
 
     func cheatDino() {
-        danaro.deposita(1000)
-        reputazione = tabboz_random(4)
-        fama = tabboz_random(40)
+        fama       .resetta(a: tabboz_random(40))
+        reputazione.resetta(a: tabboz_random(4))
+        danaro     .deposita(1000)
     }
     
     func cheatFratelloDiDino() {
-        danaro.deposita(1000)
-        reputazione = tabboz_random(30)
-        fama = tabboz_random(5)
+        fama       .resetta(a: tabboz_random(5))
+        reputazione.resetta(a: tabboz_random(30))
+        danaro     .deposita(1000)
     }
     
     func cheatDaniele() {
-        scooter.regalaMacchinina()
-        reputazione = 100
+        reputazione.resetta(a: 100)
+        scooter    .regalaMacchinina()
     }
     
     func cheatCaccia() {
-        danaro.deposita(1000)
-        fama = 100
+        fama       .resetta(a: 100)
+        danaro     .deposita(1000)
     }
     
     func cheatAndrea() {
         scuola.materie.dropFirst().forEach { $0.xxx = 10 }
         
         if tipa.rapporto > 1 {
-            tipa.rapporto = 100
+            tipa.rapporto.resetta(a: 100)
         }
         
         lavoro.assumi(presso: 1,

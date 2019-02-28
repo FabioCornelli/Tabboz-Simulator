@@ -28,16 +28,16 @@ class Carceri : NSObject {
     
     private(set) var ditta          : Int = 0
     
-                 var impegno_       : Int = 0
+                 var impegno        = Stat(valore: 0)
                  var stipendio_     : Int = 0
     private(set) var giorniDiLavoro : Int = 0 // Serve x calcolare lo stipendio SOLO per il primo mese...
 
     func impegnati() {
-        impegno_ -= 1
+        impegno.decrementa(di: 1)
     }
     
     func disimpegnati() {
-        impegno_ = 0
+        impegno.resetta(a: 0)
         giorniDiLavoro = 0
         stipendio_ = 0
         ditta = 0
@@ -65,7 +65,7 @@ class Carceri : NSObject {
         ditta = presso
         giorniDiLavoro = 1
         stipendio_ = 1000 + stipendioDelta
-        impegno_ = 10 + impegnoDelta
+        impegno.resetta(a: 10 + impegnoDelta)
     }
     
     @objc static let lavoro = [

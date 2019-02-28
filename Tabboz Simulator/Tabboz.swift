@@ -8,18 +8,46 @@
 
 import Foundation
 
+struct Stat  {
+    
+    private(set) var valore: Int
+    
+    init(valore: Int) {
+        self.valore = valore
+    }
+    
+    mutating func resetta(a tanto: Int) {
+        valore = tanto
+    }
+    
+    mutating func incrementa(di tanto: Int, seMinoreDi limite: Int? = nil) {
+        if limite.map({ valore < $0 }) ?? true {
+            incrementa(di: tanto)
+        }
+    }
+
+    mutating func decrementa(di tanto: Int, seMaggioreDi limite: Int? = nil, minimo: Int? = nil) {
+        if limite.map({ valore > $0 }) ?? true {
+            decrementa(di: tanto)
+        }
+        
+        if let minimo = minimo {
+            valore = max(valore, minimo)
+        }
+    }
+    
+}
 
 class Tabboz : NSObject {
     
     @objc static private(set) var global = Tabboz()
 
-                       var fama        : Int =         0
-                       var reputazione : Int =         0
     @objc              var fortuna     : Int =         0 /* Uguale a me...               */
-    @objc private(set) var stato       : Int =       100
     
           private(set) var attesa      : Int = ATTESAMAX // Tempo prima che ti diano altri soldi...
     
+                       var fama        = Stat(valore: 0)
+                       var reputazione = Stat(valore: 0)
           private(set) var danaro      = Danaro(quanti: 5)
           private(set) var calendario  = Calendario()
           private(set) var scuola      = Scuole()
@@ -75,9 +103,7 @@ class Tabboz : NSObject {
                 TabbozPlaySound(201)
             }
             
-            if fama < 82 {
-                fama += 1
-            }
+            fama.incrementa(di: 1, seMinoreDi: 82)
             
             eventiPalestra(hDlg)
             AggiornaPalestra(hDlg)
@@ -89,15 +115,16 @@ class Tabboz : NSObject {
             if (current_testa < 3) {
                 // Grado di abbronzatura
                 current_testa += 1
-                if fama < 20 { fama += 1 }    // Da 0 a 3 punti in piu' di fama
-                if fama < 45 { fama += 1 }    // ( secondo quanta se ne ha gia')
-                if fama < 96 { fama += 1 }
+                
+                fama.incrementa(di: 1, seMinoreDi: 20) // Da 0 a 3 punti in piu' di fama
+                fama.incrementa(di: 1, seMinoreDi: 45) // ( secondo quanta se ne ha gia')
+                fama.incrementa(di: 1, seMinoreDi: 96)
             }
             else {
                 // Carbonizzato...
                 current_testa = 4;
-                if fama > 8        { fama -= 8 }
-                if reputazione > 5 { reputazione -= 5 }
+                fama       .decrementa(di: 8, seMaggioreDi: 8)
+                reputazione.decrementa(di: 5, seMaggioreDi: 5)
                 
                 MessageBox_EccessivaEsposizioneAiRaggiUltravioletti(hDlg)
             }
@@ -131,10 +158,7 @@ class Tabboz : NSObject {
         }
         
         MessageBox_EventiPalestra(hDlg, Int32(i))
-        
-        if reputazione > 10 {
-            reputazione -= 4
-        }
+        reputazione.decrementa(di: 4, seMaggioreDi: 10)
     }
     
     // -
@@ -181,12 +205,7 @@ class Tabboz : NSObject {
         
         if danaro.paga(nuovoCellulare.prezzo) {
             cellulare.prendiCellulare(nuovoCellulare)
-            
-            fama += nuovoCellulare.fama
-            
-            if fama > 100 {
-                fama = 100
-            }
+            fama.incrementa(di: nuovoCellulare.fama)
         }
         else {
             nomoney(hDlg, Int32(CELLULRABBONAM))
@@ -361,20 +380,13 @@ class Tabboz : NSObject {
             
             if !danaro.paga(NEWSTSCOOTER.scooter[Int(scelta)].prezzo) {
                 MessageBox_TiPiacerebbeComprareLoScooter(hDlg)
-                if reputazione > 3 {
-                    reputazione -= 1
-                }
+                reputazione.decrementa(di: 1, seMaggioreDi: 3)
             }
             else {
                 scooter.compraScooter(Int(scelta))
                 
                 MessageBox_FaiUnGiroPerFartiVedere(hDlg)
-                
-                reputazione += 4
-                if reputazione > 100 {
-                    reputazione = 100
-                    
-                }
+                reputazione.incrementa(di: 4)
             }
             Evento(hDlg);
         }
@@ -482,11 +494,7 @@ class Tabboz : NSObject {
             
             // E' necessario ridisegnare l' immagine del Tabbozzo...
             TabbozRedraw = 1
-            
-            fama += vestito.fama
-            if fama > 100 {
-                fama=100
-            }
+            fama.incrementa(di: vestito.fama)
         }
         else {
             nomoney(hInstance, Int32(VESTITI))
@@ -499,11 +507,7 @@ class Tabboz : NSObject {
         let sigaretta = Tabacchi.sigarette[sigaretteId]
         
         if danaro.paga(sigaretta.prezzo) {
-            fama += sigaretta.fama
-            if fama > 100 {
-                fama = 100
-            }
-
+            fama.incrementa(di: sigaretta.fama)
             tabacchi.nuovoPacchetto()
             
             MessageBox_MessaggioPaurosoDaSigarette(hInstance)
@@ -540,13 +544,8 @@ class Tabboz : NSObject {
                 
                 MessageBox_ConciatoCosiNonPuoEntrare(hDlg)
                 
-                if reputazione > 2 {
-                    reputazione -= 1
-                }
-                
-                if fama > 2 {
-                    fama -= 1
-                }
+                fama       .decrementa(di: 1, seMaggioreDi: 2)
+                reputazione.decrementa(di: 1, seMaggioreDi: 2)
             }
             else {
                 if sound_active != 0 {
@@ -556,16 +555,8 @@ class Tabboz : NSObject {
                 
                 _ = danaro.paga(prezzo)
                 
-                fama += disco.fama
-                reputazione += disco.xxx
-                
-                if fama > 100 {
-                    fama = 100
-                }
-                
-                if reputazione > 100 {
-                    reputazione = 100
-                }
+                fama.incrementa(di: disco.fama)
+                reputazione.incrementa(di: disco.xxx)
             }
         }
         else {
@@ -592,23 +583,15 @@ class Tabboz : NSObject {
                 TabbozPlaySound(603)
             }
             
-            tipa.rapporto = 0
+            tipa.rapporto.resetta(a: 0)
             
             if (tipa.figTipa >= 79) && (sesso == Int8("M")) {
                 MessageBox_PrendonoAScarpate(hDlg)
-                
-                reputazione -= 8
-                if reputazione < 0 {
-                    reputazione = 0
-                }
+                reputazione.decrementa(di: 8)
             }
             
             if (tipa.figTipa <= 40) && (sesso == Int8("M")) {
-                reputazione += 4
-                
-                if reputazione > 100 {
-                  reputazione = 100
-                }
+                reputazione.incrementa(di: 4)
             }
             
             Evento(hDlg);
@@ -627,7 +610,8 @@ class Tabboz : NSObject {
             ((abbonamento.creditorest < 2) && !cellulare.attivo)
         {
             MessageBox_SeFaiAncoraUnaTelefonataTiSpezzoLeGambe(hDlg)
-        } else {
+        }
+        else {
             if sound_active != 0 {
                 TabbozPlaySound(602)
             }
@@ -641,9 +625,7 @@ class Tabboz : NSObject {
                 _ = danaro.paga(5)
             }
             
-            if tipa.rapporto <= 60 {
-                tipa.rapporto += 1
-            }
+            tipa.rapporto.incrementa(di: 1, seMinoreDi: 60)
         }
         
         AggiornaTipa(hDlg)
@@ -667,11 +649,9 @@ class Tabboz : NSObject {
                        "Palpatina...",
                        MB_OK)
             
-            if tipa.rapporto > 5 {
-                tipa.rapporto -= 3
-            }
+            tipa.rapporto.decrementa(di: 3, seMaggioreDi: 5)
             
-            AggiornaTipa(tipahDlg);
+            AggiornaTipa(tipahDlg)
         }
         else if (tipa.rapporto < (30 + (tipa.figTipa / 2))) {
             MessageBox(hDlg,
@@ -685,11 +665,8 @@ class Tabboz : NSObject {
                        "Palpatina...",
                        MB_OK | MB_ICONINFORMATION)
             
-            _ = tipa.rapporto + 3 // NOTE: Original bug!
-            
-            if (tipa.rapporto < 100) {
-                tipa.rapporto = 100
-            }
+            // NOTE: Original bug!
+            // tipa.rapporto.incrementa(di: 3)
             
             Giorno(hDlg)
             AggiornaTipa(tipahDlg)
@@ -723,20 +700,8 @@ class Tabboz : NSObject {
             return
         }
         
-        tipa.rapporto += 5
-        
-        if tipa.rapporto > 100 {
-            tipa.rapporto = 100
-        }
-
-        if tipa.figTipa > fama {
-            fama += 1
-        }
-        
-        if fama > 100 {
-            fama = 100
-        }
-
+        tipa.rapporto.incrementa(di: 5)
+        fama.incrementa(di: 1, seMinoreDi: tipa.figTipa)
         scooter.consuma(benza: 3)
         
         CalcolaVelocita(hDlg);
@@ -746,17 +711,10 @@ class Tabboz : NSObject {
     func entrambe(hDlg: HANDLE) {
         MessageBox_MentreSeiAppartatoTiTiraETiLascia(hDlg, tipa.nome, String(utf8String: figNomTemp))
         
-        tipa.rapporto = 0
+        tipa.rapporto.resetta(a: 0)
         
-        reputazione -= 8
-        if reputazione < 0 {
-            reputazione = 0
-        }
-        
-        fama -= 4
-        if fama < 0 {
-            fama = 0
-        }
+        fama       .decrementa(di: 4)
+        reputazione.decrementa(di: 8)
         
         EndDialog(hDlg, true)
     }
@@ -767,16 +725,9 @@ class Tabboz : NSObject {
             figosita: Int(figTemp),
             rapporto: 30 + tabboz_random(15)
         )
-        
-        fama += tipa.figTipa / 10
-        if fama > 100 {
-            fama = 100
-        }
-        
-        reputazione += tipa.figTipa / 13
-        if reputazione > 100 {
-            reputazione = 100
-        }
+
+        fama       .incrementa(di: tipa.figTipa / 10)
+        reputazione.incrementa(di: tipa.figTipa / 13)
         
         EndDialog(hDlg, true)
     }
@@ -785,7 +736,7 @@ class Tabboz : NSObject {
         // Calcola se ce la fa o meno con la tipa... ------------------------------------
         
         let puntiTipa = (tipa.figTipa * 2) + tabboz_random(50)
-        let puntiMiei = fama + reputazione + tabboz_random(30)
+        let puntiMiei = fama + (reputazione + tabboz_random(30))
         
         if puntiTipa <= puntiMiei {
             // E' andata bene... ----------------------------------------------------
@@ -804,13 +755,8 @@ class Tabboz : NSObject {
                                figosita: Int(figTemp),
                                rapporto: 30 + tabboz_random(15))
                 
-                fama += tipa.figTipa / 10
-                if (fama > 100) { fama=100 }
-                
-                reputazione += tipa.figTipa / 13
-                if reputazione > 100 {
-                    reputazione = 100
-                }
+                fama       .incrementa(di: tipa.figTipa / 10)
+                reputazione.incrementa(di: tipa.figTipa / 13)
             }
         }
         else {
@@ -820,15 +766,8 @@ class Tabboz : NSObject {
             
             DDP += 1                // log due di picche...
             
-            reputazione -= 2        // decremento reputazione
-            if reputazione < 0 {
-                reputazione = 0
-            }
-            
-            fama -= 2               // decremento figosita'
-            if fama < 0 {
-              fama=0
-            }
+            reputazione.decrementa(di: 2) // decremento reputazione
+            fama       .decrementa(di: 2) // decremento figosita'
             
             if sound_active != 0 {
                 TabbozPlaySound(601)
@@ -895,9 +834,7 @@ class Tabboz : NSObject {
                     "Cosa ??? Credi di farmi paura piccolo pezzettino di letame vestito da zarro... Deve ancora nasce chi puo' minacciarmi...",
                     "Bella figura", MB_OK | MB_ICONINFORMATION)
                     
-                    if reputazione > 3  {
-                        reputazione -= 2
-                    }
+                    reputazione.decrementa(di: 2, seMaggioreDi: 3)
                     
                     if scuola.materie[Int(scelta)].xxx > 2 {
                         scuola.materie[Int(scelta)].xxx -= 1
@@ -921,10 +858,8 @@ class Tabboz : NSObject {
                     "Infastidito dalla tua presenza, il prof ti manda via a calci.",
                     "Bella figura", MB_OK | MB_ICONINFORMATION);
                     
-                    if reputazione > 3 {
-                        reputazione -= 2
-                    }
-                    
+                    reputazione.decrementa(di: 2, seMaggioreDi: 3)
+
                     if (scuola.materie[Int(scelta)].xxx > 2 ) {
                         scuola.materie[Int(scelta)].xxx -= 1
                     }
@@ -939,13 +874,8 @@ class Tabboz : NSObject {
     
     func studia(hDlg: HANDLE) {
         if CheckVacanza(hDlg) {
-            if reputazione > 10 {    /* Studiare costa fatica...          */
-                reputazione -= 5     /* (oltre che Reputazione e Fama...) */
-            }
-            
-            if fama > 5 {
-                fama -= 1
-            }
+            reputazione.decrementa(di: 5, seMaggioreDi: 10) // Studiare costa fatica...
+            fama       .decrementa(di: 1, seMaggioreDi: 5)  // (oltre che Reputazione e Fama...)
             
             scuola.materie[Int(scelta)].xxx += 1
             
@@ -977,36 +907,20 @@ class Tabboz : NSObject {
             
         case DISCO:
             MessageBox_ButtafuoriTiDepositaInUnCassonetto(parent)
-            
-            if reputazione > 3 {
-                reputazione -= 1
-            }
-            
+            reputazione.decrementa(di: 1, seMaggioreDi:  3)
             break
             
         case VESTITI:
             MessageBox_ConCosaPaghi(parent)
-            
-            if fama > 12 {
-                fama -= 3
-            }
-            
-            if reputazione > 4 {
-                reputazione -= 2
-            }
-            
+            fama       .decrementa(di: 3, seMaggioreDi: 12)
+            reputazione.decrementa(di: 2, seMaggioreDi:  4)
             break
             
         case PALESTRA:
             MessageBox_IstruttoreTiSuonaComeUnaZampogna(parent)
-            
-            if fama > 14 {
-                fama -= 4    /* Ah,ah ! fino al 10 Jan 1999 c'era scrittto Reputazione-=4... */
-            }
-            
-            if reputazione > 18 {
-                reputazione -= 4
-            }
+
+            fama       .decrementa(di: 4, seMaggioreDi: 14) // Ah,ah ! fino al 10 Jan 1999 c'era scrittto Reputazione-=4...
+            reputazione.decrementa(di: 4, seMaggioreDi: 18)
             
             break
             
@@ -1014,42 +928,27 @@ class Tabboz : NSObject {
             MessageBox_IlMeccanicoTiRiempieDiPugni(parent)
             
             if (sesso == Int8("M")) {
-                if reputazione > 7 {
-                    reputazione -= 5
-                }
+                reputazione.decrementa(di: 5, seMaggioreDi: 7)
                 
                 if scooter.stato > 7 {
                     scooter.danneggia(5)
                 }
             }
             else {
-                if reputazione > 6 {
-                    reputazione -= 4
-                }
-                
-                if fama > 3 {
-                    fama -= 2
-                }
+                reputazione.decrementa(di: 4, seMaggioreDi: 6)
+                fama       .decrementa(di: 2, seMaggioreDi: 3)
             }
             
             break
             
         case TABACCAIO:
             MessageBox_FuoriDalMioLocale(parent)
-            
-            if fama > 2 {
-                fama -= 1
-            }
-            
+            fama.decrementa(di: 1, seMaggioreDi: 2)
             break
             
         case CELLULRABBONAM:
             MessageBox_NonTiSeiAccortoDiNonAvareSoldi(parent)
-            
-            if (fama > 2) {
-                fama -= 1
-            }
-            
+            fama.decrementa(di: 1, seMaggioreDi: 2)
             break
             
         default:
@@ -1120,7 +1019,7 @@ class Tabboz : NSObject {
             return
         }
         
-        if (( reputazione + fortuna + tabboz_random(80) ) > tabboz_random(200))   {
+        if ((reputazione + fortuna + tabboz_random(80)) > tabboz_random(200))   {
             lavoro.assumi(
                 presso: Int(n_ditta),
                 impegnoDelta: tabboz_random(20),
@@ -1130,10 +1029,7 @@ class Tabboz : NSObject {
             MessageBox_SeiStatoAssunto(hDlg, Carceri.lavoro[Int(n_ditta)].nome);
         } else {
             MessageBox_NonSeiRiuscitoASuperareIlTest(hDlg)
-            
-            if reputazione > 10 {
-                reputazione -= 2
-            }
+            reputazione.decrementa(di: 2, seMaggioreDi: 10)
         }
         
         Evento(hDlg);
@@ -1158,15 +1054,15 @@ class Tabboz : NSObject {
             return
         }
         
-        if (lavoro.impegno_ > 90) {
+        if (lavoro.impegno > 90) {
             if ((30 + fortuna) > (30 + tabboz_random(50))) {
                 MessageBox_ForsePotremmoDartiQualcosina(hDlg)
                 lavoro.stipendio_ += ((tabboz_random(1)+1) * 100)
-                lavoro.impegno_ -= 30
+                lavoro.impegno.decrementa(di: 30)
                 Evento(hDlg);
             } else {
                 MessageBox_VediDiScordartelo(hDlg);
-                lavoro.impegno_ -= 20
+                lavoro.impegno.decrementa(di: 20)
                 Evento(hDlg)
             }
         } else {
@@ -1186,13 +1082,8 @@ class Tabboz : NSObject {
             TabbozPlaySound(503)
         }
         
-        if reputazione > 20 {
-            reputazione -= 1
-        }
-        
-        if lavoro.impegno_ < 99 {
-           lavoro.impegno_ += 1
-        }
+        reputazione   .decrementa(di: 1, seMaggioreDi: 20)
+        lavoro.impegno.incrementa(di: 1)
         
         if tabboz_random(fortuna + 3) == 0 {
             Evento(hDlg)
@@ -1219,13 +1110,8 @@ class Tabboz : NSObject {
             TabbozPlaySound(502)
         }
         
-        if reputazione < 85 {
-            reputazione += 10
-        }
-        
-        if lavoro.impegno_ > 19 {
-            lavoro.impegno_ -= 15
-        }
+        reputazione   .decrementa(di: 10, seMaggioreDi: 85)
+        lavoro.impegno.decrementa(di: 15, seMaggioreDi: 19)
         
         if tabboz_random(fortuna + 3) == 0 {
             Evento(hDlg)
@@ -1240,10 +1126,8 @@ class Tabboz : NSObject {
             return
         }
 
-        if lavoro.impegno_ < 85 {
-            lavoro.impegno_ += 1
-        }
-        
+        lavoro.impegno.incrementa(di: 1, seMinoreDi: 85)
+
         if sound_active != 0 {
             TabbozPlaySound(501)
         }
@@ -1338,37 +1222,22 @@ class Tabboz : NSObject {
             if gareggia(con: NEWSTSCOOTER.scooter[i]) {
                 // perdi
                 
-                if reputazione > 80 {
-                    reputazione -= 3
-                }
-                
-                if reputazione > 10 {
-                    reputazione -= 2
-                }
+                reputazione.decrementa(di: 3, seMaggioreDi: 80)
+                reputazione.decrementa(di: 2, seMaggioreDi: 10)
                 
                 MessageBox_DopoPochiMetriSiVedeLInferiorita(hDlg)
             }
             else {
                 // vinci
-                reputazione += 10
-                
-                if reputazione > 100 {
-                  reputazione = 100
-                }
-                
+                reputazione.incrementa(di: 10)
                 MessageBox_BruciInPartenza(hDlg)
             }
         }
         else {
             // Se non accetti la sfida, perdi rep...
             
-            if reputazione > 80 {
-                reputazione -= 3
-            }
-            
-            if reputazione > 10 {
-                reputazione -= 2
-            }
+            reputazione.decrementa(di: 3, seMaggioreDi: 80)
+            reputazione.decrementa(di: 2, seMaggioreDi: 10)
         }
         
         scooter.consuma(benza: 5)
@@ -1379,19 +1248,13 @@ class Tabboz : NSObject {
     }
     
     func esciConLaCompagnia(hDlg: HANDLE) {
-                                // Uscendo con la propria compagnia si puo' arrivare
-                                // solamente a reputazione = 57
-        if reputazione < 57 {
-            reputazione += 1
-        }
+        // Uscendo con la propria compagnia si puo' arrivare
+        // solamente a reputazione = 57
+        // Se la rep e' bassa, sale + in fretta
         
-        if reputazione < 37 {   // Se la rep e' bassa, sale + in fretta
-            reputazione += 1
-        }
-        
-        if reputazione < 12 {
-            reputazione += 1
-        }
+        reputazione.incrementa(di: 1, seMinoreDi: 57)
+        reputazione.incrementa(di: 1, seMinoreDi: 37)
+        reputazione.incrementa(di: 1, seMinoreDi: 12)
         
         Evento(hDlg);
         EndDialog(hDlg, true);
@@ -1409,17 +1272,11 @@ class Tabboz : NSObject {
         if (Tempo_trascorso_dal_pestaggio > 0) {
             if (tabboz_random(2) == 1) {
                 MessageBox_ChiTiHaPicchiatoNonSiFaraVedere(hDlg)
-                
-                if reputazione < 80 {
-                    reputazione += 3
-                }
+                reputazione.incrementa(di: 3, seMinoreDi: 80)
             }
             else {
                 MessageBox_AncheITuiAmiciVengonoScacagnati(hDlg)
-                
-                if reputazione < 95 {
-                    reputazione += 5
-                }
+                reputazione.incrementa(di: 5, seMinoreDi: 95)
             }
             
             Evento(hDlg);
@@ -1727,8 +1584,8 @@ func FaiLaPagella(hDlg: HANDLE) {
 
 @objc extension Tabboz {
     
-    @objc(fama)        var X:    Int    { return fama                               }
-    @objc(reputazione) var Y:    Int    { return reputazione                        }
+    @objc(fama)        var X:    Int    { return fama.valore                        }
+    @objc(reputazione) var Y:    Int    { return reputazione.valore                 }
 
     @objc(scooter)     var Z:    NEWSTSCOOTER { return scooter.scooter              }
     
@@ -1740,7 +1597,7 @@ func FaiLaPagella(hDlg: HANDLE) {
     var currentTipa:             Int32  { return Int32(tipa.currentTipa)            }
     var nomeTipa:                String { return tipa.nome                          }
     var figTipa:                 Int32  { return Int32(tipa.figTipa)                }
-    var rapporto:                Int32  { return Int32(tipa.rapporto)               }
+    var rapporto:                Int32  { return Int32(tipa.rapporto.valore)        }
     var studio:                  Int32  { return Int32(scuola.studio)               }
     var promosso:                Bool   { return scuola.promosso                    }
     var siga:                    Int32  { return Int32(tabacchi.siga)               }
@@ -1766,7 +1623,7 @@ func FaiLaPagella(hDlg: HANDLE) {
     var nomeAbbonamento:         String { return abbonamento.nomeDisplay            }
     var creditoAbbonamento:      String { return abbonamento.creditoDisplay         }
     var ditta:                   Int32  { return Int32(lavoro.ditta)                }
-    var impegno_:                Int32  { return Int32(lavoro.impegno_)             }
+    var impegno_:                Int32  { return Int32(lavoro.impegno.valore)       }
     var stipendio_:              Int32  { return Int32(lavoro.stipendio_)           }
 
     static let palestraCostoLampada = 14
@@ -1824,4 +1681,18 @@ class ScooterData : NSObject { }
     static var stato:    Int               { return Tabboz.global.scooter.stato    }
     static var attivita: Motorino.Attivita { return Tabboz.global.scooter.attivita }
     static var prezzo:   Int               { return Tabboz.global.scooter.prezzo   }
+}
+
+extension Stat {
+    
+    static func  >(a: Stat, b: Int ) -> Bool { return a.valore  > b        }
+    static func <=(a: Stat, b: Int ) -> Bool { return a.valore <= b        }
+    static func  <(a: Stat, b: Int ) -> Bool { return a.valore  < b        }
+    static func >=(a: Stat, b: Int ) -> Bool { return a.valore >= b        }
+    static func  >(a: Int,  b: Stat) -> Bool { return a         > b.valore }
+    static func  +(a: Stat, b: Int)  -> Int  { return a.valore  + b        }
+    static func  +(a: Int,  b: Stat) -> Int  { return a         + b.valore }
+    static func  -(a: Stat, b: Int ) -> Int  { return a.valore  - b        }
+    static func  *(a: Stat, b: Int ) -> Int  { return a.valore  * b        }
+
 }

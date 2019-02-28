@@ -31,7 +31,7 @@ import Foundation
         
         /* ---------------> S T I P E N D I O <--------------- */
         
-        if lavoro.impegno_ > 0  {
+        if lavoro.impegno > 0  {
             lavoro.lavoraGiorno()
             
             if calendario.giornoDellAnno.giorno == 27 {
@@ -122,23 +122,18 @@ import Foundation
             
             if (calendario.giornoDellAnno.giorno == 25) &&
                 ((vestiti.pantaloni == 19) &&
-                    (vestiti.giubbotto == 19))
+                 (vestiti.giubbotto == 19))
             {
                 MessageBox_ConBabboStupisciTutti(hInstance)
-                fama += 20
-                
-                if fama > 100 {
-                    fama = 100
-                }
+                fama.incrementa(di: 20)
             }
             
             if (calendario.giornoDellAnno.giorno == 28) &&
-                ((vestiti.pantaloni == 19) || (vestiti.giubbotto == 19)) {
+                ((vestiti.pantaloni == 19) ||
+                 (vestiti.giubbotto == 19))
+            {
                 MessageBox_ToglitiQuelDannatoVestito(hInstance)
-                fama -= 5
-                if fama < 0 {
-                    fama = 0
-                }
+                fama.decrementa(di: 5)
             }
             
             break;

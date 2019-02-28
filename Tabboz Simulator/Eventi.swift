@@ -64,9 +64,7 @@ import Foundation
                 
             case .finite:
                 MessageBox_ApriIlPacchettoDisperatameneteVuoto(hDlg)
-                if reputazione > 10 {
-                    reputazione -= 3
-                }
+                reputazione.decrementa(di: 3, seMaggioreDi: 10)
             }
         }
     }
@@ -75,9 +73,7 @@ import Foundation
         if abbonamento.creditorest > 0 && cellulare.attivo {
             abbonamento.addebita(1)
             
-            if fama < 55 {
-                fama += 0
-            }
+            fama.incrementa(di: 1, seMinoreDi: 55)
             
             if abbonamento.creditorest == 0 {
                 MessageBox_CerchiDiTelefonareMaHaiFinitoISoldi(hDlg)
@@ -94,10 +90,8 @@ import Foundation
     }
     
     func eventiTipa(hDlg: HANDLE) {
-        if tipa.rapporto > 3 {
-            if (tabboz_random(5) - 3) > 0 {
-                tipa.rapporto -= 1
-            }
+        if (tabboz_random(5) - 3) > 0 {
+            tipa.rapporto.decrementa(di: 1, seMaggioreDi: 3)
         }
         
         if tipa.rapporto > 0 && tipa.rapporto < 98 {
@@ -109,31 +103,26 @@ import Foundation
                 }
                 
                 MessageBox_LaTipaTiMolla(hDlg, Int32(i))
-                reputazione -= 11 - i
-                if reputazione < 0 {
-                    reputazione = 0
-                }
+                reputazione.decrementa(di: 11 - i)
             }
         }
     }
     
     func eventiLavoro(hDlg: HANDLE) {
-        if lavoro.impegno_ > 3 {
+        if lavoro.impegno > 3 {
             if tabboz_random(7) - 3 > 0 {
-                lavoro.impegnati()
+                lavoro.impegno.incrementa(di: 1)
             }
         }
         
         if lavoro.ditta > 0 {
-            if tabboz_random(lavoro.impegno_ * 2 + fortuna * 3) < 2 {
+            if tabboz_random(lavoro.impegno * 2 + fortuna * 3) < 2 {
                 /* perdi il lavoro */
                 lavoro.disimpegnati()
                 
                 if sound_active != 0 {
                     TabbozPlaySound(504)
                 }
-                
-                
             }
         }
     }
@@ -173,10 +162,7 @@ import Foundation
             return
         }
         
-        reputazione -= caso
-        if reputazione < 0 {
-            reputazione = 0
-        }
+        reputazione.decrementa(di: caso)
         
         let i = 100 + tabboz_random(100)
         
@@ -196,10 +182,7 @@ import Foundation
                 MetalloEMagutto(107, hDlg: hDlg)
             }
 
-            reputazione -= 2
-            if reputazione < 0 {
-                reputazione = 0
-            }
+            reputazione.decrementa(di: 2)
 
             if scooter.stato <= 0 {
                 MessageBox_ScooterRidottoAdUnAmmassoDiRottami(hDlg)
@@ -210,15 +193,15 @@ import Foundation
     func eventiCasualiFigosita(caso: Int, hDlg: HANDLE) {
         switch caso {
             
-        case 21:            fallthrough  // + gravi
-        case 22:            fallthrough  //  |
-        case 23: fama -= 5; fallthrough  //  |
-        case 24:            fallthrough  //  |
-        case 25: fama -= 1; fallthrough  //  |
-        case 26:            fallthrough  //  |
-        case 27: fama -= 1; fallthrough  //  |
-        case 28:            fallthrough  // \|/
-        case 29:            fallthrough  // - gravi
+        case 21:                         fallthrough  // + gravi
+        case 22:                         fallthrough  //  |
+        case 23: fama.decrementa(di: 5); fallthrough  //  |
+        case 24:                         fallthrough  //  |
+        case 25: fama.decrementa(di: 5); fallthrough  //  |
+        case 26:                         fallthrough  //  |
+        case 27: fama.decrementa(di: 5); fallthrough  //  |
+        case 28:                         fallthrough  // \|/
+        case 29:                         fallthrough  // - gravi
         case 30:
             MessageBox_SeiFortunato(hDlg, Int32(caso))
             
@@ -259,12 +242,7 @@ import Foundation
             // Se non hai gia' una tipa e rifiuti una figona...
             if figTemp >= 79 && tipa.rapporto < 1 && sesso == Int8("M") {
                 MessageBox_RifiutiUnaFigona(hDlg)
-                reputazione -= 4
-                
-                if reputazione < 0 {
-                    reputazione = 0
-                }
-                
+                reputazione.decrementa(di: 4)
                 return
             }
             
@@ -282,15 +260,8 @@ import Foundation
                     rapporto: 45 + tabboz_random(15)
                 )
                 
-                fama += tipa.figTipa / 10
-                if fama > 100 {
-                    fama = 100
-                }
-                
-                reputazione += tipa.figTipa / 13
-                if reputazione > 100 {
-                    reputazione = 100
-                }
+                fama       .incrementa(di: tipa.figTipa / 10)
+                reputazione.incrementa(di: tipa.figTipa / 13)
             }
         }
     }
@@ -305,21 +276,13 @@ import Foundation
         if caso == 43 {
             if MessageBox_MiAmi(hDlg) != IDYES {
                 MessageBox_SeiIlSolitoStronzo(hDlg)
-                
-                tipa.rapporto -= 45
-                if tipa.rapporto < 5 {
-                    tipa.rapporto = 5
-                }
+                tipa.rapporto.decrementa(di: 45, minimo: 5)
             }
         }
         else {
             if MessageBox_MaSonoIngrassata(hDlg) != IDNO {
                 MessageBox_SeiUnBastardo(hDlg)
-                
-                tipa.rapporto -= 20
-                if tipa.rapporto < 5 {
-                    tipa.rapporto = 5
-                }
+                tipa.rapporto.decrementa(di: 20, minimo: 5)
             }
         }
     }
