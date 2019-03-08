@@ -83,7 +83,7 @@ enum Giorni : Int {
     
 }
 
-struct GiornoDellAnno : Equatable {
+struct GiornoDellAnno : Equatable, Hashable {
     
     var giorno : Int
     var mese   : Mese
@@ -210,12 +210,7 @@ class Calendario {
         }
 
         if (natale2 == 0) {
-            let oggiVacanza = Vacanza
-                .vacanze
-                .filter { $0.giorno == giornoDellAnno }
-                .isEmpty
-                
-            if oggiVacanza {
+            if Vacanza.vacanze[giornoDellAnno] != nil {
                 vacanza = 2 /* 2 = sono chiusi anche i negozi... */
             }
         }

@@ -133,14 +133,11 @@ import Foundation
         /* Domeniche e festivita' varie                VACANZE DI TIPO 2 */
 
         if (natale2 == 0) {
-            Vacanza
-                .vacanze
-                .filter { $0.giorno == calendario.giornoDellAnno }
-                .forEach { vacanza in
-                    MessageBox_Vacanza(hInstance,
-                                       vacanza.nome,
-                                       vacanza.descrizione)
-                }
+            if let vacanza = Vacanza.vacanze[calendario.giornoDellAnno] {
+                MessageBox_Vacanza(hInstance,
+                                   vacanza.nome,
+                                   vacanza.descrizione)
+            }
         }
     }
     
@@ -149,29 +146,26 @@ import Foundation
 struct Vacanza {
     
     static let vacanze = [
-        Vacanza("Capodanno",                GiornoDellAnno( 1, .gennaio ), "Oggi e' capodanno !"),
-        Vacanza("Epifania",                 GiornoDellAnno( 6, .gennaio ), "Epifania..."),
-        Vacanza("Anniversario Liberazione", GiornoDellAnno( 1, .aprile  ), "Oggi mi sento liberato"),
-        Vacanza("Festa dei lavoratori",     GiornoDellAnno( 1, .maggio  ), "Nonostante nella tua vita, tu non faccia nulla, oggi fai festa anche tu..."),
-        Vacanza("Ferragosto",               GiornoDellAnno( 1, .agosto  ), "Oggi e' ferragosto..."),
-        Vacanza("Tutti i Santi",            GiornoDellAnno( 1, .novembre), "Figata, oggi e' vacanza..."),
-        Vacanza("Sant' Ambrogio",           GiornoDellAnno( 7, .dicembre), "Visto che siamo a Milano, oggi facciamo festa."),
-        Vacanza("Immacolata Concezione",    GiornoDellAnno( 8, .dicembre), "Oggi e' festa..."),
-        Vacanza("Natale",                   GiornoDellAnno(25, .dicembre), "Buon Natale !!!"),
-        Vacanza("Santo Stefano",            GiornoDellAnno(26, .dicembre), "Buon Santo Stefano..."),
+        GiornoDellAnno( 1, .gennaio ): Vacanza("Capodanno",                "Oggi e' capodanno !"),
+        GiornoDellAnno( 6, .gennaio ): Vacanza("Epifania",                 "Epifania..."),
+        GiornoDellAnno( 1, .aprile  ): Vacanza("Anniversario Liberazione", "Oggi mi sento liberato"),
+        GiornoDellAnno( 1, .maggio  ): Vacanza("Festa dei lavoratori",     "Nonostante nella tua vita, tu non faccia nulla, oggi fai festa anche tu..."),
+        GiornoDellAnno( 1, .agosto  ): Vacanza("Ferragosto",               "Oggi e' ferragosto..."),
+        GiornoDellAnno( 1, .novembre): Vacanza("Tutti i Santi",            "Figata, oggi e' vacanza..."),
+        GiornoDellAnno( 7, .dicembre): Vacanza("Sant' Ambrogio",           "Visto che siamo a Milano, oggi facciamo festa."),
+        GiornoDellAnno( 8, .dicembre): Vacanza("Immacolata Concezione",    "Oggi e' festa..."),
+        GiornoDellAnno(25, .dicembre): Vacanza("Natale",                   "Buon Natale !!!"),
+        GiornoDellAnno(26, .dicembre): Vacanza("Santo Stefano",            "Buon Santo Stefano..."),
     ]
     
     let nome:        String
-    let giorno:      GiornoDellAnno
     let descrizione: String
 
     init(
         _ nome:        String,
-        _ giorno:      GiornoDellAnno,
         _ descrizione: String
     ) {
         self.nome        = nome
-        self.giorno      = giorno
         self.descrizione = descrizione
     }
     
