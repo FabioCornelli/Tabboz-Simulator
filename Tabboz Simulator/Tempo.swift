@@ -140,12 +140,12 @@ struct GiornoDellAnno : Equatable {
 
 class Calendario {
     
-                 var giornoDellAnno  = GiornoDellAnno(giorno: 30, mese: .settembre)
+    private(set) var giornoDellAnno  = GiornoDellAnno(giorno: 30, mese: .settembre)
     
     private(set) var annoBisesto     = Int32(0) // Anno Bisestile - 12 Giugno 1999
     private(set) var giornoSettimana = Giorni.lunedi
     
-                 var vacanza         = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
+    private(set) var vacanza         = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
     
     func nuovoGiorno() {
         giornoDellAnno.giorno += 1
@@ -162,6 +162,63 @@ class Calendario {
         }
         
         giornoSettimana = Giorni(rawValue: (giornoSettimana.rawValue + 1) % 7) ?? .lunedi
+        
+        vacanza = 0
+        
+        switch giornoDellAnno.mese {
+        case .gennaio:                   /* Gennaio --------------------------------------------------------- */
+            if giornoDellAnno.giorno < 7 {
+                vacanza = 1
+            }
+            break                        /* Vacanze di Natale */
+            
+        case .giugno:                    /* Giugno ---------------------------------------------------------- */
+            if giornoDellAnno.giorno > 15 {
+                vacanza = 1
+            }
+            
+            break
+            
+        case .luglio: fallthrough        /* Luglio e */
+        case .agosto:                    /* Agosto   */
+            vacanza = 1
+            break
+            
+        case .settembre:                 /* Settembre ------------------------------------------------------- */
+            if giornoDellAnno.giorno < 15 {
+               vacanza = 1
+            }
+            break
+            
+        case .dicembre:                  /* Dicembre -------------------------------------------------------- */
+            if giornoDellAnno.giorno > 22  {
+                vacanza = 1
+            }
+            break /* Vacanze di Natale */
+
+        default:
+            break
+        }
+        
+        if giornoSettimana == .domenica {
+            /* Domenica */
+            vacanza = 2
+        }
+
+        if (natale2 == 0) {
+            let oggiVacanza = Vacanza
+                .vacanze
+                .filter { vacanza in
+                    vacanza.mese   == giornoDellAnno.mese.rawValue &&
+                    vacanza.giorno == giornoDellAnno.giorno
+                }
+                .isEmpty
+                
+            if oggiVacanza {
+                vacanza = 2 /* 2 = sono chiusi anche i negozi... */
+            }
+        }
+
     }
     
 }

@@ -49,7 +49,6 @@ import Foundation
         controllaScadenzaAbbonamentoPalestra(hInstance: hInstance)
         
         /* Calcola i giorni di vacanza durante l' anno ( da finire...)    */
-        calendario.vacanza = 0
         tipa.currentTipa = 0
         
         /* Hai gia' ricevuto gli auguri di natale ??? 04/01/1999*/
@@ -59,7 +58,6 @@ import Foundation
             
         case .gennaio:                   /* Gennaio --------------------------------------------------------- */
             if calendario.giornoDellAnno.giorno < 7 {
-                calendario.vacanza = 1
                 if tipa.rapporto > 0 {
                     tipa.currentTipa = 1 /* 6 Maggio 1999 - Tipa vestita da Babbo Natale...*/
                 }
@@ -79,30 +77,21 @@ import Foundation
                 FaiLaPagella(hDlg: hInstance)
             }
             
-            if calendario.giornoDellAnno.giorno > 15 {
-                calendario.vacanza = 1
-            }
-            
-            break;
+            break
             
         case .luglio:                    /* Luglio e */
             fallthrough
             
         case .agosto:                    /* Agosto   */
-            calendario.vacanza = 1
-            
             if ((tipa.rapporto > 93) &&
                 (tipa.figTipa > 95 ))
             {
                 tipa.currentTipa = 2     /* 6 Maggio 1999 - Tipa al mare...*/
             }
             
-            break;
+            break
             
         case .settembre:                 /* Settembre ------------------------------------------------------- */
-            if calendario.giornoDellAnno.giorno < 15 {
-                calendario.vacanza = 1
-            }
             
             if calendario.giornoDellAnno.giorno == 15 {
                 MessageBox_PrimoGiornoDiScuola(hInstance)
@@ -112,12 +101,10 @@ import Foundation
             break;
             
         case .dicembre:                  /* Dicembre -------------------------------------------------------- */
-            if calendario.giornoDellAnno.giorno > 22  {
-                calendario.vacanza = 1   /* Vacanze di Natale */
-                
-                if tipa.rapporto > 0  {
-                    tipa.currentTipa = 1 /* 6 Maggio 1999 - Tipa vestita da Babbo Natale...*/
-                }
+            if (calendario.giornoDellAnno.giorno > 22) &&
+                (tipa.rapporto > 0)
+            {
+                tipa.currentTipa = 1 /* 6 Maggio 1999 - Tipa vestita da Babbo Natale...*/
             }
             
             if (calendario.giornoDellAnno.giorno == 25) &&
@@ -145,11 +132,6 @@ import Foundation
         
         /* Domeniche e festivita' varie                VACANZE DI TIPO 2 */
 
-        if calendario.giornoSettimana == .domenica {
-            /* Domenica */
-            calendario.vacanza = 2
-        }
-
         if (natale2 == 0) {
             Vacanza
                 .vacanze
@@ -161,7 +143,6 @@ import Foundation
                     MessageBox_Vacanza(hInstance,
                                        vacanza.nome,
                                        vacanza.descrizione)
-                    calendario.vacanza = 2 /* 2 = sono chiusi anche i negozi... */
                 }
         }
     }
