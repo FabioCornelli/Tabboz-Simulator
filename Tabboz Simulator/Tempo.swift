@@ -88,14 +88,18 @@ struct GiornoDellAnno : Equatable {
     var giorno : Int
     var mese   : Mese
     
+    init(_ giorno: Int, _ mese: Mese) {
+        (self.giorno, self.mese) = (giorno, mese)
+    }
+
     var string : String {
         return "\(giorno) \(mese.nome)"
     }
     
     func fraUnMese() -> GiornoDellAnno {
         var fraUnMese = GiornoDellAnno(
-            giorno: giorno,
-            mese: Mese(rawValue: mese.rawValue + 1) ?? .gennaio
+            giorno,
+            Mese(rawValue: mese.rawValue + 1) ?? .gennaio
         )
         
         // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
@@ -108,8 +112,8 @@ struct GiornoDellAnno : Equatable {
 
     func fraSeiMesi() -> GiornoDellAnno {
         var fraSeiMesi = GiornoDellAnno(
-            giorno: giorno,
-            mese: Mese(rawValue: ((mese.rawValue + 6 - 1) % 12) + 1) ?? .gennaio
+            giorno,
+            Mese(rawValue: ((mese.rawValue + 6 - 1) % 12) + 1) ?? .gennaio
         )
         
         // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
@@ -121,7 +125,7 @@ struct GiornoDellAnno : Equatable {
     }
 
     func fraUnAnno() -> GiornoDellAnno {
-        var fraUnAnno = GiornoDellAnno(giorno: giorno - 1, mese: mese)
+        var fraUnAnno = GiornoDellAnno(giorno - 1, mese)
         
         if fraUnAnno.giorno < 1 {
             fraUnAnno.mese = Mese(rawValue: mese.rawValue - 1) ?? .dicembre
@@ -133,14 +137,14 @@ struct GiornoDellAnno : Equatable {
 
     static func random() -> GiornoDellAnno {
         let mese = Mese(rawValue: tabboz_random(12) + 1) ?? .gennaio
-        return GiornoDellAnno(giorno: tabboz_random(mese.giorni) + 1, mese: mese)
+        return GiornoDellAnno(tabboz_random(mese.giorni) + 1, mese)
     }
     
 }
 
 class Calendario {
     
-    private(set) var giornoDellAnno  = GiornoDellAnno(giorno: 30, mese: .settembre)
+    private(set) var giornoDellAnno  = GiornoDellAnno(30, .settembre)
     
     private(set) var annoBisesto     = Int32(0) // Anno Bisestile - 12 Giugno 1999
     private(set) var giornoSettimana = Giorni.lunedi
@@ -208,10 +212,7 @@ class Calendario {
         if (natale2 == 0) {
             let oggiVacanza = Vacanza
                 .vacanze
-                .filter { vacanza in
-                    vacanza.mese   == giornoDellAnno.mese.rawValue &&
-                    vacanza.giorno == giornoDellAnno.giorno
-                }
+                .filter { $0.giorno == giornoDellAnno }
                 .isEmpty
                 
             if oggiVacanza {
