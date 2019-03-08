@@ -10,7 +10,7 @@ import Foundation
 
 @objc extension Tabboz {
     
-    func eventi(hDlg: HANDLE) {
+    func Evento(_ hDlg: HANDLE) {
         didLog = ObjCBool(true)
         
         Giorno(hDlg)

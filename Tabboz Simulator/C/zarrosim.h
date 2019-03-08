@@ -254,7 +254,6 @@ extern  BOOL FAR PASCAL MainDlgBoxProc(HWND hDlg, WORD message,
 					WORD wParam, LONG lParam);
 #endif
 
-extern  void Evento(HWND hWnd);
 extern  void RunPalestra(HWND hDlg);	/* 23 Aprile 1998 */
 extern  void RunTabacchi(HWND hDlg);	/* 23 Aprile 1998 */
 extern  void RunVestiti(HWND hDlg,int numero);  /* 23 Aprile 1998 */

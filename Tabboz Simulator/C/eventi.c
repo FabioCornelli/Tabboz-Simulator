@@ -34,15 +34,6 @@ extern	int	figTemp;
 extern	char	nomeTemp[];
 //extern	int	AdV;
 
-/********************************************************************/
-/* EVENTI CASUALI...                                                */
-/********************************************************************/
-
-void Evento(HANDLE hInstance)
-{
-    [Tabboz.global eventiWithHDlg:hInstance];
-}
-
 
 //
 //	MOSTRA METALLONE, non e' solo per i metalloni, e' molto utile anche per mostrare
