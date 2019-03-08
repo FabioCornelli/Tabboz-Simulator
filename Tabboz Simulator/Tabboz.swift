@@ -48,8 +48,8 @@ class Tabboz : NSObject {
     
                        var fama        = Stat(valore: 0)
                        var reputazione = Stat(valore: 0)
-          private(set) var danaro      = Danaro(quanti: 5)
-          private(set) var calendario  = Calendario()
+                       var danaro      = Danaro(quanti: 5)
+                       var calendario  = Calendario(oggi: GiornoDellAnno(30, .settembre))
           private(set) var scuola      = Scuole()
           private(set) var vestiti     = Vestiario()
           private(set) var tipa        = Fiddhiola()

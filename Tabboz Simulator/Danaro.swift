@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Danaro {
+struct Danaro {
     
     private(set) var soldi = 5
     
@@ -16,11 +16,11 @@ class Danaro {
         soldi = quanti
     }
     
-    func deposita(_ daPosare: Int) {
+    mutating func deposita(_ daPosare: Int) {
         soldi += daPosare
     }
     
-    func paga(_ daPagare: Int) -> Bool {
+    mutating func paga(_ daPagare: Int) -> Bool {
         // Controlla se ha abbastanza soldi...
         guard soldi >= daPagare else { return false }
         soldi -= daPagare

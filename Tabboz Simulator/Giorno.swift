@@ -142,31 +142,3 @@ import Foundation
     }
     
 }
-
-struct Vacanza {
-    
-    static let vacanze = [
-        GiornoDellAnno( 1, .gennaio ): Vacanza("Capodanno",                "Oggi e' capodanno !"),
-        GiornoDellAnno( 6, .gennaio ): Vacanza("Epifania",                 "Epifania..."),
-        GiornoDellAnno( 1, .aprile  ): Vacanza("Anniversario Liberazione", "Oggi mi sento liberato"),
-        GiornoDellAnno( 1, .maggio  ): Vacanza("Festa dei lavoratori",     "Nonostante nella tua vita, tu non faccia nulla, oggi fai festa anche tu..."),
-        GiornoDellAnno( 1, .agosto  ): Vacanza("Ferragosto",               "Oggi e' ferragosto..."),
-        GiornoDellAnno( 1, .novembre): Vacanza("Tutti i Santi",            "Figata, oggi e' vacanza..."),
-        GiornoDellAnno( 7, .dicembre): Vacanza("Sant' Ambrogio",           "Visto che siamo a Milano, oggi facciamo festa."),
-        GiornoDellAnno( 8, .dicembre): Vacanza("Immacolata Concezione",    "Oggi e' festa..."),
-        GiornoDellAnno(25, .dicembre): Vacanza("Natale",                   "Buon Natale !!!"),
-        GiornoDellAnno(26, .dicembre): Vacanza("Santo Stefano",            "Buon Santo Stefano..."),
-    ]
-    
-    let nome:        String
-    let descrizione: String
-
-    init(
-        _ nome:        String,
-        _ descrizione: String
-    ) {
-        self.nome        = nome
-        self.descrizione = descrizione
-    }
-    
-}

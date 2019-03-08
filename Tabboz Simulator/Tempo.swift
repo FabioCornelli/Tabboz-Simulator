@@ -9,7 +9,6 @@
 import Foundation
 
 enum Mese : Int {
-    
     case gennaio   = 1
     case febbraio  = 2
     case marzo     = 3
@@ -22,45 +21,9 @@ enum Mese : Int {
     case ottobre   = 10
     case novembre  = 11
     case dicembre  = 12
-    
-    var nome: String {
-        switch self {
-        case .gennaio:   return "Gennaio"
-        case .febbraio:  return "Febbraio"
-        case .marzo:     return "Marzo"
-        case .aprile:    return "Aprile"
-        case .maggio:    return "Maggio"
-        case .giugno:    return "Giugno"
-        case .luglio:    return "Luglio"
-        case .agosto:    return "Agosto"
-        case .settembre: return "Settembre"
-        case .ottobre:   return "Ottobre"
-        case .novembre:  return "Novembre"
-        case .dicembre:  return "Dicembre"
-        }
-    }
-    
-    var giorni: Int {
-        switch self {
-        case .gennaio:   return 31
-        case .febbraio:  return 28
-        case .marzo:     return 31
-        case .aprile:    return 30
-        case .maggio:    return 31
-        case .giugno:    return 30
-        case .luglio:    return 31
-        case .agosto:    return 31
-        case .settembre: return 30
-        case .ottobre:   return 31
-        case .novembre:  return 30
-        case .dicembre:  return 31
-        }
-    }
-    
 }
 
 enum Giorni : Int {
-    
     case lunedi    = 1
     case martedi   = 2
     case mercoledi = 3
@@ -68,25 +31,36 @@ enum Giorni : Int {
     case venerdi   = 5
     case sabato    = 6
     case domenica  = 7
-    
-    var string: String {
-        switch self {
-        case .lunedi:    return "Lunedi'"
-        case .martedi:   return "Martedi'"
-        case .mercoledi: return "Mercoledi'"
-        case .giovedi:   return "Giovedi'"
-        case .venerdi:   return "Venerdi'"
-        case .sabato:    return "Sabato"
-        case .domenica:  return "Domenica"
-        }
-    }
-    
 }
 
 struct GiornoDellAnno : Equatable, Hashable {
-    
     var giorno : Int
     var mese   : Mese
+}
+
+struct Vacanza {
+    
+    static let vacanze = [
+        GiornoDellAnno( 1, .gennaio ): Vacanza("Capodanno",                "Oggi e' capodanno !"),
+        GiornoDellAnno( 6, .gennaio ): Vacanza("Epifania",                 "Epifania..."),
+        GiornoDellAnno( 1, .aprile  ): Vacanza("Anniversario Liberazione", "Oggi mi sento liberato"),
+        GiornoDellAnno( 1, .maggio  ): Vacanza("Festa dei lavoratori",     "Nonostante nella tua vita, tu non faccia nulla, oggi fai festa anche tu..."),
+        GiornoDellAnno( 1, .agosto  ): Vacanza("Ferragosto",               "Oggi e' ferragosto..."),
+        GiornoDellAnno( 1, .novembre): Vacanza("Tutti i Santi",            "Figata, oggi e' vacanza..."),
+        GiornoDellAnno( 7, .dicembre): Vacanza("Sant' Ambrogio",           "Visto che siamo a Milano, oggi facciamo festa."),
+        GiornoDellAnno( 8, .dicembre): Vacanza("Immacolata Concezione",    "Oggi e' festa..."),
+        GiornoDellAnno(25, .dicembre): Vacanza("Natale",                   "Buon Natale !!!"),
+        GiornoDellAnno(26, .dicembre): Vacanza("Santo Stefano",            "Buon Santo Stefano..."),
+        ]
+    
+    let nome:        String
+    let descrizione: String
+    
+}
+
+// - //
+
+extension GiornoDellAnno {
     
     init(_ giorno: Int, _ mese: Mese) {
         (self.giorno, self.mese) = (giorno, mese)
@@ -142,16 +116,22 @@ struct GiornoDellAnno : Equatable, Hashable {
     
 }
 
-class Calendario {
+// - //
+
+struct Calendario {
     
-    private(set) var giornoDellAnno  = GiornoDellAnno(30, .settembre)
+    private(set) var giornoDellAnno : GiornoDellAnno
     
     private(set) var annoBisesto     = Int32(0) // Anno Bisestile - 12 Giugno 1999
     private(set) var giornoSettimana = Giorni.lunedi
     
     private(set) var vacanza         = Int32(0) // Se e' un giorno di vacanza, e' uguale ad 1 o 2 altrimenti a 0
     
-    func nuovoGiorno() {
+    init(oggi: GiornoDellAnno) {
+        giornoDellAnno = oggi
+    }
+    
+    mutating func nuovoGiorno() {
         giornoDellAnno.giorno += 1
         
         if (giornoDellAnno.giorno > giornoDellAnno.mese.giorni) {
@@ -217,4 +197,70 @@ class Calendario {
 
     }
     
+}
+
+// - //
+
+extension Mese {
+    
+    var nome: String {
+        switch self {
+        case .gennaio:   return "Gennaio"
+        case .febbraio:  return "Febbraio"
+        case .marzo:     return "Marzo"
+        case .aprile:    return "Aprile"
+        case .maggio:    return "Maggio"
+        case .giugno:    return "Giugno"
+        case .luglio:    return "Luglio"
+        case .agosto:    return "Agosto"
+        case .settembre: return "Settembre"
+        case .ottobre:   return "Ottobre"
+        case .novembre:  return "Novembre"
+        case .dicembre:  return "Dicembre"
+        }
+    }
+    
+    var giorni: Int {
+        switch self {
+        case .gennaio:   return 31
+        case .febbraio:  return 28
+        case .marzo:     return 31
+        case .aprile:    return 30
+        case .maggio:    return 31
+        case .giugno:    return 30
+        case .luglio:    return 31
+        case .agosto:    return 31
+        case .settembre: return 30
+        case .ottobre:   return 31
+        case .novembre:  return 30
+        case .dicembre:  return 31
+        }
+    }
+    
+}
+
+extension Giorni {
+    var string: String {
+        switch self {
+        case .lunedi:    return "Lunedi'"
+        case .martedi:   return "Martedi'"
+        case .mercoledi: return "Mercoledi'"
+        case .giovedi:   return "Giovedi'"
+        case .venerdi:   return "Venerdi'"
+        case .sabato:    return "Sabato"
+        case .domenica:  return "Domenica"
+        }
+    }
+}
+
+extension Vacanza {
+    
+    init(
+        _ nome:        String,
+        _ descrizione: String
+    ) {
+        self.nome        = nome
+        self.descrizione = descrizione
+    }
+
 }
