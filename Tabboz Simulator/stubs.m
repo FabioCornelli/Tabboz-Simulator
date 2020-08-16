@@ -168,6 +168,11 @@ void ShowWindow(HANDLE h, int flags) {
 }
 
 void SetDlgItemText(HANDLE h, int d, const char * str) {
+    if (h->impl) {
+        DialogNSWindow * dialogWin = (__bridge DialogNSWindow *)h->impl;
+        [dialogWin setDlgItemTextWithDlg:d text:[NSString stringWithCString:str encoding:NSUTF8StringEncoding]];
+    }
+    
     if (log_window) printf("    set %p dlg text %3d %s\n", h, d, str); didLog = true;
 }
 

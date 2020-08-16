@@ -57,7 +57,7 @@ typedef int PAINTSTRUCT;
 
 //
 
-struct TabbozHANDLE {};
+struct TabbozHANDLE { void * impl; };
 
 typedef struct TabbozHANDLE * HANDLE;
 typedef struct TabbozHANDLE * HWND;

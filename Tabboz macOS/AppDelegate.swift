@@ -41,71 +41,127 @@ func template_item_title(item: DialogItemTemplate) -> String {
     }
 }
 
-func template_item_rect(item: DialogItemTemplate) -> NSRect {
+func template_item_rect(dialog: Dialog, item: DialogItemTemplate) -> NSRect {
     let X = Int(item.itemTemplate.x.value) * 2
-    let Y = Int(item.itemTemplate.y.value) * 2
+    let Y = Int(
+        dialog.template.height.value -
+        item.itemTemplate.y.value -
+        item.itemTemplate.height.value + 1
+    ) * 2
     let W = Int(item.itemTemplate.width.value) * 2
     let H = Int(item.itemTemplate.height.value) * 2
     return NSRect(x: X, y: Y, width: W, height: H)
 }
 
-func dialog_to_win(dialog: Dialog) -> NSWindow {
+class DialogNSWindow : NSWindow {
     
-    let window = NSWindow(
-        contentRect: template_rect(template: dialog.template),
-        styleMask: [.titled, .closable],
-        backing: .buffered,
-        defer: false
-    )
+    typealias WndProc = (HWND?, Int32, Int32, Int32) -> Bool
+    
+    let wndProc : WndProc
+    
+    private var tagToView = [Int : NSView]()
+    private var viewToTag = [NSView : Int]()
 
-    window.title = template_title(template: dialog.template)
-
-    for i in dialog.items {
+    var handle = HANDLE.allocate(capacity: 1)
+    
+    init(
+        dialog: Dialog,
+        wndProc: @escaping WndProc
+    ) {
+        self.wndProc = wndProc
         
-        let label = template_item_title(item: i)
-        let frame = template_item_rect(item: i)
+        super.init(
+            contentRect: template_rect(template: dialog.template),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
         
-        let view : NSView
+        handle.pointee.impl = Unmanaged.passUnretained(self).toOpaque()
         
-        switch i.windowClass {
-        case .standard(let x):
-            switch x {
-            case .button:
-                let b = NSButton(frame: frame)
-                b.title = label
+        title = template_title(template: dialog.template)
+        
+        for i in dialog.items {
+            
+            let label = template_item_title(item: i)
+            let frame = template_item_rect(dialog: dialog, item: i)
+            let tag = Int(Int16(bitPattern: i.itemTemplate.id.value))
+            
+            let view : NSView
+            
+            switch i.windowClass {
+            case .standard(let x):
+                switch x {
+                case .button:
+                    let b = NSButton(frame: frame)
+                    b.title = label
+                    b.target = self
+                    b.action = #selector(dialogButtonAction)
+                    view = b
+                    
+                case .edit:
+                    let e = NSTextField(frame: frame)
+                    e.stringValue = label
+                    view = e
+                    print("\(label) is edit!!")
+                    
+                case .statictext:
+                    let l = NSTextField(labelWithString: label)
+                    l.frame = frame
+                    view = l
+                    
+                case .listbox:
+                    fallthrough
+                    
+                case .scrollbar:
+                    fallthrough
+                    
+                case .combobox:
+                    print(x)
+                    
+                    let b = NSBox(frame: frame)
+                    b.boxType = .custom
+                    b.borderColor = NSColor.yellow
+                    view = b
+                }
+                
+            case .custom(let x):
+                print("DIOCANE \(x) \(frame)")
+                let b = NSBox(frame: frame)
+                b.boxType = .custom
+                b.borderColor = NSColor.gray
                 view = b
-                
-            case .edit:
-                let e = NSTextField(frame: frame)
-                e.stringValue = label
-                view = e
-                print("\(label) is edit!!")
-                
-            case .statictext:
-                let l = NSTextField(labelWithString: label)
-                l.frame = frame
-                view = l
-                
-            case .listbox:
-                fallthrough
-                
-            case .scrollbar:
-                fallthrough
-                
-            case .combobox:
-                print(x)
-                continue
             }
             
-        case .custom(let x):
-            print("DIOCANE \(x)")
-            continue
+            contentView?.addSubview(view)
+            
+            if tag != -1 {
+                viewToTag[view] = tag
+                tagToView[tag] = view
+            }
         }
         
-        window.contentView?.addSubview(view)
+        _ = self.wndProc(handle, WM_INITDIALOG, 0, 0)
     }
     
-    return window
+    @objc func dialogButtonAction(sender: AnyObject) {
+        print("BUTTONZ! \(sender) \(viewToTag[sender as! NSView])")
+    }
+    
+    @objc func setDlgItemText(dlg: Int, text: String) {
+        let view = tagToView[dlg]
+        
+        if let button = view as? NSButton {
+            button.title = text
+        }
+        else if let textField = view as? NSControl {
+            textField.stringValue = text
+        }
+        else {
+            print("\(dlg) not an NSControl -- setting >\(text)<")
+        }
+    }
+
 }
 
 extension Tabboz {
@@ -134,7 +190,6 @@ extension Tabboz {
 
 }
 
-
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -142,8 +197,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var res = try! ResourceFile(url: url)
     
+    var window : NSWindow?
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         try! res.load()
+        
+        let dialog = res.dialogs[.numeric(1)]!
+        
+        InitTabboz()
+        window = DialogNSWindow(dialog: dialog, wndProc: TabbozWndProc)
+        window?.makeKeyAndOrderFront(nil)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
