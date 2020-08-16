@@ -23,6 +23,11 @@
 		3F9031A922153D2E00C9A2C3 /* Palestra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A822153D2E00C9A2C3 /* Palestra.swift */; };
 		3FB6B534221E0F7A00D76C04 /* Giorno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6B533221E0F7A00D76C04 /* Giorno.swift */; };
 		3FB6B536221F10FB00D76C04 /* Cheats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6B535221F10FB00D76C04 /* Cheats.swift */; };
+		3FC1271724E8B7B7006BDC9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC1271624E8B7B7006BDC9A /* AppDelegate.swift */; };
+		3FC1271924E8B7B8006BDC9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1271824E8B7B8006BDC9A /* Assets.xcassets */; };
+		3FC1271C24E8B7B8006BDC9A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1271A24E8B7B8006BDC9A /* MainMenu.xib */; };
+		3FC1272324E8B7F4006BDC9A /* ZARRO32.RES in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1272224E8B7F4006BDC9A /* ZARRO32.RES */; };
+		3FC1272624E8B841006BDC9A /* Win32Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC1272524E8B841006BDC9A /* Win32Resources.swift */; };
 		3FC9F54822139BA60019B93A /* KnownDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54722139BA60019B93A /* KnownDialogs.swift */; };
 		3FC9F54C2214ACB70019B93A /* Tabboz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54B2214ACB70019B93A /* Tabboz.swift */; };
 		3FC9F54F2214CB930019B93A /* MessageBoxes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54E2214CB930019B93A /* MessageBoxes.m */; };
@@ -72,6 +77,14 @@
 		3F9031A822153D2E00C9A2C3 /* Palestra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palestra.swift; sourceTree = "<group>"; };
 		3FB6B533221E0F7A00D76C04 /* Giorno.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Giorno.swift; sourceTree = "<group>"; };
 		3FB6B535221F10FB00D76C04 /* Cheats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cheats.swift; sourceTree = "<group>"; };
+		3FC1271424E8B7B7006BDC9A /* Tabboz macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tabboz macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FC1271624E8B7B7006BDC9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3FC1271824E8B7B8006BDC9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3FC1271B24E8B7B8006BDC9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3FC1271D24E8B7B8006BDC9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FC1271E24E8B7B8006BDC9A /* Tabboz_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tabboz_macOS.entitlements; sourceTree = "<group>"; };
+		3FC1272224E8B7F4006BDC9A /* ZARRO32.RES */ = {isa = PBXFileReference; lastKnownFileType = file; name = ZARRO32.RES; path = Original/ZARRO32.RES; sourceTree = SOURCE_ROOT; };
+		3FC1272524E8B841006BDC9A /* Win32Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Win32Resources.swift; sourceTree = "<group>"; };
 		3FC9F54722139BA60019B93A /* KnownDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownDialogs.swift; sourceTree = "<group>"; };
 		3FC9F54B2214ACB70019B93A /* Tabboz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabboz.swift; sourceTree = "<group>"; };
 		3FC9F54D2214C8020019B93A /* MessageBoxes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBoxes.h; sourceTree = "<group>"; };
@@ -105,6 +118,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3FC1271124E8B7B7006BDC9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -112,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				3F4DA424220FC25A008DC569 /* Tabboz Simulator */,
+				3FC1271524E8B7B7006BDC9A /* Tabboz macOS */,
 				3F4DA423220FC25A008DC569 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				3F4DA422220FC25A008DC569 /* Tabboz Simulator */,
+				3FC1271424E8B7B7006BDC9A /* Tabboz macOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,6 +173,28 @@
 				3F54DC1B2210991100794232 /* stubs.m */,
 			);
 			path = "Tabboz Simulator";
+			sourceTree = "<group>";
+		};
+		3FC1271524E8B7B7006BDC9A /* Tabboz macOS */ = {
+			isa = PBXGroup;
+			children = (
+				3FC1272424E8B80C006BDC9A /* Resources */,
+				3FC1272224E8B7F4006BDC9A /* ZARRO32.RES */,
+				3FC1272524E8B841006BDC9A /* Win32Resources.swift */,
+				3FC1271624E8B7B7006BDC9A /* AppDelegate.swift */,
+			);
+			path = "Tabboz macOS";
+			sourceTree = "<group>";
+		};
+		3FC1272424E8B80C006BDC9A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3FC1271824E8B7B8006BDC9A /* Assets.xcassets */,
+				3FC1271A24E8B7B8006BDC9A /* MainMenu.xib */,
+				3FC1271D24E8B7B8006BDC9A /* Info.plist */,
+				3FC1271E24E8B7B8006BDC9A /* Tabboz_macOS.entitlements */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		3FED203D220FC7B800AC38D7 /* C */ = {
@@ -199,19 +243,39 @@
 			productReference = 3F4DA422220FC25A008DC569 /* Tabboz Simulator */;
 			productType = "com.apple.product-type.tool";
 		};
+		3FC1271324E8B7B7006BDC9A /* Tabboz macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FC1272124E8B7B8006BDC9A /* Build configuration list for PBXNativeTarget "Tabboz macOS" */;
+			buildPhases = (
+				3FC1271024E8B7B7006BDC9A /* Sources */,
+				3FC1271124E8B7B7006BDC9A /* Frameworks */,
+				3FC1271224E8B7B7006BDC9A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Tabboz macOS";
+			productName = "Tabboz macOS";
+			productReference = 3FC1271424E8B7B7006BDC9A /* Tabboz macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		3F4DA41A220FC25A008DC569 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Antonio Malara";
 				TargetAttributes = {
 					3F4DA421220FC25A008DC569 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+					};
+					3FC1271324E8B7B7006BDC9A = {
+						CreatedOnToolsVersion = 12.0;
 					};
 				};
 			};
@@ -221,6 +285,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 3F4DA419220FC25A008DC569;
 			productRefGroup = 3F4DA423220FC25A008DC569 /* Products */;
@@ -228,9 +293,23 @@
 			projectRoot = "";
 			targets = (
 				3F4DA421220FC25A008DC569 /* Tabboz Simulator */,
+				3FC1271324E8B7B7006BDC9A /* Tabboz macOS */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3FC1271224E8B7B7006BDC9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FC1271924E8B7B8006BDC9A /* Assets.xcassets in Resources */,
+				3FC1272324E8B7F4006BDC9A /* ZARRO32.RES in Resources */,
+				3FC1271C24E8B7B8006BDC9A /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3F4DA41E220FC25A008DC569 /* Sources */ = {
@@ -272,7 +351,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3FC1271024E8B7B7006BDC9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FC1271724E8B7B7006BDC9A /* AppDelegate.swift in Sources */,
+				3FC1272624E8B841006BDC9A /* Win32Resources.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3FC1271A24E8B7B8006BDC9A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3FC1271B24E8B7B8006BDC9A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		3F4DA427220FC25A008DC569 /* Debug */ = {
@@ -421,6 +520,48 @@
 			};
 			name = Release;
 		};
+		3FC1271F24E8B7B8006BDC9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = "Tabboz macOS/Tabboz_macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Tabboz macOS/Resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "name.antonio.malara.Tabboz-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3FC1272024E8B7B8006BDC9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = "Tabboz macOS/Tabboz_macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Tabboz macOS/Resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "name.antonio.malara.Tabboz-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -438,6 +579,15 @@
 			buildConfigurations = (
 				3F4DA42A220FC25A008DC569 /* Debug */,
 				3F4DA42B220FC25A008DC569 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3FC1272124E8B7B8006BDC9A /* Build configuration list for PBXNativeTarget "Tabboz macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FC1271F24E8B7B8006BDC9A /* Debug */,
+				3FC1272024E8B7B8006BDC9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
