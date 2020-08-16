@@ -481,7 +481,7 @@ class ResourceFile {
             case .BITMAP:       fallthrough
             case .ICON:         fallthrough
             case .MENU:         fallthrough
-            case .GROUP_ICON:   
+            case .GROUP_ICON:
                 continue
                 
             case .CURSOR:       fallthrough

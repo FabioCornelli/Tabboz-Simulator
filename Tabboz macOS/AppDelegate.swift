@@ -8,6 +8,10 @@
 
 import Cocoa
 
+func tabboz_random(_ x: Int) -> Int {
+    return Int(tabboz_random(Int32(x)))
+}
+
 
 func template_title(template: DLGTEMPLATE) -> String {
     switch template.title.value {
@@ -103,6 +107,33 @@ func dialog_to_win(dialog: Dialog) -> NSWindow {
     
     return window
 }
+
+extension Tabboz {
+    
+    @objc static func dialog(from handle: HANDLE, dialog: INTRESOURCE, callback: FARPROC) {
+        
+    }
+    
+    @objc static func endDialog() {
+        shouldEndDialog = true
+    }
+    
+    @objc static func showLogo() {
+        print("Tabboz Logo")
+        
+        // The original window procedure at
+        // DialogBox(hInst, MAKEINTRESOURCE(LOGO), NULL, Logo);
+        // is showing a splash screen with a timer
+    }
+    
+    @objc static func showFormatTabboz() {
+        // DialogBox(hInst, MAKEINTRESOURCE(15), hInst, FormatTabboz);
+        
+        print("Format Tabboz")
+    }
+
+}
+
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {

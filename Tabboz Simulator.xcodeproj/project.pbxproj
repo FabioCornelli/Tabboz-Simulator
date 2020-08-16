@@ -7,6 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F0D4CB624E8C4B4008637C6 /* Tipa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B5221B113100DB786D /* Tipa.swift */; };
+		3F0D4CB724E8C4B4008637C6 /* Palestra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A822153D2E00C9A2C3 /* Palestra.swift */; };
+		3F0D4CB824E8C4B4008637C6 /* Danaro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A72217EF9B00DB786D /* Danaro.swift */; };
+		3F0D4CB924E8C4B4008637C6 /* Telefono.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A4221504FD00C9A2C3 /* Telefono.swift */; };
+		3F0D4CBA24E8C4B4008637C6 /* Vestitiario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A92217FF8D00DB786D /* Vestitiario.swift */; };
+		3F0D4CBB24E8C4B4008637C6 /* Tabacchi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AB22180EEF00DB786D /* Tabacchi.swift */; };
+		3F0D4CBC24E8C4B4008637C6 /* Scooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A22214D8EB00C9A2C3 /* Scooter.swift */; };
+		3F0D4CBD24E8C4B4008637C6 /* Giorno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6B533221E0F7A00D76C04 /* Giorno.swift */; };
+		3F0D4CBE24E8C4B4008637C6 /* Tempo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A622150C3A00C9A2C3 /* Tempo.swift */; };
+		3F0D4CBF24E8C4B4008637C6 /* Disco.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AD2218201000DB786D /* Disco.swift */; };
+		3F0D4CC024E8C4B4008637C6 /* Scuola.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B1221AE52900DB786D /* Scuola.swift */; };
+		3F0D4CC124E8C4B4008637C6 /* Cheats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6B535221F10FB00D76C04 /* Cheats.swift */; };
+		3F0D4CC224E8C4B4008637C6 /* Tabboz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54B2214ACB70019B93A /* Tabboz.swift */; };
+		3F0D4CC324E8C4B4008637C6 /* Eventi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B3221B085F00DB786D /* Eventi.swift */; };
+		3F0D4CC424E8C4B4008637C6 /* Lavoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AF2218279000DB786D /* Lavoro.swift */; };
+		3F0D4CC524E8C4B4008637C6 /* KnownDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54722139BA60019B93A /* KnownDialogs.swift */; };
+		3F0D4CC624E8C4BB008637C6 /* stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.m */; };
+		3F0D4CC724E8C4BB008637C6 /* MessageBoxes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54E2214CB930019B93A /* MessageBoxes.m */; };
+		3F0D4CC824E8C734008637C6 /* scooter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2050220FCA3500AC38D7 /* scooter.c */; };
+		3F0D4CCA24E8C734008637C6 /* disco.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED203F220FC7E000AC38D7 /* disco.c */; };
+		3F0D4CCB24E8C734008637C6 /* telefono.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204C220FCA3500AC38D7 /* telefono.c */; };
+		3F0D4CCC24E8C734008637C6 /* zarrosim.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204E220FCA3500AC38D7 /* zarrosim.c */; };
+		3F0D4CCD24E8C734008637C6 /* scuola.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2051220FCA3500AC38D7 /* scuola.c */; };
+		3F0D4CCE24E8C734008637C6 /* readkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204B220FCA3500AC38D7 /* readkey.c */; };
+		3F0D4CCF24E8C734008637C6 /* prompt.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2048220FCA3500AC38D7 /* prompt.c */; };
+		3F0D4CD024E8C734008637C6 /* tempo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2052220FCA3500AC38D7 /* tempo.c */; };
+		3F0D4CD124E8C734008637C6 /* tabimg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2047220FCA3500AC38D7 /* tabimg.c */; };
+		3F0D4CD224E8C734008637C6 /* tipa.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204D220FCA3500AC38D7 /* tipa.c */; };
+		3F0D4CD324E8C734008637C6 /* vestiti.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2043220FCA3500AC38D7 /* vestiti.c */; };
+		3F0D4CD424E8C734008637C6 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2042220FCA3500AC38D7 /* lavoro.c */; };
+		3F0D4CD524E8C735008637C6 /* eventi.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2049220FCA3500AC38D7 /* eventi.c */; };
 		3F4DA426220FC25A008DC569 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4DA425220FC25A008DC569 /* main.swift */; };
 		3F54DC1C2210991100794232 /* stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.m */; };
 		3F7D15A82217EF9B00DB786D /* Danaro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A72217EF9B00DB786D /* Danaro.swift */; };
@@ -355,8 +386,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F0D4CC424E8C4B4008637C6 /* Lavoro.swift in Sources */,
+				3F0D4CCE24E8C734008637C6 /* readkey.c in Sources */,
+				3F0D4CD524E8C735008637C6 /* eventi.c in Sources */,
+				3F0D4CD324E8C734008637C6 /* vestiti.c in Sources */,
+				3F0D4CBF24E8C4B4008637C6 /* Disco.swift in Sources */,
+				3F0D4CBB24E8C4B4008637C6 /* Tabacchi.swift in Sources */,
+				3F0D4CC724E8C4BB008637C6 /* MessageBoxes.m in Sources */,
+				3F0D4CC324E8C4B4008637C6 /* Eventi.swift in Sources */,
+				3F0D4CC624E8C4BB008637C6 /* stubs.m in Sources */,
 				3FC1271724E8B7B7006BDC9A /* AppDelegate.swift in Sources */,
+				3F0D4CC524E8C4B4008637C6 /* KnownDialogs.swift in Sources */,
+				3F0D4CC224E8C4B4008637C6 /* Tabboz.swift in Sources */,
+				3F0D4CD424E8C734008637C6 /* lavoro.c in Sources */,
+				3F0D4CB924E8C4B4008637C6 /* Telefono.swift in Sources */,
+				3F0D4CD024E8C734008637C6 /* tempo.c in Sources */,
+				3F0D4CCA24E8C734008637C6 /* disco.c in Sources */,
+				3F0D4CBE24E8C4B4008637C6 /* Tempo.swift in Sources */,
+				3F0D4CCC24E8C734008637C6 /* zarrosim.c in Sources */,
+				3F0D4CC124E8C4B4008637C6 /* Cheats.swift in Sources */,
+				3F0D4CBA24E8C4B4008637C6 /* Vestitiario.swift in Sources */,
+				3F0D4CC024E8C4B4008637C6 /* Scuola.swift in Sources */,
+				3F0D4CB724E8C4B4008637C6 /* Palestra.swift in Sources */,
+				3F0D4CCF24E8C734008637C6 /* prompt.c in Sources */,
+				3F0D4CBD24E8C4B4008637C6 /* Giorno.swift in Sources */,
+				3F0D4CBC24E8C4B4008637C6 /* Scooter.swift in Sources */,
+				3F0D4CD124E8C734008637C6 /* tabimg.c in Sources */,
 				3FC1272624E8B841006BDC9A /* Win32Resources.swift in Sources */,
+				3F0D4CD224E8C734008637C6 /* tipa.c in Sources */,
+				3F0D4CB624E8C4B4008637C6 /* Tipa.swift in Sources */,
+				3F0D4CCD24E8C734008637C6 /* scuola.c in Sources */,
+				3F0D4CC824E8C734008637C6 /* scooter.c in Sources */,
+				3F0D4CB824E8C4B4008637C6 /* Danaro.swift in Sources */,
+				3F0D4CCB24E8C734008637C6 /* telefono.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +555,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"CLI=1",
+				);
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -509,6 +575,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"CLI=1",
+				);
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -526,7 +596,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = "Tabboz macOS/Tabboz_macOS.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Tabboz macOS/Resources/Tabboz_macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Tabboz macOS/Resources/Info.plist";
@@ -537,7 +607,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "name.antonio.malara.Tabboz-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tabboz Simulator/C/Tabboz Simulator-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -547,7 +618,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = "Tabboz macOS/Tabboz_macOS.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Tabboz macOS/Resources/Tabboz_macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Tabboz macOS/Resources/Info.plist";
@@ -558,7 +629,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "name.antonio.malara.Tabboz-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tabboz Simulator/C/Tabboz Simulator-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
