@@ -141,11 +141,13 @@ class DialogNSWindow : NSWindow {
             }
         }
         
-        _ = self.wndProc(handle, WM_INITDIALOG, 0, 0)
+        _ = wndProc(handle, WM_INITDIALOG, 0, 0)
     }
     
     @objc func dialogButtonAction(sender: AnyObject) {
-        print("BUTTONZ! \(sender) \(viewToTag[sender as! NSView])")
+        if let tag = viewToTag[sender as! NSView] {
+            _ = wndProc(handle, WM_COMMAND, Int32(tag), 0)
+        }
     }
     
     @objc func setDlgItemText(dlg: Int, text: String) {
@@ -190,23 +192,62 @@ extension Tabboz {
 
 }
 
-@main
-class AppDelegate: NSObject, NSApplicationDelegate {
-
+class ApplicationHandle : NSObject {
     static let url = Bundle.main.url(forResource: "ZARRO32.RES", withExtension: nil)!
     
     var res = try! ResourceFile(url: url)
+
+    var handle = HANDLE.allocate(capacity: 1)
     
+    func main() {
+        try! res.load()
+
+        handle.pointee.impl = Unmanaged.passUnretained(self).toOpaque()
+        WinMain(handle, nil, nil, 0)
+    }
+    
+    func dialogBox(dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: FARPROC) {
+        
+        let dialogName : StringOrNumeric.StringOrNumeric
+        if dlg.number != -1 {
+            dialogName = .numeric(Int(dlg.number))
+        }
+        else {
+            dialogName = .string(String(cString: dlg.n))
+        }
+        
+        let dialog = res.dialogs[dialogName]!
+        
+        let wndproc = { a, b, c, d in farproc.pointee.proc(a, b, c, d).boolValue }
+        
+        let window = DialogNSWindow(dialog: dialog, wndProc: wndproc)
+        
+        NSApplication.shared.runModal(for: window)
+
+    }
+    
+    @objc static func dialogBox(hInst: HANDLE, dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: FARPROC) {
+
+        Unmanaged<ApplicationHandle>
+            .fromOpaque(hInst.pointee.impl)
+            .takeUnretainedValue()
+            .dialogBox(
+                dlg: dlg,
+                parentHandle: parentHandle,
+                farproc: farproc
+            )
+    }
+}
+
+@main
+class AppDelegate: NSObject, NSApplicationDelegate {
+
     var window : NSWindow?
+
+    let applicationHandle = ApplicationHandle()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        try! res.load()
-        
-        let dialog = res.dialogs[.numeric(1)]!
-        
-        InitTabboz()
-        window = DialogNSWindow(dialog: dialog, wndProc: TabbozWndProc)
-        window?.makeKeyAndOrderFront(nil)
+        applicationHandle.main()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

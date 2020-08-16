@@ -114,18 +114,21 @@ u_long new_check_l(u_long x) {
 }
 
 int DialogBox(HWND hinst, INTRESOURCE b, void * c, FARPROC proc) {
-    [Tabboz dialogFrom:hinst dialog:b callback:proc];
+    
+    [ApplicationHandle dialogBoxWithHInst:hinst dlg:b parentHandle:(HANDLE)c farproc:proc];
+//    [Tabboz dialogFrom:hinst dialog:b callback:proc];
     return 0;
 }
 
 FARPROC MakeProcInstance(DialogProcFunc proc, HWND hinst) {
-    return (FARPROC) {
-        .proc = proc,
-    };
+    struct TabbozFARPROC * ret = malloc(sizeof(struct TabbozFARPROC));
+    ret->proc = proc;
+    ret->handle = hInst;
+    return ret;
 }
 
 void FreeProcInstance(FARPROC proc) {
-    //    printf("%s -- %p\n", __PRETTY_FUNCTION__, proc);
+    free(proc);
 }
 
 int GetDlgItem(HWND hDlg, int x) {

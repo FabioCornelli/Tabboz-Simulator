@@ -68,9 +68,10 @@ typedef BOOL (*DialogProcFunc)(HANDLE, LONG, LONG, LONG);
 
 struct TabbozFARPROC {
     DialogProcFunc proc;
+    struct TabbozHANDLE *handle;
 };
 
-typedef struct TabbozFARPROC FARPROC;
+typedef struct TabbozFARPROC * FARPROC;
 
 struct TabbozINTRESOURCE {
     int number;
@@ -184,8 +185,7 @@ ATOM RegisterClass(WNDCLASS * wc);
 
 INTRESOURCE MAKEINTRESOURCE_Real(int a, const char * n);
 
-#define STRINGY(s) #s
-#define MAKEINTRESOURCE(x) MAKEINTRESOURCE_Real(x, STRINGY(x) )
+#define MAKEINTRESOURCE(x) MAKEINTRESOURCE_Real(x, NULL)
 
 void new_reset_check(void);
 int new_check_i(int x);
