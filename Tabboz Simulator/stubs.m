@@ -153,6 +153,7 @@ void SendMessage(int dlg, int msg, int value, int x) {
 }
 
 void EndDialog(HANDLE dlg, BOOL x) {
+    [ApplicationHandle endDialogWithDlg:dlg result:x];
     if (log_window) printf("    end dialog %p, %d\n", dlg, x); didLog = true;
 }
 

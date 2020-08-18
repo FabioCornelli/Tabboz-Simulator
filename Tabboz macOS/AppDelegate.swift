@@ -141,7 +141,6 @@ class DialogNSWindow : NSWindow {
                     b.boxType = .custom
                     b.borderColor = NSColor.gray
                     view = b
-                    
                 }
             }
             
@@ -222,6 +221,11 @@ class ApplicationHandle : NSObject {
                 farproc: farproc
             )
     }
+    
+    @objc static func endDialog(dlg: HANDLE, result: Bool) {
+        NSApplication.shared.stopModal(withCode: result ? .OK : .abort)
+    }
+
 }
 
 @main
