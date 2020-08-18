@@ -7,74 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F0D4CB624E8C4B4008637C6 /* Tipa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B5221B113100DB786D /* Tipa.swift */; };
-		3F0D4CB724E8C4B4008637C6 /* Palestra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A822153D2E00C9A2C3 /* Palestra.swift */; };
-		3F0D4CB824E8C4B4008637C6 /* Danaro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A72217EF9B00DB786D /* Danaro.swift */; };
-		3F0D4CB924E8C4B4008637C6 /* Telefono.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A4221504FD00C9A2C3 /* Telefono.swift */; };
-		3F0D4CBA24E8C4B4008637C6 /* Vestitiario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A92217FF8D00DB786D /* Vestitiario.swift */; };
-		3F0D4CBB24E8C4B4008637C6 /* Tabacchi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AB22180EEF00DB786D /* Tabacchi.swift */; };
-		3F0D4CBC24E8C4B4008637C6 /* Scooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A22214D8EB00C9A2C3 /* Scooter.swift */; };
-		3F0D4CBD24E8C4B4008637C6 /* Giorno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6B533221E0F7A00D76C04 /* Giorno.swift */; };
-		3F0D4CBE24E8C4B4008637C6 /* Tempo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A622150C3A00C9A2C3 /* Tempo.swift */; };
-		3F0D4CBF24E8C4B4008637C6 /* Disco.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AD2218201000DB786D /* Disco.swift */; };
-		3F0D4CC024E8C4B4008637C6 /* Scuola.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B1221AE52900DB786D /* Scuola.swift */; };
-		3F0D4CC124E8C4B4008637C6 /* Cheats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6B535221F10FB00D76C04 /* Cheats.swift */; };
-		3F0D4CC224E8C4B4008637C6 /* Tabboz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54B2214ACB70019B93A /* Tabboz.swift */; };
-		3F0D4CC324E8C4B4008637C6 /* Eventi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B3221B085F00DB786D /* Eventi.swift */; };
-		3F0D4CC424E8C4B4008637C6 /* Lavoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AF2218279000DB786D /* Lavoro.swift */; };
-		3F0D4CC524E8C4B4008637C6 /* KnownDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54722139BA60019B93A /* KnownDialogs.swift */; };
 		3F0D4CC624E8C4BB008637C6 /* stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.m */; };
-		3F0D4CC724E8C4BB008637C6 /* MessageBoxes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54E2214CB930019B93A /* MessageBoxes.m */; };
-		3F0D4CC824E8C734008637C6 /* scooter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2050220FCA3500AC38D7 /* scooter.c */; };
-		3F0D4CCA24E8C734008637C6 /* disco.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED203F220FC7E000AC38D7 /* disco.c */; };
-		3F0D4CCB24E8C734008637C6 /* telefono.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204C220FCA3500AC38D7 /* telefono.c */; };
-		3F0D4CCC24E8C734008637C6 /* zarrosim.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204E220FCA3500AC38D7 /* zarrosim.c */; };
-		3F0D4CCD24E8C734008637C6 /* scuola.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2051220FCA3500AC38D7 /* scuola.c */; };
-		3F0D4CCE24E8C734008637C6 /* readkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204B220FCA3500AC38D7 /* readkey.c */; };
-		3F0D4CCF24E8C734008637C6 /* prompt.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2048220FCA3500AC38D7 /* prompt.c */; };
-		3F0D4CD024E8C734008637C6 /* tempo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2052220FCA3500AC38D7 /* tempo.c */; };
-		3F0D4CD124E8C734008637C6 /* tabimg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2047220FCA3500AC38D7 /* tabimg.c */; };
-		3F0D4CD224E8C734008637C6 /* tipa.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204D220FCA3500AC38D7 /* tipa.c */; };
-		3F0D4CD324E8C734008637C6 /* vestiti.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2043220FCA3500AC38D7 /* vestiti.c */; };
-		3F0D4CD424E8C734008637C6 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2042220FCA3500AC38D7 /* lavoro.c */; };
-		3F0D4CD524E8C735008637C6 /* eventi.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2049220FCA3500AC38D7 /* eventi.c */; };
-		3F4DA426220FC25A008DC569 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4DA425220FC25A008DC569 /* main.swift */; };
+		3F2FF68524EC91CF00637016 /* zarrosim.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF67724EC91CE00637016 /* zarrosim.c */; };
+		3F2FF68624EC91CF00637016 /* scooter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF67824EC91CE00637016 /* scooter.c */; };
+		3F2FF68724EC91CF00637016 /* vestiti.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF67A24EC91CE00637016 /* vestiti.c */; };
+		3F2FF68824EC91CF00637016 /* scuola.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF67B24EC91CE00637016 /* scuola.c */; };
+		3F2FF68924EC91CF00637016 /* tipa.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF67C24EC91CE00637016 /* tipa.c */; };
+		3F2FF68A24EC91CF00637016 /* telefono.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF67D24EC91CF00637016 /* telefono.c */; };
+		3F2FF68B24EC91CF00637016 /* tempo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF67E24EC91CF00637016 /* tempo.c */; };
+		3F2FF68C24EC91CF00637016 /* eventi.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF68024EC91CF00637016 /* eventi.c */; };
+		3F2FF68D24EC91CF00637016 /* disco.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF68124EC91CF00637016 /* disco.c */; };
+		3F2FF68E24EC91CF00637016 /* prompt.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF68224EC91CF00637016 /* prompt.c */; };
+		3F2FF68F24EC91CF00637016 /* tabimg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF68324EC91CF00637016 /* tabimg.c */; };
+		3F2FF69024EC91CF00637016 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF68424EC91CF00637016 /* lavoro.c */; };
+		3F2FF69224EC934800637016 /* readkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69124EC934800637016 /* readkey.c */; };
 		3F54DC1C2210991100794232 /* stubs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F54DC1B2210991100794232 /* stubs.m */; };
-		3F7D15A82217EF9B00DB786D /* Danaro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A72217EF9B00DB786D /* Danaro.swift */; };
-		3F7D15AA2217FF8D00DB786D /* Vestitiario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15A92217FF8D00DB786D /* Vestitiario.swift */; };
-		3F7D15AC22180EEF00DB786D /* Tabacchi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AB22180EEF00DB786D /* Tabacchi.swift */; };
-		3F7D15AE2218201000DB786D /* Disco.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AD2218201000DB786D /* Disco.swift */; };
-		3F7D15B02218279000DB786D /* Lavoro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15AF2218279000DB786D /* Lavoro.swift */; };
-		3F7D15B2221AE52900DB786D /* Scuola.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B1221AE52900DB786D /* Scuola.swift */; };
-		3F7D15B4221B085F00DB786D /* Eventi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B3221B085F00DB786D /* Eventi.swift */; };
-		3F7D15B6221B113100DB786D /* Tipa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D15B5221B113100DB786D /* Tipa.swift */; };
-		3F9031A32214D8EB00C9A2C3 /* Scooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A22214D8EB00C9A2C3 /* Scooter.swift */; };
-		3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A4221504FD00C9A2C3 /* Telefono.swift */; };
-		3F9031A722150C3A00C9A2C3 /* Tempo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A622150C3A00C9A2C3 /* Tempo.swift */; };
-		3F9031A922153D2E00C9A2C3 /* Palestra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9031A822153D2E00C9A2C3 /* Palestra.swift */; };
-		3FB6B534221E0F7A00D76C04 /* Giorno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6B533221E0F7A00D76C04 /* Giorno.swift */; };
-		3FB6B536221F10FB00D76C04 /* Cheats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6B535221F10FB00D76C04 /* Cheats.swift */; };
 		3FC1271724E8B7B7006BDC9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC1271624E8B7B7006BDC9A /* AppDelegate.swift */; };
 		3FC1271924E8B7B8006BDC9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1271824E8B7B8006BDC9A /* Assets.xcassets */; };
 		3FC1271C24E8B7B8006BDC9A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1271A24E8B7B8006BDC9A /* MainMenu.xib */; };
 		3FC1272324E8B7F4006BDC9A /* ZARRO32.RES in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1272224E8B7F4006BDC9A /* ZARRO32.RES */; };
 		3FC1272624E8B841006BDC9A /* Win32Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC1272524E8B841006BDC9A /* Win32Resources.swift */; };
-		3FC9F54822139BA60019B93A /* KnownDialogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54722139BA60019B93A /* KnownDialogs.swift */; };
-		3FC9F54C2214ACB70019B93A /* Tabboz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54B2214ACB70019B93A /* Tabboz.swift */; };
-		3FC9F54F2214CB930019B93A /* MessageBoxes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC9F54E2214CB930019B93A /* MessageBoxes.m */; };
-		3FED2040220FC7E000AC38D7 /* disco.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED203F220FC7E000AC38D7 /* disco.c */; };
-		3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2042220FCA3500AC38D7 /* lavoro.c */; };
-		3FED2055220FCA3500AC38D7 /* vestiti.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2043220FCA3500AC38D7 /* vestiti.c */; };
-		3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2047220FCA3500AC38D7 /* tabimg.c */; };
-		3FED205A220FCA3500AC38D7 /* prompt.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2048220FCA3500AC38D7 /* prompt.c */; };
-		3FED205B220FCA3500AC38D7 /* eventi.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2049220FCA3500AC38D7 /* eventi.c */; };
-		3FED205C220FCA3500AC38D7 /* readkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204B220FCA3500AC38D7 /* readkey.c */; };
-		3FED205D220FCA3500AC38D7 /* telefono.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204C220FCA3500AC38D7 /* telefono.c */; };
-		3FED205E220FCA3500AC38D7 /* tipa.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204D220FCA3500AC38D7 /* tipa.c */; };
-		3FED205F220FCA3500AC38D7 /* zarrosim.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED204E220FCA3500AC38D7 /* zarrosim.c */; };
-		3FED2060220FCA3500AC38D7 /* scooter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2050220FCA3500AC38D7 /* scooter.c */; };
-		3FED2061220FCA3500AC38D7 /* scuola.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2051220FCA3500AC38D7 /* scuola.c */; };
-		3FED2062220FCA3500AC38D7 /* tempo.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FED2052220FCA3500AC38D7 /* tempo.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -91,23 +43,23 @@
 
 /* Begin PBXFileReference section */
 		3F25441D22116E5300D494E8 /* stubs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stubs.h; sourceTree = "<group>"; };
+		3F2FF67724EC91CE00637016 /* zarrosim.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = zarrosim.c; sourceTree = "<group>"; };
+		3F2FF67824EC91CE00637016 /* scooter.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = scooter.c; sourceTree = "<group>"; };
+		3F2FF67924EC91CE00637016 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resource.h; sourceTree = "<group>"; };
+		3F2FF67A24EC91CE00637016 /* vestiti.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = vestiti.c; sourceTree = "<group>"; };
+		3F2FF67B24EC91CE00637016 /* scuola.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = scuola.c; sourceTree = "<group>"; };
+		3F2FF67C24EC91CE00637016 /* tipa.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = tipa.c; sourceTree = "<group>"; };
+		3F2FF67D24EC91CF00637016 /* telefono.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = telefono.c; sourceTree = "<group>"; };
+		3F2FF67E24EC91CF00637016 /* tempo.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = tempo.c; sourceTree = "<group>"; };
+		3F2FF67F24EC91CF00637016 /* zarrosim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zarrosim.h; sourceTree = "<group>"; };
+		3F2FF68024EC91CF00637016 /* eventi.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = eventi.c; sourceTree = "<group>"; };
+		3F2FF68124EC91CF00637016 /* disco.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = disco.c; sourceTree = "<group>"; };
+		3F2FF68224EC91CF00637016 /* prompt.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = prompt.c; sourceTree = "<group>"; };
+		3F2FF68324EC91CF00637016 /* tabimg.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = tabimg.c; sourceTree = "<group>"; };
+		3F2FF68424EC91CF00637016 /* lavoro.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = lavoro.c; sourceTree = "<group>"; };
+		3F2FF69124EC934800637016 /* readkey.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = readkey.c; sourceTree = "<group>"; };
 		3F4DA422220FC25A008DC569 /* Tabboz Simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Tabboz Simulator"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3F4DA425220FC25A008DC569 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
-		3F7D15A72217EF9B00DB786D /* Danaro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Danaro.swift; sourceTree = "<group>"; };
-		3F7D15A92217FF8D00DB786D /* Vestitiario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vestitiario.swift; sourceTree = "<group>"; };
-		3F7D15AB22180EEF00DB786D /* Tabacchi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabacchi.swift; sourceTree = "<group>"; };
-		3F7D15AD2218201000DB786D /* Disco.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disco.swift; sourceTree = "<group>"; };
-		3F7D15AF2218279000DB786D /* Lavoro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lavoro.swift; sourceTree = "<group>"; };
-		3F7D15B1221AE52900DB786D /* Scuola.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scuola.swift; sourceTree = "<group>"; };
-		3F7D15B3221B085F00DB786D /* Eventi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eventi.swift; sourceTree = "<group>"; };
-		3F7D15B5221B113100DB786D /* Tipa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tipa.swift; sourceTree = "<group>"; };
-		3F9031A22214D8EB00C9A2C3 /* Scooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scooter.swift; sourceTree = "<group>"; };
-		3F9031A4221504FD00C9A2C3 /* Telefono.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telefono.swift; sourceTree = "<group>"; };
-		3F9031A622150C3A00C9A2C3 /* Tempo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tempo.swift; sourceTree = "<group>"; };
-		3F9031A822153D2E00C9A2C3 /* Palestra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palestra.swift; sourceTree = "<group>"; };
-		3FB6B533221E0F7A00D76C04 /* Giorno.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Giorno.swift; sourceTree = "<group>"; };
-		3FB6B535221F10FB00D76C04 /* Cheats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cheats.swift; sourceTree = "<group>"; };
 		3FC1271424E8B7B7006BDC9A /* Tabboz macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tabboz macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FC1271624E8B7B7006BDC9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FC1271824E8B7B8006BDC9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -116,29 +68,8 @@
 		3FC1271E24E8B7B8006BDC9A /* Tabboz_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tabboz_macOS.entitlements; sourceTree = "<group>"; };
 		3FC1272224E8B7F4006BDC9A /* ZARRO32.RES */ = {isa = PBXFileReference; lastKnownFileType = file; name = ZARRO32.RES; path = Original/ZARRO32.RES; sourceTree = SOURCE_ROOT; };
 		3FC1272524E8B841006BDC9A /* Win32Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Win32Resources.swift; sourceTree = "<group>"; };
-		3FC9F54722139BA60019B93A /* KnownDialogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownDialogs.swift; sourceTree = "<group>"; };
-		3FC9F54B2214ACB70019B93A /* Tabboz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabboz.swift; sourceTree = "<group>"; };
-		3FC9F54D2214C8020019B93A /* MessageBoxes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBoxes.h; sourceTree = "<group>"; };
-		3FC9F54E2214CB930019B93A /* MessageBoxes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageBoxes.m; sourceTree = "<group>"; };
 		3FED203E220FC7E000AC38D7 /* Tabboz Simulator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabboz Simulator-Bridging-Header.h"; sourceTree = "<group>"; };
-		3FED203F220FC7E000AC38D7 /* disco.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = disco.c; path = "Tabboz Simulator/C/disco.c"; sourceTree = SOURCE_ROOT; };
-		3FED2041220FCA3500AC38D7 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = "Tabboz Simulator/C/resource.h"; sourceTree = SOURCE_ROOT; };
-		3FED2042220FCA3500AC38D7 /* lavoro.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = lavoro.c; path = "Tabboz Simulator/C/lavoro.c"; sourceTree = SOURCE_ROOT; };
-		3FED2043220FCA3500AC38D7 /* vestiti.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = vestiti.c; path = "Tabboz Simulator/C/vestiti.c"; sourceTree = SOURCE_ROOT; };
-		3FED2046220FCA3500AC38D7 /* net.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = net.c; path = "Tabboz Simulator/C/net.c"; sourceTree = SOURCE_ROOT; };
-		3FED2047220FCA3500AC38D7 /* tabimg.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = tabimg.c; path = "Tabboz Simulator/C/tabimg.c"; sourceTree = SOURCE_ROOT; };
-		3FED2048220FCA3500AC38D7 /* prompt.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = prompt.c; path = "Tabboz Simulator/C/prompt.c"; sourceTree = SOURCE_ROOT; };
-		3FED2049220FCA3500AC38D7 /* eventi.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = eventi.c; path = "Tabboz Simulator/C/eventi.c"; sourceTree = SOURCE_ROOT; };
 		3FED204A220FCA3500AC38D7 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os.h; path = "Tabboz Simulator/C/os.h"; sourceTree = SOURCE_ROOT; };
-		3FED204B220FCA3500AC38D7 /* readkey.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = readkey.c; path = "Tabboz Simulator/C/readkey.c"; sourceTree = SOURCE_ROOT; };
-		3FED204C220FCA3500AC38D7 /* telefono.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = telefono.c; path = "Tabboz Simulator/C/telefono.c"; sourceTree = SOURCE_ROOT; };
-		3FED204D220FCA3500AC38D7 /* tipa.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = tipa.c; path = "Tabboz Simulator/C/tipa.c"; sourceTree = SOURCE_ROOT; };
-		3FED204E220FCA3500AC38D7 /* zarrosim.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = zarrosim.c; path = "Tabboz Simulator/C/zarrosim.c"; sourceTree = SOURCE_ROOT; };
-		3FED204F220FCA3500AC38D7 /* zarrosim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zarrosim.h; path = "Tabboz Simulator/C/zarrosim.h"; sourceTree = SOURCE_ROOT; };
-		3FED2050220FCA3500AC38D7 /* scooter.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = scooter.c; path = "Tabboz Simulator/C/scooter.c"; sourceTree = SOURCE_ROOT; };
-		3FED2051220FCA3500AC38D7 /* scuola.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = scuola.c; path = "Tabboz Simulator/C/scuola.c"; sourceTree = SOURCE_ROOT; };
-		3FED2052220FCA3500AC38D7 /* tempo.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; name = tempo.c; path = "Tabboz Simulator/C/tempo.c"; sourceTree = SOURCE_ROOT; };
-		3FED2053220FCA3500AC38D7 /* net.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = net.h; path = "Tabboz Simulator/C/net.h"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,25 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				3FED203D220FC7B800AC38D7 /* C */,
-				3F4DA425220FC25A008DC569 /* main.swift */,
-				3FC9F54B2214ACB70019B93A /* Tabboz.swift */,
-				3FB6B533221E0F7A00D76C04 /* Giorno.swift */,
-				3F7D15B3221B085F00DB786D /* Eventi.swift */,
-				3F9031A22214D8EB00C9A2C3 /* Scooter.swift */,
-				3F9031A4221504FD00C9A2C3 /* Telefono.swift */,
-				3F9031A622150C3A00C9A2C3 /* Tempo.swift */,
-				3F9031A822153D2E00C9A2C3 /* Palestra.swift */,
-				3F7D15A72217EF9B00DB786D /* Danaro.swift */,
-				3F7D15A92217FF8D00DB786D /* Vestitiario.swift */,
-				3F7D15AD2218201000DB786D /* Disco.swift */,
-				3F7D15AB22180EEF00DB786D /* Tabacchi.swift */,
-				3F7D15AF2218279000DB786D /* Lavoro.swift */,
-				3F7D15B1221AE52900DB786D /* Scuola.swift */,
-				3F7D15B5221B113100DB786D /* Tipa.swift */,
-				3FB6B535221F10FB00D76C04 /* Cheats.swift */,
-				3FC9F54722139BA60019B93A /* KnownDialogs.swift */,
-				3FC9F54D2214C8020019B93A /* MessageBoxes.h */,
-				3FC9F54E2214CB930019B93A /* MessageBoxes.m */,
 				3F25441D22116E5300D494E8 /* stubs.h */,
 				3F54DC1B2210991100794232 /* stubs.m */,
 			);
@@ -231,24 +143,22 @@
 		3FED203D220FC7B800AC38D7 /* C */ = {
 			isa = PBXGroup;
 			children = (
-				3FED203F220FC7E000AC38D7 /* disco.c */,
-				3FED2049220FCA3500AC38D7 /* eventi.c */,
-				3FED2042220FCA3500AC38D7 /* lavoro.c */,
-				3FED2046220FCA3500AC38D7 /* net.c */,
-				3FED2053220FCA3500AC38D7 /* net.h */,
+				3F2FF69124EC934800637016 /* readkey.c */,
+				3F2FF68124EC91CF00637016 /* disco.c */,
+				3F2FF68024EC91CF00637016 /* eventi.c */,
+				3F2FF68424EC91CF00637016 /* lavoro.c */,
+				3F2FF68224EC91CF00637016 /* prompt.c */,
+				3F2FF67924EC91CE00637016 /* resource.h */,
+				3F2FF67824EC91CE00637016 /* scooter.c */,
+				3F2FF67B24EC91CE00637016 /* scuola.c */,
+				3F2FF68324EC91CF00637016 /* tabimg.c */,
+				3F2FF67D24EC91CF00637016 /* telefono.c */,
+				3F2FF67E24EC91CF00637016 /* tempo.c */,
+				3F2FF67C24EC91CE00637016 /* tipa.c */,
+				3F2FF67A24EC91CE00637016 /* vestiti.c */,
+				3F2FF67724EC91CE00637016 /* zarrosim.c */,
+				3F2FF67F24EC91CF00637016 /* zarrosim.h */,
 				3FED204A220FCA3500AC38D7 /* os.h */,
-				3FED2048220FCA3500AC38D7 /* prompt.c */,
-				3FED204B220FCA3500AC38D7 /* readkey.c */,
-				3FED2041220FCA3500AC38D7 /* resource.h */,
-				3FED2050220FCA3500AC38D7 /* scooter.c */,
-				3FED2051220FCA3500AC38D7 /* scuola.c */,
-				3FED2047220FCA3500AC38D7 /* tabimg.c */,
-				3FED204C220FCA3500AC38D7 /* telefono.c */,
-				3FED2052220FCA3500AC38D7 /* tempo.c */,
-				3FED204D220FCA3500AC38D7 /* tipa.c */,
-				3FED2043220FCA3500AC38D7 /* vestiti.c */,
-				3FED204E220FCA3500AC38D7 /* zarrosim.c */,
-				3FED204F220FCA3500AC38D7 /* zarrosim.h */,
 				3FED203E220FC7E000AC38D7 /* Tabboz Simulator-Bridging-Header.h */,
 			);
 			path = C;
@@ -347,38 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F7D15AA2217FF8D00DB786D /* Vestitiario.swift in Sources */,
-				3F9031A32214D8EB00C9A2C3 /* Scooter.swift in Sources */,
-				3FED2061220FCA3500AC38D7 /* scuola.c in Sources */,
-				3FED205E220FCA3500AC38D7 /* tipa.c in Sources */,
-				3F7D15AC22180EEF00DB786D /* Tabacchi.swift in Sources */,
-				3F9031A722150C3A00C9A2C3 /* Tempo.swift in Sources */,
-				3FED2040220FC7E000AC38D7 /* disco.c in Sources */,
-				3FED205A220FCA3500AC38D7 /* prompt.c in Sources */,
-				3F7D15A82217EF9B00DB786D /* Danaro.swift in Sources */,
-				3F4DA426220FC25A008DC569 /* main.swift in Sources */,
-				3F9031A922153D2E00C9A2C3 /* Palestra.swift in Sources */,
-				3F7D15B6221B113100DB786D /* Tipa.swift in Sources */,
-				3FC9F54C2214ACB70019B93A /* Tabboz.swift in Sources */,
-				3FED2055220FCA3500AC38D7 /* vestiti.c in Sources */,
-				3FED2054220FCA3500AC38D7 /* lavoro.c in Sources */,
-				3F7D15B2221AE52900DB786D /* Scuola.swift in Sources */,
-				3FED205B220FCA3500AC38D7 /* eventi.c in Sources */,
-				3FED205F220FCA3500AC38D7 /* zarrosim.c in Sources */,
 				3F54DC1C2210991100794232 /* stubs.m in Sources */,
-				3FED2059220FCA3500AC38D7 /* tabimg.c in Sources */,
-				3F7D15B02218279000DB786D /* Lavoro.swift in Sources */,
-				3F9031A5221504FD00C9A2C3 /* Telefono.swift in Sources */,
-				3F7D15B4221B085F00DB786D /* Eventi.swift in Sources */,
-				3FED2060220FCA3500AC38D7 /* scooter.c in Sources */,
-				3FB6B534221E0F7A00D76C04 /* Giorno.swift in Sources */,
-				3FED205C220FCA3500AC38D7 /* readkey.c in Sources */,
-				3FC9F54822139BA60019B93A /* KnownDialogs.swift in Sources */,
-				3FC9F54F2214CB930019B93A /* MessageBoxes.m in Sources */,
-				3FED2062220FCA3500AC38D7 /* tempo.c in Sources */,
-				3F7D15AE2218201000DB786D /* Disco.swift in Sources */,
-				3FED205D220FCA3500AC38D7 /* telefono.c in Sources */,
-				3FB6B536221F10FB00D76C04 /* Cheats.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,39 +265,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F0D4CC424E8C4B4008637C6 /* Lavoro.swift in Sources */,
-				3F0D4CCE24E8C734008637C6 /* readkey.c in Sources */,
-				3F0D4CD524E8C735008637C6 /* eventi.c in Sources */,
-				3F0D4CD324E8C734008637C6 /* vestiti.c in Sources */,
-				3F0D4CBF24E8C4B4008637C6 /* Disco.swift in Sources */,
-				3F0D4CBB24E8C4B4008637C6 /* Tabacchi.swift in Sources */,
-				3F0D4CC724E8C4BB008637C6 /* MessageBoxes.m in Sources */,
-				3F0D4CC324E8C4B4008637C6 /* Eventi.swift in Sources */,
+				3F2FF68624EC91CF00637016 /* scooter.c in Sources */,
+				3F2FF68F24EC91CF00637016 /* tabimg.c in Sources */,
+				3F2FF69024EC91CF00637016 /* lavoro.c in Sources */,
 				3F0D4CC624E8C4BB008637C6 /* stubs.m in Sources */,
 				3FC1271724E8B7B7006BDC9A /* AppDelegate.swift in Sources */,
-				3F0D4CC524E8C4B4008637C6 /* KnownDialogs.swift in Sources */,
-				3F0D4CC224E8C4B4008637C6 /* Tabboz.swift in Sources */,
-				3F0D4CD424E8C734008637C6 /* lavoro.c in Sources */,
-				3F0D4CB924E8C4B4008637C6 /* Telefono.swift in Sources */,
-				3F0D4CD024E8C734008637C6 /* tempo.c in Sources */,
-				3F0D4CCA24E8C734008637C6 /* disco.c in Sources */,
-				3F0D4CBE24E8C4B4008637C6 /* Tempo.swift in Sources */,
-				3F0D4CCC24E8C734008637C6 /* zarrosim.c in Sources */,
-				3F0D4CC124E8C4B4008637C6 /* Cheats.swift in Sources */,
-				3F0D4CBA24E8C4B4008637C6 /* Vestitiario.swift in Sources */,
-				3F0D4CC024E8C4B4008637C6 /* Scuola.swift in Sources */,
-				3F0D4CB724E8C4B4008637C6 /* Palestra.swift in Sources */,
-				3F0D4CCF24E8C734008637C6 /* prompt.c in Sources */,
-				3F0D4CBD24E8C4B4008637C6 /* Giorno.swift in Sources */,
-				3F0D4CBC24E8C4B4008637C6 /* Scooter.swift in Sources */,
-				3F0D4CD124E8C734008637C6 /* tabimg.c in Sources */,
+				3F2FF68524EC91CF00637016 /* zarrosim.c in Sources */,
+				3F2FF68824EC91CF00637016 /* scuola.c in Sources */,
+				3F2FF68E24EC91CF00637016 /* prompt.c in Sources */,
+				3F2FF68C24EC91CF00637016 /* eventi.c in Sources */,
+				3F2FF68D24EC91CF00637016 /* disco.c in Sources */,
+				3F2FF68924EC91CF00637016 /* tipa.c in Sources */,
+				3F2FF68724EC91CF00637016 /* vestiti.c in Sources */,
 				3FC1272624E8B841006BDC9A /* Win32Resources.swift in Sources */,
-				3F0D4CD224E8C734008637C6 /* tipa.c in Sources */,
-				3F0D4CB624E8C4B4008637C6 /* Tipa.swift in Sources */,
-				3F0D4CCD24E8C734008637C6 /* scuola.c in Sources */,
-				3F0D4CC824E8C734008637C6 /* scooter.c in Sources */,
-				3F0D4CB824E8C4B4008637C6 /* Danaro.swift in Sources */,
-				3F0D4CCB24E8C734008637C6 /* telefono.c in Sources */,
+				3F2FF68A24EC91CF00637016 /* telefono.c in Sources */,
+				3F2FF68B24EC91CF00637016 /* tempo.c in Sources */,
+				3F2FF69224EC934800637016 /* readkey.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

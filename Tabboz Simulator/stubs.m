@@ -29,7 +29,7 @@ BOOL IsIconic(HANDLE a)                                    { abort(); }
 HBITMAP LoadBitmap(HANDLE a, INTRESOURCE b)                { abort(); }
 int RGB(int a, int b, int c)                               { abort(); }
 void RegCloseKey()                                         { abort(); }
-void RegQueryValue()                                       { abort(); }
+LONG RegQueryValue(HKEY a, char *b, char * c, LONG *d)     { abort(); }
 void RegSetValue()                                         { abort(); }
 void ReleaseDC()                                           { abort(); }
 void RemoveProp()                                          { abort(); }
@@ -158,8 +158,6 @@ void SendMessage(int dlg, int msg, int value, int x) {
 
 void EndDialog(HANDLE dlg, BOOL x) {
     if (log_window) printf("    end dialog %p, %d\n", dlg, x); didLog = true;
-    
-    [Tabboz endDialog];
 }
 
 HICON LoadIcon(HANDLE h, INTRESOURCE r) {

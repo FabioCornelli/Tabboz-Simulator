@@ -255,14 +255,10 @@ LONG RegCreateKeyEx(int hkey,
                     void * g,
                     HKEY *xKey,
                     LONG *disposition);
-
-
-extern BOOL enableDialogTrace;
-extern BOOL shouldEndDialog;
-
-extern BOOL log_window;
-extern BOOL didLog;
-
-#include "MessageBoxes.h"
+void RegSetValue(HKEY key, char * keyName, int c, char * keyValue, DWORD keylen);
+void RegCloseKey(HKEY key);
+LONG RegQueryValue(HKEY key, char * keyName, char * keyValue, LONG * keyLen);
+void WritePrivateProfileString(char * a, char * keyName, char * keyValue, char * filename);
+void GetPrivateProfileString(char * a, char * keyName, void * c, char * keyValue, int e, char * filename);
 
 #endif /* stubs_h */

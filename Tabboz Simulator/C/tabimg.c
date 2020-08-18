@@ -33,7 +33,7 @@
 #define IMG_X_INC 10
 #define IMG_Y_INC 0
 
-__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 /*********************************************************************/
 /* Parte per (cercare) di disegnare le immagini trasparenti...       */
@@ -41,6 +41,8 @@ __attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (An
 
 // Disegna una BMP trasparente
 // Necessita della BMP stessa e di una maschera.
+
+void AggiornaTipa(HWND hDlg);
 
 #pragma argsused
 static void DrawTransparentBitmap( HDC hdc, HBITMAP hbmpSrc,
@@ -119,19 +121,16 @@ static HBITMAP CreateTransparentMask( HBITMAP hbmpSrc,    COLORREF rgbTransparen
 #pragma argsused
 int static NEAR PASCAL WMCreate( HWND hwnd,LPCREATESTRUCT lpCS)
 {
-	HBITMAP hbmp_testa     = 0;
-	HBITMAP hbmp_giubbotto = 0;
-	HBITMAP hbmp_pantaloni = 0;
-	HBITMAP hbmp_scarpe    = 0;
-	HBITMAP hbmp_sfondo    = 0;
+	HBITMAP hbmp_testa;
+	HBITMAP hbmp_giubbotto;
+	HBITMAP hbmp_pantaloni;
+	HBITMAP hbmp_scarpe;
+	HBITMAP hbmp_sfondo;
 
 	TabbozRedraw = 0;	// Visto che sta venendo caricato ora, non necessita di essere caricato ancora...
 
-    BOOL doIt = false;
-    
 	switch (ImgSelector) {
 		case 0:
-                    doIt = true;
 					if (sesso == 'M') {
 						hbmp_pantaloni = LoadBitmap(hInst,MAKEINTRESOURCE(current_pantaloni   + 1520));
 						hbmp_testa 	   = LoadBitmap(hInst,MAKEINTRESOURCE(current_testa    + 1390));
@@ -149,7 +148,7 @@ int static NEAR PASCAL WMCreate( HWND hwnd,LPCREATESTRUCT lpCS)
 					break;
 	}
 
-	if (doIt) {
+	if (hbmp_testa) {
 	  HBITMAP hmask_testa;
 	  HBITMAP hmask_giubbotto;
 	  HBITMAP hmask_pantaloni;
@@ -285,17 +284,14 @@ long FAR PASCAL BMPViewWndProc(HWND hWnd, WORD msg,
 				  WORD wParam, LONG lParam)
 {
 	switch(msg) {
-        case WM_CREATE:	return WMCreate(hWnd,NULL); // NOTE: Quick compile fix - (LPCREATESTRUCT)lParam);
+		 case WM_CREATE:	return WMCreate(hWnd,(LPCREATESTRUCT)lParam);
 		 case WM_DESTROY: return WMDestroy(hWnd);
 		 case WM_PAINT:   return WMPaint(hWnd);
 		 case WM_LBUTTONDOWN:
 				/* Display Personal Information box. */
-        {
-            __auto_type lpproc = MakeProcInstance(PersonalInfo, hInst);
-				DialogBox(hInst,MAKEINTRESOURCE(PERSONALINFO),hWnd,lpproc);
+				DialogBox(hInst,MAKEINTRESOURCE(PERSONALINFO),hWnd,PersonalInfo);
 				AggiornaPrincipale(hWndMain);
 				return(0);
-        }
 
 		 }
 	return DefWindowProc(hWnd,msg,wParam,lParam);
@@ -404,28 +400,44 @@ extern HWND	tipahDlg;
 long FAR PASCAL BMPTipaWndProc(HWND hWnd, WORD msg,
 				  WORD wParam, LONG lParam)
 {
-    
-    switch(msg) {
-        case WM_CREATE:      return WMTipaCreate(hWnd,NULL); // NOTE: Quick compile fix -- (LPCREATESTRUCT)lParam);
-        case WM_DESTROY:     return WMTipaDestroy(hWnd);
-        case WM_PAINT:	     return WMTipaPaint(hWnd);
-        case WM_LBUTTONDOWN:
-            // sprintf(tmp,"%d %d",LOWORD(lParam),HIWORD(lParam));
-            // MessageBox( 0, tmp, "BMPTipa", MB_OK );
-            
-            if ((((LOWORD(lParam)>=138) && (LOWORD(lParam)<=170)) && // Coordinate Tette
-                 ((HIWORD(lParam)>= 50) && (HIWORD(lParam)<= 65))) ||
-                (((LOWORD(lParam)>=104) && (LOWORD(lParam)<=136)) && // Coordinate Culo
-                 ((HIWORD(lParam)>= 78) && (HIWORD(lParam)<=166))))
-            {
-                // Palpatina...
-                [Tabboz.global palpatinaWithHDlg:hWnd];
-            }
-            
-            return(0);
-    }
-    
-    return DefWindowProc(hWnd,msg,wParam,lParam);
+char tmp[255];
+
+	switch(msg) {
+		 case WM_CREATE:	return WMTipaCreate(hWnd,(LPCREATESTRUCT)lParam);
+		 case WM_DESTROY: return WMTipaDestroy(hWnd);
+		 case WM_PAINT:	return WMTipaPaint(hWnd);
+		 case WM_LBUTTONDOWN:
+//								sprintf(tmp,"%d %d",LOWORD(lParam),HIWORD(lParam));
+//								MessageBox( 0, tmp, "BMPTipa", MB_OK );
+								if ((((LOWORD(lParam)>=138) && (LOWORD(lParam)<=170)) && // Coordinate Tette
+									  ((HIWORD(lParam)>= 50) && (HIWORD(lParam)<= 65))) ||
+									 (((LOWORD(lParam)>=104) && (LOWORD(lParam)<=136)) && // Coordinate Culo
+									  ((HIWORD(lParam)>= 78) && (HIWORD(lParam)<=166)))) {
+		// Palpatina...
+		if (Rapporti < 0) {
+//			MessageBox( hWnd, "Brutto porco, che cazzo tocchi ?", "Palpatina...", MB_OK | MB_ICONSTOP);
+//			if (sound_active) TabbozPlaySound(604);
+//			AggiornaTipa(tipahDlg);
+		} else if (Rapporti < (20 + (FigTipa/2)) ) { // + e' figa, - te la da' (perla di saggezza)
+			if (sound_active) TabbozPlaySound(604);
+			MessageBox( hWnd, "Brutto porco, che cazzo tocchi ?", "Palpatina...", MB_OK);
+			if (Rapporti > 5) Rapporti-=3;
+			AggiornaTipa(tipahDlg);
+		} else if (Rapporti < (30 + (FigTipa/2)) ) {
+			MessageBox( hWnd, "Dai, smettila... Voi uomini pensato solo a quello...", "Palpatina...", MB_OK | MB_ICONQUESTION);
+		} else {
+			MessageBox( hWnd, "Mmhhhhhhhh.........", "Palpatina...", MB_OK | MB_ICONINFORMATION);
+			Rapporti+3;
+			if (Rapporti < 100) Rapporti=100;
+			Giorno(hWnd);
+			AggiornaTipa(tipahDlg);
+		}
+
+		}
+		return(0);
+
+	}
+	return DefWindowProc(hWnd,msg,wParam,lParam);
 }
 
 /*********************************************************************/

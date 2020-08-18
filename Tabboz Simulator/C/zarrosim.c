@@ -25,6 +25,11 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef TABBOZ_WIN
+//#include <dos.h>
+//#include <bwcc.h>
+#endif
+
 #include "zarrosim.h"
 #ifdef TABBOZ_WIN
 #ifndef NONETWORK
@@ -32,7 +37,7 @@
 #endif
 #endif
 
-__attribute__((unused)) static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 extern void	  Atinom(HANDLE hInstance);
 extern int	  vvc(int i);		/* 15 Giugno 1998 - v0.7.1 - Verifica Valori Chiave */
@@ -44,6 +49,8 @@ extern void OpenFileDlg(HWND hwnd);
 extern void SaveFileDlg(HWND hwnd);
 static void SalvaTutto(void);
 static void CaricaTutto(void);
+
+NEWSTSCOOTER ScooterData;
 
 // PRIMA LE VARIABILI GENERIKE...
 
@@ -59,15 +66,33 @@ int	 TabbozRedraw;	/* 26 Febbraio 1999 - 0.8.3pr */
 int	 ScuolaRedraw;	/* 27 Febbraio 1999 - 0.8.3pr */
 // DOPO LE CARATTERISTIKE
 
+int    Attesa;         // Tempo prima che ti diano altri soldi...
+int    Fama;
+int    Reputazione;
+int    Studio;         // Quanto vai bene a scuola (1 - 100)
+u_long Soldi;          // Long...per forza! lo zarro ha tanti soldi...
 u_long Paghetta;       // Paghetta Settimanale...
 char   Nome[30];		  // Nome del Tabbozzo
 char   Cognome[30];	  // Cognome del Tabbozzo ( 3 Marzo 1998 - 0.5.6a )
+char   Nometipa[30];	  // Nome della tipa
 char	 City[50];	     // Citta' di nascita
 char   Residenza[50];  // Citta' dove vive ( 11 Marzo 2000 - 0.9.0beta
 char	 Street[50];	  // Dove sto' tipo abita ( 4 Marzo 1998 - 0.5.6a )
+int	 FigTipa;	     // Figosita' della tipa
+int	 Rapporti;	     // Rapporti Tipo <-> Tipa
+int	 Stato;		     // Quanto stai male ??? (16 Marzo 1999 - 0.8.3pr )
 u_long DDP;				  // Due di picche (log...) - long,sono ottimista...
+int	 Fortuna;		  // Fortuna del tabbozzo
+int	 sizze;			  // Numero di sigarette ( 16 Maggio 1998 - 0.6.92a )
 int	 Tempo_trascorso_dal_pestaggio; //      ( 12 Giugno 1998 - 0.6.98a )
 int	 current_testa;
+int	 current_gibbotto;
+int	 current_pantaloni;
+int	 current_scarpe;
+int	 current_tipa;
+
+int	 comp_giorno;	// giorno & mese del compleanno
+int	 comp_mese;	//
 
 int	 timer_active;
 int	 fase_di_avvio;
@@ -130,20 +155,41 @@ static void CalcolaSesso(void)
 
 void ResetMe(int primavolta)
 {
+int	i;
 char  tmp[128];
 
 		TabbozRedraw 		=  1;
+		Soldi					= 10;
 		Paghetta				= 30;
+		Reputazione			=  0;
+		Fama					=  0;
+		Rapporti				=  0;
+		Stato					=100;
+		impegno				=  0;
+		giorni_di_lavoro	=	0;
+		numeroditta			=  0;
 
 		strcpy(Residenza,"Milano");
+		Nometipa[0]=0;
 
 		LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
 
 		LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1));
 		sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
 
-        [Tabboz initGlobalTabboz];
-    
+		for (i=1;i<10;i++)
+			MaterieMem[i].xxx=0;
+
+		CalcolaStudio();
+
+		x_mese				=  9;
+		x_giorno				= 30;
+		x_giornoset			=  1;
+		x_anno_bisesto		=	0;
+
+		comp_mese			= random(12)+1;
+		comp_giorno			= random(InfoMese[comp_mese-1].num_giorni)+1;
+
 		if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
 			STARTcmdShow		=  1;
 			timer_active		=  1;
@@ -160,12 +206,21 @@ char  tmp[128];
 			strcpy(Cognome,"In Particolare");
 			}
 
+		sizze					=  0;
 		current_testa     =  0;
+		current_gibbotto  =  0;
+		current_pantaloni =  0;
+		current_scarpe    =  0;
 
 #ifndef NONETWORK
 		net_enable			=  1;
 		PortNumber			= 79;
 #endif
+
+		ScooterData.stato	= -1;
+
+		AbbonamentData.creditorest = -1;
+		CellularData.stato 			= -1;
 
 }
 
@@ -227,17 +282,18 @@ static char tmpsesso;
 // InitTabboz
 //*******************************************************************
 #pragma argsused
-void InitTabboz(void)
+static void InitTabboz(void)
 {
 	 char       tmp[128];
 #ifdef TABBOZ_WIN
+	 FARPROC		lpproc;
+
 	 // Init della liberia grafica...
 	 BWCCRegister(hInst); // Fanculo ! Mi sono magiato il fegato prima di trovare
 	 // questa funzione ! non c'e' nessuno documento fottuto che mi abbia aiutato !
+
 #endif
 
-    [Tabboz initGlobalTabboz];
-    
 	 nome_del_file_su_cui_salvare[0]=0;
 
 	 // Inizializzazione dei numeri casuali...
@@ -246,11 +302,14 @@ void InitTabboz(void)
 	 // Inizializza un po' di variabile...
 	 boolean_shutdown=0;		  /* 0=resta dentro, 1=uscita, 2=shutdown 19 Giugno 1999 / 14 Ottoble 1999 */
 
-
-    ImgSelector=0;              /* W l' arte di arrangiarsi...  */
+	 Fortuna=0;					     /* Uguale a me...               */
+	 ScooterData=ScooterMem[0];  /* nessuno scooter              */
+	 Attesa=ATTESAMAX;           /* attesa per avere soldi...    */
+	 ImgSelector=0;              /* W l' arte di arrangiarsi...  */
 	 timer_active=1;             			 /* 10 Giugno  1998 */
 	 fase_di_avvio=1;				 		    /* 11 Giugno  1998 */
 	 Tempo_trascorso_dal_pestaggio=0;    /* 12 Giugno  1998 */
+	 current_tipa=0;							 /* 6  Maggio  1999 */
 
 #ifdef PROMPT_ACTIVE
 /* definitivamente rimosso il 		   10 Gennaio 1999 */
@@ -303,8 +362,7 @@ void InitTabboz(void)
 	 if (_argc > 1)
 		 if (! strcmp(_argv[1],"config") ) {
 			 hWndMain = 0; // Segnala che non esiste proc. principale.
-             __auto_type lpproc = MakeProcInstance(Configuration, hInst);
-			 DialogBox(hInst,MAKEINTRESOURCE(CONFIGURATION),NULL,lpproc);
+			 DialogBox(hInst,MAKEINTRESOURCE(CONFIGURATION),NULL,Configuration);
 			 FineProgramma("config");
 			 exit(0);
 			 }
@@ -313,11 +371,18 @@ void InitTabboz(void)
 // 12 Mar 1999 - A causa di un riordino generale, e' stata spostata qui...
 
 	 if (STARTcmdShow)
-         [Tabboz showLogo];
+		DialogBox(hInst,MAKEINTRESOURCE(LOGO),NULL,Logo);
 
 // 14 Gen 1999 - Formattazione iniziale Tabbozzo
-	 if (firsttime == 1)
-         [Tabboz showFormatTabboz];
+	 if (firsttime == 1) {
+		 lpproc = MakeProcInstance(FormatTabboz, hInst);
+		 DialogBox(hInst,
+				MAKEINTRESOURCE(15),
+				hInst,
+				lpproc);
+		 FreeProcInstance(lpproc);
+       }
+
 
 #endif
 }
@@ -329,7 +394,6 @@ void InitTabboz(void)
 
 static void CaricaTutto(void)
 {
-#ifdef TABBOZ_PERSISTANCE
 	 char       tmp[128];
 	 int			i;
 
@@ -508,7 +572,6 @@ static void CaricaTutto(void)
 	if (new_counter - atoi(RRKey("SoftCheck")))
 		ResetMe(0);
 
-#endif
 }
 
 
@@ -548,9 +611,6 @@ void FineProgramma(char *caller)
 //*******************************************************************
 
 static void SalvaTutto(void) {
-    
-#ifdef TABBOZ_PERSISTANCE
-    
 	 char tmp[128];
 	 int i;
 
@@ -724,8 +784,6 @@ static void SalvaTutto(void) {
 //	 writelog(tmp);
 // #endif
 
-#endif
-    
 }
 
 
@@ -739,6 +797,7 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
 	 char          buf[128];
 	 char          tmp[128];
+	 int		  		i;
 
 	 if (message == WM_INITDIALOG) {
 		sprintf(tmp, "%s", Andrea);
@@ -781,24 +840,39 @@ BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 			LoadString(hInst, 13, tmp, sizeof(tmp));  /* Dino... */
 			if (! strcmp(tmp,buf)) {
-                [Tabboz.global cheatDino];
+				Soldi=Soldi+1000;
+				Reputazione=random(4);
+				Fama=random(40);
 			}
 
 			LoadString(hInst, 14, tmp, sizeof(tmp));  /* Fratello di Dino... */
 			if (! strcmp(tmp,buf)) {
-                [Tabboz.global cheatFratelloDiDino];
+				Soldi=Soldi+1000;
+				Reputazione=random(30);
+				Fama=random(5);
 			}
 
 			if (! strcmp(Daniele,buf)) {	/* Murdock, ti regala una macchinina... */
-                [Tabboz.global cheatDaniele];
+				ScooterData=ScooterMem[7];
+				benzina=850;
+				Reputazione=100;
 			}
 
 			if (! strcmp(Caccia,buf)) {	/* Caccia fa' aumentare i dindi... */
-                [Tabboz.global cheatCaccia];
+				Soldi=Soldi+10000;
+				Fama=100;
 			}
 
+
 			if (! strcmp(Andrea,buf)) {	/* Io porto la scuola e la tipa al 100% */
-                [Tabboz.global cheatAndrea];
+				for (i=1;i<10;i++)
+					MaterieMem[i].xxx=10;
+				CalcolaStudio();
+				if ( Rapporti > 1 )
+					Rapporti=100;
+				impegno=100;
+				numeroditta=1;
+            stipendio=5000;
 			}
 
 
@@ -1060,9 +1134,10 @@ BOOL FAR PASCAL PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 	 char          tmp[128];
 
 	 if (message == WM_INITDIALOG) {
-		SetDlgItemText(hDlg, 103, Tabboz.global.compleannoString.UTF8String); // Data di nascita
-		sprintf(tmp, "%ld", Tabboz.global.documento);
-		SetDlgItemText(hDlg, 104, tmp); // Numero documento di nascita (inutile ma da' spessore...)
+		sprintf(tmp, " %d %s", comp_giorno,InfoMese[comp_mese-1].nome);
+		SetDlgItemText(hDlg, 103, tmp);			// Data di nascita
+		sprintf(tmp, "%d", (comp_giorno * 13 + comp_mese * 3 + 6070));
+		SetDlgItemText(hDlg, 104, tmp);			// Numero documento di nascita (inutile ma da' spessore...)
 
 		if (numeroditta < 1) {        // Professione
 			if (sesso == 'M')
@@ -1185,41 +1260,86 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 # pragma argsused
 BOOL FAR PASCAL Famiglia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
-    char        tmp[1024];
-    
-    if (message == WM_INITDIALOG) {
-        sprintf(tmp,"Papa', mi dai %s ?",MostraSoldi(100));
-        SetDlgItemText(hDlg, 103, tmp);
-        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-        SetDlgItemText(hDlg, 105, MostraSoldi(Paghetta));
-        return(TRUE);
-    }
-    else {
-         if (message == WM_COMMAND) {
-             switch (LOWORD(wParam))
-             {
-                 case 101:                   // Chiedi aumento paghetta
-                     [Tabboz.global chiediAumentoPaghettaWithHDlg:hDlg];
-                     return(TRUE);
-                     
-                 case 102:                   // Chiedi paghetta extra
-                     [Tabboz.global chiediPaghettaExtra:hDlg];
-                     return(TRUE);
-                     
-                 case 103:                   // Papa, mi dai 100000 lire ?
-                     [Tabboz.global papaMiDai100KLireWithHDlg:hDlg];
-                     return(TRUE);
-                     
-                 case IDOK:
-                 case IDCANCEL:
-                     EndDialog(hDlg, TRUE);
-                     return(TRUE);
-                     
-                 default:
-                     return(TRUE);
-             }
-         }
-     }
+	 char        tmp[1024];
+
+	 if (message == WM_INITDIALOG) {
+		sprintf(tmp,"Papa', mi dai %s ?",MostraSoldi(100));
+		SetDlgItemText(hDlg, 103, tmp);
+		SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+		SetDlgItemText(hDlg, 105, MostraSoldi(Paghetta));
+		return(TRUE);
+	} else if (message == WM_COMMAND) {
+		switch (LOWORD(wParam))
+		{
+			case 101:                   /* Chiedi aumento paghetta */
+				if (Studio > 40) {
+					if (((Studio - Paghetta +  Fortuna) > ( 75 + random(50))) & (Paghetta < 96) ) {
+						sprintf(tmp,"Va bene... ti daremo %s di paghetta in piu'...",MostraSoldi(5));
+						MessageBox( hDlg, tmp,
+						  "Aumento paghetta !", MB_OK | MB_ICONINFORMATION);
+						Paghetta+=5;
+						Evento(hDlg);
+					} else {
+						MessageBox( hDlg,
+						"Vedi di scordartelo... Dovra' passare molto tempo prima che ti venga aumentata la paghetta...",
+							"Errore irrecuperabile", MB_OK | MB_ICONHAND);
+						Evento(hDlg);
+					}
+				} else {
+					MessageBox( hDlg,
+						"Quando andrai meglio a scuola, forse...",
+						"Errore irrecuperabile", MB_OK | MB_ICONHAND);
+			}
+			SetDlgItemText(hDlg, 105, MostraSoldi(Paghetta));
+			return(TRUE);
+
+		 case 102:                   // Chiedi paghetta extra
+			if (Studio >= 40) {
+				if (Attesa == 0) {
+                                        Attesa=ATTESAMAX;
+					Soldi+= 10 ;
+					#ifdef TABBOZ_DEBUG
+					sprintf(tmp,"famiglia: paghetta extra (%s)",MostraSoldi(10));
+					writelog(tmp);
+					#endif
+					Evento(hDlg);
+				} else {
+					MessageBox( hDlg,
+					"Ma insomma ! Non puoi continuamente chiedere soldi ! Aspetta ancora qualche giorno. Fai qualche cosa di economico nel frattempo...",
+					"Non te li diamo", MB_OK | MB_ICONHAND);
+					Evento(hDlg);
+				}
+			} else {
+				sprintf(tmp,"Quando andrai meglio a scuola potrai tornare a chiederci dei soldi, non ora. \
+Ma non lo sai che per la tua vita e' importante studiare, e dovresti impegnarti \
+di piu, perche' quando ti impegni i risultati si vedono, solo che sei svogliat%c \
+e non fai mai nulla, mi ricordo che quando ero giovane io era tutta un altra cosa... \
+allora si' che i giovani studiavano...",ao);
+
+				MessageBox( hDlg,tmp,
+					"Errore irrecuperabile", MB_OK | MB_ICONHAND);
+			}
+
+			SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+			return(TRUE);
+
+		 case 103:                   // Papa, mi dai 100000 lire ?
+			if (sound_active) TabbozPlaySound(801);
+				MessageBox( hDlg,
+					"Non pensarci neanche lontanamente...",
+					"Errore irrecuperabile", MB_OK | MB_ICONHAND);
+				Evento(hDlg);
+				return(TRUE);
+
+		 case IDOK:
+		 case IDCANCEL:
+				EndDialog(hDlg, TRUE);
+				return(TRUE);
+
+		 default:
+				return(TRUE);
+		 }
+	 }
 
 	 return(FALSE);
 }
@@ -1236,50 +1356,137 @@ BOOL FAR PASCAL Famiglia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 /*      Issue   : Win32 is non-segmented, thus FAR == NEAR == nothing!          */
 BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 {
+    char          buf[128];
 	 char          tmp[128];
+	 int		  i,i2;
 
 	 if (message == WM_INITDIALOG) {
-         sprintf(tmp, "%d/100", Reputazione);
-         SetDlgItemText(hDlg, 104, tmp);
-         return(TRUE);
-     }
+	sprintf(tmp, "%d/100", Reputazione);	SetDlgItemText(hDlg, 104, tmp);
+	return(TRUE);
+	}
 
 
 /*    PortTool v2.2     4/8/1999    14:40          */
 /*      Found   : WM_COMMAND          */
 /*      Issue   : wParam/lParam repacking, refer to tech. ref. for details          */
-    else if (message == WM_COMMAND) {
+	 else if (message == WM_COMMAND)
+	 {
 
 /*    PortTool v2.2     4/8/1999    14:40          */
 /*      Found   : LOWORD          */
 /*      Issue   : Check if LOWORD target is 16- or 32-bit          */
-         switch (LOWORD(wParam)) {
-                 
-             case 101:	// Gareggia con lo scooter...
-                 [Tabboz.global gareggiaWithHDlg:hDlg];
-                 return(TRUE);
-                 
-             case 102:
-                 [Tabboz.global esciConLaCompagniaWithHDlg:hDlg];
-                 return(TRUE);
-                 
-             case 103:
-                 [Tabboz.global minacciaQualcunoWithHDlg:hDlg];
-                 return(TRUE);
-                 
-             case IDOK:
-                 EndDialog(hDlg, TRUE);
-                 return(TRUE);
-                 
-             case IDCANCEL:
-                 EndDialog(hDlg, TRUE);
-                 return(TRUE);
-                 
-             default:
-                 return(TRUE);
-                 
-         }
-     }
+	switch (LOWORD(wParam))
+	{
+	    case 101:	// Gareggia con lo scooter...
+		 if (ScooterData.stato <= 0) {
+		      MessageBox( hDlg,
+			"Con quale scooter vorresti gareggiare, visto che non lo possiedi ?",
+			"Gareggia con lo scooter", MB_OK | MB_ICONINFORMATION);
+		      return(TRUE);
+				}
+		 if (ScooterData.attivita != 1) {
+				sprintf(buf,"Purtroppo non pui gareggiare visto che il tuo scooter e' %s.",n_attivita[ScooterData.attivita]);
+				MessageBox( hDlg, buf, "Gareggia con lo scooter", MB_OK | MB_ICONINFORMATION);
+				return(TRUE);
+				}
+
+		 if (sound_active) TabbozPlaySound(701);
+		 i=1 + random(6);	// 28 Aprile 1998 - (E' cambiato tutto cio' che riguarda gli scooter...)
+		 sprintf(buf,"Accetti la sfida con un tabbozzo che ha un %s ?",ScooterMem[i].nome);
+		 i2=MessageBox( hDlg,
+		    buf,
+		    "Gareggia con lo scooter", MB_YESNO | MB_ICONQUESTION);
+
+		 if (ScooterData.stato > 30) ScooterData.stato-=random(2);
+
+		 if (i2 == IDYES) {
+//		 	if ( (ScooterMem[i].speed + 70 + random(50)) > (ScooterData.speed + ScooterData.stato + Fortuna) ) {
+			if ( (ScooterMem[i].speed + 80 + random(40)) > (ScooterData.speed + ScooterData.stato + Fortuna) ) {
+				// perdi
+				if (Reputazione > 80)
+					Reputazione-=3;
+				if (Reputazione > 10)
+					Reputazione-=2;
+				MessageBox( hDlg,
+				  "Dopo pochi metri si vede l' inferiorita' del tuo scooter...",
+				  "Hai perso", MB_OK | MB_ICONSTOP);
+			 } else {
+				// vinci
+				Reputazione+=10;
+				if (Reputazione > 100) Reputazione=100;
+				MessageBox( hDlg,
+				  "Con il tuo scooter, bruci l' avversario in partenza...",
+				  "Hai vinto", MB_OK | MB_ICONINFORMATION);
+			}
+		 } else {
+			if (Reputazione > 80)		// Se non accetti la sfida, perdi rep...
+			Reputazione-=3;
+			if (Reputazione > 10)
+			Reputazione-=2;
+		 }
+		 benzina-=5;
+		 if (benzina < 1) benzina = 0;
+		 showscooter=0;
+		 CalcolaVelocita(hDlg);
+
+		 Evento(hDlg);
+		 sprintf(tmp, "%d/100", Reputazione);	SetDlgItemText(hDlg, 104, tmp);
+		 return(TRUE);
+
+	    case 102:
+		// Uscendo con la propria compagnia si puo' arrivare
+		// solamente a reputazione = 57
+		if (Reputazione < 57)
+			Reputazione+=1;
+		if (Reputazione < 37)		// Se la rep e' bassa, sale + in fretta
+			Reputazione+=1;
+		if (Reputazione < 12)
+			Reputazione+=1;
+
+		Evento(hDlg);
+		EndDialog(hDlg, TRUE);
+		return(TRUE);
+
+		 case 103: /* 12 Giugno 1998 - Qualche mese dopo gli altri pulsanti della finestra... */
+		if (Reputazione < 16) {
+			MessageBox( hDlg,
+				  "Con la scarsa reputazione che hai, tutti trovano qualcosa di meglio da fare piuttosto che venire.",
+				  "Chiama la Compagnia", MB_OK | MB_ICONSTOP);
+			Evento(hDlg);
+			return(TRUE);
+			}
+		if (Tempo_trascorso_dal_pestaggio > 0) {
+			if (random(2) == 1) {
+				MessageBox( hDlg,
+					  "Dopo aver visto i tuoi amici, chi ti ha picchiato non si fara' piu' vedere in giro x un bel pezzo...",
+					  "Chiama la Compagnia", MB_OK | MB_ICONINFORMATION);
+				if (Reputazione < 80)
+					Reputazione+=3;
+			} else {
+				MessageBox( hDlg,
+					  "Anche i tuoi amici, al gran completo, vengono sacagnati di botte da chi ti aveva picchiato, accorgendosi cosi' che non sei solo tu ad essere una chiavica, ma lo sono anche loro...",
+					  "Chiama la Compagnia", MB_OK | MB_ICONINFORMATION);
+				if (Reputazione < 95)
+					Reputazione+=5;
+			}
+			Evento(hDlg);
+		} else {
+			MessageBox( hDlg,
+				  "Visto che non c'e' nessuno da minacciare, tutti se ne vanno avviliti...",
+				  "Chiama la Compagnia (perche'?)", MB_OK | MB_ICONSTOP);
+		}
+		sprintf(tmp, "%d/100", Reputazione);	SetDlgItemText(hDlg, 104, tmp);
+		return(TRUE);
+	    case IDOK:
+		EndDialog(hDlg, TRUE);
+		return(TRUE);
+		 case IDCANCEL:
+		EndDialog(hDlg, TRUE);
+		return(TRUE);
+	    default:
+		return(TRUE);
+	}
+    }
 
     return(FALSE);
 }
@@ -1290,7 +1497,73 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 void nomoney(HWND parent,int tipo)
 {
-    [Tabboz.global noMoneyWithHDlg:parent tipo:tipo];
+ char tmp[256];
+ switch (tipo) {
+	case DISCO:
+		sprintf(tmp,"Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\n Un energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
+		MessageBox( parent, tmp,
+		  "Bella figura", MB_OK | MB_ICONSTOP);
+		if (Reputazione > 3 )
+			Reputazione-=1;
+		break;;
+	case VESTITI:
+		sprintf(tmp,"Con cosa avresti intenzione di pagare, stronzett%c ??? Caramelle ???",ao);
+		MessageBox( parent, tmp,
+		  "Bella figura", MB_OK | MB_ICONSTOP);
+		if (Fama > 12 )
+		   Fama-=3;
+		if (Reputazione > 4 )
+		   Reputazione-=2;
+		break;;
+	case PALESTRA:
+		if (sesso == 'M') {
+			MessageBox( parent,
+				"L' enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna e ti scaraventa fuori dalla palestra.",
+				  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+		} else {
+			MessageBox( parent,
+				"L' enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.",
+				  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+		}
+		if (Fama > 14 )
+			Fama-=4;	/* Ah,ah ! fino al 10 Jan 1999 c'era scrittto Reputazione-=4... */
+		if (Reputazione > 18 )
+			Reputazione-=4;
+		break;;
+	case SCOOTER:
+		if (sesso == 'M') {
+			MessageBox( parent,
+			  "L' enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall' officina.",
+			  "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
+			if (Reputazione > 7 )
+				Reputazione-=5;
+			if (ScooterData.stato > 7 )
+				ScooterData.stato-=5;
+		} else {
+			MessageBox( parent,
+			  "Con un sonoro calcio nel culo, vieni buttata fuori dall' officina.",
+			  "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
+			if (Reputazione > 6 )
+				Reputazione-=4;
+			if (Fama > 3 )
+				Fama-=2;
+		}
+		break;;
+	case TABACCAIO:
+		sprintf(tmp,"Fai fuori dal mio locale, brut%c pezzente !, esclama il tabaccaio con un AK 47 in mano...",ao);
+		MessageBox( parent, tmp,
+		  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+		if (Fama > 2)
+			Fama-=1;
+		break;;
+	case CELLULRABBONAM:
+		sprintf(tmp,"Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
+		MessageBox( parent, tmp,
+		  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+		if (Fama > 2)
+			Fama-=1;
+		break;
+	}
 }
 
 //*******************************************************************
@@ -1330,8 +1603,9 @@ char tmp[128];
 
 
 	 if (ScooterData.stato != -1) {
-		SetDlgItemText(parent, 150, Tabboz.global.nomeScooter.UTF8String);	// Nomescooter
-		sprintf(tmp, "%ld/100", ScooterData.stato);
+		sprintf(tmp, "%s", ScooterData.nome);
+		SetDlgItemText(parent, 150, tmp);	// Nomescooter
+		sprintf(tmp, "%d/100", ScooterData.stato);
 		SetDlgItemText(parent, 156, tmp);	// Stato scooter
 	 } else {
 		sprintf(tmp, " ");
@@ -1339,7 +1613,8 @@ char tmp[128];
 		SetDlgItemText(parent, 156, tmp);	// Stato scooter
 	 }
 
-	 SetDlgItemText(parent, 157, Tabboz.global.calendarioString.UTF8String);
+	 sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
+	 SetDlgItemText(parent, 157, tmp);
 
 	 if ( sesso == 'M' )	{// Non usare la variabile "ao" xche' qui e' necessario
 		 DeleteMenu(GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
@@ -1407,6 +1682,8 @@ static HICON 	 hIcon;
 	case WM_SYSCOMMAND:
 		 switch (LOWORD(wParam))
 		 {
+		 FARPROC lpproc;
+
 		 case QX_ABOUT:
 			 /* Display about box. */
 			 lpproc = MakeProcInstance(About, hInst);
@@ -1850,7 +2127,7 @@ time_t 	t;
 
 	if (debug_active) {
 		time(&t);
-        printf("Tabboz Debug: %24.24s %s\n",ctime(&t),s); // NOTE(Biappi): changed to printf from fprintf
+		fprintf(debugfile,"%24.24s %s\n",ctime(&t),s);
 		fflush(debugfile); // Escegue il flush del file, cosi' anche se il Tabboz craschia si ha il file di log...
 	}
 }
@@ -1877,8 +2154,7 @@ int PASCAL WinMain(HANDLE hInstance, HANDLE hPrevInstance,
 	 InitTabboz();
 
 	 /* Finestra principale */
-    __auto_type lpproc = MakeProcInstance(TabbozWndProc, hInst);
-	 DialogBox(hInst,MAKEINTRESOURCE(1),NULL,lpproc);
+	 DialogBox(hInst,MAKEINTRESOURCE(1),NULL,TabbozWndProc);
 
 	 /* Chiusura */
 
@@ -1949,9 +2225,8 @@ int main (int argc, char **argv)
 //*******************************************************************
 // Dialog x la scelta del file da aprire...
 //*******************************************************************
-void OpenFileDlg(HWND hwnd) { }
 
-void Tabboz_OpenFileDlg(HWND hwnd)
+void OpenFileDlg(HWND hwnd)
 {
 #define OFN_LONGNAMES      0x00200000L
 
@@ -1979,9 +2254,7 @@ void Tabboz_OpenFileDlg(HWND hwnd)
 // Dialog x la scelta del file da salvare...
 //*******************************************************************
 
-void SaveFileDlg(HWND hwnd) {}
-
-void Tabboz_SaveFileDlg(HWND hwnd)
+void SaveFileDlg(HWND hwnd)
 {
 #define OFN_LONGNAMES      0x00200000L
   static char szFileName[256];
