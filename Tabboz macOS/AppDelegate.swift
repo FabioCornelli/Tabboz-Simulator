@@ -125,12 +125,24 @@ class DialogNSWindow : NSWindow {
                     view = b
                 }
                 
-            case .custom(let x):
-                print("DIOCANE \(x) \(frame)")
-                let b = NSBox(frame: frame)
-                b.boxType = .custom
-                b.borderColor = NSColor.gray
-                view = b
+            case .custom(let name):
+                switch name {
+                case "BorBtn":
+                    let b = NSButton(frame: frame)
+                    b.title = label
+                    b.target = self
+                    b.action = #selector(dialogButtonAction)
+                    view = b
+                    break
+                    
+                default:
+                    print("DIOCANE \(name) \(frame)")
+                    let b = NSBox(frame: frame)
+                    b.boxType = .custom
+                    b.borderColor = NSColor.gray
+                    view = b
+                    
+                }
             }
             
             contentView?.addSubview(view)
