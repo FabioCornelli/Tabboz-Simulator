@@ -93,11 +93,18 @@ class DialogNSWindow : NSWindow {
             case .standard(let x):
                 switch x {
                 case .button:
-                    let b = NSButton(frame: frame)
-                    b.title = label
-                    b.target = self
-                    b.action = #selector(dialogButtonAction)
-                    view = b
+                    if i.itemTemplate.style.value.contains(.BS_GROUPBOX) {
+                        let b = NSBox(frame: frame)
+                        b.title = i.title.value.asString()
+                        view = b
+                    }
+                    else {
+                        let b = NSButton(frame: frame)
+                        b.title = label
+                        b.target = self
+                        b.action = #selector(dialogButtonAction)
+                        view = b
+                    }
                     
                 case .edit:
                     let e = NSTextField(frame: frame)
