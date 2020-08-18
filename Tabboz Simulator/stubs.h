@@ -19,6 +19,8 @@
 #define random tabboz_random
 #define openlog tabboz_openlog
 
+#define BOOL _Bool
+
 // -
 // Type definitions
 // -
@@ -62,16 +64,11 @@ struct TabbozHANDLE { void * impl; };
 typedef struct TabbozHANDLE * HANDLE;
 typedef struct TabbozHANDLE * HWND;
 
-typedef struct TabbozDialogProc * DialogProc;
+//typedef struct TabbozDialogProc * DialogProc;
 
-typedef BOOL (*DialogProcFunc)(HANDLE, LONG, LONG, LONG);
+typedef _Bool (*DialogProcFunc)(HANDLE, WORD, WORD, LONG);
 
-struct TabbozFARPROC {
-    DialogProcFunc proc;
-    struct TabbozHANDLE *handle;
-};
-
-typedef struct TabbozFARPROC * FARPROC;
+typedef DialogProcFunc FARPROC;
 
 struct TabbozINTRESOURCE {
     int number;
@@ -190,7 +187,7 @@ INTRESOURCE MAKEINTRESOURCE_Real(int a, const char * n);
 void new_reset_check(void);
 int new_check_i(int x);
 u_long new_check_l(u_long x);
-int DialogBox(HWND hinst, INTRESOURCE b, void * c, FARPROC proc);
+int DialogBox(HWND hinst, INTRESOURCE b, void * c, DialogProcFunc proc);
 FARPROC MakeProcInstance(DialogProcFunc proc, HWND hinst);
 void FreeProcInstance(FARPROC proc);
 int GetDlgItem(HWND hDlg, int x);

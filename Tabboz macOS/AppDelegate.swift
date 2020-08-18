@@ -193,7 +193,7 @@ class ApplicationHandle : NSObject {
         WinMain(handle, nil, nil, 0)
     }
     
-    func dialogBox(dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: FARPROC) {
+    func dialogBox(dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: @escaping FARPROC) {
         
         let dialogName : StringOrNumeric.StringOrNumeric
         if dlg.number != -1 {
@@ -204,16 +204,14 @@ class ApplicationHandle : NSObject {
         }
         
         let dialog = res.dialogs[dialogName]!
-        
-        let wndproc = { a, b, c, d in farproc.pointee.proc(a, b, c, d).boolValue }
-        
-        let window = DialogNSWindow(dialog: dialog, wndProc: wndproc)
+                
+        let window = DialogNSWindow(dialog: dialog, wndProc: farproc)
         
         NSApplication.shared.runModal(for: window)
 
     }
     
-    @objc static func dialogBox(hInst: HANDLE, dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: FARPROC) {
+    @objc static func dialogBox(hInst: HANDLE, dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: @escaping FARPROC) {
 
         Unmanaged<ApplicationHandle>
             .fromOpaque(hInst.pointee.impl)

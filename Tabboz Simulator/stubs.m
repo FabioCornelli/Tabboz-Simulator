@@ -121,14 +121,10 @@ int DialogBox(HWND hinst, INTRESOURCE b, void * c, FARPROC proc) {
 }
 
 FARPROC MakeProcInstance(DialogProcFunc proc, HWND hinst) {
-    struct TabbozFARPROC * ret = malloc(sizeof(struct TabbozFARPROC));
-    ret->proc = proc;
-    ret->handle = hInst;
-    return ret;
+    return proc;
 }
 
 void FreeProcInstance(FARPROC proc) {
-    free(proc);
 }
 
 int GetDlgItem(HWND hDlg, int x) {
