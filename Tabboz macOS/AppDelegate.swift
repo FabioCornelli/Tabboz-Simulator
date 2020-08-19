@@ -72,7 +72,7 @@ class DialogNSWindow : NSWindow {
         
         super.init(
             contentRect: template_rect(template: dialog.template),
-            styleMask: [.titled, .closable],
+            styleMask: [.titled],
             backing: .buffered,
             defer: false
         )
@@ -83,7 +83,7 @@ class DialogNSWindow : NSWindow {
         
         for i in dialog.items {
             
-            let label = template_item_title(item: i)
+            let label = template_item_title(item: i).replacingOccurrences(of: "&", with: "")
             let frame = template_item_rect(dialog: dialog, item: i)
             let tag = Int(Int16(bitPattern: i.itemTemplate.id.value))
             let enabled = !i.itemTemplate.style.value.contains(.WS_DISABLED)
@@ -270,7 +270,6 @@ class ApplicationHandle : NSObject {
         let window = DialogNSWindow(dialog: dialog, wndProc: farproc)
         
         NSApplication.shared.runModal(for: window)
-
     }
     
     @objc static func dialogBox(hInst: HANDLE, dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: @escaping FARPROC) {
@@ -289,7 +288,7 @@ class ApplicationHandle : NSObject {
         Unmanaged<DialogNSWindow>
             .fromOpaque(dlg.pointee.impl)
             .takeUnretainedValue()
-            .close()
+            .orderOut(nil)
         
         NSApplication.shared.stopModal(withCode: result ? .OK : .abort)
     }
