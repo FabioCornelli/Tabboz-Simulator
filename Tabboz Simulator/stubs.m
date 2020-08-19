@@ -114,9 +114,7 @@ u_long new_check_l(u_long x) {
 }
 
 int DialogBox(HWND hinst, INTRESOURCE b, void * c, FARPROC proc) {
-    
     [ApplicationHandle dialogBoxWithHInst:hinst dlg:b parentHandle:(HANDLE)c farproc:proc];
-//    [Tabboz dialogFrom:hinst dialog:b callback:proc];
     return 0;
 }
 
@@ -154,7 +152,6 @@ void SendMessage(int dlg, int msg, int value, int x) {
 
 void EndDialog(HANDLE dlg, BOOL x) {
     [ApplicationHandle endDialogWithDlg:dlg result:x];
-    if (log_window) printf("    end dialog %p, %d\n", dlg, x); didLog = true;
 }
 
 HICON LoadIcon(HANDLE h, INTRESOURCE r) {
@@ -166,12 +163,8 @@ void ShowWindow(HANDLE h, int flags) {
 }
 
 void SetDlgItemText(HANDLE h, int d, const char * str) {
-    if (h->impl) {
-        DialogNSWindow * dialogWin = (__bridge DialogNSWindow *)h->impl;
-        [dialogWin setDlgItemTextWithDlg:d text:[NSString stringWithCString:str encoding:NSUTF8StringEncoding]];
-    }
-    
-    if (log_window) printf("    set %p dlg text %3d %s\n", h, d, str); didLog = true;
+    DialogNSWindow * dialogWin = (__bridge DialogNSWindow *)h->impl;
+    [dialogWin setDlgItemTextWithDlg:d text:[NSString stringWithCString:str encoding:NSUTF8StringEncoding]];
 }
 
 int GetMenu(HANDLE h) {
