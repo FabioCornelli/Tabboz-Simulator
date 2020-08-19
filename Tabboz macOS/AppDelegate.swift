@@ -43,10 +43,10 @@ func template_item_title(item: DialogItemTemplate) -> String {
 
 func template_item_rect(dialog: Dialog, item: DialogItemTemplate) -> NSRect {
     let X = Int(item.itemTemplate.x.value) * 2
-    let Y = Int(
-        dialog.template.height.value -
-        item.itemTemplate.y.value -
-        item.itemTemplate.height.value + 1
+    let Y = (
+        Int(dialog.template.height.value) -
+        Int(item.itemTemplate.y.value) -
+        Int(item.itemTemplate.height.value) + 1
     ) * 2
     let W = Int(item.itemTemplate.width.value) * 2
     let H = Int(item.itemTemplate.height.value) * 2
