@@ -86,6 +86,7 @@ class DialogNSWindow : NSWindow {
             let label = template_item_title(item: i)
             let frame = template_item_rect(dialog: dialog, item: i)
             let tag = Int(Int16(bitPattern: i.itemTemplate.id.value))
+            let enabled = !i.itemTemplate.style.value.contains(.WS_DISABLED)
             
             let view : NSView
             
@@ -111,27 +112,68 @@ class DialogNSWindow : NSWindow {
                             b.setButtonType(.switch)
                         }
                         
+                        b.isEnabled = enabled
                         view = b
                     }
                     
                 case .edit:
                     let e = NSTextField(frame: frame)
                     e.stringValue = label
+                    e.isEnabled = enabled
                     view = e
-                    print("\(label) is edit!!")
                     
                 case .statictext:
                     let l = NSTextField(labelWithString: label)
                     l.frame = frame
+                    l.isEnabled = enabled
                     view = l
+                    
+                case .combobox:
+                    let container = NSView(frame: frame)
+                    
+                    let c = NSPopUpButton(frame: frame)
+                    c.isEnabled = enabled
+                    c.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    container.addSubview(c)
+                    
+                    container.addConstraints([
+                        NSLayoutConstraint(item: container,
+                                           attribute: .top,
+                                           relatedBy: .equal,
+                                           toItem: c,
+                                           attribute: .top,
+                                           multiplier: 1,
+                                           constant: 0),
+                        NSLayoutConstraint(item: container,
+                                           attribute: .leading,
+                                           relatedBy: .equal,
+                                           toItem: c,
+                                           attribute: .leading,
+                                           multiplier: 1,
+                                           constant: 0),
+                        NSLayoutConstraint(item: container,
+                                           attribute: .trailing,
+                                           relatedBy: .equal,
+                                           toItem: c,
+                                           attribute: .trailing,
+                                           multiplier: 1,
+                                           constant: 0),
+                        NSLayoutConstraint(item: container,
+                                           attribute: .bottom,
+                                           relatedBy: .greaterThanOrEqual,
+                                           toItem: c,
+                                           attribute: .bottom,
+                                           multiplier: 1,
+                                           constant: 0),
+                    ])
+
+                    view = container
                     
                 case .listbox:
                     fallthrough
                     
                 case .scrollbar:
-                    fallthrough
-                    
-                case .combobox:
                     print(x)
                     
                     let b = NSBox(frame: frame)
@@ -147,8 +189,14 @@ class DialogNSWindow : NSWindow {
                     b.title = label
                     b.target = self
                     b.action = #selector(dialogButtonAction)
+                    b.isEnabled = enabled
                     view = b
                     break
+                    
+                case "msctls_progress":
+                    let x = NSLevelIndicator(frame: frame)
+                    x.isEnabled = enabled
+                    view = x
                     
                 default:
                     print("DIOCANE \(name) \(frame)")
