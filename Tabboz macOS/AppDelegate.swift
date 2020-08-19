@@ -103,6 +103,14 @@ class DialogNSWindow : NSWindow {
                         b.title = label
                         b.target = self
                         b.action = #selector(dialogButtonAction)
+
+                        if i.itemTemplate.style.value.contains(.BS_AUTORADIOBUTTON) {
+                            b.setButtonType(.radio)
+                        }
+                        else if i.itemTemplate.style.value.contains(.BS_CHECKBOX) {
+                            b.setButtonType(.switch)
+                        }
+                        
                         view = b
                     }
                     
@@ -230,6 +238,11 @@ class ApplicationHandle : NSObject {
     }
     
     @objc static func endDialog(dlg: HANDLE, result: Bool) {
+        Unmanaged<DialogNSWindow>
+            .fromOpaque(dlg.pointee.impl)
+            .takeUnretainedValue()
+            .close()
+        
         NSApplication.shared.stopModal(withCode: result ? .OK : .abort)
     }
 
