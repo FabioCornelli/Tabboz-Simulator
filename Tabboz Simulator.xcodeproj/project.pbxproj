@@ -21,11 +21,12 @@
 		3F2FF68F24EC91CF00637016 /* tabimg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF68324EC91CF00637016 /* tabimg.c */; };
 		3F2FF69024EC91CF00637016 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF68424EC91CF00637016 /* lavoro.c */; };
 		3F2FF69224EC934800637016 /* readkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69124EC934800637016 /* readkey.c */; };
-		3FC1271724E8B7B7006BDC9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC1271624E8B7B7006BDC9A /* AppDelegate.swift */; };
-		3FC1271924E8B7B8006BDC9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1271824E8B7B8006BDC9A /* Assets.xcassets */; };
-		3FC1271C24E8B7B8006BDC9A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1271A24E8B7B8006BDC9A /* MainMenu.xib */; };
-		3FC1272324E8B7F4006BDC9A /* ZARRO32.RES in Resources */ = {isa = PBXBuildFile; fileRef = 3FC1272224E8B7F4006BDC9A /* ZARRO32.RES */; };
-		3FC1272624E8B841006BDC9A /* Win32Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC1272524E8B841006BDC9A /* Win32Resources.swift */; };
+		3F2FF69B24ECD01000637016 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF69524ECD01000637016 /* MainMenu.xib */; };
+		3F2FF69C24ECD01000637016 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF69724ECD01000637016 /* Info.plist */; };
+		3F2FF69D24ECD01000637016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF69824ECD01000637016 /* Assets.xcassets */; };
+		3F2FF69E24ECD01000637016 /* Win32Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69924ECD01000637016 /* Win32Resources.swift */; };
+		3F2FF69F24ECD01000637016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69A24ECD01000637016 /* AppDelegate.swift */; };
+		3F2FF6A124ECD08F00637016 /* ZARRO32.RES in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF6A024ECD08F00637016 /* ZARRO32.RES */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,15 +46,15 @@
 		3F2FF68324EC91CF00637016 /* tabimg.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = tabimg.c; sourceTree = "<group>"; };
 		3F2FF68424EC91CF00637016 /* lavoro.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = lavoro.c; sourceTree = "<group>"; };
 		3F2FF69124EC934800637016 /* readkey.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = readkey.c; sourceTree = "<group>"; };
+		3F2FF69424ECD01000637016 /* Tabboz_macOS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Tabboz_macOS.entitlements; sourceTree = "<group>"; };
+		3F2FF69624ECD01000637016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3F2FF69724ECD01000637016 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F2FF69824ECD01000637016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3F2FF69924ECD01000637016 /* Win32Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Win32Resources.swift; sourceTree = "<group>"; };
+		3F2FF69A24ECD01000637016 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3F2FF6A024ECD08F00637016 /* ZARRO32.RES */ = {isa = PBXFileReference; lastKnownFileType = file; path = ZARRO32.RES; sourceTree = "<group>"; };
 		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
 		3FC1271424E8B7B7006BDC9A /* Tabboz Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tabboz Simulator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3FC1271624E8B7B7006BDC9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3FC1271824E8B7B8006BDC9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3FC1271B24E8B7B8006BDC9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		3FC1271D24E8B7B8006BDC9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3FC1271E24E8B7B8006BDC9A /* Tabboz_macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tabboz_macOS.entitlements; sourceTree = "<group>"; };
-		3FC1272224E8B7F4006BDC9A /* ZARRO32.RES */ = {isa = PBXFileReference; lastKnownFileType = file; name = ZARRO32.RES; path = Original/ZARRO32.RES; sourceTree = SOURCE_ROOT; };
-		3FC1272524E8B841006BDC9A /* Win32Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Win32Resources.swift; sourceTree = "<group>"; };
 		3FED203E220FC7E000AC38D7 /* Tabboz Simulator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabboz Simulator-Bridging-Header.h"; sourceTree = "<group>"; };
 		3FED204A220FCA3500AC38D7 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os.h; path = "Tabboz Simulator/C/os.h"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -69,11 +70,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F2FF69324ECD01000637016 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3F2FF69424ECD01000637016 /* Tabboz_macOS.entitlements */,
+				3F2FF69524ECD01000637016 /* MainMenu.xib */,
+				3F2FF69724ECD01000637016 /* Info.plist */,
+				3F2FF69824ECD01000637016 /* Assets.xcassets */,
+				3F2FF6A024ECD08F00637016 /* ZARRO32.RES */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		3F4DA419220FC25A008DC569 = {
 			isa = PBXGroup;
 			children = (
 				3F4DA424220FC25A008DC569 /* Tabboz Simulator */,
-				3FC1271524E8B7B7006BDC9A /* Tabboz macOS */,
 				3F4DA423220FC25A008DC569 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,32 +102,13 @@
 			isa = PBXGroup;
 			children = (
 				3FED203D220FC7B800AC38D7 /* C */,
+				3F2FF69324ECD01000637016 /* Resources */,
+				3F2FF69A24ECD01000637016 /* AppDelegate.swift */,
+				3F2FF69924ECD01000637016 /* Win32Resources.swift */,
 				3F25441D22116E5300D494E8 /* stubs.h */,
 				3F54DC1B2210991100794232 /* stubs.m */,
 			);
 			path = "Tabboz Simulator";
-			sourceTree = "<group>";
-		};
-		3FC1271524E8B7B7006BDC9A /* Tabboz macOS */ = {
-			isa = PBXGroup;
-			children = (
-				3FC1272424E8B80C006BDC9A /* Resources */,
-				3FC1272224E8B7F4006BDC9A /* ZARRO32.RES */,
-				3FC1272524E8B841006BDC9A /* Win32Resources.swift */,
-				3FC1271624E8B7B7006BDC9A /* AppDelegate.swift */,
-			);
-			path = "Tabboz macOS";
-			sourceTree = "<group>";
-		};
-		3FC1272424E8B80C006BDC9A /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				3FC1271824E8B7B8006BDC9A /* Assets.xcassets */,
-				3FC1271A24E8B7B8006BDC9A /* MainMenu.xib */,
-				3FC1271D24E8B7B8006BDC9A /* Info.plist */,
-				3FC1271E24E8B7B8006BDC9A /* Tabboz_macOS.entitlements */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		3FED203D220FC7B800AC38D7 /* C */ = {
@@ -200,9 +193,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FC1271924E8B7B8006BDC9A /* Assets.xcassets in Resources */,
-				3FC1272324E8B7F4006BDC9A /* ZARRO32.RES in Resources */,
-				3FC1271C24E8B7B8006BDC9A /* MainMenu.xib in Resources */,
+				3F2FF69C24ECD01000637016 /* Info.plist in Resources */,
+				3F2FF69D24ECD01000637016 /* Assets.xcassets in Resources */,
+				3F2FF6A124ECD08F00637016 /* ZARRO32.RES in Resources */,
+				3F2FF69B24ECD01000637016 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,17 +211,17 @@
 				3F2FF68F24EC91CF00637016 /* tabimg.c in Sources */,
 				3F2FF69024EC91CF00637016 /* lavoro.c in Sources */,
 				3F0D4CC624E8C4BB008637C6 /* stubs.m in Sources */,
-				3FC1271724E8B7B7006BDC9A /* AppDelegate.swift in Sources */,
 				3F2FF68524EC91CF00637016 /* zarrosim.c in Sources */,
 				3F2FF68824EC91CF00637016 /* scuola.c in Sources */,
 				3F2FF68E24EC91CF00637016 /* prompt.c in Sources */,
 				3F2FF68C24EC91CF00637016 /* eventi.c in Sources */,
+				3F2FF69F24ECD01000637016 /* AppDelegate.swift in Sources */,
 				3F2FF68D24EC91CF00637016 /* disco.c in Sources */,
 				3F2FF68924EC91CF00637016 /* tipa.c in Sources */,
 				3F2FF68724EC91CF00637016 /* vestiti.c in Sources */,
-				3FC1272624E8B841006BDC9A /* Win32Resources.swift in Sources */,
 				3F2FF68A24EC91CF00637016 /* telefono.c in Sources */,
 				3F2FF68B24EC91CF00637016 /* tempo.c in Sources */,
+				3F2FF69E24ECD01000637016 /* Win32Resources.swift in Sources */,
 				3F2FF69224EC934800637016 /* readkey.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,10 +229,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3FC1271A24E8B7B8006BDC9A /* MainMenu.xib */ = {
+		3F2FF69524ECD01000637016 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3FC1271B24E8B7B8006BDC9A /* Base */,
+				3F2FF69624ECD01000637016 /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -367,10 +361,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = "Tabboz macOS/Resources/Tabboz_macOS.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Tabboz Simulator/Resources/Tabboz_macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Tabboz macOS/Resources/Info.plist";
+				INFOPLIST_FILE = "Tabboz Simulator/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -389,10 +383,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = "Tabboz macOS/Resources/Tabboz_macOS.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Tabboz Simulator/Resources/Tabboz_macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Tabboz macOS/Resources/Info.plist";
+				INFOPLIST_FILE = "Tabboz Simulator/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
