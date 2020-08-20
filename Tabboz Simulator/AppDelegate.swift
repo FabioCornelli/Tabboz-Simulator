@@ -67,8 +67,6 @@ func dataToImage(data: Data) throws -> CGImage {
     let reader = Reader(data: data)
     try header.read(reader: reader)
     
-    dump(header)
-    
     guard header.planes.value == 1 else {
         throw Errors.moreThanOnePlane
     }
@@ -84,7 +82,7 @@ func dataToImage(data: Data) throws -> CGImage {
     let paletteCount = header.clrUsed.value == 0 ? 256 : Int(header.clrUsed.value)
     
     let (w, h)   = (Int(header.width.value), Int(header.height.value))
-    let srcWidth = w + 4 - (w & 3)
+    let srcWidth = (w & 3) != 0 ? w + 4 - (w & 3) : w
     let palette  = try reader.data(size: 4 * paletteCount)
     let src      = try reader.data(size: srcWidth * h)
 
@@ -187,6 +185,7 @@ class DialogNSWindow : NSWindow {
                     
                 case .statictext:
                     let l = NSTextField(labelWithString: label)
+                    l.lineBreakMode = .byWordWrapping
                     l.frame = frame
                     l.isEnabled = enabled
                     view = l
