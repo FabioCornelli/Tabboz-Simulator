@@ -24,11 +24,13 @@ func template_title(template: DLGTEMPLATE) -> String {
     }
 }
 
+let WIN32_FRAME_SCALING = 2
+
 func template_rect(template: DLGTEMPLATE) -> NSRect {
-    let X = Int(template.x.value) * 2
-    let Y = Int(template.y.value) * 2
-    let W = Int(template.width.value) * 2
-    let H = Int(template.height.value) * 2
+    let X = Int(template.x.value) * WIN32_FRAME_SCALING
+    let Y = Int(template.y.value) * WIN32_FRAME_SCALING
+    let W = Int(template.width.value) * WIN32_FRAME_SCALING
+    let H = Int(template.height.value) * WIN32_FRAME_SCALING
     return NSRect(x: X, y: Y, width: W, height: H)
 }
 
@@ -42,15 +44,78 @@ func template_item_title(item: DialogItemTemplate) -> String {
 }
 
 func template_item_rect(dialog: Dialog, item: DialogItemTemplate) -> NSRect {
-    let X = Int(item.itemTemplate.x.value) * 2
+    let X = Int(item.itemTemplate.x.value) * WIN32_FRAME_SCALING
     let Y = (
         Int(dialog.template.height.value) -
         Int(item.itemTemplate.y.value) -
         Int(item.itemTemplate.height.value) + 1
     ) * 2
-    let W = Int(item.itemTemplate.width.value) * 2
-    let H = Int(item.itemTemplate.height.value) * 2
+    let W = Int(item.itemTemplate.width.value) * WIN32_FRAME_SCALING
+    let H = Int(item.itemTemplate.height.value) * WIN32_FRAME_SCALING
     return NSRect(x: X, y: Y, width: W, height: H)
+}
+
+
+func dataToImage(data: Data) throws -> CGImage {
+    enum Errors : Error {
+        case moreThanOnePlane
+        case unsupportedCompression
+        case unsupportedBitCount
+        case unsupportedColorCount
+    }
+    
+    let header = BITMAPINFOHEADER()
+    let reader = Reader(data: data)
+    try header.read(reader: reader)
+    
+    dump(header)
+    
+    guard header.planes.value == 1 else {
+        throw Errors.moreThanOnePlane
+    }
+    
+    guard BITMAPINFOHEADER.Compression(rawValue: header.compression.value) == .BI_RGB else {
+        throw Errors.unsupportedCompression
+    }
+    
+    guard header.bitCount.value == 8 else {
+        throw Errors.unsupportedBitCount
+    }
+
+    guard header.clrUsed.value == 0 else {
+        throw Errors.unsupportedColorCount
+    }
+
+    let (w, h)   = (Int(header.width.value), Int(header.height.value))
+    let srcWidth = w + 4 - (w & 3)
+    let palette  = try reader.data(size: 4 * 256)
+    let src      = try reader.data(size: srcWidth * h)
+
+    let c = CGContext(
+        data: nil,
+        width: w,
+        height: h,
+        bitsPerComponent: 8,
+        bytesPerRow: w * 4,
+        space: CGColorSpace(name: CGColorSpace.sRGB)!,
+        bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue
+    )!
+    
+    let dst = UnsafeMutableRawBufferPointer(start: c.data, count: w * h * 4)
+    
+    for y in 0 ..< h {
+        for x in 0 ..< w {
+            let off = y * w + x
+            let pix = Int(src[(h - y - 1) * srcWidth + x])
+            
+            dst[off * 4 + 0] = palette[(pix * 4) + 2]
+            dst[off * 4 + 1] = palette[(pix * 4) + 1]
+            dst[off * 4 + 2] = palette[(pix * 4) + 0]
+            dst[off * 4 + 3] = 0
+        }
+    }
+    
+    return c.makeImage()!
 }
 
 class DialogNSWindow : NSWindow {
@@ -66,7 +131,8 @@ class DialogNSWindow : NSWindow {
     
     init(
         dialog: Dialog,
-        wndProc: @escaping WndProc
+        wndProc: @escaping WndProc,
+        resources: ResourceFile
     ) {
         self.wndProc = wndProc
         
@@ -184,6 +250,9 @@ class DialogNSWindow : NSWindow {
                 
             case .custom(let name):
                 switch name {
+                
+                // Borland documentation: http://labs.icb.ufmg.br/lbcd/prodabi5/homepages/hugo/Hugo/TPB/DOC/BWCCAPI.RW
+                
                 case "BorBtn":
                     let b = NSButton(frame: frame)
                     b.title = label
@@ -191,6 +260,15 @@ class DialogNSWindow : NSWindow {
                     b.action = #selector(dialogButtonAction)
                     b.isEnabled = enabled
                     view = b
+                    
+                    // chapter 3.3 BWCCAPI.RW
+                    if let bitmap = resources.bitmaps[.numeric(Int(i.itemTemplate.id.value) + 1000)] {
+                        let cgimate = try! dataToImage(data: bitmap)
+                        
+                        b.image = NSImage(cgImage: cgimate, size: NSSize(width: cgimate.width, height: cgimate.height))
+                        b.imageScaling = .scaleProportionallyUpOrDown
+                    }
+
                     break
                     
                 case "msctls_progress":
@@ -267,7 +345,7 @@ class ApplicationHandle : NSObject {
         
         let dialog = res.dialogs[dialogName]!
                 
-        let window = DialogNSWindow(dialog: dialog, wndProc: farproc)
+        let window = DialogNSWindow(dialog: dialog, wndProc: farproc, resources: res)
         
         NSApplication.shared.runModal(for: window)
     }

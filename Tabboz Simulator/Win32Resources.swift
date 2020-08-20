@@ -87,6 +87,10 @@ class DWORD : BinaryRepresented {
     }
 }
 
+class LONG : DWORD {
+    
+}
+
 class ResourceString : BinaryRepresented {
     
     var value = ""
@@ -440,6 +444,36 @@ class Dialog : BinaryRepresented {
     }
 }
 
+/* - */
+
+class BITMAPINFOHEADER : BinaryRepresented {
+    enum Compression : UInt32 {
+        case BI_RGB       = 0x0000
+        case BI_RLE8      = 0x0001
+        case BI_RLE4      = 0x0002
+        case BI_BITFIELDS = 0x0003
+        case BI_JPEG      = 0x0004
+        case BI_PNG       = 0x0005
+        case BI_CMYK      = 0x000B
+        case BI_CMYKRLE8  = 0x000C
+        case BI_CMYKRLE4  = 0x000D
+    }
+
+    let size = DWORD()
+    let width = LONG()
+    let height = LONG()
+    let planes = WORD()
+    let bitCount = WORD()
+    let compression = DWORD()
+    let sizeImage = DWORD()
+    let XPelsPerMeter = LONG()
+    let YPelsPerMeter = LONG()
+    let clrUsed = DWORD()
+    let clrImportant = DWORD()
+}
+
+/* - */
+
 class ResourceFile {
     
     let url : URL
@@ -447,6 +481,7 @@ class ResourceFile {
     var resources = [Resource]()
     
     var dialogs = [StringOrNumeric.StringOrNumeric : Dialog]()
+    var bitmaps = [StringOrNumeric.StringOrNumeric : Data]()
     
     init(url: URL) throws {
         self.url = url
@@ -455,6 +490,7 @@ class ResourceFile {
     func load() throws {
         resources = []
         dialogs = [:]
+        bitmaps = [:]
         
         let data = try! Data(contentsOf: url)
         let reader = Reader(data: data)
@@ -491,7 +527,18 @@ class ResourceFile {
                     print("dialog \(x.header.name.value) has no data")
                 }
                 
-            case .BITMAP:       fallthrough
+            case .BITMAP:
+                if bitmaps[x.header.name.value] != nil {
+                    print("already have bitmap named \(x.header.name.value)")
+                }
+                
+                if let data = x.data {
+                    bitmaps[x.header.name.value] = data.data
+                }
+                else {
+                    print("bitmap \(x.header.name.value) has no data")
+                }
+
             case .ICON:         fallthrough
             case .MENU:         fallthrough
             case .GROUP_ICON:
