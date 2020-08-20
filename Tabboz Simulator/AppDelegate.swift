@@ -268,6 +268,23 @@ class DialogNSWindow : NSWindow {
 
                     break
                     
+                case "BorCheck": fallthrough
+                case "BorRadio":
+                    let b = NSButton(frame: frame)
+                    b.title = label
+                    b.target = self
+                    b.action = #selector(dialogButtonAction)
+
+                    if name == "BorRadio" {
+                        b.setButtonType(.radio)
+                    }
+                    else {
+                        b.setButtonType(.switch)
+                    }
+                    
+                    b.isEnabled = enabled
+                    view = b
+
                 case "msctls_progress":
                     let x = NSLevelIndicator(frame: frame)
                     x.isEnabled = enabled
