@@ -284,6 +284,13 @@ class DialogNSWindow : NSWindow {
                     b.isEnabled = enabled
                     view = b
 
+                case "BorStatic":
+                    let l = NSTextField(labelWithString: label)
+                    l.lineBreakMode = .byWordWrapping
+                    l.frame = frame
+                    l.isEnabled = enabled
+                    view = l
+
                 case "msctls_progress":
                     let x = NSLevelIndicator(frame: frame)
                     x.isEnabled = enabled
