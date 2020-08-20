@@ -61,7 +61,6 @@ func dataToImage(data: Data) throws -> CGImage {
         case moreThanOnePlane
         case unsupportedCompression
         case unsupportedBitCount
-        case unsupportedColorCount
     }
     
     let header = BITMAPINFOHEADER()
@@ -82,13 +81,11 @@ func dataToImage(data: Data) throws -> CGImage {
         throw Errors.unsupportedBitCount
     }
 
-    guard header.clrUsed.value == 0 else {
-        throw Errors.unsupportedColorCount
-    }
-
+    let paletteCount = header.clrUsed.value == 0 ? 256 : Int(header.clrUsed.value)
+    
     let (w, h)   = (Int(header.width.value), Int(header.height.value))
     let srcWidth = w + 4 - (w & 3)
-    let palette  = try reader.data(size: 4 * 256)
+    let palette  = try reader.data(size: 4 * paletteCount)
     let src      = try reader.data(size: srcWidth * h)
 
     let c = CGContext(
