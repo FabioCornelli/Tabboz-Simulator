@@ -291,6 +291,37 @@ class DialogNSWindow : NSWindow {
                     l.isEnabled = enabled
                     view = l
 
+                case "BorShade":
+                    enum ShadeTypes : UInt32 {
+                        case  BSS_GROUP  = 0x0001 // recessed group box
+                        case  BSS_HDIP   = 0x0002 // horizontal border
+                        case  BSS_VDIP   = 0x0003 // vertical border
+                        case  BSS_HBUMP  = 0x0004 // horizontal speed bump
+                        case  BSS_VBUMP  = 0x0005 // vertical speed bump
+                        case  BSS_RGROUP = 0x0006 // raised group box
+                    }
+
+                    let type = ShadeTypes(rawValue: i.itemTemplate.style.value.rawValue & 0xf) ?? ShadeTypes.BSS_GROUP
+                    
+                    let b = NSBox(frame: frame)
+                    
+                    switch type {
+                    case .BSS_GROUP: fallthrough
+                    case .BSS_RGROUP:
+                        b.boxType = .custom
+                        
+                    case .BSS_HDIP: fallthrough
+                    case .BSS_HBUMP: fallthrough
+                    case .BSS_VDIP: fallthrough
+                    case .BSS_VBUMP:
+                        b.boxType = .separator
+                    }
+                    
+                    b.borderColor = .gray
+                    b.cornerRadius = 2
+                    view = b
+
+                    
                 case "msctls_progress":
                     let x = NSLevelIndicator(frame: frame)
                     x.isEnabled = enabled
