@@ -132,10 +132,10 @@ static const int WM_ENDSESSION = 6;
 static const int WM_QUERYDRAGICON = 7;
 static const int WM_SYSCOMMAND = 8;
 
-static const int IDCANCEL = 0;
 static const int IDOK = 1;
-static const int IDNO = 2;
-static const int IDYES = 3;
+static const int IDCANCEL = 2;
+static const int IDYES = 6;
+static const int IDNO = 7;
 
 static const int SM_CXSCREEN = 0;
 static const int SM_CYSCREEN = 0;

@@ -248,6 +248,7 @@ class DialogNSWindow : NSWindow {
                 switch name {
                 
                 // Borland documentation: http://labs.icb.ufmg.br/lbcd/prodabi5/homepages/hugo/Hugo/TPB/DOC/BWCCAPI.RW
+                // IDOK & IDCANCEL icons from the lazarus-ide project
                 
                 case "BorBtn":
                     let b = NSButton(frame: frame)
@@ -257,8 +258,19 @@ class DialogNSWindow : NSWindow {
                     b.isEnabled = enabled
                     view = b
                     
-                    // chapter 3.3 BWCCAPI.RW
-                    if let bitmap = resources.bitmaps[.numeric(Int(i.itemTemplate.id.value) + 1000)] {
+                    if i.itemTemplate.id.value == IDOK {
+                        b.title = "OK"
+                        b.image = NSImage(named: "IDOK_Icon")
+                        b.imagePosition = .imageLeading
+                    }
+                    else if i.itemTemplate.id.value == IDCANCEL  {
+                        b.title = "Close" // "Cancel" is too big for this ui but "Close" generally fits
+                        b.image = NSImage(named: "IDCANCEL_Icon")
+                        b.imagePosition = .imageLeading
+                    }
+                    else if let bitmap = resources.bitmaps[.numeric(Int(i.itemTemplate.id.value) + 1000)] {
+                        // chapter 3.3 BWCCAPI.RW
+                        
                         let cgimate = try! dataToImage(data: bitmap)
                         
                         b.image = NSImage(cgImage: cgimate, size: NSSize(width: cgimate.width, height: cgimate.height))

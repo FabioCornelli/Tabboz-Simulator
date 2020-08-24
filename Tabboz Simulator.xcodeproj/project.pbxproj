@@ -27,6 +27,8 @@
 		3F2FF69E24ECD01000637016 /* Win32Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69924ECD01000637016 /* Win32Resources.swift */; };
 		3F2FF69F24ECD01000637016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69A24ECD01000637016 /* AppDelegate.swift */; };
 		3F2FF6A124ECD08F00637016 /* ZARRO32.RES in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF6A024ECD08F00637016 /* ZARRO32.RES */; };
+		3F4E7F5C24F363F50021BB52 /* IDOK_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4E7F5B24F363F50021BB52 /* IDOK_Icon.png */; };
+		3F4E7F5E24F364010021BB52 /* IDCANCEL_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4E7F5D24F364010021BB52 /* IDCANCEL_Icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		3F2FF69924ECD01000637016 /* Win32Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Win32Resources.swift; sourceTree = "<group>"; };
 		3F2FF69A24ECD01000637016 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F2FF6A024ECD08F00637016 /* ZARRO32.RES */ = {isa = PBXFileReference; lastKnownFileType = file; path = ZARRO32.RES; sourceTree = "<group>"; };
+		3F4E7F5B24F363F50021BB52 /* IDOK_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IDOK_Icon.png; sourceTree = "<group>"; };
+		3F4E7F5D24F364010021BB52 /* IDCANCEL_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IDCANCEL_Icon.png; sourceTree = "<group>"; };
 		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
 		3FC1271424E8B7B7006BDC9A /* Tabboz Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tabboz Simulator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FED203E220FC7E000AC38D7 /* Tabboz Simulator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabboz Simulator-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -78,6 +82,8 @@
 				3F2FF69724ECD01000637016 /* Info.plist */,
 				3F2FF69824ECD01000637016 /* Assets.xcassets */,
 				3F2FF6A024ECD08F00637016 /* ZARRO32.RES */,
+				3F4E7F5B24F363F50021BB52 /* IDOK_Icon.png */,
+				3F4E7F5D24F364010021BB52 /* IDCANCEL_Icon.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -193,10 +199,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F4E7F5C24F363F50021BB52 /* IDOK_Icon.png in Resources */,
 				3F2FF69C24ECD01000637016 /* Info.plist in Resources */,
 				3F2FF69D24ECD01000637016 /* Assets.xcassets in Resources */,
 				3F2FF6A124ECD08F00637016 /* ZARRO32.RES in Resources */,
 				3F2FF69B24ECD01000637016 /* MainMenu.xib in Resources */,
+				3F4E7F5E24F364010021BB52 /* IDCANCEL_Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
