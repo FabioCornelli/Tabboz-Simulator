@@ -56,7 +56,7 @@ func template_item_rect(dialog: Dialog, item: DialogItemTemplate) -> NSRect {
 }
 
 
-func dataToImage(data: Data) throws -> CGImage {
+func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
     enum Errors : Error {
         case moreThanOnePlane
         case unsupportedCompression
@@ -81,11 +81,17 @@ func dataToImage(data: Data) throws -> CGImage {
 
     let paletteCount = header.clrUsed.value == 0 ? 256 : Int(header.clrUsed.value)
     
-    let (w, h)   = (Int(header.width.value), Int(header.height.value))
+    let (w, h)   = (
+        Int(header.width.value),
+        hasMask == false ? Int(header.height.value) : Int(header.height.value) / 2
+    )
+    
     let srcWidth = (w & 3) != 0 ? w + 4 - (w & 3) : w
     let palette  = try reader.data(size: 4 * paletteCount)
     let src      = try reader.data(size: srcWidth * h)
 
+    let mask = hasMask ? try reader.data(size: w / 8 * h) : nil
+    
     let c = CGContext(
         data: nil,
         width: w,
@@ -93,20 +99,31 @@ func dataToImage(data: Data) throws -> CGImage {
         bitsPerComponent: 8,
         bytesPerRow: w * 4,
         space: CGColorSpace(name: CGColorSpace.sRGB)!,
-        bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue
+        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
     )!
     
     let dst = UnsafeMutableRawBufferPointer(start: c.data, count: w * h * 4)
     
     for y in 0 ..< h {
         for x in 0 ..< w {
+            let srcY = h - y - 1
             let off = y * w + x
-            let pix = Int(src[(h - y - 1) * srcWidth + x])
+            let pix = Int(src[srcY * srcWidth + x])
+            
+            let maskBit : Bool
+            
+            if let mask = mask {
+                let maskByte = mask[(srcY * w / 8) + (x / 8)]
+                maskBit  = (maskByte & (0x80 >> (x % 8))) != 0
+            }
+            else {
+                maskBit = false
+            }
             
             dst[off * 4 + 0] = palette[(pix * 4) + 2]
             dst[off * 4 + 1] = palette[(pix * 4) + 1]
             dst[off * 4 + 2] = palette[(pix * 4) + 0]
-            dst[off * 4 + 3] = 0
+            dst[off * 4 + 3] = maskBit == false ? 0xff : 0x00
         }
     }
     
@@ -184,11 +201,24 @@ class DialogNSWindow : NSWindow {
                     view = e
                     
                 case .statictext:
-                    let l = NSTextField(labelWithString: label)
-                    l.lineBreakMode = .byWordWrapping
-                    l.frame = frame
-                    l.isEnabled = enabled
-                    view = l
+                    if i.itemTemplate.style.value.contains(.SS_ICON) {
+                        let i = NSImageView(frame: frame)
+                        let icon = resources.iconData(named: label)!
+                        let cgimage = try! dataToImage(data: icon, hasMask: true)
+                        
+                        i.image = NSImage(cgImage: cgimage, size: NSSize(width: cgimage.width, height: cgimage.height))
+                        i.imageScaling = .scaleProportionallyUpOrDown
+                        
+                        view = i
+                    }
+                    else {
+                        let l = NSTextField(labelWithString: label)
+                        l.lineBreakMode = .byWordWrapping
+                        l.frame = frame
+                        l.isEnabled = enabled
+                        view = l
+                    }
+                    
                     
                 case .combobox:
                     let container = NSView(frame: frame)
@@ -271,9 +301,9 @@ class DialogNSWindow : NSWindow {
                     else if let bitmap = resources.bitmaps[.numeric(Int(i.itemTemplate.id.value) + 1000)] {
                         // chapter 3.3 BWCCAPI.RW
                         
-                        let cgimate = try! dataToImage(data: bitmap)
+                        let cgimage = try! dataToImage(data: bitmap)
                         
-                        b.image = NSImage(cgImage: cgimate, size: NSSize(width: cgimate.width, height: cgimate.height))
+                        b.image = NSImage(cgImage: cgimage, size: NSSize(width: cgimage.width, height: cgimage.height))
                         b.imageScaling = .scaleProportionallyUpOrDown
                     }
 

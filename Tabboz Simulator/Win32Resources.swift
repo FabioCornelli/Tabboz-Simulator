@@ -65,6 +65,14 @@ extension BinaryRepresented {
     }
 }
 
+class BYTE : BinaryRepresented {
+    var value: UInt8 = 0
+    
+    func read(reader: Reader) throws {
+        value = try reader.byte()
+    }
+}
+
 class WORD : BinaryRepresented {
     var value: UInt16 = 0
     
@@ -330,6 +338,9 @@ class WindowStyles : BinaryRepresented {
         static let DS_CENTERMOUSE   = WindowStyles(rawValue: 0x00001000)
         static let DS_CONTEXTHELP   = WindowStyles(rawValue: 0x00002000)
         static let DS_USEPIXELS     = WindowStyles(rawValue: 0x00008000)
+        
+        static let SS_ICON          = WindowStyles(rawValue: 0x00000003)
+        
     }
     
     var value = WindowStyles(rawValue: 0)
@@ -474,6 +485,40 @@ class BITMAPINFOHEADER : BinaryRepresented {
 
 /* - */
 
+class NEWHEADER : BinaryRepresented {
+    let reserved = WORD()
+    let resType  = WORD()
+    let resCount = WORD()
+}
+
+class ICONRESDIR : BinaryRepresented {
+    let width =  BYTE()
+    let height =  BYTE()
+    let colorCount =  BYTE()
+    let reserved =  BYTE()
+    let planes =  WORD()
+    let bitCount =  WORD()
+    let bytesInRes =  DWORD()
+    let nameOrdinal =  WORD()
+}
+
+class IconGroup : BinaryRepresented {
+    let header = NEWHEADER()
+    var icons = [ICONRESDIR]()
+    
+    func read(reader: Reader) throws {
+        try header.read(reader: reader)
+        
+        for _ in 0 ..< header.resCount.value {
+            let icon = ICONRESDIR()
+            try icon.read(reader: reader)
+            icons.append(icon)
+        }
+    }
+}
+
+/* - */
+
 class ResourceFile {
     
     let url : URL
@@ -482,7 +527,9 @@ class ResourceFile {
     
     var dialogs = [StringOrNumeric.StringOrNumeric : Dialog]()
     var bitmaps = [StringOrNumeric.StringOrNumeric : Data]()
-    
+    var iconGroups = [StringOrNumeric.StringOrNumeric : IconGroup]()
+    var icons = [StringOrNumeric.StringOrNumeric : Data]()
+
     init(url: URL) throws {
         self.url = url
     }
@@ -491,6 +538,8 @@ class ResourceFile {
         resources = []
         dialogs = [:]
         bitmaps = [:]
+        iconGroups = [:]
+        icons = [:]
         
         let data = try! Data(contentsOf: url)
         let reader = Reader(data: data)
@@ -539,9 +588,34 @@ class ResourceFile {
                     print("bitmap \(x.header.name.value) has no data")
                 }
 
-            case .ICON:         fallthrough
-            case .MENU:         fallthrough
             case .GROUP_ICON:
+                if iconGroups[x.header.name.value] != nil {
+                    print("already have group icon named \(x.header.name.value)")
+                }
+                
+                if let data = x.data {
+                    let iconGroup = IconGroup()
+                    let reader = Reader(data: data.data, offset: data.offset)
+                    try iconGroup.read(reader: reader)
+                    iconGroups[x.header.name.value] = iconGroup
+                }
+                else {
+                    print("icon group \(x.header.name.value) has no data")
+                }
+                
+            case .ICON:
+                if icons[x.header.name.value] != nil {
+                    print("already have icon named \(x.header.name.value)")
+                }
+                
+                if let data = x.data {
+                    icons[x.header.name.value] = data.data
+                }
+                else {
+                    print("icon \(x.header.name.value) has no data")
+                }
+                
+            case .MENU:
                 continue
                 
             case .CURSOR:       fallthrough
@@ -566,6 +640,14 @@ class ResourceFile {
             
         }
         
+    }
+    
+    func iconData(named name: String) -> Data? {
+        guard let ordinal = iconGroups[.string(name)]?.icons.first?.nameOrdinal else {
+            return nil
+        }
+        
+        return icons[.numeric(Int(ordinal.value))]
     }
     
 }
