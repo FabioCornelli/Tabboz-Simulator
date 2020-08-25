@@ -113,13 +113,13 @@ static const int MF_BYCOMMAND = 0;
 static const int MF_STRING = 0;
 static const int MF_SEPARATOR = 0;
 
-static const int MB_OK = 0;
-static const int MB_YESNO = 0;
-static const int MB_ICONQUESTION = 0;
-static const int MB_ICONINFORMATION = 0;
-static const int MB_ICONCONFIRMATION = 0;
-static const int MB_ICONSTOP = 0;
-static const int MB_ICONHAND = 0;
+static const int MB_OK = 0x00000000;
+static const int MB_YESNO = 0x00000004;
+static const int MB_ICONQUESTION = 0x00000020L;
+static const int MB_ICONINFORMATION = 0x00000040L;
+static const int MB_ICONCONFIRMATION = 0x00000020L;
+static const int MB_ICONSTOP = 0x00000010;
+static const int MB_ICONHAND = 0x00000010;
 
 static const int WM_INITDIALOG = 0;
 static const int WM_COMMAND = 1;

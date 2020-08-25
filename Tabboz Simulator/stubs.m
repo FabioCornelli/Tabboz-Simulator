@@ -204,12 +204,15 @@ void PlaySound(void * a, void * b, int c) {
 }
 
 int MessageBox(HANDLE h, const char * msg, const char * title, int flags) {
-    if (log_window) printf("    messagebox flags: x %x\n", flags);
-    if (log_window) printf("    messagebox title: %s\n", title);
-    if (log_window) printf("    messagebox text:\n%s\n", msg);
-    if (log_window) printf("    messagebox\n");
-    didLog = true;
-    return 0;
+    return [ApplicationHandle
+            messageBoxWithHInst: h
+            message: [NSString
+                      stringWithCString: msg
+                      encoding: NSUTF8StringEncoding]
+            title: [NSString
+                    stringWithCString:title
+                    encoding:NSUTF8StringEncoding]
+            flags:flags];
 }
 
 void GetDlgItemText(HANDLE h, int param, char * buf, size_t size) {

@@ -474,6 +474,62 @@ class ApplicationHandle : NSObject {
         
         NSApplication.shared.stopModal(withCode: result ? .OK : .abort)
     }
+    
+    @objc static func messageBox(hInst: HANDLE, message: String, title: String, flags: Int32) -> Int32 {
+        let buttonFlags = flags & 0x0f
+        let iconFlags = flags & 0xf0
+
+        let alert = NSAlert()
+        alert.messageText = title
+        alert.informativeText = message
+        
+        if buttonFlags == MB_OK {
+            alert.addButton(withTitle: "OK")
+        }
+        else if buttonFlags == MB_YESNO {
+            alert.addButton(withTitle: "Yes")
+            alert.addButton(withTitle: "No")
+        }
+
+        if
+            iconFlags == MB_ICONINFORMATION
+        {
+            alert.alertStyle = .informational
+        }
+        else if
+            iconFlags == MB_ICONQUESTION ||
+            iconFlags == MB_ICONCONFIRMATION
+        {
+            alert.alertStyle = .warning
+        }
+        else if
+            iconFlags == MB_ICONSTOP ||
+            iconFlags == MB_ICONHAND
+        {
+            alert.alertStyle = .critical
+        }
+
+        let response = alert.runModal()
+        
+        if buttonFlags == MB_OK {
+            return IDOK
+        }
+        else if buttonFlags == MB_YESNO {
+            if response == .alertFirstButtonReturn {
+                return IDYES
+            }
+            else if response == .alertSecondButtonReturn {
+                return IDNO
+            }
+            else {
+                return IDNO
+            }
+        }
+        else {
+            return 0
+        }
+    }
+
 
 }
 
