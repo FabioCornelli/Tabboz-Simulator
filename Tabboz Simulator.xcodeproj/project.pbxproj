@@ -22,7 +22,6 @@
 		3F2FF69024EC91CF00637016 /* lavoro.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF68424EC91CF00637016 /* lavoro.c */; };
 		3F2FF69224EC934800637016 /* readkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69124EC934800637016 /* readkey.c */; };
 		3F2FF69B24ECD01000637016 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF69524ECD01000637016 /* MainMenu.xib */; };
-		3F2FF69C24ECD01000637016 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF69724ECD01000637016 /* Info.plist */; };
 		3F2FF69D24ECD01000637016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF69824ECD01000637016 /* Assets.xcassets */; };
 		3F2FF69E24ECD01000637016 /* Win32Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69924ECD01000637016 /* Win32Resources.swift */; };
 		3F2FF69F24ECD01000637016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2FF69A24ECD01000637016 /* AppDelegate.swift */; };
@@ -200,7 +199,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F4E7F5C24F363F50021BB52 /* IDOK_Icon.png in Resources */,
-				3F2FF69C24ECD01000637016 /* Info.plist in Resources */,
 				3F2FF69D24ECD01000637016 /* Assets.xcassets in Resources */,
 				3F2FF6A124ECD08F00637016 /* ZARRO32.RES in Resources */,
 				3F2FF69B24ECD01000637016 /* MainMenu.xib in Resources */,
