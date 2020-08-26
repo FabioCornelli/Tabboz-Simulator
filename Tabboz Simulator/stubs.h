@@ -33,7 +33,7 @@ typedef int WORD;
 typedef int DWORD;
 typedef int LONG;
 typedef int HKEY;
-typedef int COLORREF;
+typedef uint32_t COLORREF;
 
 @class Win32HBITMAP;
 typedef Win32HBITMAP * HBITMAP;
@@ -220,15 +220,15 @@ void SetFocus(int dlg);
 
 HDC CreateCompatibleDC(HDC);
 HBITMAP SelectObject(HDC, HBITMAP);
-COLORREF SetBkColor(HDC, int);
-int RGB(int, int, int);
+COLORREF SetBkColor(HDC, COLORREF);
+COLORREF RGB(int, int, int);
 void BitBlt(HDC, int x, int y,int cx, int cy, HDC hdc, int sx, int sy, int flags);
 HDC GetDC(void *);
 void DeleteDC(HDC);
 void ReleaseDC(void *, HDC);
 void GetObject(HBITMAP, size_t, LPSTR);
 void DeleteObject(HBITMAP);
-HBITMAP CreateBitmap(int width, int height, int, int, void *);
+HBITMAP CreateBitmap(int width, int height, int planes, int bitdepth, void * info);
 void SetTextColor(HDC, int);
 HDC BeginPaint(HANDLE, PAINTSTRUCT *);
 void EndPaint(HANDLE, PAINTSTRUCT *);

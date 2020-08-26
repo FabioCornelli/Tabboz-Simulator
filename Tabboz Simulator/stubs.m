@@ -230,7 +230,7 @@ HBITMAP LoadBitmap(HANDLE a, INTRESOURCE b) {
     return [app loadBitmapWithResource:b];
 }
 
-int RGB(int r, int g, int b) {
+COLORREF RGB(int r, int g, int b) {
     return
         ((r & 0xff) << 24) |
         ((g & 0xff) << 16) |
@@ -262,8 +262,8 @@ void DeleteDC() {
 void SetTextColor() {
 }
 
-COLORREF SetBkColor(HDC a, int b) {
-    return 0;
+COLORREF SetBkColor(HDC hdc, COLORREF color) {
+    return [hdc setBkColor:color];
 }
 
 HBITMAP CreateBitmap(int a, int b, int c, int d, void * e) {

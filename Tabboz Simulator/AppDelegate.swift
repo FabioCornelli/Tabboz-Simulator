@@ -106,7 +106,7 @@ func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
         bitsPerComponent: 8,
         bytesPerRow: w * 4,
         space: CGColorSpace(name: CGColorSpace.sRGB)!,
-        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        bitmapInfo: hasMask ? CGImageAlphaInfo.premultipliedLast.rawValue : CGImageAlphaInfo.noneSkipLast.rawValue
     )!
     
     let dst = UnsafeMutableRawBufferPointer(start: c.data, count: w * h * 4)
@@ -464,14 +464,8 @@ class CustomControlView : NSView {
     override var isFlipped : Bool { true }
     
     override func draw(_ dirtyRect: NSRect) {
-        let c = NSGraphicsContext.current?.cgContext
-        c?.setFillColor(CGColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1))
-        c?.fill(dirtyRect)
-        
         isPainting = true
-        print("> begin paint")
         _ = wndclass.lpfnWndProc(handle, WM_PAINT, 0, 0)
-        print("> end paint")
         isPainting = false
     }
     
@@ -498,11 +492,23 @@ class CustomControlView : NSView {
 
 class Win32HBITMAP : NSObject {
     var image: CGImage?
+    
+    @objc func getObject() -> BITMAP {
+        if let image = image {
+            return BITMAP(bmWidth: Int32(image.width),
+                          bmHeight: Int32(image.height))
+        }
+        else {
+            print("no bitmap!")
+            return BITMAP(bmWidth: 0, bmHeight: 0)
+        }
+    }
 }
 
 class Win32HDC : NSObject {
     var cgContext : CGContext?
     var selectedBitmap : Win32HBITMAP?
+    var bkColor : COLORREF?
     
     @objc func selectObject(_ object: Win32HBITMAP) -> Win32HBITMAP? {
         let old = selectedBitmap
@@ -510,23 +516,15 @@ class Win32HDC : NSObject {
         return old
     }
     
-    @objc func bitBlt(destinationRect: CGRect,
+    func normalBitBlt(context: CGContext,
+                      destinationRect: CGRect,
                       srcHDC: Win32HDC?,
                       sourcePoint: CGPoint,
                       flags: Int32)
     {
-        guard let context = cgContext else {
-            print("don't have a context to blit to")
-            return
-        }
-        
         guard let image = srcHDC?.selectedBitmap?.image else {
             print("can't get the srchdc selected bitmap")
             return
-        }
-        
-        if sourcePoint != .zero {
-            print("warning: drawing offset image not supported")
         }
         
         var rect = destinationRect
@@ -535,9 +533,60 @@ class Win32HDC : NSObject {
         context.saveGState()
         context.translateBy(x: 0, y: rect.minY + rect.maxY)
         context.scaleBy(x: 1, y: -1)
-        context.setAlpha(0.2)
         context.draw(image, in: rect)
         context.restoreGState()
+    }
+
+    
+    @objc func bitBlt(destinationRect: CGRect,
+                      srcHDC: Win32HDC?,
+                      sourcePoint: CGPoint,
+                      flags: Int32)
+    {
+        if sourcePoint != .zero {
+            print("warning: drawing offset image not supported")
+        }
+        
+        if let context = cgContext {
+            // self is an HDC created to draw on an NSView
+            normalBitBlt(context: context,
+                         destinationRect: destinationRect,
+                         srcHDC: srcHDC,
+                         sourcePoint: sourcePoint,
+                         flags: flags)
+        }
+        else if let bkColor = srcHDC?.bkColor {
+            // app is trying to create a mask for the bitmap,
+            // bkcolor is the transparency
+            
+            let (r, g, b) = bkColor.toRGB()
+            
+            guard let image = srcHDC?.selectedBitmap?.image else {
+                print("can't get image to mask")
+                return
+            }
+
+            let masked = image.copy(maskingColorComponents: [r - 1, r, g - 1, g, b - 1, b])
+            
+            // overwrite the original bitmap with the masked one and hope
+            srcHDC?.selectedBitmap?.image = masked
+        }
+    }
+    
+    @objc func setBkColor(_ color: COLORREF) -> COLORREF {
+        let old = bkColor ?? 0
+        bkColor = color
+        return old
+    }
+}
+
+extension COLORREF {
+    func toRGB() -> (CGFloat, CGFloat, CGFloat) {
+        return (
+            CGFloat((self & 0xff000000) >> 24),
+            CGFloat((self & 0x00ff0000) >> 16),
+            CGFloat((self & 0x0000ff00) >>  8)
+        )
     }
 }
 
