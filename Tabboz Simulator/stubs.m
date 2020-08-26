@@ -9,35 +9,18 @@
 #include <stdlib.h>
 #include "os.h"
 
-HDC BeginPaint(HANDLE a, PAINTSTRUCT * b)                  { abort(); }
-void BitBlt()                                              { abort(); }
-HBITMAP CreateBitmap(int a, int b, int c, int d, void * e) { abort(); }
-HDC CreateCompatibleDC(HDC a)                              { abort(); }
 long DefWindowProc(HANDLE a, WORD b, WORD c, LONG d)       { abort(); }
-void DeleteDC()                                            { abort(); }
 void DeleteObject()                                        { abort(); }
 void DestroyIcon()                                         { abort(); }
-void EndPaint()                                            { abort(); }
-HDC GetDC(void * a)                                        { abort(); }
-void GetObject()                                           { abort(); }
 BOOL GetOpenFileName(OPENFILENAME * a)                     { abort(); }
 BOOL GetSaveFileName(OPENFILENAME * a)                     { abort(); }
 void GetPrivateProfileString()                             { abort(); }
-HBITMAP GetProp(HANDLE a, char * b)                        { abort(); }
 void GetWindowRect()                                       { abort(); }
 BOOL IsIconic(HANDLE a)                                    { abort(); }
-HBITMAP LoadBitmap(HANDLE a, INTRESOURCE b)                { abort(); }
-int RGB(int a, int b, int c)                               { abort(); }
 void RegCloseKey()                                         { abort(); }
 LONG RegQueryValue(HKEY a, char *b, char * c, LONG *d)     { abort(); }
 void RegSetValue()                                         { abort(); }
-void ReleaseDC()                                           { abort(); }
 void RemoveProp()                                          { abort(); }
-HBITMAP SelectObject(HDC a, HBITMAP b)                     { abort(); }
-COLORREF SetBkColor(HDC a, int b)                          { abort(); }
-void SetProp()                                             { abort(); }
-void SetTextColor()                                        { abort(); }
-void SetWindowPos()                                        { abort(); }
 void WritePrivateProfileString()                           { abort(); }
 void new_counter()                                         { abort(); }
 void ExitWindows()                                         { abort(); }
@@ -90,7 +73,7 @@ int LoadCursor(HANDLE hinst, INTRESOURCE b) {
 }
 
 ATOM RegisterClass(WNDCLASS * wc) {
-    //    printf("%s -- %p\n", __PRETTY_FUNCTION__, wc);
+    [ApplicationHandle registerClassWithClass:*wc];
     return 0;
 }
 
@@ -236,4 +219,88 @@ void MoveWindow(HANDLE handle, int x, int y, int w, int h, int q) {
 
 void SetFocus(int dlg) {
     if (log_window) printf("    set focus dlg %d\n", dlg); didLog = true;
+}
+
+/* - */
+
+HBITMAP LoadBitmap(HANDLE a, INTRESOURCE b) {
+    ApplicationHandle * app = (__bridge ApplicationHandle *)a->impl;
+    return [app loadBitmapWithResource:b];
+}
+
+int RGB(int r, int g, int b) {
+    return
+        ((r & 0xff) << 24) |
+        ((g & 0xff) << 16) |
+        ((b & 0xff) <<  8);
+}
+
+HDC GetDC(void * a) {
+    return 0;
+}
+
+HDC CreateCompatibleDC(HDC a) {
+    return 0;
+}
+
+void ReleaseDC() {
+    ;
+}
+
+void GetObject() {
+}
+
+HBITMAP SelectObject(HDC a, HBITMAP b) {
+    return nil;
+}
+
+void DeleteDC() {
+}
+
+void SetTextColor() {
+}
+
+COLORREF SetBkColor(HDC a, int b) {
+    return 0;
+}
+
+HBITMAP CreateBitmap(int a, int b, int c, int d, void * e) {
+    return nil;
+}
+
+void BitBlt() {
+}
+
+void SetProp(HANDLE handle, char * name, HBITMAP bitmap) {
+    CustomControlView *
+    control = (__bridge CustomControlView *)handle->impl;
+    
+    NSString *
+    theName = [NSString stringWithCString:name
+                                 encoding:NSUTF8StringEncoding];
+    
+    [control setPropWithName:theName
+                      bitmap:bitmap];
+}
+
+HBITMAP GetProp(HANDLE handle, char * name) {
+    CustomControlView *
+    control = (__bridge CustomControlView *)handle->impl;
+    
+    NSString *
+    theName = [NSString stringWithCString:name
+                                 encoding:NSUTF8StringEncoding];
+    
+    return [control getPropWithName:theName];
+}
+
+void SetWindowPos() {
+}
+
+
+HDC BeginPaint(HANDLE a, PAINTSTRUCT * b) {
+    return 0;
+}
+
+void EndPaint() {
 }

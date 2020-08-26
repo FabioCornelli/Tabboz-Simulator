@@ -34,8 +34,10 @@ typedef int DWORD;
 typedef int LONG;
 typedef int HDC;
 typedef int HKEY;
-typedef int HBITMAP;
 typedef int COLORREF;
+
+@class Win32HBITMAP;
+typedef Win32HBITMAP * HBITMAP;
 
 typedef struct {
     int bmWidth;

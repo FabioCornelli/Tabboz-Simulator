@@ -154,18 +154,20 @@ class DialogNSWindow : NSWindow {
     
     typealias WndProc = (HWND?, Int32, Int32, Int32) -> Bool
     
+    let applicationHandle : ApplicationHandle
     let wndProc : WndProc
     
     private var tagToView = [Int : NSView]()
     private var viewToTag = [NSView : Int]()
 
-    var handle = HANDLE.allocate(capacity: 1)
+    let handle = HANDLE.allocate(capacity: 1)
     
     init(
         dialog: Dialog,
         wndProc: @escaping WndProc,
-        resources: ResourceFile
+        applicationHandle: ApplicationHandle
     ) {
+        self.applicationHandle = applicationHandle
         self.wndProc = wndProc
         
         super.init(
@@ -223,7 +225,7 @@ class DialogNSWindow : NSWindow {
                 case .statictext:
                     if i.itemTemplate.style.value.contains(.SS_ICON) {
                         let i = NSImageView(frame: frame)
-                        let icon = resources.iconData(named: label)!
+                        let icon = applicationHandle.res.iconData(named: label)!
                         let cgimage = try! dataToImage(data: icon, hasMask: true)
                         
                         i.image = NSImage(cgImage: cgimage, size: NSSize(width: cgimage.width, height: cgimage.height))
@@ -318,7 +320,7 @@ class DialogNSWindow : NSWindow {
                         b.image = NSImage(named: "IDCANCEL_Icon")
                         b.imagePosition = .imageLeading
                     }
-                    else if let bitmap = resources.bitmaps[.numeric(Int(i.itemTemplate.id.value) + 1000)] {
+                    else if let bitmap = applicationHandle.res.bitmaps[.numeric(Int(i.itemTemplate.id.value) + 1000)] {
                         // chapter 3.3 BWCCAPI.RW
                         
                         let cgimage = try! dataToImage(data: bitmap)
@@ -390,11 +392,16 @@ class DialogNSWindow : NSWindow {
                     view = x
                     
                 default:
-                    print("DIOCANE \(name) \(frame)")
-                    let b = NSBox(frame: frame)
-                    b.boxType = .custom
-                    b.borderColor = NSColor.gray
-                    view = b
+                    if let custom = applicationHandle.customControlClasses[name] {
+                        view = CustomControlView(frame: frame, wndclass: custom)
+                    }
+                    else {
+                        print("DIOCANE \(name) \(frame)")
+                        let b = NSBox(frame: frame)
+                        b.boxType = .custom
+                        b.borderColor = NSColor.gray
+                        view = b
+                    }
                 }
             }
             
@@ -431,12 +438,66 @@ class DialogNSWindow : NSWindow {
 
 }
 
+class CustomControlView : NSView {
+    
+    let wndclass : WNDCLASS
+    
+    let handle = HANDLE.allocate(capacity: 1)
+    var props = [String : Win32HBITMAP]()
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    init(frame: NSRect, wndclass: WNDCLASS) {
+        self.wndclass = wndclass
+        
+        super.init(frame: frame)
+        
+        handle.pointee.impl = Unmanaged.passUnretained(self).toOpaque()
+
+        _ = wndclass.lpfnWndProc(handle, WM_CREATE, 0, 0 /* create struct, unused now? */) 
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        let c = NSGraphicsContext.current?.cgContext
+        c?.setFillColor(CGColor(red: 1, green: 0, blue: 1, alpha: 1))
+        c?.fill(dirtyRect)
+        
+        _ = wndclass.lpfnWndProc(handle, WM_PAINT, 0, 0)
+    }
+    
+    @objc func setProp(name: String, bitmap: Win32HBITMAP) {
+        props[name] = bitmap
+    }
+
+    @objc func getProp(name: String) -> Win32HBITMAP? {
+        return props[name]
+    }
+
+}
+
+class Win32HBITMAP : NSObject {
+    var image: CGImage?
+}
+
+extension INTRESOURCE {
+    func toStringOrNumeric() -> StringOrNumeric.StringOrNumeric {
+        if number != -1 {
+            return .numeric(Int(number))
+        }
+        else {
+            return .string(String(cString: n))
+        }
+    }
+}
 
 class ApplicationHandle : NSObject {
     static let url = Bundle.main.url(forResource: "ZARRO32.RES", withExtension: nil)!
     
     var res = try! ResourceFile(url: url)
-
+    var customControlClasses = [String : WNDCLASS]()
+    
     var handle = HANDLE.allocate(capacity: 1)
     
     func main() {
@@ -448,17 +509,10 @@ class ApplicationHandle : NSObject {
     
     func dialogBox(dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: @escaping FARPROC) {
         
-        let dialogName : StringOrNumeric.StringOrNumeric
-        if dlg.number != -1 {
-            dialogName = .numeric(Int(dlg.number))
-        }
-        else {
-            dialogName = .string(String(cString: dlg.n))
-        }
-        
+        let dialogName = dlg.toStringOrNumeric()
         let dialog = res.dialogs[dialogName]!
-                
-        let window = DialogNSWindow(dialog: dialog, wndProc: farproc, resources: res)
+        
+        let window = DialogNSWindow(dialog: dialog, wndProc: farproc, applicationHandle: self)
         
         NSApplication.shared.runModal(for: window)
     }
@@ -539,6 +593,25 @@ class ApplicationHandle : NSObject {
         }
     }
 
+    @objc static func registerClass(class: WNDCLASS) {
+        Unmanaged<ApplicationHandle>
+            .fromOpaque(hInst.pointee.impl)
+            .takeUnretainedValue()
+            .registerClass(class: `class`)
+    }
+    
+    func registerClass(class aClass: WNDCLASS) {
+        let className = String(cString: aClass.lpszClassName)
+        customControlClasses[className] = aClass
+    }
+    
+    @objc func loadBitmap(resource: INTRESOURCE) -> HBITMAP {
+        let bitmap = res.bitmaps[resource.toStringOrNumeric()]
+        let image = bitmap.flatMap { try! dataToImage(data: $0) }
+        let hbitmap = Win32HBITMAP()
+        hbitmap.image = image
+        return hbitmap
+    }
 
 }
 
