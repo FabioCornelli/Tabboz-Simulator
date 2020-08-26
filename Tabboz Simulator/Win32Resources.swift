@@ -50,6 +50,11 @@ class Reader {
         i = idx - offset
     }
     
+    func read<T: BinaryRepresented>(_ value: T) throws -> T {
+        try value.read(reader: self)
+        return value
+    }
+
 }
 
 protocol BinaryRepresented : AnyObject {
@@ -60,10 +65,43 @@ extension BinaryRepresented {
     func read(reader: Reader) throws {
         try Mirror(reflecting: self)
             .children
-            .compactMap { $1 as? BinaryRepresented }
+            .map {
+                (label, value) -> BinaryRepresented in
+                let binaryRep = value as? BinaryRepresented
+                precondition(binaryRep != nil, "This type cannot be coneniently read")
+                return binaryRep!
+            }
             .forEach    { try $0.read(reader: reader) }
     }
 }
+
+protocol BinaryRepresentedBoxedValue {
+    associatedtype BackingType
+    
+    init(from: BackingType)
+}
+
+class RepresentedEnum<BoxedType, BoxType> : BinaryRepresented
+where
+    BoxedType : BinaryRepresentedBoxedValue,
+    BoxType : BinaryRepresented,
+    BoxedType.BackingType == BoxType
+{
+    private let box : BoxType
+    var value : BoxedType
+    
+    init(_ value: BoxedType, backing: BoxType) {
+        self.value = value
+        self.box = backing
+    }
+    
+    func read(reader: Reader) throws {
+        try box.read(reader: reader)
+        value = BoxedType(from: box)
+    }
+}
+
+/* - */
 
 class BYTE : BinaryRepresented {
     var value: UInt8 = 0
@@ -102,6 +140,10 @@ class LONG : DWORD {
 class ResourceString : BinaryRepresented {
     
     var value = ""
+    
+    func read(reader: Reader) throws {
+        return try read(reader: reader, initialCharacter: nil)
+    }
     
     func read(reader: Reader, initialCharacter: WORD? = nil) throws {
         value = ""
@@ -194,57 +236,46 @@ class StringOrNumericOrZero : BinaryRepresented {
     }
 }
 
-class ResourceType : BinaryRepresented {
+enum ResourceTypes : Int, BinaryRepresentedBoxedValue {
+    case HEADER       =   0
+    case CURSOR       =   1
+    case BITMAP       =   2
+    case ICON         =   3
+    case MENU         =   4
+    case DIALOG       =   5
+    case STRING       =   6
+    case FONTDIR      =   7
+    case FONT         =   8
+    case ACCELERATOR  =   9
+    case RCDATA       =  10
+    case MESSAGETABLE =  11
+    case GROUP_CURSOR =  12
+    case GROUP_ICON   =  14
+    case VERSION      =  16
+    case DLGINCLUDE   =  17
+    case PLUGPLAY     =  19
+    case VXD          =  20
+    case ANICURSOR    =  21
+    case ANIICON      =  22
+    case HTML         =  23
+    case DLGINIT      = 240
+    case TOOLBAR      = 241
     
-    enum Types : Int {
-        case HEADER       =   0
-        case CURSOR       =   1
-        case BITMAP       =   2
-        case ICON         =   3
-        case MENU         =   4
-        case DIALOG       =   5
-        case STRING       =   6
-        case FONTDIR      =   7
-        case FONT         =   8
-        case ACCELERATOR  =   9
-        case RCDATA       =  10
-        case MESSAGETABLE =  11
-        case GROUP_CURSOR =  12
-        case GROUP_ICON   =  14
-        case VERSION      =  16
-        case DLGINCLUDE   =  17
-        case PLUGPLAY     =  19
-        case VXD          =  20
-        case ANICURSOR    =  21
-        case ANIICON      =  22
-        case HTML         =  23
-        case DLGINIT      = 240
-        case TOOLBAR      = 241
-    }
-    
-    enum Errors : Error {
-        case notimplemented
-    }
-    
-    var value = Types.HEADER
-    
-    func read(reader: Reader) throws {
-        let type = StringOrNumeric()
-        try type.read(reader: reader)
-        reader.align(alignment: 4)
-        
-        switch type.value {
+    init(from value: StringOrNumeric) {
+        switch value.value {
         case .numeric(let i):
-            if let t = Types(rawValue: i) {
-                value = t
+            if let t = Self(rawValue: i) {
+                self = t
             }
             else {
-                throw Errors.notimplemented
+                print("unknown resource")
+                abort()
             }
         case .string(let x):
-            print(" DIOCANCANAIADEDIO this resource type is a string >>\(x)<<")
-            // throw Errors.notimplemented
+            print("string resource not implemented string >>\(x)<<")
+            abort()
         }
+
     }
 }
 
@@ -262,7 +293,8 @@ class Alignment : BinaryRepresented {
 class ResourceHeader : BinaryRepresented {
     let dataSize        = DWORD()
     let headerSize      = DWORD()
-    let type            = ResourceType()
+    let type            = RepresentedEnum(ResourceTypes.HEADER,
+                                          backing: StringOrNumeric())
     let name            = StringOrNumeric()
     let align           = Alignment(alignment: 4)
     let dataVersion     = DWORD()
@@ -273,6 +305,7 @@ class ResourceHeader : BinaryRepresented {
 }
 
 class Resource : BinaryRepresented {
+    
     let header = ResourceHeader()
     var data : (data: Data, offset: Int)? = nil
     
@@ -286,74 +319,71 @@ class Resource : BinaryRepresented {
 }
 
 /* - */
-
-class WindowStyles : BinaryRepresented {
-    struct WindowStyles : OptionSet {
-        let rawValue: UInt32
-        
-        static let WS_POPUP         = WindowStyles(rawValue: 0x80000000)
-        static let WS_CHILD         = WindowStyles(rawValue: 0x40000000)
-        static let WS_MINIMIZE      = WindowStyles(rawValue: 0x20000000)
-        static let WS_VISIBLE       = WindowStyles(rawValue: 0x10000000)
-        static let WS_DISABLED      = WindowStyles(rawValue: 0x08000000)
-        static let WS_CLIPSIBLINGS  = WindowStyles(rawValue: 0x04000000)
-        static let WS_CLIPCHILDREN  = WindowStyles(rawValue: 0x02000000)
-        static let WS_MAXIMIZE      = WindowStyles(rawValue: 0x01000000)
-        static let WS_BORDER        = WindowStyles(rawValue: 0x00800000)
-        static let WS_DLGFRAME      = WindowStyles(rawValue: 0x00400000)
-        static let WS_VSCROLL       = WindowStyles(rawValue: 0x00200000)
-        static let WS_HSCROLL       = WindowStyles(rawValue: 0x00100000)
-        static let WS_SYSMENU       = WindowStyles(rawValue: 0x00080000)
-        static let WS_THICKFRAME    = WindowStyles(rawValue: 0x00040000)
-        static let WS_GROUP         = WindowStyles(rawValue: 0x00020000)
-        static let WS_TABSTOP       = WindowStyles(rawValue: 0x00010000)
-        static let WS_MINIMIZEBOX   = WindowStyles(rawValue: 0x00020000)
-        static let WS_MAXIMIZEBOX   = WindowStyles(rawValue: 0x00010000)
-        
-        static let BS_PUSHBUTTON      = WindowStyles([])
-        static let BS_DEFPUSHBUTTON   = WindowStyles(rawValue: 0x00000001)
-        static let BS_CHECKBOX        = WindowStyles(rawValue: 0x00000002)
-        static let BS_AUTOCHECKBOX    = WindowStyles(rawValue: 0x00000003)
-        static let BS_RADIOBUTTON     = WindowStyles(rawValue: 0x00000004)
-        static let BS_3STATE          = WindowStyles(rawValue: 0x00000005)
-        static let BS_AUTO3STATE      = WindowStyles(rawValue: 0x00000006)
-        static let BS_GROUPBOX        = WindowStyles(rawValue: 0x00000007)
-        static let BS_USERBUTTON      = WindowStyles(rawValue: 0x00000008)
-        static let BS_AUTORADIOBUTTON = WindowStyles(rawValue: 0x00000009)
-        static let BS_PUSHBOX         = WindowStyles(rawValue: 0x0000000A)
-        static let BS_OWNERDRAW       = WindowStyles(rawValue: 0x0000000B)
-
-        static let DS_ABSALIGN      = WindowStyles(rawValue: 0x00000001)
-        static let DS_SYSMODAL      = WindowStyles(rawValue: 0x00000002)
-        static let DS_3DLOOK        = WindowStyles(rawValue: 0x00000004)
-        static let DS_FIXEDSYS      = WindowStyles(rawValue: 0x00000008)
-        static let DS_NOFAILCREATE  = WindowStyles(rawValue: 0x00000010)
-        static let DS_LOCALEDIT     = WindowStyles(rawValue: 0x00000020)
-        static let DS_SETFONT       = WindowStyles(rawValue: 0x00000040)
-        static let DS_MODALFRAME    = WindowStyles(rawValue: 0x00000080)
-        static let DS_NOIDLEMSG     = WindowStyles(rawValue: 0x00000100)
-        static let DS_SETFOREGROUND = WindowStyles(rawValue: 0x00000200)
-        static let DS_CONTROL       = WindowStyles(rawValue: 0x00000400)
-        static let DS_CENTER        = WindowStyles(rawValue: 0x00000800)
-        static let DS_CENTERMOUSE   = WindowStyles(rawValue: 0x00001000)
-        static let DS_CONTEXTHELP   = WindowStyles(rawValue: 0x00002000)
-        static let DS_USEPIXELS     = WindowStyles(rawValue: 0x00008000)
-        
-        static let SS_ICON          = WindowStyles(rawValue: 0x00000003)
-        
+	
+struct WindowStyles : OptionSet, BinaryRepresentedBoxedValue {
+    let rawValue: UInt32
+    
+    init(rawValue: UInt32) {
+        self.rawValue = rawValue
     }
     
-    var value = WindowStyles(rawValue: 0)
-    
-    func read(reader: Reader) throws {
-        let x = DWORD()
-        try x.read(reader: reader)
-        value = WindowStyles(rawValue: x.value)
+    init(from value: DWORD) {
+        self.rawValue = value.value
     }
+    
+    static let WS_POPUP         = WindowStyles(rawValue: 0x80000000)
+    static let WS_CHILD         = WindowStyles(rawValue: 0x40000000)
+    static let WS_MINIMIZE      = WindowStyles(rawValue: 0x20000000)
+    static let WS_VISIBLE       = WindowStyles(rawValue: 0x10000000)
+    static let WS_DISABLED      = WindowStyles(rawValue: 0x08000000)
+    static let WS_CLIPSIBLINGS  = WindowStyles(rawValue: 0x04000000)
+    static let WS_CLIPCHILDREN  = WindowStyles(rawValue: 0x02000000)
+    static let WS_MAXIMIZE      = WindowStyles(rawValue: 0x01000000)
+    static let WS_BORDER        = WindowStyles(rawValue: 0x00800000)
+    static let WS_DLGFRAME      = WindowStyles(rawValue: 0x00400000)
+    static let WS_VSCROLL       = WindowStyles(rawValue: 0x00200000)
+    static let WS_HSCROLL       = WindowStyles(rawValue: 0x00100000)
+    static let WS_SYSMENU       = WindowStyles(rawValue: 0x00080000)
+    static let WS_THICKFRAME    = WindowStyles(rawValue: 0x00040000)
+    static let WS_GROUP         = WindowStyles(rawValue: 0x00020000)
+    static let WS_TABSTOP       = WindowStyles(rawValue: 0x00010000)
+    static let WS_MINIMIZEBOX   = WindowStyles(rawValue: 0x00020000)
+    static let WS_MAXIMIZEBOX   = WindowStyles(rawValue: 0x00010000)
+    
+    static let BS_PUSHBUTTON      = WindowStyles([])
+    static let BS_DEFPUSHBUTTON   = WindowStyles(rawValue: 0x00000001)
+    static let BS_CHECKBOX        = WindowStyles(rawValue: 0x00000002)
+    static let BS_AUTOCHECKBOX    = WindowStyles(rawValue: 0x00000003)
+    static let BS_RADIOBUTTON     = WindowStyles(rawValue: 0x00000004)
+    static let BS_3STATE          = WindowStyles(rawValue: 0x00000005)
+    static let BS_AUTO3STATE      = WindowStyles(rawValue: 0x00000006)
+    static let BS_GROUPBOX        = WindowStyles(rawValue: 0x00000007)
+    static let BS_USERBUTTON      = WindowStyles(rawValue: 0x00000008)
+    static let BS_AUTORADIOBUTTON = WindowStyles(rawValue: 0x00000009)
+    static let BS_PUSHBOX         = WindowStyles(rawValue: 0x0000000A)
+    static let BS_OWNERDRAW       = WindowStyles(rawValue: 0x0000000B)
+    
+    static let DS_ABSALIGN      = WindowStyles(rawValue: 0x00000001)
+    static let DS_SYSMODAL      = WindowStyles(rawValue: 0x00000002)
+    static let DS_3DLOOK        = WindowStyles(rawValue: 0x00000004)
+    static let DS_FIXEDSYS      = WindowStyles(rawValue: 0x00000008)
+    static let DS_NOFAILCREATE  = WindowStyles(rawValue: 0x00000010)
+    static let DS_LOCALEDIT     = WindowStyles(rawValue: 0x00000020)
+    static let DS_SETFONT       = WindowStyles(rawValue: 0x00000040)
+    static let DS_MODALFRAME    = WindowStyles(rawValue: 0x00000080)
+    static let DS_NOIDLEMSG     = WindowStyles(rawValue: 0x00000100)
+    static let DS_SETFOREGROUND = WindowStyles(rawValue: 0x00000200)
+    static let DS_CONTROL       = WindowStyles(rawValue: 0x00000400)
+    static let DS_CENTER        = WindowStyles(rawValue: 0x00000800)
+    static let DS_CENTERMOUSE   = WindowStyles(rawValue: 0x00001000)
+    static let DS_CONTEXTHELP   = WindowStyles(rawValue: 0x00002000)
+    static let DS_USEPIXELS     = WindowStyles(rawValue: 0x00008000)
+    
+    static let SS_ICON          = WindowStyles(rawValue: 0x00000003)
 }
 
 class DLGITEMTEMPLATE : BinaryRepresented {
-    let style         = WindowStyles()
+    let style         = RepresentedEnum(WindowStyles([]), backing: DWORD())
     let extendedStyle = DWORD()
     let x             = WORD()
     let y             = WORD()
@@ -362,7 +392,7 @@ class DLGITEMTEMPLATE : BinaryRepresented {
     let id            = WORD()
 }
 
-class DialogItemTemplate : BinaryRepresented {
+enum WindowClass : BinaryRepresentedBoxedValue {
     enum StandardWindowClass : Int {
         case button     = 0x0080
         case edit       = 0x0081
@@ -372,27 +402,29 @@ class DialogItemTemplate : BinaryRepresented {
         case combobox   = 0x0085
     }
     
-    enum WindowClass {
-        case standard(StandardWindowClass)
-        case custom(String)
-        
-        init(from: StringOrNumeric) {
-            switch from.value {
-            case .numeric(let n):
-                if let klass = StandardWindowClass(rawValue: n) {
-                    self = .standard(klass)
-                }
-                else {
-                    self = .custom("unkown class \(n)")
-                }
-            case .string(let s):
-                self = .custom(s)
+    case standard(StandardWindowClass)
+    case custom(String)
+    
+    init(from: StringOrNumeric) {
+        switch from.value {
+        case .numeric(let n):
+            if let klass = StandardWindowClass(rawValue: n) {
+                self = .standard(klass)
             }
+            else {
+                self = .custom("unkown class \(n)")
+            }
+        case .string(let s):
+            self = .custom(s)
         }
     }
-    
+}
+
+class DialogItemTemplate : BinaryRepresented {
+
     let itemTemplate = DLGITEMTEMPLATE()
-    var windowClass: WindowClass = .standard(.button)
+    var windowClass  = RepresentedEnum(WindowClass.standard(.button),
+                                       backing: StringOrNumeric())
     let title        = StringOrNumeric()
     
     var creationData: Data? = nil
@@ -401,16 +433,13 @@ class DialogItemTemplate : BinaryRepresented {
         reader.align(alignment: 4)
         try itemTemplate.read(reader: reader)
         
-        let klass = StringOrNumeric()
         reader.align(alignment: 2)
-        try klass.read(reader: reader)
-        windowClass = WindowClass(from: klass)
+        try windowClass.read(reader: reader)
         
         reader.align(alignment: 2)
         try title.read(reader: reader)
         
-        let dataSize = WORD()
-        try dataSize.read(reader: reader)
+        let dataSize = try reader.read(WORD())
         
         if dataSize.value > 0 {
             creationData = try reader.data(size: Int(dataSize.value) - 2)
@@ -419,7 +448,8 @@ class DialogItemTemplate : BinaryRepresented {
 }
 
 class DLGTEMPLATE : BinaryRepresented {
-    let style         = WindowStyles()
+    let style         = RepresentedEnum(WindowStyles([]),
+                                        backing: DWORD())
     let extendedStyle = DWORD()
     let count         = WORD()
     let x             = WORD()
@@ -439,26 +469,21 @@ class Dialog : BinaryRepresented {
         try template.read(reader: reader)
                 
         if template.style.value.contains(.DS_SETFONT) {
-            let fontsize = WORD()
-            try fontsize.read(reader: reader)
-            let fontname = ResourceString()
-            try fontname.read(reader: reader)
+            _ /* fontsize */ = try reader.read(WORD())
+            _ /* fontname */ = try reader.read(ResourceString())
         }
         
-        
-        items = []
-        for _ in 0 ..< template.count.value {
-            let item = DialogItemTemplate()
-            try item.read(reader: reader)
-            items.append(item)
+        items = try (0 ..< template.count.value).map {
+            _ in try reader.read(DialogItemTemplate())
         }
+
     }
 }
 
 /* - */
 
 class BITMAPINFOHEADER : BinaryRepresented {
-    enum Compression : UInt32 {
+    enum Compression : UInt32, BinaryRepresentedBoxedValue {
         case BI_RGB       = 0x0000
         case BI_RLE8      = 0x0001
         case BI_RLE4      = 0x0002
@@ -468,6 +493,10 @@ class BITMAPINFOHEADER : BinaryRepresented {
         case BI_CMYK      = 0x000B
         case BI_CMYKRLE8  = 0x000C
         case BI_CMYKRLE4  = 0x000D
+        
+        init(from: DWORD) {
+            self.init(rawValue: from.value)!
+        }
     }
 
     let size = DWORD()
@@ -475,7 +504,7 @@ class BITMAPINFOHEADER : BinaryRepresented {
     let height = LONG()
     let planes = WORD()
     let bitCount = WORD()
-    let compression = DWORD()
+    let compression = RepresentedEnum(Compression.BI_RGB, backing: DWORD())
     let sizeImage = DWORD()
     let XPelsPerMeter = LONG()
     let YPelsPerMeter = LONG()
@@ -508,11 +537,8 @@ class IconGroup : BinaryRepresented {
     
     func read(reader: Reader) throws {
         try header.read(reader: reader)
-        
-        for _ in 0 ..< header.resCount.value {
-            let icon = ICONRESDIR()
-            try icon.read(reader: reader)
-            icons.append(icon)
+        icons = try (0 ..< header.resCount.value).map {
+            _ in try reader.read(ICONRESDIR())
         }
     }
 }
@@ -530,9 +556,46 @@ class ResourceFile {
     var iconGroups = [StringOrNumeric.StringOrNumeric : IconGroup]()
     var icons = [StringOrNumeric.StringOrNumeric : Data]()
 
-    init(url: URL) throws {
+    init(url: URL) {
         self.url = url
     }
+    
+    private func collectResource<T: BinaryRepresented>(
+        _ x: Resource,
+        type: T,
+        into array: inout [StringOrNumeric.StringOrNumeric : T]
+    ) throws
+    {
+        if array[x.header.name.value] != nil {
+            print("already have \(T.self) named \(x.header.name.value)")
+        }
+        
+        if let data = x.data {
+            let reader = Reader(data: data.data, offset: data.offset)
+            array[x.header.name.value] = try reader.read(type)
+        }
+        else {
+            print("\(T.self) \(x.header.name.value) has no data")
+        }
+    }
+    
+    private func collectData(
+        _ x: Resource,
+        into array: inout [StringOrNumeric.StringOrNumeric : Data]
+    ) throws
+    {
+        if array[x.header.name.value] != nil {
+            print("already have data named \(x.header.name.value)")
+        }
+        
+        if let data = x.data {
+            array[x.header.name.value] = data.data
+        }
+        else {
+            print("\(x.header.name.value) has no data")
+        }
+    }
+
     
     func load() throws {
         resources = []
@@ -562,58 +625,16 @@ class ResourceFile {
                 continue
                 
             case .DIALOG:
-                if dialogs[x.header.name.value] != nil {
-                    print("already have dialog named \(x.header.name.value)")
-                }
-                
-                if let data = x.data {
-                    let dialog = Dialog()
-                    let reader = Reader(data: data.data, offset: data.offset)
-                    try dialog.read(reader: reader)
-                    dialogs[x.header.name.value] = dialog
-                }
-                else {
-                    print("dialog \(x.header.name.value) has no data")
-                }
+                try collectResource(x, type: Dialog(), into: &dialogs)
                 
             case .BITMAP:
-                if bitmaps[x.header.name.value] != nil {
-                    print("already have bitmap named \(x.header.name.value)")
-                }
-                
-                if let data = x.data {
-                    bitmaps[x.header.name.value] = data.data
-                }
-                else {
-                    print("bitmap \(x.header.name.value) has no data")
-                }
+                try collectData(x, into: &bitmaps)
 
             case .GROUP_ICON:
-                if iconGroups[x.header.name.value] != nil {
-                    print("already have group icon named \(x.header.name.value)")
-                }
-                
-                if let data = x.data {
-                    let iconGroup = IconGroup()
-                    let reader = Reader(data: data.data, offset: data.offset)
-                    try iconGroup.read(reader: reader)
-                    iconGroups[x.header.name.value] = iconGroup
-                }
-                else {
-                    print("icon group \(x.header.name.value) has no data")
-                }
+                try collectResource(x, type: IconGroup(), into: &iconGroups)
                 
             case .ICON:
-                if icons[x.header.name.value] != nil {
-                    print("already have icon named \(x.header.name.value)")
-                }
-                
-                if let data = x.data {
-                    icons[x.header.name.value] = data.data
-                }
-                else {
-                    print("icon \(x.header.name.value) has no data")
-                }
+                try collectData(x, into: &icons)
                 
             case .MENU:
                 continue

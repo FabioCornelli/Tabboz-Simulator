@@ -59,7 +59,7 @@ func template_item_rect(dialog: Dialog, item: DialogItemTemplate) -> NSRect {
 func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
     enum Errors : Error {
         case moreThanOnePlane
-        case unsupportedCompression(UInt32)
+        case unsupportedCompression(BITMAPINFOHEADER.Compression)
         case unsupportedBitCount(UInt16)
     }
     
@@ -71,7 +71,7 @@ func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
         throw Errors.moreThanOnePlane
     }
     
-    guard BITMAPINFOHEADER.Compression(rawValue: header.compression.value) == .BI_RGB else {
+    guard header.compression.value == .BI_RGB else {
         throw Errors.unsupportedCompression(header.compression.value)
     }
     
@@ -190,7 +190,7 @@ class DialogNSWindow : NSWindow {
             
             let view : NSView
             
-            switch i.windowClass {
+            switch i.windowClass.value {
             case .standard(let x):
                 switch x {
                 case .button:
