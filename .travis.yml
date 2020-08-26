@@ -1,0 +1,11 @@
+language: objective-c
+osx_image: xcode12
+script: xcodebuild clean build
+
+after_success:
+    - pushd . ; cd build/Release/ ;
+      zip -r ../../Tabboz-Simulator.zip Tabboz\ Simulator.app ;
+      popd
+    - openssl aes-256-cbc -K $TABBOZ_KEY -iv $TABBOZ_IV -in .travis_tabboz.enc -out .travis_tabboz -d
+    - chmod 0400 .travis_tabboz
+    - "eval \"$(ssh-agent -s)\" ; ssh-add .travis_tabboz ; scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null Tabboz-Simulator.zip dipreazione@perpli.me:"
