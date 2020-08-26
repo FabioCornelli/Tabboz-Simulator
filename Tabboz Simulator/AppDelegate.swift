@@ -226,9 +226,15 @@ class DialogNSWindow : NSWindow {
                     if i.itemTemplate.style.value.contains(.SS_ICON) {
                         let i = NSImageView(frame: frame)
                         let icon = applicationHandle.res.iconData(named: label)!
-                        let cgimage = try! dataToImage(data: icon, hasMask: true)
                         
-                        i.image = NSImage(cgImage: cgimage, size: NSSize(width: cgimage.width, height: cgimage.height))
+                        do {
+                            let cgimage = try dataToImage(data: icon, hasMask: true)
+                            i.image = NSImage(cgImage: cgimage, size: NSSize(width: cgimage.width, height: cgimage.height))
+                        }
+                        catch {
+                            print("cannot parse image because \(error)")
+                        }
+                        
                         i.imageScaling = .scaleProportionallyUpOrDown
                         
                         view = i
@@ -323,10 +329,15 @@ class DialogNSWindow : NSWindow {
                     else if let bitmap = applicationHandle.res.bitmaps[.numeric(Int(i.itemTemplate.id.value) + 1000)] {
                         // chapter 3.3 BWCCAPI.RW
                         
-                        let cgimage = try! dataToImage(data: bitmap)
+                        do {
+                            let cgimage = try dataToImage(data: bitmap)
                         
-                        b.image = NSImage(cgImage: cgimage, size: NSSize(width: cgimage.width, height: cgimage.height))
-                        b.imageScaling = .scaleProportionallyUpOrDown
+                            b.image = NSImage(cgImage: cgimage, size: NSSize(width: cgimage.width, height: cgimage.height))
+                            b.imageScaling = .scaleProportionallyUpOrDown
+                        }
+                        catch {
+                            print("cannot open image because \(error)")
+                        }
                     }
 
                     break
@@ -697,7 +708,7 @@ class ApplicationHandle : NSObject {
     
     @objc func loadBitmap(resource: INTRESOURCE) -> HBITMAP {
         let bitmap = res.bitmaps[resource.toStringOrNumeric()]
-        let image = bitmap.flatMap { try! dataToImage(data: $0) }
+        let image = bitmap.flatMap { try? dataToImage(data: $0) }
         let hbitmap = Win32HBITMAP()
         hbitmap.image = image
         return hbitmap
