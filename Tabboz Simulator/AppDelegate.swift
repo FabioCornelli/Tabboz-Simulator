@@ -445,6 +445,8 @@ class CustomControlView : NSView {
     let handle = HANDLE.allocate(capacity: 1)
     var props = [String : Win32HBITMAP]()
     
+    var isPainting = false
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -459,12 +461,18 @@ class CustomControlView : NSView {
         _ = wndclass.lpfnWndProc(handle, WM_CREATE, 0, 0 /* create struct, unused now? */) 
     }
     
+    override var isFlipped : Bool { true }
+    
     override func draw(_ dirtyRect: NSRect) {
         let c = NSGraphicsContext.current?.cgContext
-        c?.setFillColor(CGColor(red: 1, green: 0, blue: 1, alpha: 1))
+        c?.setFillColor(CGColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1))
         c?.fill(dirtyRect)
         
+        isPainting = true
+        print("> begin paint")
         _ = wndclass.lpfnWndProc(handle, WM_PAINT, 0, 0)
+        print("> end paint")
+        isPainting = false
     }
     
     @objc func setProp(name: String, bitmap: Win32HBITMAP) {
@@ -475,10 +483,62 @@ class CustomControlView : NSView {
         return props[name]
     }
 
+    @objc func beginPaint() -> Win32HDC? {
+        guard isPainting else {
+            print("begin paint not in a -draw")
+            return nil
+        }
+        
+        let hdc = Win32HDC()
+        hdc.cgContext = NSGraphicsContext.current?.cgContext
+        return hdc
+    }
+    
 }
 
 class Win32HBITMAP : NSObject {
     var image: CGImage?
+}
+
+class Win32HDC : NSObject {
+    var cgContext : CGContext?
+    var selectedBitmap : Win32HBITMAP?
+    
+    @objc func selectObject(_ object: Win32HBITMAP) -> Win32HBITMAP? {
+        let old = selectedBitmap
+        selectedBitmap = object
+        return old
+    }
+    
+    @objc func bitBlt(destinationRect: CGRect,
+                      srcHDC: Win32HDC?,
+                      sourcePoint: CGPoint,
+                      flags: Int32)
+    {
+        guard let context = cgContext else {
+            print("don't have a context to blit to")
+            return
+        }
+        
+        guard let image = srcHDC?.selectedBitmap?.image else {
+            print("can't get the srchdc selected bitmap")
+            return
+        }
+        
+        if sourcePoint != .zero {
+            print("warning: drawing offset image not supported")
+        }
+        
+        var rect = destinationRect
+        rect.size = CGSize(width: image.width, height: image.height)
+                
+        context.saveGState()
+        context.translateBy(x: 0, y: rect.minY + rect.maxY)
+        context.scaleBy(x: 1, y: -1)
+        context.setAlpha(0.2)
+        context.draw(image, in: rect)
+        context.restoreGState()
+    }
 }
 
 extension INTRESOURCE {

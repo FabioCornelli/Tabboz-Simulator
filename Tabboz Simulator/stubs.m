@@ -240,7 +240,7 @@ HDC GetDC(void * a) {
 }
 
 HDC CreateCompatibleDC(HDC a) {
-    return 0;
+    return [[Win32HDC alloc] init];
 }
 
 void ReleaseDC() {
@@ -250,8 +250,8 @@ void ReleaseDC() {
 void GetObject() {
 }
 
-HBITMAP SelectObject(HDC a, HBITMAP b) {
-    return nil;
+HBITMAP SelectObject(HDC hdc, HBITMAP bitmap) {
+    return [hdc selectObject:bitmap];
 }
 
 void DeleteDC() {
@@ -266,9 +266,6 @@ COLORREF SetBkColor(HDC a, int b) {
 
 HBITMAP CreateBitmap(int a, int b, int c, int d, void * e) {
     return nil;
-}
-
-void BitBlt() {
 }
 
 void SetProp(HANDLE handle, char * name, HBITMAP bitmap) {
@@ -297,10 +294,27 @@ HBITMAP GetProp(HANDLE handle, char * name) {
 void SetWindowPos() {
 }
 
-
-HDC BeginPaint(HANDLE a, PAINTSTRUCT * b) {
-    return 0;
+HDC BeginPaint(HANDLE handle, PAINTSTRUCT * b) {
+    CustomControlView *
+    control = (__bridge CustomControlView *)handle->impl;
+    return [control beginPaint];
 }
 
 void EndPaint() {
+}
+
+void BitBlt(HDC hdc,
+            int x,
+            int y,
+            int cx,
+            int cy,
+            HDC srcHDC,
+            int sx,
+            int sy,
+            int flags)
+{
+    [hdc bitBltWithDestinationRect:CGRectMake(x, y, cx, cy)
+                            srcHDC:srcHDC
+                       sourcePoint:CGPointMake(sx, sy)
+                             flags:flags];
 }
