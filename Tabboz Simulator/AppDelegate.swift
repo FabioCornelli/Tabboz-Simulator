@@ -75,12 +75,16 @@ func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
         throw Errors.unsupportedCompression(header.compression.value)
     }
     
-    guard (header.bitCount.value == 8 || header.bitCount.value == 4) else {
+    guard
+        header.bitCount.value == 8 ||
+        header.bitCount.value == 4 ||
+        header.bitCount.value == 1
+    else {
         throw Errors.unsupportedBitCount(header.bitCount.value)
     }
     
     let bitCount = Int(header.bitCount.value)
-    let defaultPaletteCount = bitCount == 8 ? 256 : 16
+    let defaultPaletteCount = bitCount == 8 ? 256 : bitCount == 4 ? 16 : 2
     let paletteCount = header.clrUsed.value == 0 ? defaultPaletteCount : Int(header.clrUsed.value)
     
     let (w, h)   = (
@@ -88,11 +92,12 @@ func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
         hasMask == false ? Int(header.height.value) : Int(header.height.value) / 2
     )
     
-    let srcWidth = (w & 3) != 0 ? w + 4 - (w & 3) : w
-    let palette  = try reader.data(size: 4 * paletteCount)
-    let src      = try reader.data(size: srcWidth * h * bitCount / 8)
+    let srcStride  = (w * bitCount + 31) / 32 * 4
+    let maskStride = (w  + 31) / 32 * 4
+    let palette    = try reader.data(size: 4 * paletteCount)
+    let src        = try reader.data(size: srcStride * h)
 
-    let mask = hasMask ? try reader.data(size: w / 8 * h) : nil
+    let mask = hasMask ? try reader.data(size: maskStride * h) : nil
     
     let c = CGContext(
         data: nil,
@@ -115,16 +120,20 @@ func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
             let maskBit : Bool
             
             if bitCount == 8 {
-                pix = Int(src[srcY * srcWidth + x])
+                pix = Int(src[srcY * srcStride + x])
+            }
+            else if bitCount == 4 {
+                let pixByte = src[srcY * srcStride + (x / 2)]
+                pix = (x % 2) == 0 ? Int(pixByte & 0xf0) >> 4 : Int(pixByte & 0x0f)
             }
             else {
-                // bitCount == 4
-                let pixByte = src[srcY * (srcWidth / 2) + (x / 2)]
-                pix = (x % 2) == 0 ? Int(pixByte & 0xf0) >> 4 : Int(pixByte & 0x0f)
+                // bitCount == 1
+                let pixByte = Int(src[(srcY * srcStride) + (x / 8)])
+                pix = (pixByte & (0x80 >> (x % 8))) >> (7 - (x % 8))
             }
             
             if let mask = mask {
-                let maskByte = mask[(srcY * w / 8) + (x / 8)]
+                let maskByte = mask[(srcY * maskStride) + (x / 8)]
                 maskBit  = (maskByte & (0x80 >> (x % 8))) != 0
             }
             else {
