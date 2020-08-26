@@ -73,7 +73,8 @@ int LoadCursor(HANDLE hinst, INTRESOURCE b) {
 }
 
 ATOM RegisterClass(WNDCLASS * wc) {
-    [ApplicationHandle registerClassWithClass:*wc];
+    ApplicationHandle * handle = (__bridge ApplicationHandle *)wc->hInstance->impl;
+    [handle registerClassWithClass:*wc];
     return 0;
 }
 
@@ -97,7 +98,8 @@ u_long new_check_l(u_long x) {
 }
 
 int DialogBox(HWND hinst, INTRESOURCE b, void * c, FARPROC proc) {
-    [ApplicationHandle dialogBoxWithHInst:hinst dlg:b parentHandle:(HANDLE)c farproc:proc];
+    ApplicationHandle * handle = (__bridge ApplicationHandle *)hinst->impl;
+    [handle dialogBoxWithDlg:b parentHandle:(HANDLE)c farproc:proc];
     return 0;
 }
 

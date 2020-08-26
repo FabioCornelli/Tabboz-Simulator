@@ -567,7 +567,7 @@ class ApplicationHandle : NSObject {
         WinMain(handle, nil, nil, 0)
     }
     
-    func dialogBox(dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: @escaping FARPROC) {
+    @objc func dialogBox(dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: @escaping FARPROC) {
         
         let dialogName = dlg.toStringOrNumeric()
         let dialog = res.dialogs[dialogName]!
@@ -576,19 +576,7 @@ class ApplicationHandle : NSObject {
         
         NSApplication.shared.runModal(for: window)
     }
-    
-    @objc static func dialogBox(hInst: HANDLE, dlg: INTRESOURCE, parentHandle: HANDLE?, farproc: @escaping FARPROC) {
-
-        Unmanaged<ApplicationHandle>
-            .fromOpaque(hInst.pointee.impl)
-            .takeUnretainedValue()
-            .dialogBox(
-                dlg: dlg,
-                parentHandle: parentHandle,
-                farproc: farproc
-            )
-    }
-    
+        
     @objc static func endDialog(dlg: HANDLE, result: Bool) {
         Unmanaged<DialogNSWindow>
             .fromOpaque(dlg.pointee.impl)
@@ -652,15 +640,8 @@ class ApplicationHandle : NSObject {
             return 0
         }
     }
-
-    @objc static func registerClass(class: WNDCLASS) {
-        Unmanaged<ApplicationHandle>
-            .fromOpaque(hInst.pointee.impl)
-            .takeUnretainedValue()
-            .registerClass(class: `class`)
-    }
     
-    func registerClass(class aClass: WNDCLASS) {
+    @objc func registerClass(class aClass: WNDCLASS) {
         let className = String(cString: aClass.lpszClassName)
         customControlClasses[className] = aClass
     }
