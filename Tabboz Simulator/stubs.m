@@ -34,11 +34,13 @@ void BWCCRegister(HANDLE _) {
 }
 
 void randomize() {
-    ;
+    srand((int)time(0));
 }
 
 int tabboz_random(int x) {
-    return 0;
+    int r =  rand() % (x + 1);
+    printf("RANDOM %3d (max: %3d)\n", r, x);
+    return r;
 }
 
 LONG RegOpenKeyEx(int a, char * keyName, int c, int d, HKEY * hkey) {
