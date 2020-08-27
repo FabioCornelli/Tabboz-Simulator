@@ -302,7 +302,7 @@ static void InitTabboz(void)
 	 // Inizializza un po' di variabile...
 	 boolean_shutdown=0;		  /* 0=resta dentro, 1=uscita, 2=shutdown 19 Giugno 1999 / 14 Ottoble 1999 */
 
-	 Fortuna=0;					     /* Uguale a me...               */
+	 Fortuna=100;					     /* Uguale a me...               */
 	 ScooterData=ScooterMem[0];  /* nessuno scooter              */
 	 Attesa=ATTESAMAX;           /* attesa per avere soldi...    */
 	 ImgSelector=0;              /* W l' arte di arrangiarsi...  */
