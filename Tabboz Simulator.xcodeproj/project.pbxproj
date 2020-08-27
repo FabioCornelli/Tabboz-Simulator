@@ -28,6 +28,7 @@
 		3F2FF6A124ECD08F00637016 /* ZARRO32.RES in Resources */ = {isa = PBXBuildFile; fileRef = 3F2FF6A024ECD08F00637016 /* ZARRO32.RES */; };
 		3F4E7F5C24F363F50021BB52 /* IDOK_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4E7F5B24F363F50021BB52 /* IDOK_Icon.png */; };
 		3F4E7F5E24F364010021BB52 /* IDCANCEL_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4E7F5D24F364010021BB52 /* IDCANCEL_Icon.png */; };
+		3FA5354B24F75B8700CCD6B0 /* Win32BMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA5354A24F75B8700CCD6B0 /* Win32BMP.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		3F4E7F5B24F363F50021BB52 /* IDOK_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IDOK_Icon.png; sourceTree = "<group>"; };
 		3F4E7F5D24F364010021BB52 /* IDCANCEL_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IDCANCEL_Icon.png; sourceTree = "<group>"; };
 		3F54DC1B2210991100794232 /* stubs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = stubs.m; sourceTree = "<group>"; };
+		3FA5354A24F75B8700CCD6B0 /* Win32BMP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Win32BMP.swift; sourceTree = "<group>"; };
 		3FC1271424E8B7B7006BDC9A /* Tabboz Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tabboz Simulator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FED203E220FC7E000AC38D7 /* Tabboz Simulator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabboz Simulator-Bridging-Header.h"; sourceTree = "<group>"; };
 		3FED204A220FCA3500AC38D7 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os.h; path = "Tabboz Simulator/C/os.h"; sourceTree = SOURCE_ROOT; };
@@ -110,6 +112,7 @@
 				3F2FF69324ECD01000637016 /* Resources */,
 				3F2FF69A24ECD01000637016 /* AppDelegate.swift */,
 				3F2FF69924ECD01000637016 /* Win32Resources.swift */,
+				3FA5354A24F75B8700CCD6B0 /* Win32BMP.swift */,
 				3F25441D22116E5300D494E8 /* stubs.h */,
 				3F54DC1B2210991100794232 /* stubs.m */,
 			);
@@ -213,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FA5354B24F75B8700CCD6B0 /* Win32BMP.swift in Sources */,
 				3F2FF68624EC91CF00637016 /* scooter.c in Sources */,
 				3F2FF68F24EC91CF00637016 /* tabimg.c in Sources */,
 				3F2FF69024EC91CF00637016 /* lavoro.c in Sources */,
