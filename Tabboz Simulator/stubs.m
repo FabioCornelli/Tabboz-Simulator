@@ -64,9 +64,11 @@ LONG RegCreateKeyEx(int hkey,
     return 1;
 }
 
-void LoadString(HANDLE hinst, int b, LPSTR ptr, int size) {
-    // Don't know where this strings come from yet
-    snprintf(ptr, size, "String %d", b);
+void LoadString(HANDLE hinst, int stringId, LPSTR ptr, int size) {
+    ApplicationHandle * handle = (__bridge ApplicationHandle *)hinst->impl;
+    NSString * string = [handle loadStringWithStringId: stringId];
+    
+    snprintf(ptr, size, "%s", string.UTF8String);
 }
 
 int LoadCursor(HANDLE hinst, INTRESOURCE b) {

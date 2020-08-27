@@ -551,19 +551,14 @@ class IconGroup : BinaryRepresented {
 /* - */
 
 class ResourceFile {
-    
-    let url : URL
-    
+        
     var resources = [Resource]()
     
-    var dialogs = [StringOrNumeric.StringOrNumeric : Dialog]()
-    var bitmaps = [StringOrNumeric.StringOrNumeric : Data]()
+    var dialogs    = [StringOrNumeric.StringOrNumeric : Dialog]()
+    var bitmaps    = [StringOrNumeric.StringOrNumeric : Data]()
     var iconGroups = [StringOrNumeric.StringOrNumeric : IconGroup]()
-    var icons = [StringOrNumeric.StringOrNumeric : Data]()
-
-    init(url: URL) {
-        self.url = url
-    }
+    var icons      = [StringOrNumeric.StringOrNumeric : Data]()
+    var strings    = [Int : String]()
     
     private func collectResource<T: BinaryRepresented>(
         _ x: Resource,
@@ -601,15 +596,34 @@ class ResourceFile {
         }
     }
 
+    private func parseStrings(resource: Resource) throws {
+        guard
+            case let StringOrNumeric.StringOrNumeric.numeric(name) = resource.header.name.value,
+            let data = resource.data?.data
+        else {
+            return
+        }
     
-    func load() throws {
-        resources = []
-        dialogs = [:]
-        bitmaps = [:]
-        iconGroups = [:]
-        icons = [:]
+        let r = Reader(data: data)
+        let len = WORD()
         
-        let data = try! Data(contentsOf: url)
+        for i in 0 ..< 16 {
+            try len.read(reader: r)
+            
+            guard len.value != 0 else {
+                continue
+            }
+            
+            let stringId   = (name - 1) * 16 + i
+            let stringData = try r.data(size: Int(len.value * 2))
+            let string     = String(data: stringData, encoding: .utf16LittleEndian) ?? "[ENCODING ERROR]"
+            
+            strings[stringId] = string
+        }
+    }
+    
+    func load(url: URL) throws {
+        let data = try Data(contentsOf: url)
         let reader = Reader(data: data)
         
         while true {
@@ -640,12 +654,14 @@ class ResourceFile {
                 
             case .ICON:
                 try collectData(x, into: &icons)
+            
+            case .STRING:
+                try parseStrings(resource: x)
                 
             case .MENU:
                 continue
                 
             case .CURSOR:       fallthrough
-            case .STRING:       fallthrough
             case .FONTDIR:      fallthrough
             case .FONT:         fallthrough
             case .ACCELERATOR:  fallthrough

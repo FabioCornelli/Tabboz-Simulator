@@ -518,16 +518,13 @@ extension INTRESOURCE {
 }
 
 class ApplicationHandle : NSObject {
-    static let url = Bundle.main.url(forResource: "ZARRO32.RES", withExtension: nil)!
     
-    var res = ResourceFile(url: url)
+    var res = ResourceFile()
     var customControlClasses = [String : WNDCLASS]()
     
     var handle = HANDLE.allocate(capacity: 1)
     
     func main() {
-        try! res.load()
-
         handle.pointee.impl = Unmanaged.passUnretained(self).toOpaque()
         WinMain(handle, nil, nil, 0)
     }
@@ -618,7 +615,11 @@ class ApplicationHandle : NSObject {
         hbitmap.image = image
         return hbitmap
     }
-
+    
+    @objc func loadString(stringId: Int) -> String {
+        return res.strings[stringId] ?? ""
+    }
+    
 }
 
 @main
@@ -628,7 +629,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     let applicationHandle = ApplicationHandle()
     
+    static let zarroResources = Bundle.main.url(forResource: "ZARRO32.RES", withExtension: nil)!
+    static let textReources   = Bundle.main.url(forResource: "TEXT.RES"   , withExtension: nil)!
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        try! applicationHandle.res.load(url: Self.zarroResources)
+        try! applicationHandle.res.load(url: Self.textReources)
         applicationHandle.main()
     }
 
