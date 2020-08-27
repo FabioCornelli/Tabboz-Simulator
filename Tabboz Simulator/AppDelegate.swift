@@ -109,12 +109,16 @@ fileprivate func BMP_RGB_to_32bpp(
     }
 }
 
-fileprivate func BMP_RLE4_to_32bpp(
+fileprivate func BMP_RLE_to_32bpp(
     _ reader: Reader,
     _ w: Int,
     _ h: Int,
     _ dst: UnsafeMutableRawBufferPointer,
-    _ palette: Data
+    _ palette: Data,
+    
+    colorForByte: (Int, Int) -> Int,
+    runDataForCount: (Reader, Int) throws -> Data,
+    colorForRun: (Data, Int) -> UInt8
 ) throws
 {
     var x = 0
@@ -149,11 +153,7 @@ fileprivate func BMP_RLE4_to_32bpp(
                 let colors = Int(try reader.byte())
                 
                 for i in 0 ..< count {
-                    
-                    let pix = (i % 2 == 0)
-                        ? (colors & 0xf0) >> 4
-                        : (colors & 0x0f)
-                    
+                    let pix = colorForByte(colors, i)
                     setColor(pix)
                     incrementPixelPosition()
                 }
@@ -179,17 +179,15 @@ fileprivate func BMP_RLE4_to_32bpp(
                 }
                 else {
                     let count = Int(escaped)
-                    let run = try reader.data(size: (count + 1) / 2)
+                    let run = try runDataForCount(reader, count)
                     
                     if (run.count % 2) == 1 {
                         _ = try reader.byte()
                     }
                     
                     for i in 0 ..< count {
-                        let colors = Int(run[i / 2])
-                        let pix = (i % 2 == 0)
-                            ? (colors & 0xf0) >> 4
-                            : (colors & 0x0f)
+                        let col = colorForRun(run, i)
+                        let pix = colorForByte(Int(col), i)
                         
                         setColor(pix)
                         incrementPixelPosition()
@@ -202,6 +200,60 @@ fileprivate func BMP_RLE4_to_32bpp(
             break
         }
     }
+}
+
+fileprivate func BMP_RLE4_to_32bpp(
+    _ reader: Reader,
+    _ w: Int,
+    _ h: Int,
+    _ dst: UnsafeMutableRawBufferPointer,
+    _ palette: Data
+) throws
+{
+    try BMP_RLE_to_32bpp(
+        reader,
+        w,
+        h,
+        dst,
+        palette,
+        colorForByte: { (colors, i) in
+            (i % 2 == 0)
+                ? (colors & 0xf0) >> 4
+                : (colors & 0x0f)
+        },
+        runDataForCount: { (reader, count) in
+            try reader.data(size: (count + 1) / 2)
+        },
+        colorForRun: { (run, i)  in
+            run[i / 2]
+        }
+    )
+}
+
+fileprivate func BMP_RLE8_to_32bpp(
+    _ reader: Reader,
+    _ w: Int,
+    _ h: Int,
+    _ dst: UnsafeMutableRawBufferPointer,
+    _ palette: Data
+) throws
+{
+    try BMP_RLE_to_32bpp(
+        reader,
+        w,
+        h,
+        dst,
+        palette,
+        colorForByte: { (colors, i) in
+            colors
+        },
+        runDataForCount: { (reader, count) in
+            try reader.data(size: count)
+        },
+        colorForRun: { (run, i) in
+            run[i]
+        }
+    )
 }
 
 func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
@@ -217,10 +269,6 @@ func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
     
     guard header.planes.value == 1 else {
         throw Errors.moreThanOnePlane
-    }
-    
-    guard header.compression.value == .BI_RGB || header.compression.value == .BI_RLE4 else {
-        throw Errors.unsupportedCompression(header.compression.value)
     }
     
     guard
@@ -255,14 +303,21 @@ func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
     )!
     
     let dst = UnsafeMutableRawBufferPointer(start: c.data, count: w * h * 4)
-    
-    if header.compression.value == .BI_RGB {
+
+    switch header.compression.value {
+    case .BI_RGB:
         try BMP_RGB_to_32bpp(reader, w, h, bitCount, hasMask, dst, palette)
-    }
-    else {
+        
+    case .BI_RLE4:
         try BMP_RLE4_to_32bpp(reader, w, h, dst, palette)
+        
+    case .BI_RLE8:
+        try BMP_RLE8_to_32bpp(reader, w, h, dst, palette)
+        
+    default:
+        throw Errors.unsupportedCompression(header.compression.value)
     }
-    
+        
     return c.makeImage()!
 }
 
