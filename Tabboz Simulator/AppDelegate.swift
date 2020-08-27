@@ -56,61 +56,22 @@ func template_item_rect(dialog: Dialog, item: DialogItemTemplate) -> NSRect {
 }
 
 
-func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
-    enum Errors : Error {
-        case moreThanOnePlane
-        case unsupportedCompression(BITMAPINFOHEADER.Compression)
-        case unsupportedBitCount(UInt16)
-    }
-    
-    let header = BITMAPINFOHEADER()
-    let reader = Reader(data: data)
-    try header.read(reader: reader)
-    
-    guard header.planes.value == 1 else {
-        throw Errors.moreThanOnePlane
-    }
-    
-    guard header.compression.value == .BI_RGB else {
-        throw Errors.unsupportedCompression(header.compression.value)
-    }
-    
-    guard
-        header.bitCount.value == 8 ||
-        header.bitCount.value == 4 ||
-        header.bitCount.value == 1
-    else {
-        throw Errors.unsupportedBitCount(header.bitCount.value)
-    }
-    
-    let bitCount = Int(header.bitCount.value)
-    let defaultPaletteCount = bitCount == 8 ? 256 : bitCount == 4 ? 16 : 2
-    let paletteCount = header.clrUsed.value == 0 ? defaultPaletteCount : Int(header.clrUsed.value)
-    
-    let (w, h)   = (
-        Int(header.width.value),
-        hasMask == false ? Int(header.height.value) : Int(header.height.value) / 2
-    )
-    
+fileprivate func BMP_RGB_to_32bpp(
+    _ reader: Reader,
+    _ w: Int,
+    _ h: Int,
+    _ bitCount: Int,
+    _ hasMask: Bool,
+    _ dst: UnsafeMutableRawBufferPointer,
+    _ palette: Data
+) throws
+{
     let srcStride  = (w * bitCount + 31) / 32 * 4
     let maskStride = (w  + 31) / 32 * 4
-    let palette    = try reader.data(size: 4 * paletteCount)
     let src        = try reader.data(size: srcStride * h)
 
     let mask = hasMask ? try reader.data(size: maskStride * h) : nil
-    
-    let c = CGContext(
-        data: nil,
-        width: w,
-        height: h,
-        bitsPerComponent: 8,
-        bytesPerRow: w * 4,
-        space: CGColorSpace(name: CGColorSpace.sRGB)!,
-        bitmapInfo: hasMask ? CGImageAlphaInfo.premultipliedLast.rawValue : CGImageAlphaInfo.noneSkipLast.rawValue
-    )!
-    
-    let dst = UnsafeMutableRawBufferPointer(start: c.data, count: w * h * 4)
-    
+
     for y in 0 ..< h {
         for x in 0 ..< w {
             let srcY = h - y - 1
@@ -145,6 +106,161 @@ func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
             dst[off * 4 + 2] = palette[(pix * 4) + 0]
             dst[off * 4 + 3] = maskBit == false ? 0xff : 0x00
         }
+    }
+}
+
+fileprivate func BMP_RLE4_to_32bpp(
+    _ reader: Reader,
+    _ w: Int,
+    _ h: Int,
+    _ dst: UnsafeMutableRawBufferPointer,
+    _ palette: Data
+) throws
+{
+    var x = 0
+    var y = 0
+    
+    let incrementPixelPosition = {
+        x += 1
+        if x >= w {
+            x = 0
+        }
+    }
+    
+    let setColor = { (pix: Int) in
+        let off = (h - y - 1) * w + x
+        
+        dst[off * 4 + 0] = palette[(pix * 4) + 2]
+        dst[off * 4 + 1] = palette[(pix * 4) + 1]
+        dst[off * 4 + 2] = palette[(pix * 4) + 0]
+        dst[off * 4 + 3] = 0
+    }
+    
+    var command : UInt8
+    
+    while true {
+        do {
+            command = try reader.byte()
+            
+            if command != 0 {
+                // Encoded Mode
+                
+                let count = Int(command)
+                let colors = Int(try reader.byte())
+                
+                for i in 0 ..< count {
+                    
+                    let pix = (i % 2 == 0)
+                        ? (colors & 0xf0) >> 4
+                        : (colors & 0x0f)
+                    
+                    setColor(pix)
+                    incrementPixelPosition()
+                }
+            }
+            else {
+                // Absolute Mode
+                
+                let escaped = try reader.byte()
+                
+                if escaped == 0 {
+                    // end of line
+                    x = 0
+                    y += 1
+                }
+                else if escaped == 1 {
+                    // end of bitmap
+                    break
+                }
+                else if escaped == 2 {
+                    // delta
+                    x += Int(try reader.byte())
+                    y += Int(try reader.byte())
+                }
+                else {
+                    let count = Int(escaped)
+                    let run = try reader.data(size: (count + 1) / 2)
+                    
+                    if (run.count % 2) == 1 {
+                        _ = try reader.byte()
+                    }
+                    
+                    for i in 0 ..< count {
+                        let colors = Int(run[i / 2])
+                        let pix = (i % 2 == 0)
+                            ? (colors & 0xf0) >> 4
+                            : (colors & 0x0f)
+                        
+                        setColor(pix)
+                        incrementPixelPosition()
+                    }
+                }
+            }
+            
+        }
+        catch (Reader.Errors.eof) {
+            break
+        }
+    }
+}
+
+func dataToImage(data: Data, hasMask: Bool = false) throws -> CGImage {
+    enum Errors : Error {
+        case moreThanOnePlane
+        case unsupportedCompression(BITMAPINFOHEADER.Compression)
+        case unsupportedBitCount(UInt16)
+    }
+    
+    let header = BITMAPINFOHEADER()
+    let reader = Reader(data: data)
+    try header.read(reader: reader)
+    
+    guard header.planes.value == 1 else {
+        throw Errors.moreThanOnePlane
+    }
+    
+    guard header.compression.value == .BI_RGB || header.compression.value == .BI_RLE4 else {
+        throw Errors.unsupportedCompression(header.compression.value)
+    }
+    
+    guard
+        header.bitCount.value == 8 ||
+        header.bitCount.value == 4 ||
+        header.bitCount.value == 1
+    else {
+        throw Errors.unsupportedBitCount(header.bitCount.value)
+    }
+
+    let w                   = Int(header.width.value)
+    let h                   = hasMask ? Int(header.height.value) / 2
+                                      : Int(header.height.value)
+
+    let bitCount            = Int(header.bitCount.value)
+    let defaultPaletteCount = bitCount == 8 ? 256 :
+                              bitCount == 4 ? 16  : 2
+    
+    let paletteCount        = header.clrUsed.value == 0 ? defaultPaletteCount
+                                                        : Int(header.clrUsed.value)
+    
+    let palette             = try reader.data(size: 4 * paletteCount)
+    
+    let c = CGContext(
+        data: nil,
+        width: w,
+        height: h,
+        bitsPerComponent: 8,
+        bytesPerRow: w * 4,
+        space: CGColorSpace(name: CGColorSpace.sRGB)!,
+        bitmapInfo: hasMask ? CGImageAlphaInfo.premultipliedLast.rawValue : CGImageAlphaInfo.noneSkipLast.rawValue
+    )!
+    
+    let dst = UnsafeMutableRawBufferPointer(start: c.data, count: w * h * 4)
+    
+    if header.compression.value == .BI_RGB {
+        try BMP_RGB_to_32bpp(reader, w, h, bitCount, hasMask, dst, palette)
+    }
+    else {
+        try BMP_RLE4_to_32bpp(reader, w, h, dst, palette)
     }
     
     return c.makeImage()!
@@ -615,7 +731,7 @@ extension INTRESOURCE {
 class ApplicationHandle : NSObject {
     static let url = Bundle.main.url(forResource: "ZARRO32.RES", withExtension: nil)!
     
-    var res = try! ResourceFile(url: url)
+    var res = ResourceFile(url: url)
     var customControlClasses = [String : WNDCLASS]()
     
     var handle = HANDLE.allocate(capacity: 1)

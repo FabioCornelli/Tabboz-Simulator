@@ -1,11 +1,11 @@
 import Foundation
 
-enum Errors : Error {
-    case eof
-    case overflow
-}
-
 class Reader {
+    enum Errors : Error {
+        case eof
+        case overflow(Int)
+    }
+
     let data: Data
     let offset: Int
     
@@ -35,6 +35,11 @@ class Reader {
     }
 
     func data(size: Int) throws -> Data {
+        let overflow = i + size - data.count
+        if overflow > 0 {
+            throw Errors.overflow(overflow)
+        }
+        
         let r = Data(data[i ..< i + size])
         i += size
         return r
@@ -613,14 +618,14 @@ class ResourceFile {
             do {
                 try x.read(reader: reader)
             }
-            catch (Errors.eof) {
+            catch (Reader.Errors.eof) {
                 break
             }
                         
             resources.append(x)
             
             switch x.header.type.value {
-            
+             
             case .HEADER:
                 continue
                 
