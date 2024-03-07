@@ -10,20 +10,20 @@
 #include "os.h"
 
 long DefWindowProc(HANDLE a, WORD b, WORD c, LONG d)       { abort(); }
-void DeleteObject()                                        { abort(); }
-void DestroyIcon()                                         { abort(); }
+void DeleteObject(HBITMAP hb)                              { abort(); }
+void DestroyIcon(HICON hi)                                 { abort(); }
 BOOL GetOpenFileName(OPENFILENAME * a)                     { abort(); }
 BOOL GetSaveFileName(OPENFILENAME * a)                     { abort(); }
-void GetPrivateProfileString()                             { abort(); }
-void GetWindowRect()                                       { abort(); }
+void GetPrivateProfileString(char * a, char * keyName, void * c, char * keyValue, int e, char * filename)                             { abort(); }
+void GetWindowRect(HANDLE h, RECT * r)                     { abort(); }
 BOOL IsIconic(HANDLE a)                                    { abort(); }
-void RegCloseKey()                                         { abort(); }
+void RegCloseKey(HKEY key)                                 { abort(); }
 LONG RegQueryValue(HKEY a, char *b, char * c, LONG *d)     { abort(); }
-void RegSetValue()                                         { abort(); }
-void RemoveProp()                                          { abort(); }
-void WritePrivateProfileString()                           { abort(); }
-void new_counter()                                         { abort(); }
-void ExitWindows()                                         { abort(); }
+void RegSetValue(HKEY key, char * keyName, int c, char * keyValue, DWORD keylen)                                         { abort(); }
+void RemoveProp(HANDLE h, char *p)                         { abort(); }
+void WritePrivateProfileString(char * a, char * keyName, char * keyValue, char * filename)                           { abort(); }
+void new_counter(void)                                         { abort(); }
+void ExitWindows(int, int)                                 { abort(); }
 
 char * _argv[] = {""};
 int _argc = 0;
@@ -33,7 +33,7 @@ void BWCCRegister(HANDLE _) {
     ;
 }
 
-void randomize() {
+void randomize(void) {
     srand((int)time(0));
 }
 
@@ -249,21 +249,21 @@ HDC CreateCompatibleDC(HDC a) {
     return [[Win32HDC alloc] init];
 }
 
-void ReleaseDC() {
-    ;
+void ReleaseDC(void *, HDC) {
+    
 }
 
-void GetObject() {
+void GetObject(HBITMAP, size_t, LPSTR) {
 }
 
 HBITMAP SelectObject(HDC hdc, HBITMAP bitmap) {
     return [hdc selectObject:bitmap];
 }
 
-void DeleteDC() {
+void DeleteDC(HDC) {
 }
 
-void SetTextColor() {
+void SetTextColor(HDC, int) {
 }
 
 COLORREF SetBkColor(HDC hdc, COLORREF color) {
@@ -297,7 +297,7 @@ HBITMAP GetProp(HANDLE handle, char * name) {
     return [control getPropWithName:theName];
 }
 
-void SetWindowPos() {
+void SetWindowPos(HANDLE, void *, int, int, int, int, int) {
 }
 
 HDC BeginPaint(HANDLE handle, PAINTSTRUCT * b) {
@@ -306,7 +306,7 @@ HDC BeginPaint(HANDLE handle, PAINTSTRUCT * b) {
     return [control beginPaint];
 }
 
-void EndPaint() {
+void EndPaint(HANDLE, PAINTSTRUCT *) {
 }
 
 void BitBlt(HDC hdc,
