@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreImage
 
 fileprivate func BMP_RGB_to_32bpp(
     _ reader: Reader,
