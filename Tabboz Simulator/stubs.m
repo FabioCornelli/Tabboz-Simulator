@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include "os.h"
+#include <AVFoundation/AVFAudio.h>
 
 long DefWindowProc(HANDLE a, WORD b, WORD c, LONG d)       { abort(); }
 void DeleteObject(HBITMAP hb)                              { abort(); }
@@ -212,7 +213,15 @@ void GetDlgItemText(HANDLE h, int param, char * buf, size_t size) {
 
 void sndPlaySound(char * filename, int flags) {
     if (log_window) printf("    play sound %s\n", filename); didLog = true;
-
+    NSString *fullFileName = [[NSString stringWithUTF8String: filename] lowercaseString];
+    NSArray *components = [fullFileName componentsSeparatedByString:@"."];
+    NSString *name = components[0];
+    NSString *extension = components[1];
+    NSURL *url = [NSBundle.mainBundle URLForResource:name withExtension:extension];
+    
+    printf("play sound -> %s\n",[url.path cStringUsingEncoding:NSUTF8StringEncoding]);
+    NSSound *sound = [[NSSound alloc] initWithContentsOfFile:url.path byReference:NO];
+    [sound play];
 }
 
 int GetSystemMetrics(int x) {
