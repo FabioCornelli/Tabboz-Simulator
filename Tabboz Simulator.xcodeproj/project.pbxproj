@@ -30,6 +30,48 @@
 		3F4E7F5E24F364010021BB52 /* IDCANCEL_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F4E7F5D24F364010021BB52 /* IDCANCEL_Icon.png */; };
 		3FA5354B24F75B8700CCD6B0 /* Win32BMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA5354A24F75B8700CCD6B0 /* Win32BMP.swift */; };
 		3FA5354D24F7990300CCD6B0 /* TEXT.RES in Resources */ = {isa = PBXBuildFile; fileRef = 3FA5354C24F7990300CCD6B0 /* TEXT.RES */; };
+		AEDD31EC2B9A66E60015433A /* tabs0501.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31C22B9A66E50015433A /* tabs0501.wav */; };
+		AEDD31ED2B9A66E60015433A /* tabs1200.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31C32B9A66E50015433A /* tabs1200.wav */; };
+		AEDD31EE2B9A66E60015433A /* tabs0605.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31C42B9A66E50015433A /* tabs0605.wav */; };
+		AEDD31EF2B9A66E60015433A /* tabs0305.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31C52B9A66E50015433A /* tabs0305.wav */; };
+		AEDD31F02B9A66E60015433A /* tabs0207.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31C62B9A66E50015433A /* tabs0207.wav */; };
+		AEDD31F12B9A66E60015433A /* tabs0202.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31C72B9A66E50015433A /* tabs0202.wav */; };
+		AEDD31F22B9A66E60015433A /* tabs0400.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31C82B9A66E50015433A /* tabs0400.wav */; };
+		AEDD31F32B9A66E60015433A /* tabs0701.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31C92B9A66E50015433A /* tabs0701.wav */; };
+		AEDD31F42B9A66E60015433A /* tabs1400.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31CA2B9A66E50015433A /* tabs1400.wav */; };
+		AEDD31F52B9A66E60015433A /* tabs1500.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31CB2B9A66E50015433A /* tabs1500.wav */; };
+		AEDD31F62B9A66E60015433A /* tabs1300.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31CC2B9A66E50015433A /* tabs1300.wav */; };
+		AEDD31F72B9A66E60015433A /* tabs1501.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31CD2B9A66E50015433A /* tabs1501.wav */; };
+		AEDD31F82B9A66E60015433A /* tabs0402.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31CE2B9A66E50015433A /* tabs0402.wav */; };
+		AEDD31F92B9A66E60015433A /* tabs1402.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31CF2B9A66E50015433A /* tabs1402.wav */; };
+		AEDD31FA2B9A66E60015433A /* tabs0801.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D02B9A66E50015433A /* tabs0801.wav */; };
+		AEDD31FB2B9A66E60015433A /* tabs0303.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D12B9A66E50015433A /* tabs0303.wav */; };
+		AEDD31FC2B9A66E60015433A /* tabs0602.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D22B9A66E50015433A /* tabs0602.wav */; };
+		AEDD31FD2B9A66E60015433A /* tabs0604.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D32B9A66E50015433A /* tabs0604.wav */; };
+		AEDD31FE2B9A66E60015433A /* tabs0203.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D42B9A66E50015433A /* tabs0203.wav */; };
+		AEDD31FF2B9A66E60015433A /* tabs1201.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D52B9A66E50015433A /* tabs1201.wav */; };
+		AEDD32002B9A66E60015433A /* tabs0603.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D62B9A66E50015433A /* tabs0603.wav */; };
+		AEDD32012B9A66E60015433A /* tabs0304.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D72B9A66E50015433A /* tabs0304.wav */; };
+		AEDD32022B9A66E60015433A /* tabs0001.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D82B9A66E50015433A /* tabs0001.wav */; };
+		AEDD32032B9A66E60015433A /* tabs0900.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31D92B9A66E60015433A /* tabs0900.wav */; };
+		AEDD32042B9A66E60015433A /* tabs1100.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31DA2B9A66E60015433A /* tabs1100.wav */; };
+		AEDD32052B9A66E60015433A /* tabs1403.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31DB2B9A66E60015433A /* tabs1403.wav */; };
+		AEDD32062B9A66E60015433A /* tabs0302.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31DC2B9A66E60015433A /* tabs0302.wav */; };
+		AEDD32072B9A66E60015433A /* tabs0502.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31DD2B9A66E60015433A /* tabs0502.wav */; };
+		AEDD32082B9A66E60015433A /* tabs0206.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31DE2B9A66E60015433A /* tabs0206.wav */; };
+		AEDD32092B9A66E60015433A /* tabs0101.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31DF2B9A66E60015433A /* tabs0101.wav */; };
+		AEDD320A2B9A66E60015433A /* tabs0000.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E02B9A66E60015433A /* tabs0000.wav */; };
+		AEDD320B2B9A66E60015433A /* tabs0102.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E12B9A66E60015433A /* tabs0102.wav */; };
+		AEDD320C2B9A66E60015433A /* tabs0204.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E22B9A66E60015433A /* tabs0204.wav */; };
+		AEDD320D2B9A66E60015433A /* tabs0503.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E32B9A66E60015433A /* tabs0503.wav */; };
+		AEDD320E2B9A66E60015433A /* tabs0205.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E42B9A66E60015433A /* tabs0205.wav */; };
+		AEDD320F2B9A66E60015433A /* tabs0505.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E52B9A66E60015433A /* tabs0505.wav */; };
+		AEDD32102B9A66E60015433A /* tabs0504.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E62B9A66E60015433A /* tabs0504.wav */; };
+		AEDD32112B9A66E60015433A /* tabs0401.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E72B9A66E60015433A /* tabs0401.wav */; };
+		AEDD32122B9A66E60015433A /* tabs1401.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E82B9A66E60015433A /* tabs1401.wav */; };
+		AEDD32132B9A66E60015433A /* tabs0201.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31E92B9A66E60015433A /* tabs0201.wav */; };
+		AEDD32142B9A66E60015433A /* tabs0103.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31EA2B9A66E60015433A /* tabs0103.wav */; };
+		AEDD32152B9A66E60015433A /* tabs0403.wav in Resources */ = {isa = PBXBuildFile; fileRef = AEDD31EB2B9A66E60015433A /* tabs0403.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +106,48 @@
 		3FC1271424E8B7B7006BDC9A /* Tabboz Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tabboz Simulator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FED203E220FC7E000AC38D7 /* Tabboz Simulator-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabboz Simulator-Bridging-Header.h"; sourceTree = "<group>"; };
 		3FED204A220FCA3500AC38D7 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os.h; path = "Tabboz Simulator/C/os.h"; sourceTree = SOURCE_ROOT; };
+		AEDD31C22B9A66E50015433A /* tabs0501.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0501.wav; path = Original/tabs0501.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31C32B9A66E50015433A /* tabs1200.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1200.wav; path = Original/tabs1200.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31C42B9A66E50015433A /* tabs0605.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0605.wav; path = Original/tabs0605.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31C52B9A66E50015433A /* tabs0305.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0305.wav; path = Original/tabs0305.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31C62B9A66E50015433A /* tabs0207.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0207.wav; path = Original/tabs0207.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31C72B9A66E50015433A /* tabs0202.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0202.wav; path = Original/tabs0202.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31C82B9A66E50015433A /* tabs0400.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0400.wav; path = Original/tabs0400.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31C92B9A66E50015433A /* tabs0701.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0701.wav; path = Original/tabs0701.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31CA2B9A66E50015433A /* tabs1400.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1400.wav; path = Original/tabs1400.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31CB2B9A66E50015433A /* tabs1500.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1500.wav; path = Original/tabs1500.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31CC2B9A66E50015433A /* tabs1300.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1300.wav; path = Original/tabs1300.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31CD2B9A66E50015433A /* tabs1501.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1501.wav; path = Original/tabs1501.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31CE2B9A66E50015433A /* tabs0402.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0402.wav; path = Original/tabs0402.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31CF2B9A66E50015433A /* tabs1402.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1402.wav; path = Original/tabs1402.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D02B9A66E50015433A /* tabs0801.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0801.wav; path = Original/tabs0801.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D12B9A66E50015433A /* tabs0303.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0303.wav; path = Original/tabs0303.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D22B9A66E50015433A /* tabs0602.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0602.wav; path = Original/tabs0602.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D32B9A66E50015433A /* tabs0604.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0604.wav; path = Original/tabs0604.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D42B9A66E50015433A /* tabs0203.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0203.wav; path = Original/tabs0203.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D52B9A66E50015433A /* tabs1201.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1201.wav; path = Original/tabs1201.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D62B9A66E50015433A /* tabs0603.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0603.wav; path = Original/tabs0603.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D72B9A66E50015433A /* tabs0304.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0304.wav; path = Original/tabs0304.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D82B9A66E50015433A /* tabs0001.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0001.wav; path = Original/tabs0001.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31D92B9A66E60015433A /* tabs0900.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0900.wav; path = Original/tabs0900.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31DA2B9A66E60015433A /* tabs1100.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1100.wav; path = Original/tabs1100.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31DB2B9A66E60015433A /* tabs1403.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1403.wav; path = Original/tabs1403.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31DC2B9A66E60015433A /* tabs0302.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0302.wav; path = Original/tabs0302.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31DD2B9A66E60015433A /* tabs0502.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0502.wav; path = Original/tabs0502.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31DE2B9A66E60015433A /* tabs0206.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0206.wav; path = Original/tabs0206.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31DF2B9A66E60015433A /* tabs0101.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0101.wav; path = Original/tabs0101.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E02B9A66E60015433A /* tabs0000.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0000.wav; path = Original/tabs0000.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E12B9A66E60015433A /* tabs0102.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0102.wav; path = Original/tabs0102.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E22B9A66E60015433A /* tabs0204.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0204.wav; path = Original/tabs0204.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E32B9A66E60015433A /* tabs0503.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0503.wav; path = Original/tabs0503.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E42B9A66E60015433A /* tabs0205.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0205.wav; path = Original/tabs0205.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E52B9A66E60015433A /* tabs0505.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0505.wav; path = Original/tabs0505.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E62B9A66E60015433A /* tabs0504.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0504.wav; path = Original/tabs0504.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E72B9A66E60015433A /* tabs0401.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0401.wav; path = Original/tabs0401.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E82B9A66E60015433A /* tabs1401.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs1401.wav; path = Original/tabs1401.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31E92B9A66E60015433A /* tabs0201.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0201.wav; path = Original/tabs0201.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31EA2B9A66E60015433A /* tabs0103.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0103.wav; path = Original/tabs0103.wav; sourceTree = SOURCE_ROOT; };
+		AEDD31EB2B9A66E60015433A /* tabs0403.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tabs0403.wav; path = Original/tabs0403.wav; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +164,48 @@
 		3F2FF69324ECD01000637016 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AEDD31E02B9A66E60015433A /* tabs0000.wav */,
+				AEDD31D82B9A66E50015433A /* tabs0001.wav */,
+				AEDD31DF2B9A66E60015433A /* tabs0101.wav */,
+				AEDD31E12B9A66E60015433A /* tabs0102.wav */,
+				AEDD31EA2B9A66E60015433A /* tabs0103.wav */,
+				AEDD31E92B9A66E60015433A /* tabs0201.wav */,
+				AEDD31C72B9A66E50015433A /* tabs0202.wav */,
+				AEDD31D42B9A66E50015433A /* tabs0203.wav */,
+				AEDD31E22B9A66E60015433A /* tabs0204.wav */,
+				AEDD31E42B9A66E60015433A /* tabs0205.wav */,
+				AEDD31DE2B9A66E60015433A /* tabs0206.wav */,
+				AEDD31C62B9A66E50015433A /* tabs0207.wav */,
+				AEDD31DC2B9A66E60015433A /* tabs0302.wav */,
+				AEDD31D12B9A66E50015433A /* tabs0303.wav */,
+				AEDD31D72B9A66E50015433A /* tabs0304.wav */,
+				AEDD31C52B9A66E50015433A /* tabs0305.wav */,
+				AEDD31C82B9A66E50015433A /* tabs0400.wav */,
+				AEDD31E72B9A66E60015433A /* tabs0401.wav */,
+				AEDD31CE2B9A66E50015433A /* tabs0402.wav */,
+				AEDD31EB2B9A66E60015433A /* tabs0403.wav */,
+				AEDD31C22B9A66E50015433A /* tabs0501.wav */,
+				AEDD31DD2B9A66E60015433A /* tabs0502.wav */,
+				AEDD31E32B9A66E60015433A /* tabs0503.wav */,
+				AEDD31E62B9A66E60015433A /* tabs0504.wav */,
+				AEDD31E52B9A66E60015433A /* tabs0505.wav */,
+				AEDD31D22B9A66E50015433A /* tabs0602.wav */,
+				AEDD31D62B9A66E50015433A /* tabs0603.wav */,
+				AEDD31D32B9A66E50015433A /* tabs0604.wav */,
+				AEDD31C42B9A66E50015433A /* tabs0605.wav */,
+				AEDD31C92B9A66E50015433A /* tabs0701.wav */,
+				AEDD31D02B9A66E50015433A /* tabs0801.wav */,
+				AEDD31D92B9A66E60015433A /* tabs0900.wav */,
+				AEDD31DA2B9A66E60015433A /* tabs1100.wav */,
+				AEDD31C32B9A66E50015433A /* tabs1200.wav */,
+				AEDD31D52B9A66E50015433A /* tabs1201.wav */,
+				AEDD31CC2B9A66E50015433A /* tabs1300.wav */,
+				AEDD31CA2B9A66E50015433A /* tabs1400.wav */,
+				AEDD31E82B9A66E60015433A /* tabs1401.wav */,
+				AEDD31CF2B9A66E50015433A /* tabs1402.wav */,
+				AEDD31DB2B9A66E60015433A /* tabs1403.wav */,
+				AEDD31CB2B9A66E50015433A /* tabs1500.wav */,
+				AEDD31CD2B9A66E50015433A /* tabs1501.wav */,
 				3F2FF69424ECD01000637016 /* Tabboz_macOS.entitlements */,
 				3F2FF69524ECD01000637016 /* MainMenu.xib */,
 				3F2FF69724ECD01000637016 /* Info.plist */,
@@ -204,12 +330,54 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEDD32022B9A66E60015433A /* tabs0001.wav in Resources */,
+				AEDD32072B9A66E60015433A /* tabs0502.wav in Resources */,
+				AEDD32042B9A66E60015433A /* tabs1100.wav in Resources */,
+				AEDD31EF2B9A66E60015433A /* tabs0305.wav in Resources */,
+				AEDD320F2B9A66E60015433A /* tabs0505.wav in Resources */,
+				AEDD31F62B9A66E60015433A /* tabs1300.wav in Resources */,
 				3F4E7F5C24F363F50021BB52 /* IDOK_Icon.png in Resources */,
+				AEDD31F32B9A66E60015433A /* tabs0701.wav in Resources */,
+				AEDD32142B9A66E60015433A /* tabs0103.wav in Resources */,
+				AEDD31FD2B9A66E60015433A /* tabs0604.wav in Resources */,
+				AEDD32012B9A66E60015433A /* tabs0304.wav in Resources */,
+				AEDD31F02B9A66E60015433A /* tabs0207.wav in Resources */,
+				AEDD320D2B9A66E60015433A /* tabs0503.wav in Resources */,
+				AEDD320A2B9A66E60015433A /* tabs0000.wav in Resources */,
+				AEDD31F92B9A66E60015433A /* tabs1402.wav in Resources */,
+				AEDD32002B9A66E60015433A /* tabs0603.wav in Resources */,
+				AEDD32112B9A66E60015433A /* tabs0401.wav in Resources */,
 				3F2FF69D24ECD01000637016 /* Assets.xcassets in Resources */,
+				AEDD31FC2B9A66E60015433A /* tabs0602.wav in Resources */,
+				AEDD32062B9A66E60015433A /* tabs0302.wav in Resources */,
+				AEDD31FA2B9A66E60015433A /* tabs0801.wav in Resources */,
+				AEDD32092B9A66E60015433A /* tabs0101.wav in Resources */,
+				AEDD31FB2B9A66E60015433A /* tabs0303.wav in Resources */,
 				3F2FF6A124ECD08F00637016 /* ZARRO32.RES in Resources */,
+				AEDD31F72B9A66E60015433A /* tabs1501.wav in Resources */,
+				AEDD32152B9A66E60015433A /* tabs0403.wav in Resources */,
 				3FA5354D24F7990300CCD6B0 /* TEXT.RES in Resources */,
+				AEDD32122B9A66E60015433A /* tabs1401.wav in Resources */,
+				AEDD320C2B9A66E60015433A /* tabs0204.wav in Resources */,
+				AEDD32082B9A66E60015433A /* tabs0206.wav in Resources */,
+				AEDD32102B9A66E60015433A /* tabs0504.wav in Resources */,
 				3F2FF69B24ECD01000637016 /* MainMenu.xib in Resources */,
+				AEDD31FE2B9A66E60015433A /* tabs0203.wav in Resources */,
+				AEDD31F52B9A66E60015433A /* tabs1500.wav in Resources */,
+				AEDD31ED2B9A66E60015433A /* tabs1200.wav in Resources */,
+				AEDD320E2B9A66E60015433A /* tabs0205.wav in Resources */,
+				AEDD31FF2B9A66E60015433A /* tabs1201.wav in Resources */,
+				AEDD31F82B9A66E60015433A /* tabs0402.wav in Resources */,
 				3F4E7F5E24F364010021BB52 /* IDCANCEL_Icon.png in Resources */,
+				AEDD32132B9A66E60015433A /* tabs0201.wav in Resources */,
+				AEDD31F42B9A66E60015433A /* tabs1400.wav in Resources */,
+				AEDD320B2B9A66E60015433A /* tabs0102.wav in Resources */,
+				AEDD32052B9A66E60015433A /* tabs1403.wav in Resources */,
+				AEDD32032B9A66E60015433A /* tabs0900.wav in Resources */,
+				AEDD31EE2B9A66E60015433A /* tabs0605.wav in Resources */,
+				AEDD31F22B9A66E60015433A /* tabs0400.wav in Resources */,
+				AEDD31F12B9A66E60015433A /* tabs0202.wav in Resources */,
+				AEDD31EC2B9A66E60015433A /* tabs0501.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
