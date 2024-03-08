@@ -49,7 +49,7 @@ func template_item_rect(dialog: Dialog, item: DialogItemTemplate) -> NSRect {
         Int(dialog.template.height.value) -
         Int(item.itemTemplate.y.value) -
         Int(item.itemTemplate.height.value) + 1
-    ) * 2
+    ) * WIN32_FRAME_SCALING
     let W = Int(item.itemTemplate.width.value) * WIN32_FRAME_SCALING
     let H = Int(item.itemTemplate.height.value) * WIN32_FRAME_SCALING
     return NSRect(x: X, y: Y, width: W, height: H)
@@ -239,6 +239,7 @@ class DialogNSWindow : NSWindow {
                         
                             b.image = NSImage(cgImage: cgimage, size: NSSize(width: cgimage.width, height: cgimage.height))
                             b.imageScaling = .scaleProportionallyUpOrDown
+                            b.isBordered = false
                         }
                         catch {
                             print("cannot open image because \(error)")
